@@ -37,6 +37,7 @@ const courseSchema= new Schema<CourseDocument>({
       isApproved: {
         type: Boolean,
         require: true,
+        default:false
       },
       instructor: {
         type: mongoose.Schema.Types.ObjectId,

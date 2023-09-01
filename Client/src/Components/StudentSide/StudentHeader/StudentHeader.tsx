@@ -4,11 +4,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
-import logo from '../../../../Assets/Images/carouselBody/l1.jpeg'
-import { Link } from 'react-router-dom';
+import logo from '../../../Assets/Images/carouselBody/l1.jpeg'
 import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-function NavScrollExample() {
+function StudentHeader() {
   return (
     <Navbar expand="lg" className="bg-white">
       <Container >
@@ -26,9 +26,8 @@ function NavScrollExample() {
             <Nav.Link href="#action2">Profile</Nav.Link>
             
           </Nav>
-          <Link to="/studentregister"><Button >Sign Up</Button></Link>
-          <Link to="/studentlogin"><Button className='m-3'>Login</Button></Link>
-          <Link to="/tutorregister"><Button>Instructor</Button></Link>
+          
+         <Link to='/'><Button>Logout</Button></Link>
           
         
         </Navbar.Collapse>
@@ -38,4 +37,4 @@ function NavScrollExample() {
   );
 }
 
-export default NavScrollExample;
+export default StudentHeader;

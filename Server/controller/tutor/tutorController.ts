@@ -67,17 +67,13 @@ const signUp= async (req:Request,res:Response)=>{
     } 
  }
 
- const addCategory= async(req:Request,res:Response)=>{
-    const newCategory = await courseCategory.create ({
-        title: req.body.title,
-        description: req.body.description,
-      })
-      if(newCategory){
+ const getCategory= async(req:Request,res:Response)=>{
+    const category = await courseCategory.find({})
+    console.log(category,"kjhkh");
+    
+      if(category){
         res.status(201).json({
-            _id:newCategory._id,
-            title:newCategory.title,
-            description:newCategory.description,
-            createdAt:newCategory.createdAt,
+            Category:category
             
         })
       }
@@ -136,5 +132,5 @@ const addLesson= async(req:Request,res:Response)=>{
 }
 
  export{
-    signUp,login,addCategory,addCourse,addLesson
+    signUp,login,getCategory,addCourse,addLesson
  }

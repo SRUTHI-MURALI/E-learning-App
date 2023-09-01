@@ -1,9 +1,21 @@
 
 import './App.css'
-import Home from './Pages/Home'
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
-import Register from './Pages/Register'
-import Login from './Pages/Login'
+
+//Student imports
+import StudentHome from './Pages/StudentPages/StudentHome'
+import StudentRegister from './Pages/StudentPages/StudentRegister'
+import StudentLogin from './Pages/StudentPages/StudentLogin'
+import StudentLandingPage from './Pages/StudentPages/StudentLandingPage'
+
+//Tutor imports
+import TutorRegister from './Pages/TutorPages/TutorRegister'
+import TutorLogin from './Pages/TutorPages/TutorLogin'
+import TutorHome from './Pages/TutorPages/TutorHome'
+import TutorCreateCourse from './Pages/TutorPages/TutorCreateCourse'
+
+
+
 
 function App() {
   
@@ -12,12 +24,17 @@ function App() {
     <>
       <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<StudentHome />} />
+        <Route path="/studentregister" element={<StudentRegister />} />
+        <Route path="/studentlogin" element={<StudentLogin />} />
+        <Route path="/studentlandingpage" element={<StudentLandingPage />} />
+        <Route path="/tutorregister" element={<TutorRegister />} />
+        <Route path="/tutorlogin" element={<TutorLogin />} />
+        <Route path="/tutorhome" element={<TutorHome />} />
+        <Route path="/tutorcreatecourse" element={<TutorCreateCourse />} />
         
       </Routes>
- </Router>
+    </Router>
     </>
   )
 }

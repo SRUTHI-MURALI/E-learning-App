@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import {Col,Row} from 'react-bootstrap'
 import './Footer.css'
-import l1 from '../../Assets/Images/carouselBody/l1.jpeg'
+import l1 from '../../../../Assets/Images/carouselBody/l1.jpeg'
 
 function Footer() {
   return (
@@ -40,7 +40,7 @@ function Footer() {
             <h6 style={{textAlign:'center'}} className='mt-1'>Quick Links</h6>
         </Col>
         <Col xs={12} md={3}>
-        <img src={l1} />
+        <img className='footerimg' src={l1} />
            
         </Col>
         </Row>

@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import {Col,Row} from 'react-bootstrap'
 import './Body1.css'
-import a1 from '../../../Assets/Images/carouselBody/a1.jpeg'
+import a1 from '../../../../Assets/Images/carouselBody/hb1.avif'
 
 function WithHeaderExample() {
   return (
