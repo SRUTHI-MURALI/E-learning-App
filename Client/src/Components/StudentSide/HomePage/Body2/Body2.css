@@ -1,0 +1,11 @@
+.cardLayout{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.cardLayout img{
+    height: 280px;
+    width: 100%;
+}
