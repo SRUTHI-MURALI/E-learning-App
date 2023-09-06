@@ -13,9 +13,11 @@ import adminrouter from "../route/admin/adminrouter"
 import studentrouter from "../route/student/studentrouter"
 import tutorrouter from "../route/tutor/tutorrouter"
 
+
 app.use("/admin",adminrouter)
 app.use("/student",studentrouter)
 app.use("/tutor",tutorrouter)
+
 
 
 

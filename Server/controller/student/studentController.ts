@@ -4,6 +4,8 @@ import generateToken from "../../token/generateToken";
 import Student from "../../model/student";
 
 
+
+
 const signUp= async (req:Request,res:Response)=>{
     try {
         const {name,email,password,phone} = req.body

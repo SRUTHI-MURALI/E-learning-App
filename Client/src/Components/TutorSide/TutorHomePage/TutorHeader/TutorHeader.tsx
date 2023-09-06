@@ -24,7 +24,7 @@ function TutorHeader() {
           >
             <Nav >Hello Tutor</Nav>
           </Nav>
-         <Link to='/'><Button className='m-5'>Logout</Button></Link>
+         <Link to='/'><Button className='m-3'>Logout</Button></Link>
         
         </Navbar.Collapse>    
     </Navbar>

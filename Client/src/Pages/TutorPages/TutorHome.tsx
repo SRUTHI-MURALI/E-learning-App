@@ -11,7 +11,7 @@ function TutorHome() {
           <TutorSideBar />
         </Col>
         <Col  xs={12} md={10} style={{ padding: 0 }}>
-          <TutorHeader />
+           <TutorHeader />
         </Col>
       </Row>
     </div>

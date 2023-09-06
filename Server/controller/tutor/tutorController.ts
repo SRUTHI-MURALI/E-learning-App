@@ -84,7 +84,6 @@ const signUp= async (req:Request,res:Response)=>{
         title: req.body.title,
         description: req.body.description,
         category:req.body.category,
-        price:req.body.price,
         lessonCount:req.body.lessonCount,
         isApproved:req.body.isApproved,
         instructor:req.body.instructor
@@ -97,7 +96,6 @@ const signUp= async (req:Request,res:Response)=>{
             title:newCourse.title,
             description:newCourse.description,
             category:newCourse.category,
-            price:newCourse.price,
             lessonCount:newCourse.lessonCount,
             isApproved:newCourse.isApproved,
             instructor:newCourse.instructor,

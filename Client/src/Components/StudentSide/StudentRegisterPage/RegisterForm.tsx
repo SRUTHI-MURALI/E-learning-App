@@ -106,9 +106,11 @@ function RegisterForm() {
                 </Form.Group>
               </Row>
 
-              <Button variant="primary" type="submit">
-                Register
-              </Button>
+              <div className="d-flex justify-content-center mt-5">
+                <Button variant="primary" type="submit">
+                 New Register
+                </Button>
+              </div>
             </Form>
             <h6 className="mt-5" style={{ textAlign: 'right' }}>
               Have you already registered? <Link to="/studentlogin">Login</Link>
