@@ -24,8 +24,7 @@ function RegisterForm() {
     const trimmedPassword = password.trim();
     const trimmedPhone = phone.trim();
     const trimmedEmail = email.trim();
-
-
+  
     if (
       trimmedName === '' ||
       trimmedEmail === '' ||
@@ -35,28 +34,31 @@ function RegisterForm() {
       toast.error("Please fill all fields");
       return;
     }
-   
+  
     try {
-       await axios.post('http://localhost:3002/student/register', {
+      await axios.post('http://localhost:3002/student/sendotp', {
         name: trimmedName,
         email: trimmedEmail,
         phone: trimmedPhone,
         password: trimmedPassword,
       });
-     toast.success("successfully registered")
-      navigate('/studentlogin')
   
-      
+      // Display success toast
+      toast.success("Successfully registered");
+  
+      // Navigate after toast is displayed
+      navigate('/verifyOtp');
     } catch (error) {
-     toast.error("registration error");
-     return;
+      toast.error("Registration error");
+      return;
     }
   };
+  
 
   return (
     <Container className="mt-5">
       <Card className="regCard">
-        <ToastContainer position='top-center' autoClose={3000}></ToastContainer>
+        <ToastContainer position='top-center'></ToastContainer>
         <Row>
           <Col xs={12} md={6}>
             <img className="regCardimg" src={r1} alt="Registration" />

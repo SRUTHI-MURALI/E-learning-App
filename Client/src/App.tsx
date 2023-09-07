@@ -22,6 +22,10 @@ import StudentList from './Pages/AdminPages/StudentList'
 import InstructorList from './Pages/AdminPages/InstructorList'
 
 
+//Verify Otp import
+import VerifyOtp from './Pages/Otp/VerifyOtp'
+
+
 
 
 function App() {
@@ -54,6 +58,8 @@ function App() {
         <Route path="/adminhome" element={<AdminHome />} />
         <Route path="/studentsList" element={<StudentList />} />
         <Route path="/instructorsList" element={<InstructorList/>} />
+
+        <Route path="/verifyOtp" element={<VerifyOtp/>} />
        
       </Routes>
     </Router>

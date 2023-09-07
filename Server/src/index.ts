@@ -12,11 +12,12 @@ app.use(cors())
 import adminrouter from "../route/admin/adminrouter"
 import studentrouter from "../route/student/studentrouter"
 import tutorrouter from "../route/tutor/tutorrouter"
-
+import otprouter from "../route/otp/mobileOtpRouter"
 
 app.use("/admin",adminrouter)
 app.use("/student",studentrouter)
 app.use("/tutor",tutorrouter)
+app.use("/otp",otprouter)
 
 
 
