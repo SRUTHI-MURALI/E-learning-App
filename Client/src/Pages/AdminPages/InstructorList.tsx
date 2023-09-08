@@ -1,25 +1,28 @@
 
 import { Row,Col  } from 'react-bootstrap'
-import AdminHome from './AdminHome'
+
 import InstructorTable from '../../Components/AdminSIde/InstructorDetails/InstructorTable'
+import AdminSidebar from '../../Components/AdminSIde/AdminSidebar/AdminSidebar'
 
 
 
 
 function InstructorList() {
   return (
-    <div style={{overflow:'hidden',backgroundColor:"rgb(139, 179, 198)"}}>
-  <Row>
+    <div style={{overflowX:'hidden'}}>
+      <Row>
     <Col xs={12} md={2}>
-        <AdminHome/>
+        <AdminSidebar/>
     </Col>
     <Col xs={12} md={8}>
    
     <InstructorTable/>
     </Col>
   </Row>
-      
     </div>
+  
+      
+  
   )
 }
 

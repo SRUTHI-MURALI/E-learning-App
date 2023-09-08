@@ -2,7 +2,6 @@
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import React, { useState,useEffect } from 'react';
-import {  useNavigate } from 'react-router-dom';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -13,7 +12,7 @@ function TutorCreateCourseForm() {
   const [lessons, setLessons] = useState('');
   const [categories, setCategories] = useState([]);
  
-  const navigate=useNavigate()
+  
 
   useEffect(() => {
     axios.get('http://localhost:3002/tutor/getCourseCategory')

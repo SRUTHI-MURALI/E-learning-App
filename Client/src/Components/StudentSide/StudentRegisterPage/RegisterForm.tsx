@@ -47,7 +47,7 @@ function RegisterForm() {
       toast.success("Successfully registered");
   
       // Navigate after toast is displayed
-      navigate('/verifyOtp');
+      navigate('/studentverifyOtp');
     } catch (error) {
       toast.error("Registration error");
       return;

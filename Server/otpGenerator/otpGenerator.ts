@@ -7,12 +7,15 @@ const authToken: string = process.env.TWILIO_AUTH_TOKEN || '';
 
 const serviceSid: string = process.env.TWILIO_SERVICE_SID || '';
 
+
+
 const twilioClient: Twilio = new Twilio(accountSid, authToken);
 
 export const generateOTP = async (phoneNumber: number): Promise<void> => {
   try {
    
     
+   
     
    
     const otpResponse = await twilioClient.verify.v2.services(serviceSid).verifications.create({
@@ -24,9 +27,10 @@ export const generateOTP = async (phoneNumber: number): Promise<void> => {
     });
 
     console.log("hi nnn");
-    console.log('OTP sent successfully:', otpResponse.sid);
+    console.log('OTP sent successfully:');
   } catch (error) {
    
+    
     
     // Handle any errors here
    

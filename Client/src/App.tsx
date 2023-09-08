@@ -13,7 +13,8 @@ import StudentLandingPage from './Pages/StudentPages/StudentLandingPage'
 import TutorRegister from './Pages/TutorPages/TutorRegister'
 import TutorLogin from './Pages/TutorPages/TutorLogin'
 import TutorHome from './Pages/TutorPages/TutorHome'
-import TutorCreateCourse from './Pages/TutorPages/TutorCreateCourse'
+import TutorAddCourse from './Pages/TutorPages/TutorAddCourse'
+
 
 
 //Admin imports
@@ -21,14 +22,21 @@ import AdminLogin from './Pages/AdminPages/AdminLogin'
 import AdminHome from './Pages/AdminPages/AdminHome'
 import StudentList from './Pages/AdminPages/StudentList'
 import InstructorList from './Pages/AdminPages/InstructorList'
+import CourseCategoryList from './Pages/AdminPages/CourseCategoryList'
+import AddCategory from './Components/AdminSIde/CourseCategory/AddCategory'
+
 
 
 //Verify Otp import
-import VerifyOtp from './Pages/Otp/VerifyOtp'
+import StudentVerifyOtp from './Pages/Otp/StudentVerifyOtp'
+import TutorVerifyOtp from './Pages/Otp/TutorVerifyOtp'
+
 
 
 //forgot password import
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword'
+
+
 
 
 
@@ -53,7 +61,8 @@ function App() {
         <Route path="/tutorregister" element={<TutorRegister />} />
         <Route path="/tutorlogin" element={<TutorLogin />} />
         <Route path="/tutorhome" element={<TutorHome />} />
-        <Route path="/tutorcreatecourse" element={<TutorCreateCourse />} />
+        <Route path="/addcourse" element={<TutorAddCourse/>} />
+       
 
 
   //admin Routes
@@ -63,12 +72,15 @@ function App() {
         <Route path="/adminhome" element={<AdminHome />} />
         <Route path="/studentsList" element={<StudentList />} />
         <Route path="/instructorsList" element={<InstructorList/>} />
+        <Route path="/courseCategoryList" element={<CourseCategoryList/>} />
+        <Route path="/addCategory" element={<AddCategory/>} />
 
 
   //otp
 
 
-        <Route path="/verifyOtp" element={<VerifyOtp/>} />
+        <Route path="/studentverifyOtp" element={<StudentVerifyOtp/>} />
+        <Route path="/tutorverifyOtp" element={<TutorVerifyOtp/>} />
 
 
   //forgot password     

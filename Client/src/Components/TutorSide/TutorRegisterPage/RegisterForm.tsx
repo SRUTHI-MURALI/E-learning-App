@@ -47,7 +47,7 @@ function RegisterForm() {
         password: trimmedPassword,
       });
      toast.success("successfully registered")
-     navigate('/verifyOtp');
+     navigate('/tutorverifyOtp');
   
       
     } catch (error) {

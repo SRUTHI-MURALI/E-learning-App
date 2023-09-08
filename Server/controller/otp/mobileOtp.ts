@@ -4,7 +4,7 @@ import { generateOTP,verifyOTP } from "../../otpGenerator/otpGenerator";
 const sendMobileOtp=async(req:Request,res:Response)=>{
     try {
         const { phone } = req.body;
-        console.log("tutor1");
+        
         
         // Generate and send OTP using the imported function
         const otp = await generateOTP(phone);

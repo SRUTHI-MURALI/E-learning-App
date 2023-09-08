@@ -1,15 +1,19 @@
-import AdminSidebar from "../../Components/AdminSIde/AdminHome/AdminSidebar";
 
-
+import AdminHeader from '../../Components/AdminSIde/AdminHeader/AdminHeader'
+import AdminSidebar from '../../Components/AdminSIde/AdminSidebar/AdminSidebar'
+import AdminDashBoard from '../../Components/AdminSIde/AdminDashBoard/AdminDashBoard'
 
 function AdminHome() {
+ 
+
+
   return (
-      <div  style={{backgroundColor:"rgb(120, 179, 198)"}}>
-       
-       <AdminSidebar/>
+    <div className='grid-container'>
+      <AdminHeader />
+      <AdminSidebar />
+      <AdminDashBoard/>
     </div>
-      
-  );
+  )
 }
 
-export default AdminHome;
+export default AdminHome

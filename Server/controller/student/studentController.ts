@@ -11,6 +11,9 @@ const globalData = {
   };
   
   const sendOtp = async (req: Request, res: Response) => {
+
+    
+    
    
     
     try {
@@ -23,7 +26,7 @@ const globalData = {
             
             res.status(400).json({ error: 'Student already exists' });
         } else {
-                
+            console.log("ll");
                 
                 await axios.post('http://localhost:3002/otp/sendmobileotp', { phone: phone });
                 res.status(200).json({ message: 'OTP sent successfully' });
@@ -101,25 +104,27 @@ const googleLogin = async (req: Request, res: Response) => {
   
       const { id_token } = req.body;
   
-      console.log(id_token, "email");
+     
   
       // Define a type for your decoded token
       interface JwtDecodedToken {
         name: string | null;
         email: string | null;
-        jti:string |null
+        jti:string |null;
+        phone:string|null;
         // Add other properties as needed
       }
   
       // Use type assertion to tell TypeScript that you're certain it's JwtDecodedToken
       const decodedToken = jwt.decode(id_token) as JwtDecodedToken;
   
-      const { name, email,jti } = decodedToken;
+      const { name, email,jti,phone } = decodedToken;
      
       const addStudent=  await Student.create({
         name,
         email,
-        jti
+        jti,
+        phone
       })
             const token = generateToken(addStudent._id);
             return res.status(200).json({
@@ -137,12 +142,7 @@ const googleLogin = async (req: Request, res: Response) => {
     }
   };
 
-  
-  
-  
-  
-  
-  
+
 
  export {
     sendOtp,signUp,login,googleLogin

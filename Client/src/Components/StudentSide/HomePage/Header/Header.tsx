@@ -7,10 +7,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '../../../../Assets/Images/carouselBody/l1.jpeg'
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import './Header.css'
 
 function NavScrollExample() {
   return (
-    <Navbar expand="lg" className="bg-white">
+    <Navbar expand="lg" >
       <Container >
         <img className='logo' src={logo} />
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -20,10 +21,10 @@ function NavScrollExample() {
             style={{ maxHeight: '80px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Courses</Nav.Link>
-            <Nav.Link href="#action2">Contacts</Nav.Link>
-            <Nav.Link href="#action2">Profile</Nav.Link>
+            <Nav.Link className="nav-student" href="#action1">Home</Nav.Link>
+            <Nav.Link className="nav-student" href="#action2">Courses</Nav.Link>
+            <Nav.Link className="nav-student" href="#action2">Contacts</Nav.Link>
+            <Nav.Link className="nav-student" href="#action2">Profile</Nav.Link>
             
           </Nav>
           <Link to="/studentregister"><Button >Sign Up</Button></Link>

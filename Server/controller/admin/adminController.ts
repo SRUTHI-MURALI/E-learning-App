@@ -4,6 +4,7 @@ import generateToken from "../../token/generateToken";
 import Admin from'../../model/admin'
 import student from '../../model/student'
 import tutor from '../../model/tutor'
+import category from '../../model/courseCategory'
 
 const login=async(req:Request,res:Response)=>{
     try {
@@ -46,6 +47,8 @@ const blockStudent=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
+      console.log(id);
+      
 
       const students= await student.findByIdAndUpdate(
          id,
@@ -111,7 +114,24 @@ const getInstructorList=async(req:Request,res:Response)=>{
    }
 }
 
+const getCategoryList=async(req:Request,res:Response)=>{
+   try {
+      const categories= await category.find({})
+      
+      console.log(categories,"hjghghhghghkg");
+      
+      if(categories){
+         res.status(201).json({
+            categories
+            
+        })
+      }
+   } catch (error) {
+      res.status(400).json(error)
+   }
+}
+
  export {
-    login,getStudentsList,getInstructorList,blockStudent,unBlockStudent
+    login,getStudentsList,getInstructorList,blockStudent,unBlockStudent,getCategoryList
  }
 

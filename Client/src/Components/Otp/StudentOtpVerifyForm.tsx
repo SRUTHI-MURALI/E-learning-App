@@ -7,7 +7,7 @@ import { Card, Container,} from 'react-bootstrap';
 import r1 from '../../Assets/Images/otp1.avif'
 
 
-function OtpVerifyForm() {
+function StudentOtpVerifyForm() {
     
     const [otp, setotp] = useState('');
 
@@ -29,7 +29,7 @@ function OtpVerifyForm() {
         
     })
     .then(() => {
-       
+      
         
         navigate('/studentlandingpage');
     })
@@ -66,4 +66,4 @@ function OtpVerifyForm() {
   );
 }
 
-export default OtpVerifyForm;
+export default StudentOtpVerifyForm;
