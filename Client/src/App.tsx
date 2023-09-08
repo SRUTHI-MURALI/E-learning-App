@@ -2,6 +2,7 @@
 import './App.css'
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
 
+
 //Student imports
 import StudentHome from './Pages/StudentPages/StudentHome'
 import StudentRegister from './Pages/StudentPages/StudentRegister'
@@ -24,6 +25,10 @@ import InstructorList from './Pages/AdminPages/InstructorList'
 
 //Verify Otp import
 import VerifyOtp from './Pages/Otp/VerifyOtp'
+
+
+//forgot password import
+import ForgotPassword from './Pages/ForgotPassword/ForgotPassword'
 
 
 
@@ -59,7 +64,16 @@ function App() {
         <Route path="/studentsList" element={<StudentList />} />
         <Route path="/instructorsList" element={<InstructorList/>} />
 
+
+  //otp
+
+
         <Route path="/verifyOtp" element={<VerifyOtp/>} />
+
+
+  //forgot password     
+
+        <Route path="/forgotpassword" element={<ForgotPassword/>} />
        
       </Routes>
     </Router>

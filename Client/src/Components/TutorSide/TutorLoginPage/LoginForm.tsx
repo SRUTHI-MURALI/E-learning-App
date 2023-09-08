@@ -93,7 +93,18 @@ function LoginForm() {
      </Row>
       
     </Form>
-    <h6 className='mt-5' style={{textAlign:'right'}}> If you are a new user? <Link to='/tutorregister'>Register</Link></h6>  
+
+    <Row>
+        <Col>
+          <h6 className='mt-3 '>  <Link to='/forgotpassword'>Forgot Password</Link></h6>  
+    
+          </Col>
+          <Col>
+          <h6 className='mt-3 '> If you are a new user? <Link to='/tutorregister'>Register</Link></h6>  
+    
+          </Col>
+        </Row>
+   
         </Col>
         
         </Row>

@@ -2,13 +2,14 @@ import { Request,Response } from "express"
 import generateToken from "../../token/generateToken";
 import Student from "../../model/student";
 import axios from 'axios'
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 const globalData = {
     otp: null as null | number, // Use type null | number for otp
     student: null as null | { name: string, email: string, phone: string, password: string }, // Define a type for user
   };
-
-
+  
   const sendOtp = async (req: Request, res: Response) => {
    
     
@@ -18,14 +19,15 @@ const globalData = {
         const phonefind = await Student.findOne({ phone });
         
         if (emailfind || phonefind) {
-            console.log("dafads");
+            
             
             res.status(400).json({ error: 'Student already exists' });
         } else {
                 
+                
                 await axios.post('http://localhost:3002/otp/sendmobileotp', { phone: phone });
                 res.status(200).json({ message: 'OTP sent successfully' });
-          
+               
             const newStudent = {
                 name,
                 email,
@@ -42,13 +44,13 @@ const globalData = {
 };
 
 const signUp = async (req: Request, res: Response) => {
-   
     
     try {
-        const { phone,verificationCode } = req.body;
+        const { verificationCode } = req.body;
+        const phone=globalData.student?.phone
                 
             await axios.post('http://localhost:3002/otp/verifymobileotp', { phone,verificationCode});
-            res.status(200).json({ message: 'OTP sent successfully' });
+            
             const addUser=  await Student.create(globalData.student)
             const token = generateToken(addUser._id);
             return res.status(200).json({
@@ -90,7 +92,59 @@ const signUp = async (req: Request, res: Response) => {
         res.status(400).json(error)
     }
  }
+
+// Import Request and Response from express package
+
+const googleLogin = async (req: Request, res: Response) => {
+    try {
+      console.log("hello");
+  
+      const { id_token } = req.body;
+  
+      console.log(id_token, "email");
+  
+      // Define a type for your decoded token
+      interface JwtDecodedToken {
+        name: string | null;
+        email: string | null;
+        jti:string |null
+        // Add other properties as needed
+      }
+  
+      // Use type assertion to tell TypeScript that you're certain it's JwtDecodedToken
+      const decodedToken = jwt.decode(id_token) as JwtDecodedToken;
+  
+      const { name, email,jti } = decodedToken;
+     
+      const addStudent=  await Student.create({
+        name,
+        email,
+        jti
+      })
+            const token = generateToken(addStudent._id);
+            return res.status(200).json({
+                _id: addStudent?._id,
+                name: addStudent?.name,
+                email: addStudent?.email,
+                phone:addStudent?.phone,
+                token,
+            })
+  
+      // Continue with your logic
+  
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  };
+
+  
+  
+  
+  
+  
+  
+
  export {
-    sendOtp,signUp,login
+    sendOtp,signUp,login,googleLogin
  }
 

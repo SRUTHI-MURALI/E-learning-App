@@ -11,28 +11,39 @@ const twilioClient: Twilio = new Twilio(accountSid, authToken);
 
 export const generateOTP = async (phoneNumber: number): Promise<void> => {
   try {
+   
+    
+    
+   
     const otpResponse = await twilioClient.verify.v2.services(serviceSid).verifications.create({
+        
+    
+        
       to: `+91${phoneNumber}`,
       channel: 'sms',
     });
-    // You can handle the success response or return it if needed.
+
+    console.log("hi nnn");
     console.log('OTP sent successfully:', otpResponse.sid);
   } catch (error) {
+   
+    
     // Handle any errors here
-    console.error('Error sending OTP:', error);
+   
+    console.error('Error sending OTP:');
     throw error;
   }
 };
 
 export const verifyOTP = async (phoneNumber: number,verificationCode:string): Promise<void> => {
     try {
-      const otpResponse = await twilioClient.verify.v2.services(serviceSid)
-        .verificationChecks.create({
-            to: "+91" + phoneNumber,
-            code: verificationCode,
-          });
-      // You can handle the success response or return it if needed.
-      console.log('OTP verified successfully:',otpResponse);
+        await twilioClient.verify.v2.services(serviceSid)
+            .verificationChecks.create({
+                to: "+91" + phoneNumber,
+                code: verificationCode,
+            });
+        // You can handle the success response or return it if needed.
+        console.log('OTP verified successfully:');
     } catch (error) {
       // Handle any errors here
       console.error('Error sending OTP:', error);

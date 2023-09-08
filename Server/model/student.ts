@@ -10,6 +10,7 @@ interface StudentDocument extends Document {
   courses: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
   isBlocked:boolean;
+  jti:string
 
   matchPasswords(enteredPassword: string): Promise<boolean>
 }
@@ -35,6 +36,11 @@ const studentSchema= new Schema<StudentDocument>({
         default: false,
         type: Boolean,
       },
+      jti:{
+        
+        type:String
+      },
+      
       photo: 
       [{
          type: String,

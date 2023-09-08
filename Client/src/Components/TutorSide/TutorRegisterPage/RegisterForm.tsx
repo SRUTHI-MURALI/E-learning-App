@@ -38,14 +38,16 @@ function RegisterForm() {
     }
    
     try {
-       await axios.post('http://localhost:3002/tutor/register', {
+      
+      
+       await axios.post('http://localhost:3002/tutor/sendotp', {
         name: trimmedTutorName,
         email: trimmedEmail,
         phone: trimmedPhone,
         password: trimmedPassword,
       });
      toast.success("successfully registered")
-      navigate('/tutorlogin')
+     navigate('/verifyOtp');
   
       
     } catch (error) {

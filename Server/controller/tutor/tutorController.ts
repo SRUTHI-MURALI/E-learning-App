@@ -1,52 +1,79 @@
 import { Request,Response } from "express"
-
+import axios from "axios";
 import generateToken from "../../token/generateToken";
 import Tutor from "../../model/tutor"
 import courseCategory from "../../model/courseCategory"
 import course from "../../model/courses"
 import lesson from "../../model/lesson"
 
-const signUp= async (req:Request,res:Response)=>{
+const globalData = {
+    otp: null as null | number, // Use type null | number for otp
+    tutor: null as null | { name: string, email: string, phone: string, password: string }, // Define a type for user
+  };
+
+
+const sendOtp = async (req: Request, res: Response) => {
+   
+    
+    
     try {
         const {name,email,password,phone} = req.body
         const emailfind = await Tutor.findOne({ email });
         const phonefind = await Tutor.findOne({ phone });
+        
         if (emailfind || phonefind) {
-            res.status(400)
-            throw new Error('Instructor already existing')
+            
+            
+            res.status(400).json({ error: 'Instructor already exists' });
         } else {
-           
-              const newTutor = await Tutor.create({
-                name,
-                email,
-                password,
-                phone
-            })
-             
-            if(newTutor){
-                const token =  generateToken(newTutor._id);
-              
-                 res.status(201).json({
-                     _id:newTutor._id,
-                     name:newTutor.name,
-                     email:newTutor.email,
-                     phone:newTutor.phone,
-                     token
-                 })
-             }else{
-                 res.status(400)
-                 throw new Error('Invalid Tutor Data')
-             }
                 
+                console.log("ttttt");
                 
-            }
-          }
-        
-    catch (error) {
-      console.log(error);
-        
+                await axios.post('http://localhost:3002/otp/sendmobileotp', { phone: phone });
+                res.status(200).json({ message: 'OTP sent successfully' });
+                
+                const newTutor = {
+                    name,
+                    email,
+                    password,
+                    phone
+                }
+            globalData.tutor = newTutor;
+
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
- }
+};
+
+
+const signUp = async (req: Request, res: Response) => {
+    
+    try {
+        const { verificationCode } = req.body;
+        const phone=globalData.tutor?.phone
+                
+            await axios.post('http://localhost:3002/otp/verifymobileotp', { phone,verificationCode});
+            
+            const addUser=  await Tutor.create(globalData.tutor)
+            const token = generateToken(addUser._id);
+            return res.status(200).json({
+                _id: addUser?._id,
+                name: addUser?.name,
+                email: addUser?.email,
+                phone:addUser?.phone,
+                token,
+            })
+
+       
+          
+            
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
  const login= async (req:Request,res:Response)=>{
     const { email,password}= req.body
@@ -69,7 +96,6 @@ const signUp= async (req:Request,res:Response)=>{
 
  const getCategory= async(req:Request,res:Response)=>{
     const category = await courseCategory.find({})
-    console.log(category,"kjhkh");
     
       if(category){
         res.status(201).json({
@@ -130,5 +156,5 @@ const addLesson= async(req:Request,res:Response)=>{
 }
 
  export{
-    signUp,login,getCategory,addCourse,addLesson
+    sendOtp, signUp,login,getCategory,addCourse,addLesson
  }
