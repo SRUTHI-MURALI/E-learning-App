@@ -40,12 +40,7 @@
   }
   
   /* Default styles for larger screens */
-.add-category-form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+
 
 .responsive-card {
   width: 360px;
