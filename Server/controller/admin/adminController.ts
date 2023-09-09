@@ -4,7 +4,7 @@ import generateToken from "../../token/generateToken";
 import Admin from'../../model/admin'
 import student from '../../model/student'
 import tutor from '../../model/tutor'
-import category from '../../model/courseCategory'
+import categoryModel from '../../model/courseCategory'
 
 const login=async(req:Request,res:Response)=>{
     try {
@@ -114,11 +114,43 @@ const getInstructorList=async(req:Request,res:Response)=>{
    }
 }
 
+const addCategory= async(req:Request,res:Response)=>{
+   try {
+      
+      
+      const {category,description} = req.body
+      console.log(category,description,"category");
+      const newCategory=await categoryModel.create({
+         title:category,
+         description:description,
+      })
+
+      
+      
+      if(newCategory){
+         res.status(201).json({
+             _id:newCategory._id,
+             title:newCategory.title,
+             description:newCategory.description,
+             createdAt:newCategory.createdAt,
+             
+         })
+     }
+   } catch (error) {
+      console.log(error);
+      
+      
+
+      res.status(400).json(error)
+   }
+
+}
+
 const getCategoryList=async(req:Request,res:Response)=>{
    try {
-      const categories= await category.find({})
+      const categories= await categoryModel.find({})
       
-      console.log(categories,"hjghghhghghkg");
+
       
       if(categories){
          res.status(201).json({
@@ -132,6 +164,6 @@ const getCategoryList=async(req:Request,res:Response)=>{
 }
 
  export {
-    login,getStudentsList,getInstructorList,blockStudent,unBlockStudent,getCategoryList
+    login,getStudentsList,getInstructorList,blockStudent,unBlockStudent,getCategoryList,addCategory
  }
 
