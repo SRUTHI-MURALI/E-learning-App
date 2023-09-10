@@ -4,8 +4,10 @@ interface CourseDocument extends Document {
   title: string;
   description: string;
   category: mongoose.Schema.Types.ObjectId,
-  lessonCount:number,
+  photo:string,
   isApproved:boolean,
+  price:number,
+  duration:string,
   instructor: mongoose.Schema.Types.ObjectId,
   createdAt: Date;
   updatedAt: Date;
@@ -25,9 +27,16 @@ const courseSchema= new Schema<CourseDocument>({
         ref:"courseCategory",
         require: true,
       },
-     
-      lessonCount: {
-        type: Number,
+      duration: {
+        type: String,
+        require: true,
+      },
+      price:{
+        type:Number,
+        require:true,
+      },
+      photo: {
+        type: String,
         require: true,
       },
       isApproved: {

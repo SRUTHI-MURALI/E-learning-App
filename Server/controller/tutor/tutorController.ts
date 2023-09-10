@@ -106,14 +106,19 @@ const signUp = async (req: Request, res: Response) => {
  }
 
  const addCourse= async(req:Request,res:Response)=>{
+    
+    
+
     const newCourse=await course.create({
         title: req.body.title,
         description: req.body.description,
         category:req.body.category,
-        lessonCount:req.body.lessonCount,
+       duration:req.body.duration,
+       price:req.body.price,
         isApproved:req.body.isApproved,
         instructor:req.body.instructor
     })
+    
     
     
     if(newCourse){
@@ -122,7 +127,8 @@ const signUp = async (req: Request, res: Response) => {
             title:newCourse.title,
             description:newCourse.description,
             category:newCourse.category,
-            lessonCount:newCourse.lessonCount,
+            price:newCourse.price,
+            duration:newCourse.duration,
             isApproved:newCourse.isApproved,
             instructor:newCourse.instructor,
             createdAt:newCourse.createdAt,

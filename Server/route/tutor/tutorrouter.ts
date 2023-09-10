@@ -7,7 +7,7 @@ tutorRouter.post('/sendotp',sendOtp)
 tutorRouter.post('/verifyotp',signUp)
 tutorRouter.post('/login',login)
 tutorRouter.get('/getCourseCategory',getCategory)
-tutorRouter.post('/addCourse',addCourse)
-tutorRouter.post('/addLesson',addLesson)
+tutorRouter.post('/addcourse',addCourse)
+tutorRouter.post('/addlesson',addLesson)
 
 export default tutorRouter
