@@ -10,13 +10,18 @@ function AddCourse({selectedCategory,onCourseAdded}) {
     const[price,setPrice]=useState('')
     const[duration,setDuration]=useState('')
     const[description,setDescription]=useState('')
-    const[image,setImage]=useState('')
-    const[lessonCount,setLessonCount]=useState(0)
-    const[show,setShow]=useState(true)
+    const [image, setImage] = useState<File | null>(null)
+    const [cloudinaryURL, setCloudinaryURL] = useState('');
+    const[selectedCourse,setSelectedCourse]= useState('')
+    
+    const[show,setShow]=useState(null)
    
 
     const submitHandler = async ()  => {
+
+      
      
+
       const trimmedTitle = title.trim();
       const trimmedPrice = price.trim();
       const trimmedDuration = duration.trim();
@@ -32,22 +37,36 @@ function AddCourse({selectedCategory,onCourseAdded}) {
       ) {
         
         
-        toast.error("Please fill all fields");
+       return toast.error("Please fill all fields");
       
       }
+
+      await imageHandler()
+
+      if (!cloudinaryURL) {
+        
+        
+        toast.error("Error uploading photo");
+        return;
+      }
+  
       
-     
       try {
       
       
-         await axios.post('http://localhost:3002/tutor/addcourse', {
+       const response=  await axios.post('http://localhost:3002/tutor/addcourse', {
           title: trimmedTitle,
           price: trimmedPrice,
           duration: trimmedDuration,
           description: trimmedDescription,
-          category:selectedCategory
-        });
-        onCourseAdded(true)
+          category:selectedCategory,
+          photo: cloudinaryURL,
+
+        })
+        setSelectedCourse(response.data._id)
+        
+
+        setShow(true)
        toast.success("successfully registered")
        
     
@@ -59,8 +78,31 @@ function AddCourse({selectedCategory,onCourseAdded}) {
     };
 
       const addLessonHandler = async ()=>{
+
         setShow(false)
-        setLessonCount(lessonCount+1)
+        
+      }
+
+      const exitHandler = async ()=>{
+
+        onCourseAdded(true)
+        
+      }
+
+      const imageHandler= async ()=>{
+        const formData = new FormData()
+        formData.append("file",image)
+        formData.append("upload_preset","courselist")
+        formData.append("cloud_name","dnkc0odiw")
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/dnkc0odiw/image/upload",
+          formData
+          
+        )
+        console.log(response);
+        setCloudinaryURL(response.data.public_id);
+
+  
       }
     
     
@@ -82,11 +124,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
           />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridPassword">
-          <Form.Label>Category</Form.Label>
-          <Form.Control  placeholder={selectedCategory}
-           />
-        </Form.Group>
+       
       </Row>
 
       <Row className="mb-3">
@@ -112,26 +150,41 @@ function AddCourse({selectedCategory,onCourseAdded}) {
       </Form.Group>
       
       <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label></Form.Label>
-        <Form.Control type="file"
-        value={image}
-        onChange={(e)=>{setImage(e.target.value)}}
-         />
-      </Form.Group>
+  <Form.Label></Form.Label>
+  <Form.Control
+    type="file"
+    onChange={(e) => {
+      const inputElement = e.target as HTMLInputElement;
+      if (inputElement && inputElement.files) {
+        const selectedFile = inputElement.files[0];
+        setImage(selectedFile);
+      }
+    }}
+  />
+</Form.Group>
       <Row>
-        <Col>
-        <Button variant="primary" onClick={submitHandler}>
-        submit
-      </Button> 
-        </Col>
-        {show && (
-           <Col>
-           <Button variant="primary" style={{float:'right'}} onClick={addLessonHandler}>
-           Add Lesson
-         </Button> 
-           </Col>
-        )}
        
+      {show ? (
+      
+        <Col>
+      <Button variant="primary" style={{ float: 'right' }} onClick={addLessonHandler}>
+        Add Lesson
+      </Button>
+    </Col>
+  
+  ) : show === null ? (
+    <Col>
+      <Button variant="primary" onClick={submitHandler}>
+        Submit
+      </Button>
+    </Col>
+  ) : null}
+
+<Col>
+  <Button variant="primary" onClick={exitHandler} style={{ float: 'right' }}>
+    Exit
+  </Button>
+</Col>
        
         </Row>
     </Form>
@@ -139,7 +192,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
         </Card>
         {show==false &&(
            <Row>
-           <AddLesson />
+           <AddLesson courseId={selectedCourse} />
          </Row>
         )}
          

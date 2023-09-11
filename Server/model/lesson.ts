@@ -6,7 +6,6 @@ interface LessonDocument extends Document {
   course: mongoose.Schema.Types.ObjectId,
   video:string,
   duration:string,
-  instructor: mongoose.Schema.Types.ObjectId,
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,11 +26,7 @@ const lessonSchema= new Schema<LessonDocument>({
         type: String,
         require: true,
       },
-      instructor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"tutor",
-        require: true,
-      },
+      
       course: {
         type: mongoose.Schema.Types.ObjectId,
         ref:"course",

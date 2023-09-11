@@ -35,6 +35,7 @@ import TutorVerifyOtp from './Pages/Otp/TutorVerifyOtp'
 
 //forgot password import
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword'
+import CoursesList from './Pages/AdminPages/CoursesList'
 
 
 
@@ -74,7 +75,7 @@ function App() {
         <Route path="/instructorsList" element={<InstructorList/>} />
         <Route path="/courseCategoryList" element={<CourseCategoryList/>} />
         <Route path="/addCategory" element={<AddCategory/>} />
-
+        <Route path="/allCoursesList" element={<CoursesList/>} />
 
   //otp
 

@@ -1,66 +1,92 @@
-import mongoose, { Schema,model,Document } from "mongoose";
+import mongoose, { Schema, model, Document } from "mongoose";
 
 interface CourseDocument extends Document {
   title: string;
   description: string;
-  category: mongoose.Schema.Types.ObjectId,
-  photo:string,
-  isApproved:boolean,
-  price:number,
-  duration:string,
-  instructor: mongoose.Schema.Types.ObjectId,
+  category: mongoose.Schema.Types.ObjectId;
+  photo: string;
+  isApproved: boolean;
+  price: number;
+  duration: string;
+  instructor: mongoose.Schema.Types.ObjectId;
+  courseLessons: Lesson[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-const courseSchema= new Schema<CourseDocument>({
-    title: {
+interface Lesson {
+  title: string;
+  duration: number;
+  description: string;
+  video: string;
+}
+
+const courseSchema = new Schema<CourseDocument>({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "courseCategory",
+    required: true,
+  },
+  duration: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  photo: {
+    type: String,
+    required: true,
+  },
+  isApproved: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  instructor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "tutor",
+    required: false,
+  },
+  courseLessons: [
+    {
+      title: {
         type: String,
-        require: true,
+        required: true,
+      },
+      duration: {
+        type: Number,
+        required: true,
       },
       description: {
         type: String,
-        require: true,
-      },
-      category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"courseCategory",
-        require: true,
-      },
-      duration: {
-        type: String,
-        require: true,
-      },
-      price:{
-        type:Number,
-        require:true,
-      },
-      photo: {
-        type: String,
-        require: true,
-      },
-      isApproved: {
-        type: Boolean,
-        require: true,
-        default:false
-      },
-      instructor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"tutor",
-        require: true,
-      },
-      createdAt: {
-        type:Date,
         required: true,
-        default:Date.now ,
       },
-      updatedAt: {
-        type:Date,
+      video: {
+        type: String,
         required: true,
-        default:Date.now ,
       },
-     
-})
+    },
+  ],
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+});
 
-
-export default model<CourseDocument>("course",courseSchema)
+export default model<CourseDocument>("course", courseSchema);

@@ -1,19 +1,27 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 
 
 
-function AddLesson() {
+function AddLesson({courseId}) {
+  console.log(courseId,"sruthy");
+  
   const [lessons, setLessons] = useState([]);
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
   const [description, setDescription] = useState('');
+  const[showAddLesson,setShowAddLesson]= useState(false)
 
   const handleAdd = () => {
-    if (title.trim() === '' || duration.trim() === '' || description.trim() === '') {
+    if (title.trim() === '' || 
+    duration.trim() === '' || 
+    description.trim() === '') 
+    {
       alert('Please fill in all fields before adding a lesson.');
       return;
     }
+
 
     const newLesson = {
       title: title,
@@ -21,23 +29,43 @@ function AddLesson() {
       description: description,
     };
 
+
     setLessons([...lessons, newLesson]);
     // Clear the form fields
     setTitle('');
     setDuration('');
     setDescription('');
+
+    setShowAddLesson(true)
   };
 
-  const handleMainSubmit = () => {
+    const handleAddlessonButton= ()=>{
+      setShowAddLesson(false)
+    }
+  const handleMainSubmit = async () => {
+   
     // Handle the submission of all lessons here
     console.log('All lessons:', lessons);
+    try {
+      await axios.post('http://localhost:3002/tutor/addlessons',
+     { lessons,
+      courseId}
+      ).then
+      alert('success')
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
     <div>
          {/* Render individual forms for each lesson */}
       {lessons.map((lesson, index) => (
+        <>
+        <h2>Lesson:{index+1}</h2>
         <LessonForm key={index} lesson={lesson} />
+        </>
+        
       ))}
       <Container>
         <Card className='justify-content-center m-2'>
@@ -75,9 +103,16 @@ function AddLesson() {
             </Form.Group>
 
             <Row>
-              <Col>
-                <Button onClick={handleAdd}>Add Lesson</Button>
+              {showAddLesson=== true ?(
+                 <Col>
+                 <Button onClick={handleAddlessonButton}>AddLesson</Button>
+               </Col>             
+              ):(
+                <Col>
+                <Button onClick={handleAdd}>submit</Button>
               </Col>
+              )}
+              
               <Col>
                 <Button onClick={handleAdd}>Add Quiz</Button>
               </Col>
@@ -100,9 +135,10 @@ function AddLesson() {
 
 function LessonForm({ lesson }) {
     return (
-      <Container key={lesson.index}>
+      <Container key={lesson.title}>
         <Card className='justify-content-center m-2'>
           <Form className='mt-2 mb-2'>
+
             <h4>Title: {lesson.title}</h4>
             <p>Duration: {lesson.duration}</p>
             <p>Description: {lesson.description}</p>

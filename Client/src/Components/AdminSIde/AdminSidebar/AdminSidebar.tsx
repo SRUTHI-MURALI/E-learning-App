@@ -26,7 +26,7 @@ function AdminSidebar() {
                 </a>
             </li>
             <li className='sidebar-list-item'>
-                <a href="">
+                <a href="allCoursesList">
                     <BsFillArchiveFill className='icon'/> Courses
                 </a>
             </li>

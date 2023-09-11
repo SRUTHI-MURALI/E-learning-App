@@ -4,12 +4,15 @@ import generateToken from "../../token/generateToken";
 import Tutor from "../../model/tutor"
 import courseCategory from "../../model/courseCategory"
 import course from "../../model/courses"
-import lesson from "../../model/lesson"
+
+
 
 const globalData = {
     otp: null as null | number, // Use type null | number for otp
     tutor: null as null | { name: string, email: string, phone: string, password: string }, // Define a type for user
   };
+
+  
 
 
 const sendOtp = async (req: Request, res: Response) => {
@@ -107,7 +110,7 @@ const signUp = async (req: Request, res: Response) => {
 
  const addCourse= async(req:Request,res:Response)=>{
     
-    
+  
 
     const newCourse=await course.create({
         title: req.body.title,
@@ -115,9 +118,11 @@ const signUp = async (req: Request, res: Response) => {
         category:req.body.category,
        duration:req.body.duration,
        price:req.body.price,
+       photo:req.body.photo,
         isApproved:req.body.isApproved,
-        instructor:req.body.instructor
+       
     })
+    
     
     
     
@@ -130,36 +135,35 @@ const signUp = async (req: Request, res: Response) => {
             price:newCourse.price,
             duration:newCourse.duration,
             isApproved:newCourse.isApproved,
-            instructor:newCourse.instructor,
+           
             createdAt:newCourse.createdAt,
             
         })
     }
 }
  
-const addLesson= async(req:Request,res:Response)=>{
-    const newLesson=await lesson.create({
-        title: req.body.title,
-        description: req.body.description,
-        course:req.body.course,
-        duration:req.body.duration,
-        video:req.body.video,
-        instructor:req.body.instructor
-    })
-    if(newLesson){
-        res.status(201).json({
-            _id:newLesson._id,
-            title:newLesson.title,
-            description:newLesson.description,
-            course:newLesson.course,
-            duration:newLesson.duration,
-            video:newLesson.video,
-            instructor:newLesson.instructor,
-            createdAt:newLesson.createdAt,
-            
-        })
+const addLesson = async (req: Request, res: Response) => {
+    const { lessons, courseId } = req.body;
+  
+    try {
+      const updatedCourse = await course.findOneAndUpdate(
+        { _id: courseId }, // Find the course by its ID
+        { $push: { courseLessons: lessons } }, // Add lessons to the courseLessons array
+        { new: true } // Return the updated course document
+      );
+  
+      if (updatedCourse) {
+        res.status(201).json(updatedCourse);
+      } else {
+        res.status(404).json({ error: 'Course not found' });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Server error' });
     }
-}
+  };
+  
+  
 
  export{
     sendOtp, signUp,login,getCategory,addCourse,addLesson

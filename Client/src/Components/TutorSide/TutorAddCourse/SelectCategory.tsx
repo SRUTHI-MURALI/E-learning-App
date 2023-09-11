@@ -26,8 +26,8 @@ function SelectCategory({ onSelectCategory }) {
       const handleCategorySelection = () => {
         if(selectedCategory===''){
           {
-            toast.error("Please Select a Category");
-            return;
+            return toast.error("Please Select a Category");
+            
           }
          
         }
