@@ -3,6 +3,7 @@ import
  { BsPersonCircle, BsJustify}
  from 'react-icons/bs'
  import '../Css/Admin.css'
+import { Link } from 'react-router-dom'
 
  
 
@@ -18,7 +19,7 @@ function AdminHeader() {
         <div className='header-right'>
             
            
-            <BsPersonCircle className='icon'/>
+        <Link to='/adminlogin'> <BsPersonCircle className='icon'/>Logout</Link>
         </div>
     </header>
   )

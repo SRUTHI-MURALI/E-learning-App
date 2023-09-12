@@ -11,12 +11,16 @@ import { useState } from 'react';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import { login } from '../../ReduxComponents/TutorSlice';
 
 
 function LoginForm() {
     
     const [password,setPassword]=useState('')
     const [email,setEmail]=useState('')
+
+    const dispatch=useDispatch()
     const navigate=useNavigate()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,12 +40,14 @@ function LoginForm() {
         }
        
         try {
-           await axios.post('http://localhost:3002/tutor/login', {
+          const response = await axios.post('http://localhost:3002/tutor/login', {
            
             email: trimmedEmail,
            
             password: trimmedPassword,
           });
+
+          dispatch(login(response.data))
          toast.success("successfully logged in")
           navigate('/tutorhome')
       

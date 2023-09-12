@@ -23,7 +23,7 @@ function TutorSidebar() {
                 </a>
             </li>
             <li className='sidebar-list-item'>
-                <a href="">
+                <a href="/tutorallcourses">
                     <BsFillArchiveFill className='icon'/> Courses
                 </a>
             </li>

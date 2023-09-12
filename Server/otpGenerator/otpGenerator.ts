@@ -13,14 +13,9 @@ const twilioClient: Twilio = new Twilio(accountSid, authToken);
 
 export const generateOTP = async (phoneNumber: number): Promise<void> => {
   try {
+console.log(phoneNumber,"ll");
    
-    
-   
-    
-   
-    const otpResponse = await twilioClient.verify.v2.services(serviceSid).verifications.create({
-        
-    
+     await twilioClient.verify.v2.services(serviceSid).verifications.create({
         
       to: `+91${phoneNumber}`,
       channel: 'sms',

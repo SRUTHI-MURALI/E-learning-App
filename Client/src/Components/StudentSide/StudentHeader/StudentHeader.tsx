@@ -7,10 +7,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '../../../Assets/Images/carouselBody/l1.jpeg'
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import './StudentHeader.css'
+import { useSelector } from 'react-redux';
+import { selectStudent } from '../../ReduxComponents/StudentSlice';
 
 function StudentHeader() {
+  const studentdetails= useSelector(selectStudent)
   return (
-    <Navbar expand="lg" className="bg-white">
+    <Navbar expand="lg" >
       <Container >
         <img className='logo' src={logo} />
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -20,13 +24,13 @@ function StudentHeader() {
             style={{ maxHeight: '80px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Courses</Nav.Link>
-            <Nav.Link href="#action2">Contacts</Nav.Link>
-            <Nav.Link href="#action2">Profile</Nav.Link>
+            <Nav.Link className='nav-header-student' href="/studentlandingpage">Home</Nav.Link>
+            <Nav.Link className='nav-header-student'  href="studentallcourselist">Courses</Nav.Link>
+            <Nav.Link className='nav-header-student'  href="#action2">Contacts</Nav.Link>
+            <Nav.Link className='nav-header-student'  href="#action2">Profile</Nav.Link>
             
           </Nav>
-          
+          <h1>{studentdetails.name}</h1>
          <Link to='/'><Button>Logout</Button></Link>
           
         

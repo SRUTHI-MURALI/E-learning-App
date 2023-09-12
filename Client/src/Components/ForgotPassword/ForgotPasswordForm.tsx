@@ -24,11 +24,14 @@ function ForgotPasswordForm() {
         
         return;
       }
+      console.log(trimmedPhone,"ll");
+      
 
       axios.post('http://localhost:3002/otp/sendmobileotp', {
         phone:trimmedPhone
         
     })
+    
     .then(() => {
        
         

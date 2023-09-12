@@ -34,6 +34,7 @@ function StudentTable() {
           setStudentlist(response.data.students);
         })
         toast.success("successfully blocked")
+        window.location.reload();
       }
 
       const unBlockStudent= async (id)=>{
@@ -44,6 +45,7 @@ function StudentTable() {
           setStudentlist(response.data.students);
         })
         toast.success("successfully unblocked")
+        window.location.reload();
       }
 
   return (

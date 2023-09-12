@@ -12,16 +12,23 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import { useState } from 'react';
 import { GoogleOAuthProvider,GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { useDispatch, } from 'react-redux';
+import { login,  } from '../../ReduxComponents/StudentSlice';
 
 
 function LoginForm() {
+ 
+  
   const [password,setPassword]=useState('')
     const [email,setEmail]=useState('')
+
+    const dispatch=useDispatch()
     const navigate=useNavigate()
 
     const handleGoogleLogin = async (credentialResponse:CredentialResponse) => {
       try {
         const idToken = credentialResponse.credential;
+        console.log(idToken,"id");
         
         
         // Send the Google ID token to your server for verification
@@ -56,12 +63,13 @@ function LoginForm() {
         }
        
         try {
-           await axios.post('http://localhost:3002/student/login', {
+         const response=  await axios.post('http://localhost:3002/student/login', {
            
             email: trimmedEmail,
            
             password: trimmedPassword,
           });
+          dispatch(login(response.data))
          toast.success("successfully logged in")
           navigate('/studentlandingpage')
       

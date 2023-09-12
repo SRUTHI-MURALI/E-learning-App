@@ -14,6 +14,7 @@ const globalData = {
 
     
     
+    
    
     
     try {
@@ -26,7 +27,7 @@ const globalData = {
             
             res.status(400).json({ error: 'Student already exists' });
         } else {
-            console.log("ll");
+           
                 
                 await axios.post('http://localhost:3002/otp/sendmobileotp', { phone: phone });
                 res.status(200).json({ message: 'OTP sent successfully' });
@@ -103,6 +104,8 @@ const googleLogin = async (req: Request, res: Response) => {
       console.log("hello");
   
       const { id_token } = req.body;
+      console.log(id_token,"mumaaaa");
+      
   
      
   

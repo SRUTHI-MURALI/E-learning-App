@@ -4,13 +4,12 @@ import {AiFillEdit} from 'react-icons/ai';
 import {ImArrowRight} from 'react-icons/im'
 import {useState,useEffect} from 'react'
 import axios from 'axios';
-import './CourseTable.css'
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import EditCourseForm from './EditCourseForm';
 import { Button } from 'react-bootstrap';
+import EditCourseTutorForm from './EditCourseTutorForm';
 
-function CourseTable() {
+function TutorCourseTable() {
     const courseimageurl="https://res.cloudinary.com/dnkc0odiw/image/upload/v1694350814/"
     const[courseList,setCourselist]=useState([])
     const [openPopUp, setOpenPopUp] = useState(false);
@@ -18,7 +17,7 @@ function CourseTable() {
 
     
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/getallcourses')
+        axios.get('http://localhost:3002/tutor/getallcourses')
           .then((response) => {
           
             setCourselist(response.data.allCourses);
@@ -36,28 +35,9 @@ function CourseTable() {
         }
        
         
-        const cancelApproval= async (id)=>{
         
-            axios.put(`http://localhost:3002/admin/cancelcourse/${id}`)
-            .then((response) => {
-             
-              setCourselist(response.data.cancelCourse);
-            })
-            toast.success("successfully cancelled approval")
-            window.location.reload();
-          }
     
-          const approve= async (id)=>{
-            
-            axios.put(`http://localhost:3002/admin/approvecourse/${id}`)
-            .then((response) => {
-              
-              setCourselist(response.data.cancelCourse);
-            })
-            toast.success("successfully approved ")
-            window.location.reload();
-          }
-    
+          
   return (
 
     <div>
@@ -92,9 +72,9 @@ function CourseTable() {
               <td>{course.duration}</td>
               <td>
                 {course.isApproved ? (
-                  <Button variant='info' size="sm" onClick={()=>{cancelApproval(course._id)}}>Approved</Button>
+                  <Button variant='info' size="sm" >Approved</Button>
                 ) : (
-                  <Button variant='secondary' size="sm" onClick={()=>{approve(course._id)}}>UnApproved</Button>
+                  <Button variant='secondary' size="sm" >UnApproved</Button>
                 )}
               </td>
               <td>{course.price}</td>
@@ -110,7 +90,7 @@ function CourseTable() {
     {openPopUp && (
         <div>
             
-          <EditCourseForm courseId={courseId} onCloseEdit={()=> setOpenPopUp(false)}/>
+          <EditCourseTutorForm courseId={courseId} onCloseEdit={()=> setOpenPopUp(false)}/>
           
           
         </div>
@@ -119,6 +99,6 @@ function CourseTable() {
   )
 }
 
-export default CourseTable
+export default TutorCourseTable
 
 

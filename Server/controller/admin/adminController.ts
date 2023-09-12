@@ -171,10 +171,7 @@ const getCourseList=async(req:Request,res:Response)=>{
       console.log(allCourses,"all");
       console.log(allCourses);
       
-      
-      
-      
-      
+   
       if(allCourses){
          res.status(201).json({
             allCourses

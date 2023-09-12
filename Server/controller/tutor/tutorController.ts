@@ -111,6 +111,7 @@ const signUp = async (req: Request, res: Response) => {
  const addCourse= async(req:Request,res:Response)=>{
     
   
+  
 
     const newCourse=await course.create({
         title: req.body.title,
@@ -119,6 +120,7 @@ const signUp = async (req: Request, res: Response) => {
        duration:req.body.duration,
        price:req.body.price,
        photo:req.body.photo,
+       
         isApproved:req.body.isApproved,
        
     })
@@ -164,7 +166,81 @@ const addLesson = async (req: Request, res: Response) => {
   };
   
   
+  const getCourseList=async(req:Request,res:Response)=>{
+    try {
+       const allCourses= await course.find().populate("category")
+       
+       console.log(allCourses,"all");
+       console.log(allCourses);
+       
+    
+       if(allCourses){
+          res.status(201).json({
+             allCourses
+             
+         })
+       }
+    } catch (error) {
+       res.status(400).json(error)
+    }
+ }
+ 
+ const getEditCourseList=async(req:Request,res:Response)=>{
+    try {
+       const {id}=req.params
+    
+       
+       const editCourse= await course.findById({_id:id})
+       
+       
+       if(editCourse){
+          res.status(201).json({
+             editCourse
+             
+         })
+       }
+    } catch (error) {
+       res.status(400).json(error)
+    }
+ }
+ 
+ const editCourseList= async(req:Request,res:Response)=>{
+    try {
+       
+       
+       const {title,duration,price} = req.body
+       const {id}=req.params
+     
+       const editedCourse=await course.findByIdAndUpdate(
+         id, {
+          title: title,
+          duration:duration,
+          price:price,
+        },
+        { new: true }
+       )
+ 
+       
+       
+       if(editedCourse){
+          res.status(201).json({
+              _id:editedCourse._id,
+              title:editedCourse.title,
+              duration:editedCourse.duration,
+              price:editedCourse.price,
+              
+          })
+      }
+    } catch (error) {
+       console.log(error);
+       
+       
+ 
+       res.status(400).json(error)
+    }
+ 
+ }
 
  export{
-    sendOtp, signUp,login,getCategory,addCourse,addLesson
+    sendOtp, signUp,login,getCategory,addCourse,addLesson,getCourseList,getEditCourseList,editCourseList
  }
