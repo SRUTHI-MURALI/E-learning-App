@@ -46,15 +46,24 @@ function LoginForm() {
            
             password: trimmedPassword,
           });
+          const tutorData=response.data
+          
+          
+          localStorage.setItem('tutorData',JSON.stringify(tutorData))
+         
 
-          dispatch(login(response.data))
+          dispatch(login(tutorData))
          toast.success("successfully logged in")
           navigate('/tutorhome')
       
           
         } catch (error) {
-         toast.error("logging error");
-         return;
+          // Display the error message from the response
+          if (error.response && error.response.data && error.response.data.message) {
+            toast.error(error.response.data.message);
+          } else {
+            toast.error("An error occurred while logging in");
+          }
         }
       };
   return (
@@ -80,7 +89,7 @@ function LoginForm() {
 
       <Form.Group className="mb-3 mt-5" controlId="formGridAddress2">
         <Form.Label>Password</Form.Label>
-        <Form.Control placeholder="Password"
+        <Form.Control placeholder="Password" type='password'
          value={password}
          onChange={(e)=>{setPassword(e.target.value)}} />
       </Form.Group>

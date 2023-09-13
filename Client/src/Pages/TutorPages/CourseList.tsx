@@ -5,15 +5,17 @@ import TutorSidebar from '../../Components/TutorSide/TutorSidebar/TutorSidebar'
 import TutorCourseTable from '../../Components/TutorSide/TutorCourseDetails/TutorCourseTable'
 
 function CourseList() {
+  const tutorName = localStorage.getItem('name');
   return (
     <div>
        <Row >
+     
       <TutorHeader/>
     <Col xs={12} md={2}>
         <TutorSidebar/>
     </Col>
     <Col xs={12} md={8}>
-        <TutorCourseTable/>
+        <TutorCourseTable  tutorname= {tutorName}/>
    </Col>
     
   </Row>

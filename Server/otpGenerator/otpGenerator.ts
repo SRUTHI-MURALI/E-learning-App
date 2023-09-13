@@ -21,7 +21,7 @@ console.log(phoneNumber,"ll");
       channel: 'sms',
     });
 
-    console.log("hi nnn");
+    
     console.log('OTP sent successfully:');
   } catch (error) {
    
@@ -29,8 +29,10 @@ console.log(phoneNumber,"ll");
     
     // Handle any errors here
    
-    console.error('Error sending OTP:');
-    throw error;
+    console.error('Error sending OTP:',);
+    console.log(error);
+    
+    
   }
 };
 

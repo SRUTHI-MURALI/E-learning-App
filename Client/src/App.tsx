@@ -38,6 +38,8 @@ import TutorVerifyOtp from './Pages/Otp/TutorVerifyOtp'
 
 // forgot password import
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword'
+import StudentCourseDetails from './Pages/StudentPages/StudentCourseDetails'
+import TutorStudentList from './Pages/TutorPages/TutorStudentList'
 
 
 
@@ -56,6 +58,7 @@ function App() {
         <Route path="/studentlogin" element={<StudentLogin />} />
         <Route path="/studentlandingpage" element={<StudentLandingPage />} />
         <Route path="/studentallcourselist" element={<StudentCourseList/>} />
+        <Route path="/studentcoursedetails/:id" element={<StudentCourseDetails/>} />
 
    {/* tutor Routes */}
 
@@ -64,6 +67,7 @@ function App() {
         <Route path="/tutorhome" element={<TutorHome />} />
         <Route path="/addcourse" element={<TutorAddCourse/>} />
         <Route path="/tutorallcourses" element={<CourseList/>} />
+        <Route path='/tutorstudentslist' element={<TutorStudentList/>}/>
 
 
 
@@ -85,7 +89,7 @@ function App() {
         <Route path="/tutorverifyOtp" element={<TutorVerifyOtp/>} />
 
 
-  {/* forgot password      */}
+  {/* forgot password  */}
 
         <Route path="/forgotpassword" element={<ForgotPassword/>} />
        

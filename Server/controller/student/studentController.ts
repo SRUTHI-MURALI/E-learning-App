@@ -1,6 +1,7 @@
 import { Request,Response } from "express"
 import generateToken from "../../token/generateToken";
 import Student from "../../model/student";
+import Courses from "../../model/courses";
 import axios from 'axios'
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
@@ -12,11 +13,7 @@ const globalData = {
   
   const sendOtp = async (req: Request, res: Response) => {
 
-    
-    
-    
-   
-    
+
     try {
         const { name, email, password, phone } = req.body;
         const emailfind = await Student.findOne({ email });
@@ -66,10 +63,8 @@ const signUp = async (req: Request, res: Response) => {
             })
 
        
-          
-            
     } catch (error) {
-        console.error(error);
+     
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
@@ -79,6 +74,9 @@ const signUp = async (req: Request, res: Response) => {
         const { email,password}= req.body
         const student=await Student.findOne({email})
         if(student && (await student.matchPasswords(password))){
+            if(student.isBlocked){
+                res.status(300).json({message:"Student is Blocked"})
+            }else{
         const token = generateToken(student._id)
     
         res.status(201).json({
@@ -88,12 +86,14 @@ const signUp = async (req: Request, res: Response) => {
         phone:student.phone,
         token
     })
+            }
+        
     }else{
-        res.status(400)
-        throw new Error('Invalid student Data')
+        res.status(300).json({message:"Invalid Credentials"})
+        
     }
 } catch (error) {
-        res.status(400).json(error)
+    res.status(300).json({message:"logging Error"})
     }
  }
 
@@ -101,14 +101,10 @@ const signUp = async (req: Request, res: Response) => {
 
 const googleLogin = async (req: Request, res: Response) => {
     try {
-      console.log("hello");
+    
   
       const { id_token } = req.body;
-      console.log(id_token,"mumaaaa");
-      
-  
-     
-  
+    
       // Define a type for your decoded token
       interface JwtDecodedToken {
         name: string | null;
@@ -146,8 +142,29 @@ const googleLogin = async (req: Request, res: Response) => {
   };
 
 
+  
+  const courseDetails=async(req:Request,res:Response)=>{
+    try {
+        const {id}=req.params
+       const courseDetails= await Courses.findById({_id:id}).populate("category")
+       
+      console.log(courseDetails,'courseidddd');
+      
+    
+       if(courseDetails){
+          res.status(201).json({
+            courseDetails
+             
+         })
+       }
+    } catch (error) {
+       res.status(400).json(error)
+    }
+ }
+ 
+
 
  export {
-    sendOtp,signUp,login,googleLogin
+    sendOtp,signUp,login,googleLogin,courseDetails
  }
 

@@ -9,6 +9,7 @@ interface TutorDocument extends Document {
   photo: string[];
   subject:string;
   experience:number;
+  isBlocked:boolean;
   courses: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
   
@@ -36,6 +37,10 @@ const tutorSchema= new Schema<TutorDocument>({
        subject: {
         type: String,
         require: true,
+      },
+      isBlocked: {
+        default: false,
+        type: Boolean,
       },
       experience: {
         type: Number,

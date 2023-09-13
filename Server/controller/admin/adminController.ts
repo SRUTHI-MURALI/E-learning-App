@@ -21,7 +21,7 @@ const login=async(req:Request,res:Response)=>{
         })
       }else{
          res.status(400)
-         throw new Error('Invalid admin Data')
+         
      }
     } catch (error) {
       res.status(400).json(error)
@@ -48,7 +48,7 @@ const blockStudent=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      console.log(id);
+  
       
 
       const students= await student.findByIdAndUpdate(
@@ -138,7 +138,7 @@ const addCategory= async(req:Request,res:Response)=>{
          })
      }
    } catch (error) {
-      console.log(error);
+    
       
       
 
@@ -168,9 +168,7 @@ const getCourseList=async(req:Request,res:Response)=>{
    try {
       const allCourses= await courses.find().populate("category")
       
-      console.log(allCourses,"all");
-      console.log(allCourses);
-      
+     
    
       if(allCourses){
          res.status(201).json({
@@ -230,7 +228,7 @@ const editCourseList= async(req:Request,res:Response)=>{
          })
      }
    } catch (error) {
-      console.log(error);
+    
       
       
 
@@ -244,7 +242,7 @@ const approveCourse=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      console.log(id,"approve");
+     
       
       const allcourses= await courses.findByIdAndUpdate(
          id,
@@ -295,8 +293,61 @@ const cancelCourse=async(req:Request,res:Response)=>{
    }
 }
 
+const blockTutor=async(req:Request,res:Response)=>{
+   
+   try {
+      const {id} =req.params
+      
+
+      const tutorlist= await tutor.findByIdAndUpdate(
+         id,
+         {
+            isBlocked: true
+         },
+         { new: true }
+       )
+       .then(() => {
+         res.status(201).json({
+            tutorlist
+            
+        })
+       })
+    
+      
+     
+   } catch (error) {
+      res.status(400).json(error)
+   }
+}
+
+const unBlockTutor=async(req:Request,res:Response)=>{
+  
+   
+   try {
+      const {id} =req.params
+      const tutorlist= await tutor.findByIdAndUpdate(
+         id,
+         {
+           isBlocked: false
+         },
+         { new: true }
+       )
+       .then(() => {
+         res.status(201).json({
+            tutorlist
+            
+        })
+       })
+    
+      
+     
+   } catch (error) {
+      res.status(400).json(error)
+   }
+}
+
  export {
     login,getStudentsList,getInstructorList,blockStudent,unBlockStudent,getCategoryList,addCategory,getCourseList,getEditCourseList,editCourseList,
-    approveCourse,cancelCourse
+    approveCourse,cancelCourse,blockTutor,unBlockTutor
  }
 

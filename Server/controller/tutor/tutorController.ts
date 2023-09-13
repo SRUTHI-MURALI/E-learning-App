@@ -30,7 +30,7 @@ const sendOtp = async (req: Request, res: Response) => {
             res.status(400).json({ error: 'Instructor already exists' });
         } else {
                 
-                console.log("ttttt");
+              
                 
                 await axios.post('http://localhost:3002/otp/sendmobileotp', { phone: phone });
                 res.status(200).json({ message: 'OTP sent successfully' });
@@ -45,7 +45,7 @@ const sendOtp = async (req: Request, res: Response) => {
 
         }
     } catch (error) {
-        console.error(error);
+     
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
@@ -73,32 +73,42 @@ const signUp = async (req: Request, res: Response) => {
           
             
     } catch (error) {
-        console.error(error);
+      
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
  const login= async (req:Request,res:Response)=>{
-    const { email,password}= req.body
+    try {
+      const { email,password}= req.body
     const tutor=await Tutor.findOne({email})
-    if(tutor && (await tutor.matchPasswords(password))){
+   
+    if(tutor && (await tutor.matchPasswords(password)) ){
+      if(tutor.isBlocked){
+        res.status(300).json({message:"Blocked Tutor"})
+      }else{
         const token = generateToken(tutor._id)
     
-    res.status(201).json({
-        _id:tutor._id,
-        name:tutor.name,
-        email:tutor.email,
-        phone:tutor.phone,
-        token
-    })
+        res.status(201).json({
+            _id:tutor._id,
+            name:tutor.name,
+            email:tutor.email,
+            phone:tutor.phone,
+            token
+        })
+      }
+       
     }else{
-        res.status(400)
-        throw new Error('Invalid tutor or password')
+        res.status(300).json({message:"Invalid Credentials"})
+        
     } 
+    } catch (error) {
+      res.status(300).json({message:"logging error"})
+    }
  }
 
  const getCategory= async(req:Request,res:Response)=>{
-    const category = await courseCategory.find({})
+    const category = await courseCategory.find().exec()
     
       if(category){
         res.status(201).json({
@@ -170,9 +180,6 @@ const addLesson = async (req: Request, res: Response) => {
     try {
        const allCourses= await course.find().populate("category")
        
-       console.log(allCourses,"all");
-       console.log(allCourses);
-       
     
        if(allCourses){
           res.status(201).json({
@@ -232,7 +239,7 @@ const addLesson = async (req: Request, res: Response) => {
           })
       }
     } catch (error) {
-       console.log(error);
+     
        
        
  

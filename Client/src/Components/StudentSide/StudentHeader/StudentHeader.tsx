@@ -6,13 +6,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
 import logo from '../../../Assets/Images/carouselBody/l1.jpeg'
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import './StudentHeader.css'
-import { useSelector } from 'react-redux';
-import { selectStudent } from '../../ReduxComponents/StudentSlice';
+
+import { logout} from '../../ReduxComponents/StudentSlice';
+import { useDispatch } from 'react-redux'
 
 function StudentHeader() {
-  const studentdetails= useSelector(selectStudent)
+  const studentData=localStorage.getItem("studentData")
+  const parseData=JSON.parse(studentData)
+
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+
+  const handleLogout= async ()=>{
+    await dispatch(logout)
+    navigate('/')
+  }
   return (
     <Navbar expand="lg" >
       <Container >
@@ -30,8 +40,9 @@ function StudentHeader() {
             <Nav.Link className='nav-header-student'  href="#action2">Profile</Nav.Link>
             
           </Nav>
-          <h1>{studentdetails.name}</h1>
-         <Link to='/'><Button>Logout</Button></Link>
+          <h1 style={{fontSize:'larger',color:'white',fontWeight:'bold',fontStyle:'italic'}}>Welcome {parseData.name} </h1>
+
+         <Link to='' onClick={handleLogout}><Button className='m-3'>Logout</Button></Link>
           
         
         </Navbar.Collapse>

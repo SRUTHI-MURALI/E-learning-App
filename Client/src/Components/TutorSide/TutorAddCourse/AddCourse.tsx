@@ -5,7 +5,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import AddLesson from './AddLesson';
 
+
 function AddCourse({selectedCategory,onCourseAdded}) {
+
+  const tutorData=localStorage.getItem("tutorData")
+  const parseData=JSON.parse(tutorData)
+
     const[title,setTitle]= useState('')
     const[price,setPrice]=useState('')
     const[duration,setDuration]=useState('')
@@ -13,6 +18,8 @@ function AddCourse({selectedCategory,onCourseAdded}) {
     const [image, setImage] = useState<File | null>(null)
     const [cloudinaryURL, setCloudinaryURL] = useState('');
     const[selectedCourse,setSelectedCourse]= useState('')
+
+    
     
     const[show,setShow]=useState(null)
    
@@ -61,7 +68,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
           description: trimmedDescription,
           category:selectedCategory,
           photo: cloudinaryURL,
-
+          instructor:parseData.name
         })
         setSelectedCourse(response.data._id)
         

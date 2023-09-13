@@ -1,10 +1,10 @@
-import React from 'react'
+
 import 
  { BsPersonCircle, BsJustify}
  from 'react-icons/bs'
  import '../Css/Tutor.css'
-import { useSelector } from 'react-redux'
-import { logout, selecttutor } from '../../ReduxComponents/TutorSlice'
+
+import { logout,  } from '../../ReduxComponents/TutorSlice'
 import { Link, useNavigate } from 'react-router-dom'
  
 import { useDispatch } from 'react-redux'
@@ -12,8 +12,9 @@ import { useDispatch } from 'react-redux'
 
 function TutorHeader() {
 
-  const tutor=useSelector(selecttutor)
-
+  const tutorData=localStorage.getItem("tutorData")
+  const parseData=JSON.parse(tutorData)
+  
   const dispatch=useDispatch()
   const navigate=useNavigate()
 
@@ -27,12 +28,12 @@ function TutorHeader() {
             <BsJustify className='icon' />
         </div>
         <div className='header-left'>
-           <h3 style={{color:'#fff'}}>{tutor.name}</h3>
+           <h3 style={{color:'#fff'}}>{parseData.name}</h3>
         </div>
         <div className='header-right'>
             
            
-           <Link to='' onClick={handleLogout}> <BsPersonCircle className='icon'/>Logout </Link>
+           <Link to='' onClick={handleLogout}> <BsPersonCircle className='icon'/>Logout</Link>
         </div>
     </header>
   )

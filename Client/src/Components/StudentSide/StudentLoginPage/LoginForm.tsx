@@ -69,14 +69,23 @@ function LoginForm() {
            
             password: trimmedPassword,
           });
-          dispatch(login(response.data))
+
+          const studentData=response.data
+          
+          
+          localStorage.setItem('studentData',JSON.stringify(studentData))
+          dispatch(login(studentData))
          toast.success("successfully logged in")
           navigate('/studentlandingpage')
       
           
         } catch (error) {
-         toast.error("logging error");
-         return;
+          // Display the error message from the response
+          if (error.response && error.response.data && error.response.data.message) {
+            toast.error(error.response.data.message);
+          } else {
+            toast.error("An error occurred while logging in");
+          }
         }
       };
   return (
