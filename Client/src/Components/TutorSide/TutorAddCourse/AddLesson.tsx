@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
+import { Lessons_Upload_Url,Base_Url } from '../../../Config/Config';
 
 function AddLesson({courseId}) {
  
@@ -57,7 +57,7 @@ function AddLesson({courseId}) {
     // Handle the submission of all lessons here
     console.log('All lessons:', lessons);
     try {
-      await axios.post('http://localhost:3002/tutor/addlessons',
+      await axios.post(`${Base_Url}/tutor/addlessons`,
      { lessons,
       courseId}
       ).then
@@ -74,11 +74,11 @@ function AddLesson({courseId}) {
     formData.append("upload_preset","lessonlist")
     formData.append("cloud_name","dnkc0odiw")
     const response = await axios.post(
-      "https://api.cloudinary.com/v1_1/dnkc0odiw/video/upload",
+      `${Lessons_Upload_Url } `,
       formData
       
     )
-    console.log(response,"kkkvideo");
+   
     setCloudinaryURL(response.data.public_id);
 
 

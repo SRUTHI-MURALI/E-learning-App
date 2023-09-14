@@ -8,6 +8,7 @@ import axios from 'axios';
 import './InstructorTable.css'
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Base_Url } from '../../../Config/Config';
 
 
 function InstructorTable() {
@@ -15,7 +16,7 @@ function InstructorTable() {
 
     
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/getinstructorlist')
+        axios.get(`${Base_Url}/admin/getinstructorlist`)
           .then((response) => {
            
             setInstructorlist(response.data.instructor);
@@ -28,7 +29,7 @@ function InstructorTable() {
 
       const blockInstructor= async (id)=>{
         
-        axios.put(`http://localhost:3002/admin/blockinstructor/${id}`)
+        axios.put(`${Base_Url}/admin/blockinstructor/${id}`)
         .then((response) => {
          
           setInstructorlist(response.data.tutorlist);
@@ -39,7 +40,7 @@ function InstructorTable() {
 
       const unBlockInstructor= async (id)=>{
         
-        axios.put(`http://localhost:3002/admin/unblockinstructor/${id}`)
+        axios.put(`${Base_Url}/admin/unblockinstructor/${id}`)
         .then((response) => {
           
           setInstructorlist(response.data.tutorlist);

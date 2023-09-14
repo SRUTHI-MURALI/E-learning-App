@@ -20,6 +20,7 @@ function StudentHeader() {
   const navigate=useNavigate()
 
   const handleLogout= async ()=>{
+    localStorage.removeItem('studentData');
     await dispatch(logout)
     navigate('/')
   }
@@ -27,20 +28,23 @@ function StudentHeader() {
     <Navbar expand="lg" >
       <Container >
         <img className='logo' src={logo} />
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '80px' }}
             navbarScroll
           >
-            <Nav.Link className='nav-header-student' href="/studentlandingpage">Home</Nav.Link>
+            {parseData ? ( <Nav.Link className='nav-header-student' href="/studentlandingpage">Home</Nav.Link>):(
+               <Nav.Link className='nav-header-student' href="/">Home</Nav.Link>
+            )}
+           
             <Nav.Link className='nav-header-student'  href="studentallcourselist">Courses</Nav.Link>
             <Nav.Link className='nav-header-student'  href="#action2">Contacts</Nav.Link>
             <Nav.Link className='nav-header-student'  href="#action2">Profile</Nav.Link>
             
           </Nav>
-          <h1 style={{fontSize:'larger',color:'white',fontWeight:'bold',fontStyle:'italic'}}>Welcome {parseData.name} </h1>
+          <h1 style={{fontSize:'larger',color:'white',fontWeight:'bold',fontStyle:'italic'}}>Welcome {parseData?.name} </h1>
 
          <Link to='' onClick={handleLogout}><Button className='m-3'>Logout</Button></Link>
           

@@ -2,19 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Form, Button, Container } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { Base_Url } from '../../../Config/Config';
 
 function EditCourseForm({ onCloseEdit, courseId }) {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [duration, setDuration] = useState('');
- 
 
-  
-  
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3002/admin/geteditcourse/${courseId}`)
+      .get(`${Base_Url}/admin/geteditcourse/${courseId}`)
       .then((response) => {
         const course = response.data.editCourse; // Assuming your response contains the course data
         setTitle(course.title);
@@ -44,7 +42,7 @@ function EditCourseForm({ onCloseEdit, courseId }) {
     }
 
     try {
-      await axios.put(`http://localhost:3002/admin/editcourselist${courseId}`, {
+      await axios.put(`${Base_Url}/admin/editcourselist${courseId}`, {
         title: trimmedTitle,
         duration: trimmedDuration,
         price: trimmedPrice,

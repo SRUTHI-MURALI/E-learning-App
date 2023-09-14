@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
+import { Base_Url } from '../../../Config/Config';
 
 
 function LoginForm() {
@@ -36,7 +37,7 @@ function LoginForm() {
         }
        
         try {
-           await axios.post('http://localhost:3002/admin/login', {
+           await axios.post(`${Base_Url}/admin/login`, {
            
             email: trimmedEmail,
            

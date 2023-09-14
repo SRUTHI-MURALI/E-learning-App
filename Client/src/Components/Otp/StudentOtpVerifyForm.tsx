@@ -5,6 +5,7 @@ import axios from 'axios'
 import {  useNavigate } from 'react-router-dom';
 import { Card, Container,} from 'react-bootstrap';
 import r1 from '../../Assets/Images/otp1.avif'
+import { Base_Url } from '../../Config/Config';
 
 
 function StudentOtpVerifyForm() {
@@ -23,15 +24,16 @@ function StudentOtpVerifyForm() {
         
         return;
       }
+      
 
-      axios.post('http://localhost:3002/student/verifyotp', {
+      axios.post(`${Base_Url}/student/verifyotp`, {
         verificationCode: trimmedOtp,
         
     })
     .then(() => {
-      
+     
         
-        navigate('/studentlandingpage');
+        navigate('/studentlogin');
     })
     .catch(error => {
         // Handle the error here

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import SelectCategory from '../../Components/TutorSide/TutorAddCourse/SelectCategory';
 import AddCourse from '../../Components/TutorSide/TutorAddCourse/AddCourse';
 import TutorHome from './TutorHome';
+import { Col, Row } from 'react-bootstrap';
+import TutorHeader from '../../Components/TutorSide/TutorHeader/TutorHeader';
+import TutorSidebar from '../../Components/TutorSide/TutorSidebar/TutorSidebar';
 
 function TutorAddCourse() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -17,8 +20,17 @@ function TutorAddCourse() {
   };
 
   return (
-    <div>
-      {courseAdded==false ? (
+    <div >
+      <Row >
+        <Row>
+        <TutorHeader/>
+        </Row>
+      <Row>
+       <Col>
+       <TutorSidebar />
+       </Col>
+       <Col >
+       {courseAdded==false ? (
         selectedCategory === null ? (
           <SelectCategory onSelectCategory={handleCategorySelect} />
         ) : (
@@ -27,6 +39,10 @@ function TutorAddCourse() {
       ) : (
         <TutorHome/>
       )}
+       </Col>
+       </Row>
+      </Row>
+     
       
     </div>
   );

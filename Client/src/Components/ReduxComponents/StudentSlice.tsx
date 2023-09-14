@@ -18,6 +18,7 @@ const studentSlice= createSlice({
         },
         logout:(state)=>{
             state.student='' ;
+            localStorage.removeItem('studentData');
         },
     },
 })

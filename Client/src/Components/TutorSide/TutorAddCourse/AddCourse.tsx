@@ -4,6 +4,7 @@ import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import AddLesson from './AddLesson';
+import { Base_Url,Course_Upload_Url } from '../../../Config/Config';
 
 
 function AddCourse({selectedCategory,onCourseAdded}) {
@@ -61,7 +62,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
       try {
       
       
-       const response=  await axios.post('http://localhost:3002/tutor/addcourse', {
+       const response=  await axios.post(`${Base_Url}/tutor/addcourse`, {
           title: trimmedTitle,
           price: trimmedPrice,
           duration: trimmedDuration,
@@ -102,11 +103,11 @@ function AddCourse({selectedCategory,onCourseAdded}) {
         formData.append("upload_preset","courselist")
         formData.append("cloud_name","dnkc0odiw")
         const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/dnkc0odiw/image/upload",
+          `${Course_Upload_Url}`,
           formData
           
         )
-        console.log(response);
+       
         setCloudinaryURL(response.data.public_id);
 
   

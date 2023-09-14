@@ -65,10 +65,6 @@ function BasicExample() {
         </Col>
         </Row>  
     
-    
-    
-    
-    
     </Container>
   );
 }

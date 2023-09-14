@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
+import { Base_Url } from '../../../Config/Config';
 
 function RegisterForm() {
   const [tutorName, setTutorName] = useState('')
@@ -40,7 +41,7 @@ function RegisterForm() {
     try {
       
       
-       await axios.post('http://localhost:3002/tutor/sendotp', {
+       await axios.post(`${Base_Url}/tutor/sendotp`, {
         name: trimmedTutorName,
         email: trimmedEmail,
         phone: trimmedPhone,
@@ -70,7 +71,7 @@ function RegisterForm() {
       
 
       <Form.Group className="mb-3 mt-5" controlId="formGridAddress1">
-        <Form.Label>Username</Form.Label>
+        <Form.Label>Name of Tutor</Form.Label>
         <Form.Control placeholder="Angelina" 
         value={tutorName}
         onChange={(e)=>setTutorName(e.target.value)}/>

@@ -5,6 +5,7 @@ import axios from 'axios'
 import {  useNavigate } from 'react-router-dom';
 import { Card, Container,} from 'react-bootstrap';
 import r1 from '../../Assets/Images/otp1.avif'
+import { Base_Url } from '../../Config/Config';
 
 
 function TutorOtpVerifyForm() {
@@ -24,14 +25,14 @@ function TutorOtpVerifyForm() {
         return;
       }
 
-      axios.post('http://localhost:3002/tutor/verifyotp', {
+      axios.post(`${Base_Url}/tutor/verifyotp`, {
         verificationCode: trimmedOtp,
         
     })
     .then(() => {
       
         
-        navigate('/tutorhome');
+        navigate('/tutorlogin');
     })
     .catch(error => {
         // Handle the error here

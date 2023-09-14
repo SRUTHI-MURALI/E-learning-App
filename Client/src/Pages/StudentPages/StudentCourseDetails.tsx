@@ -21,7 +21,7 @@ export default function StudentCourseDetails() {
     // Make an HTTP request to fetch data from the backend
     axios.get(`http://localhost:3002/student/getspecificcoursedetails/${id}`)
       .then((response) => {
-        setData(response.data); // Store data in state
+        setData(response?.data); // Store data in state
       
       })
       .catch((error) => {

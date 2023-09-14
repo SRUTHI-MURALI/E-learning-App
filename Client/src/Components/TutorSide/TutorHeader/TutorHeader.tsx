@@ -1,7 +1,5 @@
 
-import 
- { BsPersonCircle, BsJustify}
- from 'react-icons/bs'
+import { BsPersonCircle, BsJustify} from 'react-icons/bs'
  import '../Css/Tutor.css'
 
 import { logout,  } from '../../ReduxComponents/TutorSlice'
@@ -19,16 +17,15 @@ function TutorHeader() {
   const navigate=useNavigate()
 
   const handleLogout= async ()=>{
+    localStorage.removeItem('tutorData');
     await dispatch(logout)
     navigate('/tutorlogin')
   }
   return (
     <header className='header'>
-        <div className='menu-icon'>
-            <BsJustify className='icon' />
-        </div>
+       
         <div className='header-left'>
-           <h3 style={{color:'#fff'}}>{parseData.name}</h3>
+           <h3 style={{color:'#fff'}}>{parseData?.name}</h3>
         </div>
         <div className='header-right'>
             

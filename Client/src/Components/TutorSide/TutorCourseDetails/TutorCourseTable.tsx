@@ -8,18 +8,17 @@ import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from 'react-bootstrap';
 import EditCourseTutorForm from './EditCourseTutorForm';
+import { Base_Url} from '../../../Config/Config';
 
 function TutorCourseTable() {
  
-  
-    const courseimageurl="https://res.cloudinary.com/dnkc0odiw/image/upload/v1694350814/"
     const[courseList,setCourselist]=useState([])
     const [openPopUp, setOpenPopUp] = useState(false);
     const[courseId,setCourseId]=useState('')
 
     
     useEffect(() => {
-        axios.get('http://localhost:3002/tutor/getallcourses')
+        axios.get(`${Base_Url}/tutor/getallcourses`)
           .then((response) => {
           
             setCourselist(response.data.allCourses);
@@ -36,9 +35,6 @@ function TutorCourseTable() {
             setOpenPopUp(true);
         }
        
-        
-        
-    
           
   return (
 
@@ -80,7 +76,7 @@ function TutorCourseTable() {
                 )}
               </td>
               <td>{course.price}</td>
-              <td><img src={`${courseimageurl}/${course.photo}`} alt='sample' style={{width:"40px"}}/> </td>
+              <td><img src={`${Base_Url}/${course.photo}`} alt='sample' style={{width:"40px"}}/> </td>
               <td><AiFillEdit onClick={() => handleEditCourse(course._id)}/></td>
               <td> <Button variant="link">Lessons</Button></td>
             </tr>

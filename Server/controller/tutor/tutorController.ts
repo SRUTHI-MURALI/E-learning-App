@@ -4,6 +4,7 @@ import generateToken from "../../token/generateToken";
 import Tutor from "../../model/tutor"
 import courseCategory from "../../model/courseCategory"
 import course from "../../model/courses"
+const BaseUrl: string = process.env.BaseUrl|| '';
 
 
 
@@ -12,10 +13,7 @@ const globalData = {
     tutor: null as null | { name: string, email: string, phone: string, password: string }, // Define a type for user
   };
 
-  
-
-
-const sendOtp = async (req: Request, res: Response) => {
+  const sendOtp = async (req: Request, res: Response) => {
    
     
     
@@ -32,7 +30,7 @@ const sendOtp = async (req: Request, res: Response) => {
                 
               
                 
-                await axios.post('http://localhost:3002/otp/sendmobileotp', { phone: phone });
+                await axios.post( `${BaseUrl}/otp/sendmobileotp`, { phone: phone });
                 res.status(200).json({ message: 'OTP sent successfully' });
                 
                 const newTutor = {
@@ -57,7 +55,7 @@ const signUp = async (req: Request, res: Response) => {
         const { verificationCode } = req.body;
         const phone=globalData.tutor?.phone
                 
-            await axios.post('http://localhost:3002/otp/verifymobileotp', { phone,verificationCode});
+            await axios.post(`${BaseUrl}/otp/verifymobileotp`, { phone,verificationCode});
             
             const addUser=  await Tutor.create(globalData.tutor)
             const token = generateToken(addUser._id);
@@ -130,7 +128,6 @@ const signUp = async (req: Request, res: Response) => {
        duration:req.body.duration,
        price:req.body.price,
        photo:req.body.photo,
-       
         isApproved:req.body.isApproved,
        
     })
@@ -147,7 +144,6 @@ const signUp = async (req: Request, res: Response) => {
             price:newCourse.price,
             duration:newCourse.duration,
             isApproved:newCourse.isApproved,
-           
             createdAt:newCourse.createdAt,
             
         })

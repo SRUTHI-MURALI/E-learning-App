@@ -6,6 +6,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios';
 import './CourseCategoriesTable.css'
 import AddCategory from './AddCategory';
+import { Base_Url } from '../../../Config/Config';
 
 function CourseCategoriesTable() {
 
@@ -14,7 +15,7 @@ function CourseCategoriesTable() {
  
     
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/getcategorylist')
+        axios.get(`${Base_Url}/admin/getcategorylist`)
           .then((response) => {
            
             setCategorylist(response.data.categories);

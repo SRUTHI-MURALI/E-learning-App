@@ -8,13 +8,14 @@ import axios from 'axios';
 import './TutorStudentTable.css'
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Base_Url } from '../../../Config/Config';
 
 function TutorStudentTable() {
     const[studentList,setStudentlist]=useState([])
 
     
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/getstudentlist')
+        axios.get(`${Base_Url}/admin/getstudentlist`)
           .then((response) => {
            console.log(response.data,"iii");
            

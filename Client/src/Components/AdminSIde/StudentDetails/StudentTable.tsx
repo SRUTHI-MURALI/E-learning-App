@@ -8,13 +8,14 @@ import axios from 'axios';
 import './StudentTable.css'
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Base_Url } from '../../../Config/Config';
 
 function StudentTable() {
     const[studentList,setStudentlist]=useState([])
 
     
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/getstudentlist')
+        axios.get(`${Base_Url}/admin/getstudentlist`)
           .then((response) => {
            
             setStudentlist(response.data.students);
@@ -28,7 +29,7 @@ function StudentTable() {
 
       const blockStudent= async (id)=>{
         
-        axios.put(`http://localhost:3002/admin/blockstudent/${id}`)
+        axios.put(`${Base_Url}/admin/blockstudent/${id}`)
         .then((response) => {
          
           setStudentlist(response.data.students);
@@ -39,7 +40,7 @@ function StudentTable() {
 
       const unBlockStudent= async (id)=>{
         
-        axios.put(`http://localhost:3002/admin/unblockstudent/${id}`)
+        axios.put(`${Base_Url}/admin/unblockstudent/${id}`)
         .then((response) => {
           
           setStudentlist(response.data.students);

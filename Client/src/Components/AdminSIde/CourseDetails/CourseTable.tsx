@@ -9,16 +9,17 @@ import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditCourseForm from './EditCourseForm';
 import { Button } from 'react-bootstrap';
+import { Base_Url,Image_Url } from '../../../Config/Config';
 
 function CourseTable() {
-    const courseimageurl="https://res.cloudinary.com/dnkc0odiw/image/upload/v1694350814/"
+    
     const[courseList,setCourselist]=useState([])
     const [openPopUp, setOpenPopUp] = useState(false);
     const[courseId,setCourseId]=useState('')
 
     
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/getallcourses')
+        axios.get(`${Base_Url}/admin/getallcourses`)
           .then((response) => {
           
             setCourselist(response.data.allCourses);
@@ -38,7 +39,7 @@ function CourseTable() {
         
         const cancelApproval= async (id)=>{
         
-            axios.put(`http://localhost:3002/admin/cancelcourse/${id}`)
+            axios.put(`${Base_Url}/admin/cancelcourse/${id}`)
             .then((response) => {
              
               setCourselist(response.data.cancelCourse);
@@ -49,7 +50,7 @@ function CourseTable() {
     
           const approve= async (id)=>{
             
-            axios.put(`http://localhost:3002/admin/approvecourse/${id}`)
+            axios.put(`${Base_Url}/admin/approvecourse/${id}`)
             .then((response) => {
               
               setCourselist(response.data.cancelCourse);
@@ -98,7 +99,7 @@ function CourseTable() {
                 )}
               </td>
               <td>{course.price}</td>
-              <td><img src={`${courseimageurl}/${course.photo}`} alt='sample' style={{width:"40px"}}/> </td>
+              <td><img src={`${Image_Url}/${course.photo}`} alt='sample' style={{width:"40px"}}/> </td>
               <td><AiFillEdit onClick={() => handleEditCourse(course._id)}/></td>
               <td> <Button variant="link">Lessons</Button></td>
             </tr>

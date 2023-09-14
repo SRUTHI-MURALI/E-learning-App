@@ -3,12 +3,13 @@ import { Card, Col, Container, Row } from 'react-bootstrap'
 import img from '../../../Assets/Images/carouselBody/hb2.avif'
 import axios from 'axios';
 import './StudentCoursesList.css'
+import { Base_Url } from '../../../Config/Config';
 
 function EnrolledCoursesList() {
     const[allCourseList,setAllCourseList]=useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/getallcourses')
+        axios.get(`${Base_Url}/admin/getallcourses`)
           .then((response) => {
            
             setAllCourseList(response.data.allCourses);

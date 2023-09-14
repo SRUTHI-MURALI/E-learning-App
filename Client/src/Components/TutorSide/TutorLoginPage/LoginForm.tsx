@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { login } from '../../ReduxComponents/TutorSlice';
+import { Base_Url } from '../../../Config/Config';
 
 
 function LoginForm() {
@@ -40,7 +41,7 @@ function LoginForm() {
         }
        
         try {
-          const response = await axios.post('http://localhost:3002/tutor/login', {
+          const response = await axios.post(`${Base_Url}/tutor/login`, {
            
             email: trimmedEmail,
            

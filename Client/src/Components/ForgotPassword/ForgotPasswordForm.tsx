@@ -5,6 +5,7 @@ import axios from 'axios'
 import {  useNavigate } from 'react-router-dom';
 import { Card, Container,} from 'react-bootstrap';
 import r1 from '../../Assets/Images/p2.webp'
+import { Base_Url } from '../../Config/Config';
 
 
 function ForgotPasswordForm() {
@@ -27,7 +28,7 @@ function ForgotPasswordForm() {
       console.log(trimmedPhone,"ll");
       
 
-      axios.post('http://localhost:3002/otp/sendmobileotp', {
+      axios.post(`${Base_Url}/otp/sendmobileotp`, {
         phone:trimmedPhone
         
     })
@@ -55,7 +56,7 @@ function ForgotPasswordForm() {
         return;
       }
 
-      axios.post('http://localhost:3002/otp/verifymobileotp', {
+      axios.post(`${Base_Url}/otp/verifymobileotp`, {
         verificationCode:trimmedOtp,
         phone:phone
         
@@ -72,7 +73,7 @@ function ForgotPasswordForm() {
   }
     
   return (
-    <div className="d-grid justify-content-center align-items-center" style={{ minHeight: "100vh" ,backgroundImage: `url(${r1})`}}>
+    <div className="d-grid justify-content-center align-items-center" style={{ minHeight: "100vh" ,backgroundColor:'grey'}}>
   <Container  >
   <Card style={{ width: '18rem' }} className="text-center">
     <Form onSubmit={handleNumberSubmit}>

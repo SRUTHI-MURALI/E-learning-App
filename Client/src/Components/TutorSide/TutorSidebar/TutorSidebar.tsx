@@ -5,10 +5,14 @@ import
  from 'react-icons/bs'
  import l1 from '../../../Assets/Images/carouselBody/l1.jpeg'
  import '../Css/Tutor.css'
+import { Row ,Col} from 'react-bootstrap'
  
 function TutorSidebar() {
   return (
-    <aside id="sidebar" className= "sidebar-responsive">
+    <Row>
+        <Col>
+      
+        <aside id="sidebar" className= "sidebar-responsive">
         <div className='sidebar-title'>
             <div className='sidebar-brand'>
                 <img style={{height:'150px'}} src={l1} />
@@ -42,7 +46,11 @@ function TutorSidebar() {
             
         </ul>
     </aside>
+   
+        </Col>
+    </Row>
   )
 }
 
 export default TutorSidebar
+

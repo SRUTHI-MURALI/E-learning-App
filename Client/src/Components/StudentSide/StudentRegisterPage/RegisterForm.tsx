@@ -10,6 +10,7 @@ import r1 from '../../../Assets/Images/r1.avif';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Base_Url } from '../../../Config/Config';
 
 function RegisterForm() {
   const [userName, setUserName] = useState('');
@@ -34,15 +35,16 @@ function RegisterForm() {
       toast.error("Please fill all fields");
       return;
     }
+ 
   
     try {
-      await axios.post('http://localhost:3002/student/sendotp', {
+      await axios.post(`${Base_Url}/student/sendotp`, {
         name: trimmedName,
         email: trimmedEmail,
         phone: trimmedPhone,
         password: trimmedPassword,
       });
-  
+      
       // Display success toast
       toast.success("Successfully registered");
   
@@ -54,7 +56,6 @@ function RegisterForm() {
     }
   };
   
-
   return (
     <Container className="mt-5">
       <Card className="regCard">
@@ -69,7 +70,7 @@ function RegisterForm() {
             </h1>
             <Form onSubmit={handleSubmit} className="mt-5 ">
               <Form.Group className="mb-3 mt-5" controlId="formGridAddress1">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>Name of Student</Form.Label>
                 <Form.Control
                   placeholder="Angelina"
                   value={userName}

@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import './CourseCategoriesTable.css'; // Create a CSS file for your component styles
+import { Base_Url } from '../../../Config/Config';
 
 function AddCategory({ onClose }) {
   const [category, setCategory] = useState('');
@@ -20,7 +21,7 @@ function AddCategory({ onClose }) {
     }
 
     try {
-      await axios.post('http://localhost:3002/admin/addcategory', {
+      await axios.post(`${Base_Url}/admin/addcategory`, {
         category: trimmedCategory,
         description: trimmedDescription,
       });

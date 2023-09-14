@@ -5,6 +5,7 @@ import Courses from "../../model/courses";
 import axios from 'axios'
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+const BaseUrl: string = process.env.BaseUrl|| '';
 
 const globalData = {
     otp: null as null | number, // Use type null | number for otp
@@ -13,7 +14,7 @@ const globalData = {
   
   const sendOtp = async (req: Request, res: Response) => {
 
-
+    
     try {
         const { name, email, password, phone } = req.body;
         const emailfind = await Student.findOne({ email });
@@ -21,12 +22,13 @@ const globalData = {
         
         if (emailfind || phonefind) {
             
-            
+           
             res.status(400).json({ error: 'Student already exists' });
         } else {
            
+               
                 
-                await axios.post('http://localhost:3002/otp/sendmobileotp', { phone: phone });
+                await axios.post(`${BaseUrl}/otp/sendmobileotp`, { phone: phone });
                 res.status(200).json({ message: 'OTP sent successfully' });
                
             const newStudent = {
@@ -37,6 +39,7 @@ const globalData = {
             };
             globalData.student = newStudent;
 
+
         }
     } catch (error) {
         console.error(error);
@@ -45,12 +48,14 @@ const globalData = {
 };
 
 const signUp = async (req: Request, res: Response) => {
+   
     
     try {
         const { verificationCode } = req.body;
         const phone=globalData.student?.phone
-                
-            await axios.post('http://localhost:3002/otp/verifymobileotp', { phone,verificationCode});
+      
+    
+            await axios.post(`${BaseUrl}/otp/verifymobileotp`, { phone,verificationCode});
             
             const addUser=  await Student.create(globalData.student)
             const token = generateToken(addUser._id);
@@ -148,7 +153,7 @@ const googleLogin = async (req: Request, res: Response) => {
         const {id}=req.params
        const courseDetails= await Courses.findById({_id:id}).populate("category")
        
-      console.log(courseDetails,'courseidddd');
+  
       
     
        if(courseDetails){

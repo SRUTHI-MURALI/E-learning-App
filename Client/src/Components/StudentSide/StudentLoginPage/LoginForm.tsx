@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { GoogleOAuthProvider,GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { useDispatch, } from 'react-redux';
 import { login,  } from '../../ReduxComponents/StudentSlice';
-
+import { Base_Url } from '../../../Config/Config';
 
 function LoginForm() {
  
@@ -32,7 +32,7 @@ function LoginForm() {
         
         
         // Send the Google ID token to your server for verification
-        await axios.post('http://localhost:3002/student/googlelogin', {
+        await axios.post(`${Base_Url}/student/googlelogin`, {
           id_token:idToken
         });
   
@@ -63,7 +63,7 @@ function LoginForm() {
         }
        
         try {
-         const response=  await axios.post('http://localhost:3002/student/login', {
+         const response=  await axios.post(`${Base_Url}/student/login`, {
            
             email: trimmedEmail,
            
@@ -111,7 +111,7 @@ function LoginForm() {
 
       <Form.Group className="mb-3 mt-5" controlId="formGridAddress2">
         <Form.Label>Password</Form.Label>
-        <Form.Control placeholder="Password"
+        <Form.Control placeholder="Password" type='password'
         value={password}
         onChange={(e)=>{setPassword(e.target.value)}} />
       </Form.Group>

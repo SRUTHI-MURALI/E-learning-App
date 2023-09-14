@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Row,Col,Container } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import { FaRupeeSign } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { Base_Url, Image_Url } from '../../../Config/Config';
 
 
 
 function StudentCourseAbout({data}) {
   const[allCourseList,setAllCourseList]=useState([])
-  const baseUrl="https://res.cloudinary.com/dnkc0odiw/image/upload/v1694423417/"
-
+ 
   useEffect(() => {
-    axios.get('http://localhost:3002/admin/getallcourses')
+    axios.get(`${Base_Url}/admin/getallcourses`)
       .then((response) => {
        
         setAllCourseList(response.data.allCourses);
@@ -27,12 +27,12 @@ function StudentCourseAbout({data}) {
        <h2 className='m-3' style={{color:'rgb(139, 179, 198)',fontWeight:'bolder',fontSize:'30px'}}>Explore More...</h2>
   <Row className='m-3'>
     {allCourseList.map((courses, index) => {
-      if (data.courseDetails._id !== courses._id) {
+      if (data.courseDetails?._id !== courses._id) {
         return (
           <Col key={courses._id}>
             <Link to={`/studentcoursedetails/${courses._id}`}>
               <Card style={{ width: '16vw', height: '25rem' }} className='m-2 '>
-                <Card.Img style={{ height: '200px' }} variant="top" src={`${baseUrl}/${courses.photo}`} />
+                <Card.Img style={{ height: '200px' }} variant="top" src={`${Image_Url}/${courses.photo}`} />
                 <Card.Body className='mt-4 justify-content-center align-items-center'>
                   <Card.Title className='text-center'>{courses.title}</Card.Title>
                   <Card.Text className='text-center'>By Tutor's name</Card.Text>
