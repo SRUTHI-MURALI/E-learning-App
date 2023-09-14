@@ -1,6 +1,5 @@
 
 import Table from 'react-bootstrap/Table';
-import {AiFillEdit} from 'react-icons/ai';
 import {ImArrowRight} from 'react-icons/im'
 import { Button } from 'react-bootstrap'
 import {useState,useEffect} from 'react'
@@ -60,7 +59,7 @@ function InstructorTable() {
           <th > Name</th>
           <th >Email</th>
           <th>Phone</th>
-          <th>Edit</th>
+         
           <th>Actions</th>
         </tr>
       </thead>
@@ -71,7 +70,8 @@ function InstructorTable() {
               <td>{instructor.name}</td>
               <td>{instructor.email}</td>
               <td>{instructor.phone}</td>
-              <td><AiFillEdit /></td>
+              
+              
               <td>
                 {instructor.isBlocked ? (
                   <Button onClick={()=>{unBlockInstructor(instructor._id)}}>Unblock</Button>

@@ -5,6 +5,7 @@ interface CategoryDocument extends Document {
   description: string;
   createdAt: Date;
   updatedAt: Date;
+  isActive:boolean;
 }
 
 const courseCategorySchema= new Schema<CategoryDocument>({
@@ -15,6 +16,11 @@ const courseCategorySchema= new Schema<CategoryDocument>({
       description: {
         type: String,
         require: true,
+      },
+      isActive:{
+        type:Boolean,
+        require:true,
+        default:true
       },
       createdAt: {
         type:Date,

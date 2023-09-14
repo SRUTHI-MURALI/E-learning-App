@@ -19,16 +19,9 @@ function AddCourse({selectedCategory,onCourseAdded}) {
     const [image, setImage] = useState<File | null>(null)
     const [cloudinaryURL, setCloudinaryURL] = useState('');
     const[selectedCourse,setSelectedCourse]= useState('')
-
-    
-    
     const[show,setShow]=useState(null)
-   
-
+    
     const submitHandler = async ()  => {
-
-      
-     
 
       const trimmedTitle = title.trim();
       const trimmedPrice = price.trim();
@@ -69,7 +62,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
           description: trimmedDescription,
           category:selectedCategory,
           photo: cloudinaryURL,
-          instructor:parseData.name
+          instructor:parseData?._id
         })
         setSelectedCourse(response.data._id)
         
@@ -118,7 +111,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
     <div>
       
       <Container>
-      <Card className=' justify-content-center m-3'>
+      <Card className=' justify-content-center' >
         <Row>
         <ToastContainer position='top-center' autoClose={3000}></ToastContainer>
 

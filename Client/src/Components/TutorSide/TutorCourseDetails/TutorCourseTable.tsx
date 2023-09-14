@@ -8,9 +8,14 @@ import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from 'react-bootstrap';
 import EditCourseTutorForm from './EditCourseTutorForm';
-import { Base_Url} from '../../../Config/Config';
+import { Base_Url,Image_Url} from '../../../Config/Config';
 
 function TutorCourseTable() {
+
+  const tutorData=localStorage.getItem("tutorData")
+  const parseData=JSON.parse(tutorData)
+ console.log( parseData.name,'parseddd');
+ 
  
     const[courseList,setCourselist]=useState([])
     const [openPopUp, setOpenPopUp] = useState(false);
@@ -43,7 +48,7 @@ function TutorCourseTable() {
 
        {openPopUp== false && (
         <>
-      <p className='studentlistheading' ><ImArrowRight /> <u>Course List</u></p>
+      <p className='studentlistheading' ><ImArrowRight /> <u>My Course List</u></p>
      
       <Table className='mt-5 ms-5' striped bordered hover size="sm">
       <thead>
@@ -61,27 +66,30 @@ function TutorCourseTable() {
         </tr>
       </thead>
       <tbody>
-          {courseList.map((course, index) => (
-            <tr key={course._id}>
-              <td>{index + 1}</td>
-              <td>{course.title}</td>
-              <td>{course.category.title}</td>
-              <td>{course.description}</td>
-              <td>{course.duration}</td>
-              <td>
-                {course.isApproved ? (
-                  <Button variant='info' size="sm" >Approved</Button>
-                ) : (
-                  <Button variant='secondary' size="sm" >UnApproved</Button>
-                )}
-              </td>
-              <td>{course.price}</td>
-              <td><img src={`${Base_Url}/${course.photo}`} alt='sample' style={{width:"40px"}}/> </td>
-              <td><AiFillEdit onClick={() => handleEditCourse(course._id)}/></td>
-              <td> <Button variant="link">Lessons</Button></td>
-            </tr>
-          ))}
-        </tbody>
+  {courseList
+    .filter((course) => course?.instructor?.name === parseData?.name)
+    .map((course, index) => (
+      <tr key={course._id}>
+        <td>{index + 1}</td>
+        <td>{course?.title}</td>
+        <td>{course?.category.title}</td>
+        <td>{course?.description}</td>
+        <td>{course?.duration}</td>
+        <td>
+          {course?.isApproved ? (
+            <Button variant='info' size="sm" >Approved</Button>
+          ) : (
+            <Button variant='secondary' size="sm" >UnApproved</Button>
+          )}
+        </td>
+        <td>{course?.price}</td>
+        <td><img src={`${Image_Url}/${course.photo}`} alt='sample' style={{width:"40px"}}/> </td>
+        <td><AiFillEdit onClick={() => handleEditCourse(course._id)}/></td>
+        <td> <Button variant="link">Lessons</Button></td>
+      </tr>
+    ))}
+</tbody>
+
     </Table>
     </>
    )}

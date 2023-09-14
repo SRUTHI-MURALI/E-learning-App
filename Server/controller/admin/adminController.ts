@@ -120,23 +120,29 @@ const addCategory= async(req:Request,res:Response)=>{
       
       
       const {category,description} = req.body
-      console.log(category,description,"category");
-      const newCategory=await categoryModel.create({
-         title:category,
-         description:description,
-      })
-
-      
-      
-      if(newCategory){
-         res.status(201).json({
-             _id:newCategory._id,
-             title:newCategory.title,
-             description:newCategory.description,
-             createdAt:newCategory.createdAt,
-             
+     const check=await categoryModel.findOne({title:category})
+      if(check){
+         res.status(400).json(
+            "category already existing"
+         )
+      }else{
+         const newCategory=await categoryModel.create({
+            title:category,
+            description:description,
          })
-     }
+
+         if(newCategory){
+            res.status(201).json({
+                _id:newCategory._id,
+                title:newCategory.title,
+                description:newCategory.description,
+                createdAt:newCategory.createdAt,
+                
+            })
+        }
+      }
+     
+      
    } catch (error) {
     
       
@@ -166,10 +172,8 @@ const getCategoryList=async(req:Request,res:Response)=>{
 
 const getCourseList=async(req:Request,res:Response)=>{
    try {
-      const allCourses= await courses.find().populate("category")
-      
-     
-   
+      const allCourses= await courses.find().populate("category instructor")
+
       if(allCourses){
          res.status(201).json({
             allCourses
@@ -203,6 +207,7 @@ const getEditCourseList=async(req:Request,res:Response)=>{
 const editCourseList= async(req:Request,res:Response)=>{
    try {
       
+   
       
       const {title,duration,price} = req.body
       const {id}=req.params
@@ -345,9 +350,117 @@ const unBlockTutor=async(req:Request,res:Response)=>{
       res.status(400).json(error)
    }
 }
+const activateCategory=async(req:Request,res:Response)=>{
+  
+   
+   try {
+      const {id} =req.params
+      const categories= await categoryModel.findByIdAndUpdate(
+         id,
+         {
+           isActive: true
+         },
+         { new: true }
+       )
+       .then(() => {
+         res.status(201).json({
+            categories
+            
+        })
+       })
+    
+      
+     
+   } catch (error) {
+      res.status(400).json(error)
+   }
+}
+
+const inActivateCategory=async(req:Request,res:Response)=>{
+  
+   
+   try {
+      const {id} =req.params
+      const categories= await categoryModel.findByIdAndUpdate(
+         id,
+         {
+           isActive: false
+         },
+         { new: true }
+       )
+       .then(() => {
+         res.status(201).json({
+            categories
+            
+        })
+       })
+    
+      
+     
+   } catch (error) {
+      res.status(400).json(error)
+   }
+}
+
+const getEditCategoryList=async(req:Request,res:Response)=>{
+   try {
+      const {id}=req.params
+      const editCategory= await categoryModel.findById({_id:id})
+      if(editCategory){
+         res.status(201).json({
+            editCategory
+            
+        })
+      }
+   } catch (error) {
+      res.status(400).json(error)
+   }
+}
+
+const editCategory= async(req:Request,res:Response)=>{
+   
+   try {
+      
+     
+      const {category,description} = req.body
+      const {id}=req.params
+  const check=await categoryModel.findOne({title:category})
+    if(check){
+      res.status(400).json("category already existing")
+    }else{
+      const editedCategory=await categoryModel.findByIdAndUpdate(
+         id, {
+          title:category,
+          description:description
+        },
+        { new: true }
+       )
+
+       if(editedCategory){
+         res.status(201).json({
+             _id:editedCategory._id,
+             category:editedCategory.title,
+             description:editedCategory.description,
+           
+         })
+     }
+   
+    }
+      
+   } catch (error) {
+    
+      res.status(400).json(error)
+   }
+
+}
+
 
  export {
-    login,getStudentsList,getInstructorList,blockStudent,unBlockStudent,getCategoryList,addCategory,getCourseList,getEditCourseList,editCourseList,
-    approveCourse,cancelCourse,blockTutor,unBlockTutor
+    login,getStudentsList,getInstructorList,blockStudent,
+    unBlockStudent,getCategoryList,addCategory,
+    getCourseList,getEditCourseList,editCourseList,
+    approveCourse,cancelCourse,blockTutor,unBlockTutor,
+    activateCategory,getEditCategoryList,
+    inActivateCategory,editCategory
  }
 

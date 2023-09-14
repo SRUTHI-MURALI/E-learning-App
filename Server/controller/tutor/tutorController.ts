@@ -4,6 +4,7 @@ import generateToken from "../../token/generateToken";
 import Tutor from "../../model/tutor"
 import courseCategory from "../../model/courseCategory"
 import course from "../../model/courses"
+import categoryModel from "../../model/courseCategory"
 const BaseUrl: string = process.env.BaseUrl|| '';
 
 
@@ -117,10 +118,8 @@ const signUp = async (req: Request, res: Response) => {
  }
 
  const addCourse= async(req:Request,res:Response)=>{
+  
     
-  
-  
-
     const newCourse=await course.create({
         title: req.body.title,
         description: req.body.description,
@@ -128,6 +127,7 @@ const signUp = async (req: Request, res: Response) => {
        duration:req.body.duration,
        price:req.body.price,
        photo:req.body.photo,
+       instructor:req.body.instructor,
         isApproved:req.body.isApproved,
        
     })
@@ -143,6 +143,7 @@ const signUp = async (req: Request, res: Response) => {
             category:newCourse.category,
             price:newCourse.price,
             duration:newCourse.duration,
+            instructor:newCourse.instructor,
             isApproved:newCourse.isApproved,
             createdAt:newCourse.createdAt,
             
@@ -174,7 +175,8 @@ const addLesson = async (req: Request, res: Response) => {
   
   const getCourseList=async(req:Request,res:Response)=>{
     try {
-       const allCourses= await course.find().populate("category")
+       const allCourses= await course.find().populate("category instructor")
+     
        
     
        if(allCourses){
@@ -193,12 +195,13 @@ const addLesson = async (req: Request, res: Response) => {
        const {id}=req.params
     
        
-       const editCourse= await course.findById({_id:id})
-       
+       const editCourse= await course.findById({_id:id}).populate("category")
+       const categories= await categoryModel.find()
        
        if(editCourse){
           res.status(201).json({
-             editCourse
+             editCourse,
+             categories
              
          })
        }
@@ -208,17 +211,22 @@ const addLesson = async (req: Request, res: Response) => {
  }
  
  const editCourseList= async(req:Request,res:Response)=>{
+  
+  
     try {
        
+       console.log(req.body);
        
-       const {title,duration,price} = req.body
+       const {title,duration,price,category} = req.body
        const {id}=req.params
+   
      
        const editedCourse=await course.findByIdAndUpdate(
          id, {
           title: title,
           duration:duration,
           price:price,
+          category:category
         },
         { new: true }
        )
@@ -231,7 +239,7 @@ const addLesson = async (req: Request, res: Response) => {
               title:editedCourse.title,
               duration:editedCourse.duration,
               price:editedCourse.price,
-              
+              category:editedCourse.category
           })
       }
     } catch (error) {

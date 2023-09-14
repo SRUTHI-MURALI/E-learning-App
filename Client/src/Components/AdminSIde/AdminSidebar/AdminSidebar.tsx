@@ -5,12 +5,16 @@ import
  from 'react-icons/bs'
  import '../Css/Admin.css'
  import l1 from '../../../Assets/Images/carouselBody/l1.jpeg'
+import { Row,Col } from 'react-bootstrap'
 
 
  
 
 function AdminSidebar() {
   return (
+    <Row>
+        <Col>
+       
     <aside id="sidebar" className= "sidebar-responsive">
         <div className='sidebar-title'>
             <div className='sidebar-brand'>
@@ -50,6 +54,8 @@ function AdminSidebar() {
             
         </ul>
     </aside>
+    </Col>
+    </Row>
   )
 }
 

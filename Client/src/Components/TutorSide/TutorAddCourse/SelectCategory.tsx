@@ -33,7 +33,8 @@ function SelectCategory({ onSelectCategory }) {
   };
 
   return (
-    <div className="mt-5">
+    <div >
+      
       <Card className="selectcategorycard">
         <Row>
           <Container>

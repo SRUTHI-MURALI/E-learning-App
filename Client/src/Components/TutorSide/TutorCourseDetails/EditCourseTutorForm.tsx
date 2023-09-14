@@ -4,48 +4,47 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Base_Url } from '../../../Config/Config';
 
+
 function EditCourseTutorForm({ onCloseEdit, courseId }) {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [duration, setDuration] = useState('');
+  const [category, setCategory] = useState('');
+  const [allCategories,setAllCategories]=useState([])
  
   useEffect(() => {
     axios
       .get(`${Base_Url}/tutor/geteditcourse/${courseId}`)
       .then((response) => {
-        const course = response.data.editCourse; // Assuming your response contains the course data
+        const course = response.data.editCourse;
+      setAllCategories(response.data.categories)
         setTitle(course.title);
         setDuration(course.duration);
-       
+       setCategory(course.category)
         setPrice(course.price);
         
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [courseId]);
+  }, []);
 
   const handleSubmit = async () => {
+    
+    
     const trimmedTitle = title.trim();
     const trimmedDuration = duration.trim();
     const trimmedPrice = price.trim();
+    const trimmedCategory= category.trim();
+    
     
 
-    if (
-      trimmedTitle === '' ||
-      trimmedDuration === '' ||
-      trimmedPrice === '' 
-      
-    ) {
-      return toast.error('Please fill all fields');
-    }
-
     try {
-      await axios.put(`${Base_Url}/tutor/editcourselist${courseId}`, {
+      await axios.put(`${Base_Url}/tutor/editcourselist/${courseId}`, {
         title: trimmedTitle,
         duration: trimmedDuration,
         price: trimmedPrice,
-      
+        category:trimmedCategory,
       });
 
       toast.success('Successfully added');
@@ -65,7 +64,7 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
        
       <Row>
         <Card className="responsive-card" >
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Label style={{ color: 'black' }}>Edit Course</Form.Label>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Course Title</Form.Label>
@@ -79,6 +78,8 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>Duration</Form.Label>
               <Form.Control
+              type="number"
+              placeholder={duration}
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
               />
@@ -86,13 +87,32 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>Price</Form.Label>
               <Form.Control
+              type="number"
+              placeholder={price}
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Category</Form.Label>
+              
+              
+              <Form.Select 
+                
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value={category._id}>{category.title}</option>
+                {allCategories.map((categoryItem) => (
+                  <option key={categoryItem._id} value={categoryItem._id}>
+                    {categoryItem.title}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+
             
             <div className="d-flex justify-content-between">
-              <Button type="submit" onClick={handleSubmit}>
+              <Button type="submit" >
                 Submit
               </Button>
               <Button onClick={handleClose}>Close</Button>

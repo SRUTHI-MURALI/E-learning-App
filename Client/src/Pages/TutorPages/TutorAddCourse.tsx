@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import SelectCategory from '../../Components/TutorSide/TutorAddCourse/SelectCategory';
 import AddCourse from '../../Components/TutorSide/TutorAddCourse/AddCourse';
 import TutorHome from './TutorHome';
-import { Col, Row } from 'react-bootstrap';
+
+import { Col, Container, Row,DropdownButton,Dropdown } from 'react-bootstrap';
 import TutorHeader from '../../Components/TutorSide/TutorHeader/TutorHeader';
 import TutorSidebar from '../../Components/TutorSide/TutorSidebar/TutorSidebar';
 
@@ -20,16 +21,21 @@ function TutorAddCourse() {
   };
 
   return (
-    <div >
-      <Row >
-        <Row>
-        <TutorHeader/>
-        </Row>
-      <Row>
-       <Col>
-       <TutorSidebar />
-       </Col>
-       <Col >
+    <>
+    
+  <Col>
+  <TutorHeader/>
+    <TutorSidebar/>
+  </Col>
+ 
+  <Col>
+  
+  <Container className="d-flex justify-content-center align-items-center vh-100">
+    
+    <Row>
+      
+    <Col >
+    
        {courseAdded==false ? (
         selectedCategory === null ? (
           <SelectCategory onSelectCategory={handleCategorySelect} />
@@ -40,11 +46,12 @@ function TutorAddCourse() {
         <TutorHome/>
       )}
        </Col>
-       </Row>
-      </Row>
-     
-      
-    </div>
+
+    </Row>
+  </Container>
+  </Col>
+</>
+
   );
 }
 

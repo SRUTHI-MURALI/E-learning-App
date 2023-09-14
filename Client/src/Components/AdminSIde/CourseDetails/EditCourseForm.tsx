@@ -24,25 +24,16 @@ function EditCourseForm({ onCloseEdit, courseId }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [courseId]);
+  }, []);
 
   const handleSubmit = async () => {
     const trimmedTitle = title.trim();
     const trimmedDuration = duration.trim();
     const trimmedPrice = price.trim();
+    console.log("hjhkjkkj");
     
-
-    if (
-      trimmedTitle === '' ||
-      trimmedDuration === '' ||
-      trimmedPrice === '' 
-      
-    ) {
-      return toast.error('Please fill all fields');
-    }
-
     try {
-      await axios.put(`${Base_Url}/admin/editcourselist${courseId}`, {
+      await axios.put(`${Base_Url}/admin/editcourselist/${courseId}`, {
         title: trimmedTitle,
         duration: trimmedDuration,
         price: trimmedPrice,
@@ -66,7 +57,7 @@ function EditCourseForm({ onCloseEdit, courseId }) {
        
       <Row>
         <Card className="responsive-card" >
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Label style={{ color: 'black' }}>Edit Course</Form.Label>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Course Title</Form.Label>
@@ -80,6 +71,8 @@ function EditCourseForm({ onCloseEdit, courseId }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>Duration</Form.Label>
               <Form.Control
+               type="text"
+               placeholder={duration}
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
               />
@@ -87,13 +80,15 @@ function EditCourseForm({ onCloseEdit, courseId }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>Price</Form.Label>
               <Form.Control
+               type="number"
+               placeholder={price}
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
             </Form.Group>
             
             <div className="d-flex justify-content-between">
-              <Button type="submit" onClick={handleSubmit}>
+              <Button type="submit" >
                 Submit
               </Button>
               <Button onClick={handleClose}>Close</Button>

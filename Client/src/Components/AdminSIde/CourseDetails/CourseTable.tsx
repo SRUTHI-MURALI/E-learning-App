@@ -76,6 +76,7 @@ function CourseTable() {
           <th >Category</th>
           <th>Description</th>
           <th>Duration</th>
+          <th>Instructor</th>
           <th>isApproved</th>
           <th>Price</th>
           <th>Image</th>
@@ -87,10 +88,11 @@ function CourseTable() {
           {courseList.map((course, index) => (
             <tr key={course._id}>
               <td>{index + 1}</td>
-              <td>{course.title}</td>
-              <td>{course.category.title}</td>
-              <td>{course.description}</td>
-              <td>{course.duration}</td>
+              <td>{course?.title}</td>
+              <td>{course?.category.title}</td>
+              <td>{course?.description}</td>
+              <td>{course?.duration}</td>
+              <td>{course?.instructor?.name}</td>
               <td>
                 {course.isApproved ? (
                   <Button variant='info' size="sm" onClick={()=>{cancelApproval(course._id)}}>Approved</Button>
