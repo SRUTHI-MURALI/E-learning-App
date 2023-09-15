@@ -14,8 +14,7 @@ function TutorCourseTable() {
 
   const tutorData=localStorage.getItem("tutorData")
   const parseData=JSON.parse(tutorData)
- console.log( parseData.name,'parseddd');
- 
+
  
     const[courseList,setCourselist]=useState([])
     const [openPopUp, setOpenPopUp] = useState(false);

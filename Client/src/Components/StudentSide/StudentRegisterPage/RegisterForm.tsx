@@ -35,6 +35,25 @@ function RegisterForm() {
       toast.error("Please fill all fields");
       return;
     }
+
+     // Validate username format (only letters and spaces allowed)
+     const usernamePattern = /^[A-Za-z\s]+$/;
+     if (!usernamePattern.test(trimmedName.trim())) {
+       alert('Username can only contain letters and spaces');
+       return;
+     }
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(trimmedPhone.trim())) {
+      alert('Please enter a valid 10-digit phone number');
+      return;
+    }
+
+    // Validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(trimmedEmail.trim())) {
+      alert('Please enter a valid email address');
+      return;
+    }
  
   
     try {
@@ -91,7 +110,7 @@ function RegisterForm() {
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="123@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

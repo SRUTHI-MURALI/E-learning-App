@@ -25,6 +25,8 @@ function EditCategoryForm({ onCloseEdit, categoryId }) {
 
   const handleSubmit = async () => {
    
+    
+   
     const trimmedCategory = category.trim();
     const trimmedDescription = description.trim();
 
@@ -38,6 +40,7 @@ function EditCategoryForm({ onCloseEdit, categoryId }) {
       });
 
       toast.success('Successfully edited');
+      
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message);

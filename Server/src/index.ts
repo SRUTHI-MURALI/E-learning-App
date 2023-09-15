@@ -22,6 +22,6 @@ app.use("/otp",otprouter)
 
 
 
-app.listen(3002)
+app.listen(3001)
 
 

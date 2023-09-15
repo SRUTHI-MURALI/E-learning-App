@@ -37,6 +37,25 @@ function RegisterForm() {
       toast.error("Please fill all fields");
       return;
     }
+
+     // Validate username format (only letters and spaces allowed)
+     const usernamePattern = /^[A-Za-z\s]+$/;
+     if (!usernamePattern.test(trimmedTutorName.trim())) {
+       alert('Username can only contain letters and spaces');
+       return;
+     }
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(trimmedPhone.trim())) {
+      alert('Please enter a valid 10-digit phone number');
+      return;
+    }
+
+    // Validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(trimmedEmail.trim())) {
+      alert('Please enter a valid email address');
+      return;
+    }
    
     try {
       

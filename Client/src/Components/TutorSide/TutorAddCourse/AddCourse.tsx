@@ -42,6 +42,15 @@ function AddCourse({selectedCategory,onCourseAdded}) {
       
       }
 
+       // Validate username format (only letters and spaces allowed)
+     const usernamePattern = /^[A-Za-z\s.]+$/;
+     if (!usernamePattern.test(trimmedTitle.trim())) {
+       alert('title can only contain letters and spaces');
+       return;
+     }
+   
+    
+
       await imageHandler()
 
       if (!cloudinaryURL) {

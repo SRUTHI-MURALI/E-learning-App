@@ -190,6 +190,8 @@ const getEditCourseList=async(req:Request,res:Response)=>{
       const {id}=req.params
    
       
+   
+      
       const editCourse= await courses.findById({_id:id})
       
       
@@ -207,6 +209,8 @@ const getEditCourseList=async(req:Request,res:Response)=>{
 const editCourseList= async(req:Request,res:Response)=>{
    try {
       
+   console.log(req.params);
+   
    
       
       const {title,duration,price} = req.body

@@ -20,16 +20,34 @@ function AddCategory({ onClose }) {
       return;
     }
 
+    const usernamePattern = /^[A-Za-z\s.]+$/;
+    if (!usernamePattern.test(trimmedCategory.trim())) {
+      alert('category can only contain letters and spaces');
+      return;
+    }
+  
+
     try {
-      await axios.post(`${Base_Url}/admin/addcategory`, {
+      const response = await axios.post(`${Base_Url}/admin/addcategory`, {
         category: trimmedCategory,
         description: trimmedDescription,
       });
 
-      toast.success('Successfully added');
+      if (response.status === 201) {
+        // OTP sent successfully
+        toast.success("category added");
+       
+      } else if(response.status==400){
+        toast.error("Category already exists");
+      }
     } catch (error) {
-      toast.error('Error');
-      return;
+      if (error.response && error.response.data && error.response.data.message) {
+        // Display the error message from the response if available
+        toast.error(error.response.data.message);
+      } else {
+        // Handle unexpected errors
+        toast.error("An error occurred while sending OTP");
+      }
     }
   };
 

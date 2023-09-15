@@ -39,7 +39,16 @@ function LoginForm() {
           toast.error("Please fill all fields");
           return;
         }
-       
+
+   
+
+          // Validate email format
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(trimmedEmail.trim())) {
+            alert('Please enter a valid email address');
+            return;
+          }
+            
         try {
           const response = await axios.post(`${Base_Url}/tutor/login`, {
            

@@ -196,12 +196,12 @@ const addLesson = async (req: Request, res: Response) => {
     
        
        const editCourse= await course.findById({_id:id}).populate("category")
-       const categories= await categoryModel.find()
+       const allcategories= await categoryModel.find()
        
        if(editCourse){
           res.status(201).json({
              editCourse,
-             categories
+             allcategories
              
          })
        }
@@ -211,11 +211,11 @@ const addLesson = async (req: Request, res: Response) => {
  }
  
  const editCourseList= async(req:Request,res:Response)=>{
-  
+ 
   
     try {
        
-       console.log(req.body);
+      
        
        const {title,duration,price,category} = req.body
        const {id}=req.params
@@ -227,6 +227,7 @@ const addLesson = async (req: Request, res: Response) => {
           duration:duration,
           price:price,
           category:category
+        
         },
         { new: true }
        )
@@ -239,7 +240,7 @@ const addLesson = async (req: Request, res: Response) => {
               title:editedCourse.title,
               duration:editedCourse.duration,
               price:editedCourse.price,
-              category:editedCourse.category
+            
           })
       }
     } catch (error) {
@@ -253,5 +254,6 @@ const addLesson = async (req: Request, res: Response) => {
  }
 
  export{
-    sendOtp, signUp,login,getCategory,addCourse,addLesson,getCourseList,getEditCourseList,editCourseList
+    sendOtp, signUp,login,getCategory,addCourse,addLesson,
+    getCourseList,getEditCourseList,editCourseList
  }

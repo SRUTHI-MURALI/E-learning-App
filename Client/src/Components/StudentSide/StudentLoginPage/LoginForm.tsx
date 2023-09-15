@@ -32,10 +32,15 @@ function LoginForm() {
         
         
         // Send the Google ID token to your server for verification
-        await axios.post(`${Base_Url}/student/googlelogin`, {
+        const response=await axios.post(`${Base_Url}/student/googlelogin`, {
           id_token:idToken
         });
-  
+
+        const studentData=response.data
+          
+          
+        localStorage.setItem('studentData',JSON.stringify(studentData))
+        dispatch(login(studentData))
         // If the server verifies the Google token and returns user data
         toast.success("successfully logged in")
           navigate('/studentlandingpage')
@@ -61,6 +66,14 @@ function LoginForm() {
           toast.error("Please fill all fields");
           return;
         }
+
+      
+          // Validate email format
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(trimmedEmail.trim())) {
+            alert('Please enter a valid email address');
+            return;
+          }
        
         try {
          const response=  await axios.post(`${Base_Url}/student/login`, {

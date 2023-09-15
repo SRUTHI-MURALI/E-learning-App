@@ -5,7 +5,7 @@ const sendMobileOtp=async(req:Request,res:Response)=>{
     try {
         const { phone } = req.body;
         
-        console.log("generate otp");
+        
         
         
         // Generate and send OTP using the imported function

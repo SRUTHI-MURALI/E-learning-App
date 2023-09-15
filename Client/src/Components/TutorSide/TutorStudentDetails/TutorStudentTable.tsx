@@ -1,8 +1,8 @@
 
 import Table from 'react-bootstrap/Table';
-import {AiFillEdit} from 'react-icons/ai';
+import {AiOutlineClose,AiOutlineCheck} from 'react-icons/ai';
 import {ImArrowRight} from 'react-icons/im'
-import { Button } from 'react-bootstrap'
+
 import {useState,useEffect} from 'react'
 import axios from 'axios';
 import './TutorStudentTable.css'
@@ -17,7 +17,7 @@ function TutorStudentTable() {
     useEffect(() => {
         axios.get(`${Base_Url}/admin/getstudentlist`)
           .then((response) => {
-           console.log(response.data,"iii");
+         
            
             setStudentlist(response.data.students);
           })
@@ -40,8 +40,8 @@ function TutorStudentTable() {
           <th > Name</th>
           <th >Email</th>
           <th>Phone</th>
-          <th>Edit</th>
-          <th>Actions</th>
+        
+          <th>IsBlocked</th>
         </tr>
       </thead>
       <tbody>
@@ -51,12 +51,13 @@ function TutorStudentTable() {
               <td>{student.name}</td>
               <td>{student.email}</td>
               <td>{student.phone}</td>
-              <td><AiFillEdit /></td>
+             
               <td>
                 {student.isBlocked ? (
-                  <Button >Unblock</Button>
+                   <AiOutlineClose />
+                 
                 ) : (
-                  <Button >Block</Button>
+                  <AiOutlineCheck />
                 )}
               </td>
             </tr>

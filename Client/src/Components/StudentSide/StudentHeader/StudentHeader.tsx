@@ -25,6 +25,7 @@ function StudentHeader() {
     navigate('/')
   }
   return (
+    
     <Navbar expand="lg" >
       <Container >
         <img className='logo' src={logo} />
@@ -44,6 +45,7 @@ function StudentHeader() {
             <Nav.Link className='nav-header-student'  href="#action2">Profile</Nav.Link>
             
           </Nav>
+          
           <h1 style={{fontSize:'larger',color:'white',fontWeight:'bold',fontStyle:'italic'}}>Welcome {parseData?.name} </h1>
 
          <Link to='' onClick={handleLogout}><Button className='m-3'>Logout</Button></Link>

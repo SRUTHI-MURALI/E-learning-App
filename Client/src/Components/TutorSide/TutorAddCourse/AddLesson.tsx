@@ -23,6 +23,13 @@ function AddLesson({courseId}) {
       alert('Please fill in all fields before adding a lesson.');
       return;
     }
+
+    const usernamePattern = /^[A-Za-z\s.]+$/;
+    if (!usernamePattern.test(title.trim())) {
+      alert('title can only contain letters and spaces');
+      return;
+    }
+  
     await videoHandler()
 
     if (!cloudinaryURL) {

@@ -9,18 +9,21 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [duration, setDuration] = useState('');
-  const [category, setCategory] = useState('');
-  const [allCategories,setAllCategories]=useState([])
+  const[category,setCategory]=useState('')
+  const[allCategories,setAllCategories]=useState([])
+
+ console.log(category,"jhkjhkh");
  
   useEffect(() => {
     axios
       .get(`${Base_Url}/tutor/geteditcourse/${courseId}`)
       .then((response) => {
         const course = response.data.editCourse;
-      setAllCategories(response.data.categories)
+        setAllCategories(response.data.allcategories)
+        
         setTitle(course.title);
         setDuration(course.duration);
-       setCategory(course.category)
+       setCategory(course.category.title)
         setPrice(course.price);
         
       })
@@ -29,25 +32,25 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
       });
   }, []);
 
-  const handleSubmit = async () => {
-    
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     
     const trimmedTitle = title.trim();
     const trimmedDuration = duration.trim();
-    const trimmedPrice = price.trim();
-    const trimmedCategory= category.trim();
-    
-    
+
 
     try {
       await axios.put(`${Base_Url}/tutor/editcourselist/${courseId}`, {
         title: trimmedTitle,
         duration: trimmedDuration,
-        price: trimmedPrice,
-        category:trimmedCategory,
+        price,
+        category,
+       
       });
 
       toast.success('Successfully added');
+      window.location.reload();
+      onCloseEdit(false);
     } catch (error) {
       toast.error('Error');
     }
@@ -93,22 +96,24 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
                 onChange={(e) => setPrice(e.target.value)}
               />
             </Form.Group>
+
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Category</Form.Label>
-              
-              
-              <Form.Select 
-                
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value={category._id}>{category.title}</option>
-                {allCategories.map((categoryItem) => (
-                  <option key={categoryItem._id} value={categoryItem._id}>
-                    {categoryItem.title}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            <Form.Label>Category</Form.Label>
+            <Form.Select
+            
+             
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value={category._id}>{category}</option>
+              {allCategories
+              .filter((categoryItem) => categoryItem._id !== category._id)
+              .map((categoryItem) => (
+                <option key={categoryItem._id} value={categoryItem._id}>
+                  {categoryItem.title}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
 
             
             <div className="d-flex justify-content-between">

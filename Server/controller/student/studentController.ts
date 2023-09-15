@@ -5,6 +5,8 @@ import Courses from "../../model/courses";
 import axios from 'axios'
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import bcrypt from 'bcrypt'
+
 const BaseUrl: string = process.env.BaseUrl|| '';
 
 const globalData = {
@@ -13,24 +15,16 @@ const globalData = {
   };
   
   const sendOtp = async (req: Request, res: Response) => {
-
-    
     try {
         const { name, email, password, phone } = req.body;
         const emailfind = await Student.findOne({ email });
         const phonefind = await Student.findOne({ phone });
-        
         if (emailfind || phonefind) {
-            
-           
             res.status(400).json({ error: 'Student already exists' });
         } else {
-           
-               
-                
+            
                 await axios.post(`${BaseUrl}/otp/sendmobileotp`, { phone: phone });
-                res.status(200).json({ message: 'OTP sent successfully' });
-               
+                res.status(200).json({ message: 'OTP sent successfully' });            
             const newStudent = {
                 name,
                 email,
@@ -38,8 +32,28 @@ const globalData = {
                 phone
             };
             globalData.student = newStudent;
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
-
+const resetPasswordSentOtp =async (req: Request, res: Response) => {
+    try {
+       const {phone} =req.body
+     
+       
+        const phonefind = await Student.findOne({ phone });
+       
+        
+        if ( phonefind!=null) {
+            await axios.post(`${BaseUrl}/otp/sendmobileotp`, { phone: phonefind.phone });
+            res.status(200).json({ message: 'OTP sent successfully' });    
+        } else {
+            
+            res.status(400).json({ message: 'No Number Exists' });    
+            
         }
     } catch (error) {
         console.error(error);
@@ -107,7 +121,6 @@ const signUp = async (req: Request, res: Response) => {
 const googleLogin = async (req: Request, res: Response) => {
     try {
     
-  
       const { id_token } = req.body;
     
       // Define a type for your decoded token
@@ -123,22 +136,41 @@ const googleLogin = async (req: Request, res: Response) => {
       const decodedToken = jwt.decode(id_token) as JwtDecodedToken;
   
       const { name, email,jti,phone } = decodedToken;
+      const emailfind = await Student.findOne({ email });
+      const phonefind = await Student.findOne({ phone });
+
+      if (emailfind || phonefind) {
+       const existingStudent=emailfind || phonefind;
+      
+       
+       const token = generateToken(existingStudent?._id);
+       return res.status(200).json({
+           _id: existingStudent?._id,
+           name: existingStudent?.name,
+           email: existingStudent?.email,
+           phone:existingStudent?.phone,
+           token,
+       })
+
+    } else{
+        const addStudent=  await Student.create({
+            name,
+            email,
+            jti,
+            phone
+          })
+                const token = generateToken(addStudent._id);
+                return res.status(200).json({
+                    _id: addStudent?._id,
+                    name: addStudent?.name,
+                    email: addStudent?.email,
+                    phone:addStudent?.phone,
+                    token,
+                })
+      
+    }
      
-      const addStudent=  await Student.create({
-        name,
-        email,
-        jti,
-        phone
-      })
-            const token = generateToken(addStudent._id);
-            return res.status(200).json({
-                _id: addStudent?._id,
-                name: addStudent?.name,
-                email: addStudent?.email,
-                phone:addStudent?.phone,
-                token,
-            })
-  
+      
       // Continue with your logic
   
     } catch (error) {
@@ -153,9 +185,6 @@ const googleLogin = async (req: Request, res: Response) => {
         const {id}=req.params
        const courseDetails= await Courses.findById({_id:id}).populate("category")
        
-  
-      
-    
        if(courseDetails){
           res.status(201).json({
             courseDetails
@@ -167,9 +196,35 @@ const googleLogin = async (req: Request, res: Response) => {
     }
  }
  
+const resetPassword= async (req:Request,res:Response) =>{
+    
+    
+    try {
+        const{phone,password}=req.body
+       
+        const salt = await bcrypt.genSalt(10);
+     const hashedpassword = await bcrypt.hash(password, salt);
+        const studentPassword= await Student.findOneAndUpdate(
+            {phone},{
+                password:hashedpassword
+            },
+            { new: true }
+            
+        )
 
+
+
+        if(studentPassword){
+         
+            
+            res.status(400).json({studentPassword})
+        }
+    } catch (error) {
+        res.status(400).json('reset error')
+    }
+}
 
  export {
-    sendOtp,signUp,login,googleLogin,courseDetails
+    sendOtp,signUp,login,googleLogin,courseDetails,resetPassword,resetPasswordSentOtp
  }
 
