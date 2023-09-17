@@ -107,7 +107,7 @@ const signUp = async (req: Request, res: Response) => {
  }
 
  const getCategory= async(req:Request,res:Response)=>{
-    const category = await courseCategory.find().exec()
+    const category = await courseCategory.find({ isActive: true }).exec()
     
       if(category){
         res.status(201).json({
@@ -153,6 +153,7 @@ const signUp = async (req: Request, res: Response) => {
  
 const addLesson = async (req: Request, res: Response) => {
     const { lessons, courseId } = req.body;
+  console.log(lessons);
   
     try {
       const updatedCourse = await course.findOneAndUpdate(

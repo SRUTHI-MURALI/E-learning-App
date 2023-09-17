@@ -6,6 +6,8 @@ import student from '../../model/student'
 import tutor from '../../model/tutor'
 import categoryModel from '../../model/courseCategory'
 import courses from "../../model/courses";
+const email='sruthymn6@gmail.com'
+import generateEmail from "../../EmailGenerator/emailGenerator";
 
 const login=async(req:Request,res:Response)=>{
     try {
@@ -246,57 +248,68 @@ const editCourseList= async(req:Request,res:Response)=>{
 
 }
 
-const approveCourse=async(req:Request,res:Response)=>{
-  
-   
+const approveCourse = async (req: Request, res: Response) => {
    try {
-      const {id} =req.params
-     
-      
-      const allcourses= await courses.findByIdAndUpdate(
-         id,
-         {
-           isApproved: true
-         },
-         { new: true }
-       )
-       .then(() => {
-         res.status(201).json({
-            allcourses
-            
-        })
-       
-        
-       })
+     const { id } = req.params;
+ 
+     const inst:any = await courses.findById(id).populate('instructor');
+     const instructorEmail = inst?.instructor?.email
+     const coursename=inst?.title
+     const msg="this course is approved"
     
-      
-     
+     if (!instructorEmail) {
+       // Handle the case when instructorEmail is undefined
+       throw new Error("Instructor email not found");
+     }
+ 
+    await courses.findByIdAndUpdate(
+       id,
+       {
+         isApproved: true
+       },
+       { new: true }
+     );
+ 
+     await generateEmail(instructorEmail,coursename,msg);
+ const allcourses=await courses.find().populate("instructor")
+     res.status(201).json({
+       allcourses,
+     });
+ 
    } catch (error) {
-      res.status(400).json(error)
+     res.status(400).json({ message: "error.message" }); // Send the error message in the response
    }
-}
+ };
+
+
 
 const cancelCourse=async(req:Request,res:Response)=>{
-  
    
    try {
       const {id} =req.params
-      const allcourses= await courses.findByIdAndUpdate(
-         id,
-         {
-           isApproved: false
-         },
-         { new: true }
-       )
-       .then(() => {
-         res.status(201).json({
-            allcourses
-            
-        })
-       })
+      const inst:any = await courses.findById(id).populate('instructor');
+     const instructorEmail = inst?.instructor?.email
+    const coursename=inst?.title
+    const msg="this course is not approved"
+     if (!instructorEmail) {
+       // Handle the case when instructorEmail is undefined
+       throw new Error("Instructor email not found");
+     }
+     await courses.findByIdAndUpdate(
+      id,
+      {
+        isApproved: false
+      },
+      { new: true }
+    );
+
+    await generateEmail(instructorEmail,coursename,msg);
+const allcourses=await courses.find().populate("instructor")
+    res.status(201).json({
+      allcourses,
+    });
+
     
-      
-     
    } catch (error) {
       res.status(400).json(error)
    }
@@ -306,8 +319,6 @@ const blockTutor=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      
-
       const tutorlist= await tutor.findByIdAndUpdate(
          id,
          {
@@ -317,13 +328,10 @@ const blockTutor=async(req:Request,res:Response)=>{
        )
        .then(() => {
          res.status(201).json({
-            tutorlist
-            
+            tutorlist  
         })
        })
     
-      
-     
    } catch (error) {
       res.status(400).json(error)
    }

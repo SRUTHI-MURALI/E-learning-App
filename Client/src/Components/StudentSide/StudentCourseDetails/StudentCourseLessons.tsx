@@ -3,11 +3,13 @@ import { Container, Row } from 'react-bootstrap'
 import Accordion from 'react-bootstrap/Accordion';
 
 function StudentCourseLessons({ data }) {
+  console.log(data,"kk");
+  
   return (
     <div>
       <Container>
         <h2 className='m-3' style={{color:'rgb(139, 179, 198)',fontWeight:'bolder',fontSize:'30px'}}>Course Highlights</h2>
-          {data.courseDetails?.courseLessons?.map((courses, index) => (
+          {data?.courseLessons?.map((courses, index) => (
             <Row className='m-3'>
             <Accordion key={courses?._id}>
               <Accordion.Item eventKey={courses?._id}>

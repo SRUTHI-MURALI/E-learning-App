@@ -13,33 +13,32 @@ function AddLesson({courseId}) {
   const [description, setDescription] = useState('');
   const navigate=useNavigate()
   const [video, setVideo] = useState<File | null>(null)
-    const [cloudinaryURL, setCloudinaryURL] = useState('');
+    const [cloudinaryURL, setCloudinaryURL] = useState([]);
 
   const handleAdd = async () => {
+    console.log('hjkj');
     if (title.trim() === '' || 
     duration.trim() === '' || 
     description.trim() === '') 
     {
-      alert('Please fill in all fields before adding a lesson.');
-      return;
+      return alert('Please fill in all fields before adding a lesson.');
+    
     }
+console.log('hjkj');
 
-    const usernamePattern = /^[A-Za-z\s.]+$/;
-    if (!usernamePattern.test(title.trim())) {
-      alert('title can only contain letters and spaces');
-      return;
-    }
+    
   
     await videoHandler()
 
     if (!cloudinaryURL) {
       
       
-      alert("Error uploading photo");
-      return;
+      return  alert("Error uploading video");
+     
     }
 
     const newLesson = {
+    
       title: title,
       duration: duration,
       description: description,
@@ -53,7 +52,9 @@ function AddLesson({courseId}) {
     setTitle('');
     setDuration('');
     setDescription('');
-    setVideo(null)
+    setVideo(null);
+    setCloudinaryURL([])
+
 
    
   };

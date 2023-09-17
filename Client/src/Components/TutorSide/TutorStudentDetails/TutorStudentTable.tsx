@@ -9,9 +9,12 @@ import './TutorStudentTable.css'
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Base_Url } from '../../../Config/Config';
+import ReactPaginate from 'react-paginate'; 
 
 function TutorStudentTable() {
     const[studentList,setStudentlist]=useState([])
+    const [currentPage, setCurrentPage] = useState(0); // Current page number
+    const itemsPerPage = 2;
 
     
     useEffect(() => {
@@ -26,6 +29,12 @@ function TutorStudentTable() {
           });
       }, []);
 
+      const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+      };
+  
+      const offset = currentPage * itemsPerPage;
+      const paginatedData = studentList.slice(offset, offset + itemsPerPage);
 
   return (
 
@@ -45,7 +54,7 @@ function TutorStudentTable() {
         </tr>
       </thead>
       <tbody>
-          {studentList.map((student, index) => (
+          {paginatedData.map((student, index) => (
             <tr key={student._id}>
               <td>{index + 1}</td>
               <td>{student.name}</td>
@@ -64,6 +73,20 @@ function TutorStudentTable() {
           ))}
         </tbody>
     </Table>
+
+    <div style={{float:'right' , margin:'3px', }}>
+        <ReactPaginate 
+        previousLabel={'Previous '} 
+        nextLabel={'Next'}
+        breakLabel={'...'}
+        pageCount={Math.ceil(studentList.length / itemsPerPage)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={2}
+        onPageChange={handlePageChange}
+        containerClassName={'pagination'} // Remove one of the containerClassName attributes
+        activeClassName={'active'}
+      />
+      </div>
  
     </div>
   )

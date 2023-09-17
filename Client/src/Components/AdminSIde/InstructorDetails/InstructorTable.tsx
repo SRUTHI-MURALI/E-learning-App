@@ -8,10 +8,13 @@ import './InstructorTable.css'
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Base_Url } from '../../../Config/Config';
+import ReactPaginate from 'react-paginate'; 
 
 
 function InstructorTable() {
     const[instructorList,setInstructorlist]=useState([])
+    const [currentPage, setCurrentPage] = useState(0); // Current page number
+    const itemsPerPage = 2;
 
     
     useEffect(() => {
@@ -24,6 +27,11 @@ function InstructorTable() {
             console.error(error);
           });
       }, []);
+
+      const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+      };
+
   
 
       const blockInstructor= async (id)=>{
@@ -48,6 +56,9 @@ function InstructorTable() {
         window.location.reload();
       }
      
+      const offset = currentPage * itemsPerPage;
+      const paginatedData = instructorList.slice(offset, offset + itemsPerPage);
+
   return (
     <div>
       <p className='instructorlistheading' ><ImArrowRight /> <u>Instructor List</u></p>
@@ -64,7 +75,7 @@ function InstructorTable() {
         </tr>
       </thead>
       <tbody>
-          {instructorList.map((instructor, index) => (
+          {paginatedData.map((instructor, index) => (
             <tr key={instructor.id}>
               <td>{index + 1}</td>
               <td>{instructor.name}</td>
@@ -84,6 +95,20 @@ function InstructorTable() {
         </tbody>
     </Table>
  
+    <div style={{float:'right' , margin:'3px', }}>
+        <ReactPaginate 
+        previousLabel={'Previous '} 
+        nextLabel={'Next'}
+        breakLabel={'...'}
+        pageCount={Math.ceil(instructorList.length / itemsPerPage)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={2}
+        onPageChange={handlePageChange}
+        containerClassName={'pagination'} // Remove one of the containerClassName attributes
+        activeClassName={'active'}
+      />
+      </div>
+
     </div>
   )
 }

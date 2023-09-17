@@ -9,6 +9,7 @@ import './CourseCategoriesTable.css'
 import AddCategory from './AddCategory';
 import { Base_Url } from '../../../Config/Config';
 import EditCategoryForm from './EditCategoryForm';
+import ReactPaginate from 'react-paginate'; 
 
 function CourseCategoriesTable() {
 
@@ -16,6 +17,8 @@ function CourseCategoriesTable() {
   const[categoryId,setCategoryId]=useState('')
   const [openPopUp, setOpenPopUp] = useState(false);
   const [editPopUp, setEditPopUp] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0); // Current page number
+  const itemsPerPage = 1;
  
     
     useEffect(() => {
@@ -34,6 +37,10 @@ function CourseCategoriesTable() {
       const handleOpenDialog = () => {
         setOpenPopUp(true);
       
+      };
+
+      const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
       };
 
       const InActivateCourse= async (id)=>{
@@ -65,6 +72,8 @@ function CourseCategoriesTable() {
        
        
       }
+      const offset = currentPage * itemsPerPage;
+      const paginatedData = categoryList.slice(offset, offset + itemsPerPage);
     
   return (
     <div>
@@ -77,6 +86,7 @@ function CourseCategoriesTable() {
         <Button onClick={handleOpenDialog} type='submit' className='addcategorylist'>Add Category</Button>
         </Col>
         </Row>
+       
        
       <Col>
       {openPopUp==false && editPopUp==false ? (
@@ -91,7 +101,7 @@ function CourseCategoriesTable() {
        </tr>
      </thead>
      <tbody>
-         {categoryList.map((category, index) => (
+         {paginatedData.map((category, index) => (
            <tr key={category._id}>
              <td>{index + 1}</td>
              <td>{category.title}</td>
@@ -112,6 +122,8 @@ function CourseCategoriesTable() {
        </tbody>
    </Table>
         ):null}
+
+
         </Col>
       </Row>
 
@@ -121,6 +133,9 @@ function CourseCategoriesTable() {
          
         </div>
       )}
+
+
+
     
     {editPopUp && (
         <div>
@@ -130,6 +145,20 @@ function CourseCategoriesTable() {
           
         </div>
       )}
+
+      <div style={{float:'right' , margin:'3px', }}>
+        <ReactPaginate 
+        previousLabel={'Previous '} 
+        nextLabel={'Next'}
+        breakLabel={'...'}
+        pageCount={Math.ceil(categoryList.length / itemsPerPage)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={2}
+        onPageChange={handlePageChange}
+        containerClassName={'pagination'} // Remove one of the containerClassName attributes
+        activeClassName={'active'}
+      />
+      </div>
    
      </div>
     

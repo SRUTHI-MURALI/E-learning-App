@@ -9,11 +9,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Button } from 'react-bootstrap';
 import EditCourseTutorForm from './EditCourseTutorForm';
 import { Base_Url,Image_Url} from '../../../Config/Config';
+import ReactPaginate from 'react-paginate'; 
 
 function TutorCourseTable() {
 
   const tutorData=localStorage.getItem("tutorData")
   const parseData=JSON.parse(tutorData)
+  const [currentPage, setCurrentPage] = useState(0); // Current page number
+    const itemsPerPage = 2;
 
  
     const[courseList,setCourselist]=useState([])
@@ -31,6 +34,12 @@ function TutorCourseTable() {
             console.error(error);
           });
       }, []);
+
+      const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+      };
+  
+     
   
         const handleEditCourse = async (Id)=>{
             
@@ -39,6 +48,8 @@ function TutorCourseTable() {
             setOpenPopUp(true);
         }
        
+        const offset = currentPage * itemsPerPage;
+        const paginatedData = courseList.slice(offset, offset + itemsPerPage);
           
   return (
 
@@ -65,7 +76,7 @@ function TutorCourseTable() {
         </tr>
       </thead>
       <tbody>
-  {courseList
+  {paginatedData
     .filter((course) => course?.instructor?.name === parseData?.name)
     .map((course, index) => (
       <tr key={course._id}>
@@ -100,6 +111,21 @@ function TutorCourseTable() {
           
         </div>
       )}
+
+
+        <div style={{float:'right' , margin:'3px', }}>
+                <ReactPaginate 
+                previousLabel={'Previous '} 
+                nextLabel={'Next'}
+                breakLabel={'...'}
+                pageCount={Math.ceil(courseList.length / itemsPerPage)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                onPageChange={handlePageChange}
+                containerClassName={'pagination'} // Remove one of the containerClassName attributes
+                activeClassName={'active'}
+              />
+              </div>
     </div>
   )
 }

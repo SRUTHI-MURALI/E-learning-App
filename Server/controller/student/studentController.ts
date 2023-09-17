@@ -183,7 +183,8 @@ const googleLogin = async (req: Request, res: Response) => {
   const courseDetails=async(req:Request,res:Response)=>{
     try {
         const {id}=req.params
-       const courseDetails= await Courses.findById({_id:id}).populate("category")
+       const courseDetails= await Courses.findById({_id:id}).populate("category instructor")
+     
        
        if(courseDetails){
           res.status(201).json({

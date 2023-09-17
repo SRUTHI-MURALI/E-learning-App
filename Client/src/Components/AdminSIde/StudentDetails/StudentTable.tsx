@@ -11,6 +11,9 @@ import { Base_Url } from '../../../Config/Config';
 
 function StudentTable() {
     const[studentList,setStudentlist]=useState([])
+    const [currentPage, setCurrentPage] = useState(0); // Current page number
+    const itemsPerPage = 2;
+   
 
     
     useEffect(() => {
@@ -23,6 +26,11 @@ function StudentTable() {
             console.error(error);
           });
       }, []);
+
+      
+      const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+      };
   
      
 
@@ -48,6 +56,9 @@ function StudentTable() {
         window.location.reload();
       }
 
+      const offset = currentPage * itemsPerPage;
+      const paginatedData = studentList.slice(offset, offset + itemsPerPage);
+
   return (
 
     <div>
@@ -65,7 +76,7 @@ function StudentTable() {
         </tr>
       </thead>
       <tbody>
-          {studentList.map((student, index) => (
+          {paginatedData.map((student, index) => (
             <tr key={student._id}>
               <td>{index + 1}</td>
               <td>{student.name}</td>
@@ -82,6 +93,20 @@ function StudentTable() {
           ))}
         </tbody>
     </Table>
+
+    <div style={{float:'right' , margin:'3px', }}>
+        <ReactPaginate 
+        previousLabel={'Previous '} 
+        nextLabel={'Next'}
+        breakLabel={'...'}
+        pageCount={Math.ceil(studentList.length / itemsPerPage)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={2}
+        onPageChange={handlePageChange}
+        containerClassName={'pagination'} // Remove one of the containerClassName attributes
+        activeClassName={'active'}
+      />
+      </div>
  
     </div>
   )

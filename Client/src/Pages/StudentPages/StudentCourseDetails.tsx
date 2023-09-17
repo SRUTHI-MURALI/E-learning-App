@@ -10,6 +10,7 @@ import StudentCourseAbout from '../../Components/StudentSide/StudentCourseDetail
 import { Col, Container, Row } from 'react-bootstrap'
 import StudenetCoursePurchase from '../../Components/StudentSide/StudentCourseDetails/StudenetCoursePurchase'
 import StudentCourseLessons from '../../Components/StudentSide/StudentCourseDetails/StudentCourseLessons'
+import { Base_Url } from '../../Config/Config'
 
 export default function StudentCourseDetails() {
     const [data,setData]= useState('')
@@ -19,9 +20,9 @@ export default function StudentCourseDetails() {
 
     useEffect(() => {
     // Make an HTTP request to fetch data from the backend
-    axios.get(`http://localhost:3002/student/getspecificcoursedetails/${id}`)
+    axios.get(`${Base_Url}/student/getspecificcoursedetails/${id}`)
       .then((response) => {
-        setData(response?.data); // Store data in state
+        setData(response.data.courseDetails); // Store data in state
       
       })
       .catch((error) => {
@@ -29,6 +30,7 @@ export default function StudentCourseDetails() {
       
       });
   }, []);
+
 
 
   return (

@@ -10,12 +10,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditCourseForm from './EditCourseForm';
 import { Button } from 'react-bootstrap';
 import { Base_Url,Image_Url } from '../../../Config/Config';
+import ReactPaginate from 'react-paginate'; 
 
 function CourseTable() {
     
     const[courseList,setCourselist]=useState([])
     const [openPopUp, setOpenPopUp] = useState(false);
     const[courseId,setCourseId]=useState('')
+    const [currentPage, setCurrentPage] = useState(0); // Current page number
+    const itemsPerPage = 5;
 
     
     useEffect(() => {
@@ -28,6 +31,11 @@ function CourseTable() {
             console.error(error);
           });
       }, []);
+
+      const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+      };
+
   
         const handleEditCourse = async (Id)=>{
             
@@ -42,7 +50,7 @@ function CourseTable() {
             axios.put(`${Base_Url}/admin/cancelcourse/${id}`)
             .then((response) => {
              
-              setCourselist(response.data.cancelCourse);
+              setCourselist(response.data.allcourses);
             })
             toast.success("successfully cancelled approval")
             window.location.reload();
@@ -53,11 +61,17 @@ function CourseTable() {
             axios.put(`${Base_Url}/admin/approvecourse/${id}`)
             .then((response) => {
               
-              setCourselist(response.data.cancelCourse);
+              setCourselist(response.data.allcourses);
+            console.log(response.data);
+        
             })
             toast.success("successfully approved ")
-            window.location.reload();
+            window.location.reload(); 
+            
           }
+
+          const offset = currentPage * itemsPerPage;
+          const paginatedData = courseList.slice(offset, offset + itemsPerPage);
     
   return (
 
@@ -85,7 +99,7 @@ function CourseTable() {
         </tr>
       </thead>
       <tbody>
-          {courseList.map((course, index) => (
+          {paginatedData.map((course, index) => (
             <tr key={course._id}>
               <td>{index + 1}</td>
               <td>{course?.title}</td>
@@ -118,6 +132,21 @@ function CourseTable() {
           
         </div>
       )}
+
+
+<div style={{float:'right' , margin:'3px', }}>
+        <ReactPaginate 
+        previousLabel={'Previous '} 
+        nextLabel={'Next'}
+        breakLabel={'...'}
+        pageCount={Math.ceil(courseList.length / itemsPerPage)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={2}
+        onPageChange={handlePageChange}
+        containerClassName={'pagination'} // Remove one of the containerClassName attributes
+        activeClassName={'active'}
+      />
+      </div>
     </div>
   )
 }
