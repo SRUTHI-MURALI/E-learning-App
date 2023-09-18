@@ -1,11 +1,10 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
-import AdminSidebar from '../../Components/AdminSIde/AdminSidebar/AdminSidebar'
-import CourseTable from '../../Components/AdminSIde/CourseDetails/CourseTable'
 import AdminHeader from '../../Components/AdminSIde/AdminHeader/AdminHeader'
+import AdminSidebar from '../../Components/AdminSIde/AdminSidebar/AdminSidebar'
+import AdminLessonsTable from '../../Components/AdminSIde/AdminLessonDetails/AdminLessonsTable'
 
-function 
-CoursesList() {
+function AdminLessonList() {
   return (
     <div>
     <Row >
@@ -15,11 +14,11 @@ CoursesList() {
     </Col>
     <Col xs={12} md={8}>
    
-    <CourseTable/>
+    <AdminLessonsTable/>
     </Col>
   </Row>
     </div>
   )
 }
 
-export default CoursesList
+export default AdminLessonList

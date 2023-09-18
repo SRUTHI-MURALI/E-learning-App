@@ -22,8 +22,8 @@ function AddCategory({ onClose }) {
 
     const usernamePattern = /^[A-Za-z\s.]+$/;
     if (!usernamePattern.test(trimmedCategory.trim())) {
-      alert('category can only contain letters and spaces');
-      return;
+       alert('category can only contain letters and spaces');
+       return
     }
   
 
@@ -52,6 +52,7 @@ function AddCategory({ onClose }) {
   };
 
   const handleClose = () => {
+   
     onClose(false);
   };
 
@@ -59,7 +60,7 @@ function AddCategory({ onClose }) {
     <div className="add-category-form-container">
       <ToastContainer position="top-center"></ToastContainer>
       <Card className="responsive-card" >
-        <Form>
+        <Form 	onSubmit={handleSubmit}>
           <FormLabel style={{ color: 'black'  }}>Add Category</FormLabel>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Category Name</Form.Label>
@@ -80,7 +81,7 @@ function AddCategory({ onClose }) {
             />
           </Form.Group>
           <div className="d-flex justify-content-between">
-            <Button type="submit" onClick={handleSubmit}>
+            <Button type="submit" >
               Submit
             </Button>
             <Button onClick={handleClose}>Close</Button>

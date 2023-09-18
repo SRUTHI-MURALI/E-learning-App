@@ -8,14 +8,15 @@ import './StudentTable.css'
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Base_Url } from '../../../Config/Config';
+import ReactPaginate from 'react-paginate'; 
+import Swal from 'sweetalert2';
+
 
 function StudentTable() {
     const[studentList,setStudentlist]=useState([])
     const [currentPage, setCurrentPage] = useState(0); // Current page number
     const itemsPerPage = 2;
    
-
-    
     useEffect(() => {
         axios.get(`${Base_Url}/admin/getstudentlist`)
           .then((response) => {
@@ -33,29 +34,43 @@ function StudentTable() {
       };
   
      
-
-      const blockStudent= async (id)=>{
-        
-        axios.put(`${Base_Url}/admin/blockstudent/${id}`)
-        .then((response) => {
-         
-          setStudentlist(response.data.students);
-        })
-        toast.success("successfully blocked")
-        window.location.reload();
-      }
-
-      const unBlockStudent= async (id)=>{
-        
-        axios.put(`${Base_Url}/admin/unblockstudent/${id}`)
-        .then((response) => {
+      const blockStatus = async (student:any) => {
+        try {
+          // Display a confirmation dialog using SweetAlert
+          const result = await Swal.fire({
+            title: `Are you sure you want to ${
+              student.isBlocked ? 'UnBlock' : 'Block'
+            } the student "${student.name}"?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+          });
+    
+          if (result.isConfirmed) {
+            if (!student.isBlocked) {
+             await axios.put(`${Base_Url}/admin/blockstudent/${student._id}`)
+              student.isBlocked = true;
+              toast.success(`student "${student.name}" blocked successfully`);
+            
+            } else {
+              await  axios.put(`${Base_Url}/admin/unblockstudent/${student._id}`)
+              student.isBlocked = false;
+              toast.success(`student "${student.name}" unblocked successfully`);
+            
+            }
           
-          setStudentlist(response.data.students);
-        })
-        toast.success("successfully unblocked")
-        window.location.reload();
-      }
+            setStudentlist([...studentList]);
+            
+            
+          }
+        } catch (error) {
+          // Handle errors and display an error message to the user
+          toast.error('Error');
+        }
+      };
 
+      
       const offset = currentPage * itemsPerPage;
       const paginatedData = studentList.slice(offset, offset + itemsPerPage);
 
@@ -84,9 +99,9 @@ function StudentTable() {
               <td>{student.phone}</td>
               <td>
                 {student.isBlocked ? (
-                  <Button onClick={()=>{unBlockStudent(student._id)}}>Unblock</Button>
+                  <Button onClick={()=>{blockStatus(student)}}>Unblock</Button>
                 ) : (
-                  <Button onClick={()=>{blockStudent(student._id)}}>Block</Button>
+                  <Button onClick={()=>{blockStatus(student)}}>Block</Button>
                 )}
               </td>
             </tr>

@@ -17,7 +17,11 @@ function RegisterForm() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [confirmPassword,setConfirmPassword]=useState('')
   const navigate=useNavigate()
+
+ 
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,19 +29,21 @@ function RegisterForm() {
     const trimmedPassword = password.trim();
     const trimmedPhone = phone.trim();
     const trimmedEmail = email.trim();
+    const trimmedConfirmPassword= confirmPassword.trim()
   
     if (
       trimmedName === '' ||
       trimmedEmail === '' ||
       trimmedPhone === '' ||
-      trimmedPassword === ''
+      trimmedPassword === ''||
+      trimmedConfirmPassword===''
     ) {
       toast.error("Please fill all fields");
       return;
     }
 
      // Validate username format (only letters and spaces allowed)
-     const usernamePattern = /^[A-Za-z\s]+$/;
+     const usernamePattern = /^[A-Za-z\s.]+$/;
      if (!usernamePattern.test(trimmedName.trim())) {
        alert('Username can only contain letters and spaces');
        return;
@@ -54,7 +60,10 @@ function RegisterForm() {
       alert('Please enter a valid email address');
       return;
     }
- 
+    if(password !== confirmPassword){
+      alert('password mismatch');
+      return
+    }
   
     try {
       await axios.post(`${Base_Url}/student/sendotp`, {
@@ -66,14 +75,19 @@ function RegisterForm() {
       
       // Display success toast
       toast.success("Successfully registered");
+ 
   
-      // Navigate after toast is displayed
-      navigate('/studentverifyOtp');
+      handleNavigation(trimmedPhone)
     } catch (error) {
       toast.error("Registration error");
       return;
     }
   };
+
+  const handleNavigation = (phone) => {
+    navigate(`/studentverifyOtp/${phone}`);
+  }
+  
   
   return (
     <Container className="mt-5">
@@ -105,18 +119,17 @@ function RegisterForm() {
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </Form.Group>
-
+                
+                <Form.Group className="mb-3 mt-5" controlId="formGridAddress1">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                   type="text"
+                   placeholder="123@gmail.com"
+                   value={email}
+                   onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
               <Row className="mb-3 mt-4">
-                <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="123@gmail.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
-
                 <Form.Group as={Col} controlId="formGridPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -124,6 +137,15 @@ function RegisterForm() {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} controlId="formGridPassword">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </Form.Group>
               </Row>

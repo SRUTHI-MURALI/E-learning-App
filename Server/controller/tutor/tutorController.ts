@@ -4,7 +4,7 @@ import generateToken from "../../token/generateToken";
 import Tutor from "../../model/tutor"
 import courseCategory from "../../model/courseCategory"
 import course from "../../model/courses"
-import categoryModel from "../../model/courseCategory"
+import C from "../../model/courseCategory"
 const BaseUrl: string = process.env.BaseUrl|| '';
 
 
@@ -197,7 +197,7 @@ const addLesson = async (req: Request, res: Response) => {
     
        
        const editCourse= await course.findById({_id:id}).populate("category")
-       const allcategories= await categoryModel.find()
+       const allcategories= await C.find()
        
        if(editCourse){
           res.status(201).json({
@@ -254,7 +254,28 @@ const addLesson = async (req: Request, res: Response) => {
  
  }
 
+ const getAllLessons=async(req:Request,res:Response)=>{
+  try {
+     const {id}= req.params
+     const allCourses= await course.findById({_id:id})
+    
+     const allLessons= allCourses?.courseLessons
+     console.log(allLessons,"lllll");
+     
+
+     if(allLessons){
+        res.status(201).json({
+           allLessons
+           
+       })
+     }
+  } catch (error) {
+     res.status(400).json(error)
+  }
+}
+
+
  export{
     sendOtp, signUp,login,getCategory,addCourse,addLesson,
-    getCourseList,getEditCourseList,editCourseList
+    getCourseList,getEditCourseList,editCourseList,getAllLessons
  }

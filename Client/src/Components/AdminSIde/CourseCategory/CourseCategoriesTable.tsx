@@ -4,12 +4,14 @@ import {ImArrowRight} from 'react-icons/im'
 import {AiFillEdit,AiOutlineClose,AiOutlineCheck} from 'react-icons/ai';
 import { Button, Col, Row } from 'react-bootstrap'
 import {useState,useEffect} from 'react'
+import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import './CourseCategoriesTable.css'
 import AddCategory from './AddCategory';
 import { Base_Url } from '../../../Config/Config';
 import EditCategoryForm from './EditCategoryForm';
 import ReactPaginate from 'react-paginate'; 
+import Swal from 'sweetalert2';
 
 function CourseCategoriesTable() {
 
@@ -18,7 +20,7 @@ function CourseCategoriesTable() {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [editPopUp, setEditPopUp] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 1;
+  const itemsPerPage = 5;
  
     
     useEffect(() => {
@@ -43,28 +45,43 @@ function CourseCategoriesTable() {
         setCurrentPage(selected);
       };
 
-      const InActivateCourse= async (id)=>{
-        
-        axios.put(`${Base_Url}/admin/inactivatecategory/${id}`)
-        .then((response) => {
-         
-          setCategorylist(response.data.categories);
-        })
-       
-        window.location.reload();
-      }
-
-      const ActivateCourse= async (id)=>{
-        
-        axios.put(`${Base_Url}/admin/activatecategory/${id}`)
-        .then((response) => {
-         
-          setCategorylist(response.data.categories);
-        })
-       
-        window.location.reload();
-      }
-
+      const categoryStatus = async (category) => {
+        try {
+          // Display a confirmation dialog using SweetAlert
+          const result = await Swal.fire({
+            title: `Are you sure you want to ${
+              category.isActive ? 'Inactivate' : 'Activate'
+            } the category "${category.title}"?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+          });
+    
+          if (result.isConfirmed) {
+            if (!category.isActive) {
+             await  axios.put(`${Base_Url}/admin/activatecategory/${category._id}`)
+              category.isActive = true;
+              toast.success(`category ${category.title} approved successfully`);
+            
+            } else {
+              await axios.put(`${Base_Url}/admin/inactivatecategory/${category._id}`)
+              category.isActive = false;
+              toast.success(`category "${category.title}" unapproved successfully`);
+            
+            }
+          
+            setCategorylist([...categoryList]);
+            console.log(categoryList,"hhh");
+            
+          }
+        } catch (error) {
+          // Handle errors and display an error message to the user
+          toast.error('Error');
+        }
+      };
+    
+      
       const EditCategory= async (id)=>{
         setCategoryId(id)
             
@@ -78,6 +95,7 @@ function CourseCategoriesTable() {
   return (
     <div>
       <Row>
+      <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
         <Row>
         <Col>
         <p className='categorylistheading' ><ImArrowRight /> <u>Course Categories</u></p>
@@ -110,11 +128,11 @@ function CourseCategoriesTable() {
              <td>
                 {category.isActive ? (
                   <>
-                  <AiOutlineCheck  onClick={()=>{InActivateCourse(category._id)}}/>
+                  <AiOutlineCheck  onClick={()=>{categoryStatus(category)}}/>
                   
                   </>
                 ) : (
-                  <AiOutlineClose  onClick={()=>{ActivateCourse(category._id)}}/>
+                  <AiOutlineClose  onClick={()=>{categoryStatus(category)}}/>
                 )}
               </td>
            </tr>

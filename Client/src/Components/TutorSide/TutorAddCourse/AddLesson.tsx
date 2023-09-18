@@ -13,7 +13,7 @@ function AddLesson({courseId}) {
   const [description, setDescription] = useState('');
   const navigate=useNavigate()
   const [video, setVideo] = useState<File | null>(null)
-    const [cloudinaryURL, setCloudinaryURL] = useState([]);
+    const [cloudinaryURL, setCloudinaryURL] = useState('');
 
   const handleAdd = async () => {
     console.log('hjkj');
@@ -70,7 +70,7 @@ console.log('hjkj');
       courseId}
       ).then
       alert('success')
-      navigate('/tutorhome')
+      navigate('/tutorallcourses')
     } catch (error) {
       console.log(error)
     }
@@ -86,6 +86,8 @@ console.log('hjkj');
       formData
       
     )
+    console.log(response.data);
+    
    
     setCloudinaryURL(response.data.public_id);
 

@@ -9,6 +9,8 @@ import StudentRegister from './Pages/StudentPages/StudentRegister'
 import StudentLogin from './Pages/StudentPages/StudentLogin'
 import StudentLandingPage from './Pages/StudentPages/StudentLandingPage'
 import StudentCourseList from './Pages/StudentPages/StudentCourseList'
+import StudentCourseDetails from './Pages/StudentPages/StudentCourseDetails'
+
 
 
 //Tutor imports
@@ -17,6 +19,9 @@ import TutorLogin from './Pages/TutorPages/TutorLogin'
 import TutorHome from './Pages/TutorPages/TutorHome'
 import TutorAddCourse from './Pages/TutorPages/TutorAddCourse'
 import CourseList from './Pages/TutorPages/CourseList'
+import TutorStudentList from './Pages/TutorPages/TutorStudentList'
+
+
 
 
 
@@ -30,6 +35,8 @@ import AddCategory from './Components/AdminSIde/CourseCategory/AddCategory'
 import CoursesList from './Pages/AdminPages/CoursesList'
 
 
+
+
 //Verify Otp import
 import StudentVerifyOtp from './Pages/Otp/StudentVerifyOtp'
 import TutorVerifyOtp from './Pages/Otp/TutorVerifyOtp'
@@ -38,9 +45,8 @@ import TutorVerifyOtp from './Pages/Otp/TutorVerifyOtp'
 
 // forgot password import
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword'
-import StudentCourseDetails from './Pages/StudentPages/StudentCourseDetails'
-import TutorStudentList from './Pages/TutorPages/TutorStudentList'
-
+import AdminLessonList from './Pages/AdminPages/AdminLessonList'
+import TutorLessonList from './Pages/TutorPages/TutorLessonList'
 
 
 function App() {
@@ -68,6 +74,7 @@ function App() {
         <Route path="/addcourse" element={<TutorAddCourse/>} />
         <Route path="/tutorallcourses" element={<CourseList/>} />
         <Route path='/tutorstudentslist' element={<TutorStudentList/>}/>
+        <Route path="/tutorlessonslist/:id" element={<TutorLessonList/>} />
 
 
 
@@ -81,11 +88,13 @@ function App() {
         <Route path="/courseCategoryList" element={<CourseCategoryList/>} />
         <Route path="/addCategory" element={<AddCategory onClose={undefined}/>} />
         <Route path="/allCoursesList" element={<CoursesList/>} />
+        <Route path="/adminlessonslist/:id" element={<AdminLessonList/>} />
+
 
   {/* otp */}
 
 
-        <Route path="/studentverifyOtp" element={<StudentVerifyOtp/>} />
+        <Route path="/studentverifyOtp/:phone" element={<StudentVerifyOtp/>} />
         <Route path="/tutorverifyOtp" element={<TutorVerifyOtp/>} />
 
 

@@ -21,6 +21,8 @@ function ForgotPasswordForm() {
 
   const navigate=useNavigate()
 
+ 
+
   const handleNumberSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
@@ -170,7 +172,7 @@ function ForgotPasswordForm() {
     {count > 0 ? (
       <h6>Countdown: {count} seconds</h6>
     ) : (
-      <Form >
+      <Form onSubmit={handleNumberSubmit}>
         <Button type="submit">Resend OTP</Button>
       </Form>
     )}

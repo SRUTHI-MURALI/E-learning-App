@@ -3,7 +3,7 @@ import { Container, Row } from 'react-bootstrap'
 import Accordion from 'react-bootstrap/Accordion';
 
 function StudentCourseLessons({ data }) {
-  console.log(data,"kk");
+ 
   
   return (
     <div>

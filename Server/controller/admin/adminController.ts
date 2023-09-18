@@ -6,7 +6,6 @@ import student from '../../model/student'
 import tutor from '../../model/tutor'
 import categoryModel from '../../model/courseCategory'
 import courses from "../../model/courses";
-const email='sruthymn6@gmail.com'
 import generateEmail from "../../EmailGenerator/emailGenerator";
 
 const login=async(req:Request,res:Response)=>{
@@ -53,19 +52,20 @@ const blockStudent=async(req:Request,res:Response)=>{
   
       
 
-      const students= await student.findByIdAndUpdate(
+       await student.findByIdAndUpdate(
          id,
          {
             isBlocked: true
          },
          { new: true }
        )
-       .then(() => {
+       const students= await student.find()
+       if(students) {
          res.status(201).json({
             students
             
         })
-       })
+       }
     
       
      
@@ -79,19 +79,20 @@ const unBlockStudent=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      const students= await student.findByIdAndUpdate(
+       await student.findByIdAndUpdate(
          id,
          {
            isBlocked: false
          },
          { new: true }
        )
-       .then(() => {
+       const students= await student.find()
+       if(students) {
          res.status(201).json({
             students
             
         })
-       })
+       }
     
       
      
@@ -124,7 +125,7 @@ const addCategory= async(req:Request,res:Response)=>{
       const {category,description} = req.body
      const check=await categoryModel.findOne({title:category})
       if(check){
-         res.status(400).json(
+      return   res.status(400).json(
             "category already existing"
          )
       }else{
@@ -134,7 +135,7 @@ const addCategory= async(req:Request,res:Response)=>{
          })
 
          if(newCategory){
-            res.status(201).json({
+         return   res.status(201).json({
                 _id:newCategory._id,
                 title:newCategory.title,
                 description:newCategory.description,
@@ -251,6 +252,7 @@ const editCourseList= async(req:Request,res:Response)=>{
 const approveCourse = async (req: Request, res: Response) => {
    try {
      const { id } = req.params;
+ console.log(id,'hkjhkjh');
  
      const inst:any = await courses.findById(id).populate('instructor');
      const instructorEmail = inst?.instructor?.email
@@ -319,18 +321,20 @@ const blockTutor=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      const tutorlist= await tutor.findByIdAndUpdate(
+       await tutor.findByIdAndUpdate(
          id,
          {
             isBlocked: true
          },
          { new: true }
        )
-       .then(() => {
+       const tutorlist= await tutor.find()
+       if(tutorlist) {
          res.status(201).json({
-            tutorlist  
+            tutorlist
+            
         })
-       })
+       }
     
    } catch (error) {
       res.status(400).json(error)
@@ -342,19 +346,20 @@ const unBlockTutor=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      const tutorlist= await tutor.findByIdAndUpdate(
+    await tutor.findByIdAndUpdate(
          id,
          {
            isBlocked: false
          },
          { new: true }
        )
-       .then(() => {
+       const tutorlist= await tutor.find()
+       if(tutorlist) {
          res.status(201).json({
             tutorlist
             
         })
-       })
+       }
     
       
      
@@ -367,19 +372,21 @@ const activateCategory=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      const categories= await categoryModel.findByIdAndUpdate(
+      console.log(id,"catid");
+      await categoryModel.findByIdAndUpdate(
          id,
          {
            isActive: true
          },
          { new: true }
        )
-       .then(() => {
+       const categories= await categoryModel.find()
+      if(categories) {
          res.status(201).json({
             categories
             
         })
-       })
+       }
     
       
      
@@ -393,20 +400,20 @@ const inActivateCategory=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      const categories= await categoryModel.findByIdAndUpdate(
+       await categoryModel.findByIdAndUpdate(
          id,
          {
            isActive: false
          },
          { new: true }
        )
-       .then(() => {
-         res.status(201).json({
-            categories
-            
-        })
-       })
-    
+       const categories= await categoryModel.find()
+       if(categories) {
+          res.status(201).json({
+             categories
+             
+         })
+        }
       
      
    } catch (error) {
@@ -467,12 +474,34 @@ const editCategory= async(req:Request,res:Response)=>{
 }
 
 
+const getAllLessons=async(req:Request,res:Response)=>{
+   try {
+      const {id}= req.params
+      const allCourses= await courses.findById({_id:id})
+     
+      const allLessons= allCourses?.courseLessons
+      console.log(allLessons,"lllll");
+      
+
+      if(allLessons){
+         res.status(201).json({
+            allLessons
+            
+        })
+      }
+   } catch (error) {
+      res.status(400).json(error)
+   }
+}
+
+
+
+
  export {
     login,getStudentsList,getInstructorList,blockStudent,
     unBlockStudent,getCategoryList,addCategory,
     getCourseList,getEditCourseList,editCourseList,
     approveCourse,cancelCourse,blockTutor,unBlockTutor,
     activateCategory,getEditCategoryList,
-    inActivateCategory,editCategory
- }
+    inActivateCategory,editCategory,getAllLessons }
 

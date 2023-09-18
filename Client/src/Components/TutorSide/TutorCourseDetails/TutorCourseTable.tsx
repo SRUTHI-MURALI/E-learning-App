@@ -10,15 +10,16 @@ import { Button } from 'react-bootstrap';
 import EditCourseTutorForm from './EditCourseTutorForm';
 import { Base_Url,Image_Url} from '../../../Config/Config';
 import ReactPaginate from 'react-paginate'; 
+import { useNavigate } from 'react-router-dom';
 
 function TutorCourseTable() {
 
   const tutorData=localStorage.getItem("tutorData")
   const parseData=JSON.parse(tutorData)
   const [currentPage, setCurrentPage] = useState(0); // Current page number
-    const itemsPerPage = 2;
+    const itemsPerPage = 10;
 
- 
+  const navigate=useNavigate()
     const[courseList,setCourselist]=useState([])
     const [openPopUp, setOpenPopUp] = useState(false);
     const[courseId,setCourseId]=useState('')
@@ -39,8 +40,10 @@ function TutorCourseTable() {
         setCurrentPage(selected);
       };
   
-     
-  
+      const handleLessons= async(Id)=>{
+        navigate(`/tutorlessonslist/${Id}`)
+      }
+
         const handleEditCourse = async (Id)=>{
             
             setCourseId(Id)
@@ -95,7 +98,7 @@ function TutorCourseTable() {
         <td>{course?.price}</td>
         <td><img src={`${Image_Url}/${course.photo}`} alt='sample' style={{width:"40px"}}/> </td>
         <td><AiFillEdit onClick={() => handleEditCourse(course._id)}/></td>
-        <td> <Button variant="link">Lessons</Button></td>
+        <td> <Button variant="link" onClick={()=>handleLessons(course._id)} >Lessons</Button></td>
       </tr>
     ))}
 </tbody>

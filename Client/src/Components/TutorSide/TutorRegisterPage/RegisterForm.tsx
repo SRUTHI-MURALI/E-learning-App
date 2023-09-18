@@ -16,6 +16,7 @@ import { Base_Url } from '../../../Config/Config';
 function RegisterForm() {
   const [tutorName, setTutorName] = useState('')
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const navigate=useNavigate()
@@ -26,13 +27,15 @@ function RegisterForm() {
     const trimmedPassword = password.trim();
     const trimmedPhone = phone.trim();
     const trimmedEmail = email.trim();
+    const trimmedConfirmPassword= confirmPassword.trim();
 
 
     if (
       trimmedTutorName === '' ||
       trimmedEmail === '' ||
       trimmedPhone === '' ||
-      trimmedPassword === ''
+      trimmedPassword === ''||
+      trimmedConfirmPassword ===''
     ) {
       toast.error("Please fill all fields");
       return;
@@ -54,6 +57,11 @@ function RegisterForm() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(trimmedEmail.trim())) {
       alert('Please enter a valid email address');
+      return;
+    }
+
+    if(confirmPassword !== password){
+      alert('password mismatch');
       return;
     }
    
@@ -102,19 +110,24 @@ function RegisterForm() {
          value={phone}
          onChange={(e)=>setPhone(e.target.value)} />
       </Form.Group>
-      <Row className="mb-3 mt-4">
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="123@gmail.com"
+      <Form.Group className="mb-3 mt-5" controlId="formGridAddress1">
+        <Form.Label>Email</Form.Label>
+        <Form.Control type="email" placeholder="123@gmail.com"
            value={email}
            onChange={(e)=>setEmail(e.target.value)} />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridPassword">
+      </Form.Group>
+      <Row className="mb-3 mt-4">
+      <Form.Group as={Col} controlId="formGridPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" 
            value={password}
            onChange={(e)=>setPassword(e.target.value)}/>
+        </Form.Group>
+        <Form.Group as={Col} controlId="formGridPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control type="password" placeholder="confirmPassword" 
+           value={confirmPassword}
+           onChange={(e)=>setConfirmPassword(e.target.value)}/>
         </Form.Group>
       </Row>
 
