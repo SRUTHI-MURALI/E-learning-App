@@ -7,7 +7,7 @@ interface StudentDocument extends Document {
   phone: number;
   password: string;
   photo: string[];
-  courses: mongoose.Schema.Types.ObjectId;
+  enrolledCourses: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
   isBlocked:boolean;
   jti:string
@@ -47,11 +47,12 @@ const studentSchema= new Schema<StudentDocument>({
    
          required: true,
        }],
-       courses: {
+       
+       enrolledCourses: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Courses",
+        ref:"courses",
         require: true,
-      },
+      }],
       createdAt: {
         type:Date,
         required:true,

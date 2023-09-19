@@ -20,6 +20,7 @@ import TutorHome from './Pages/TutorPages/TutorHome'
 import TutorAddCourse from './Pages/TutorPages/TutorAddCourse'
 import CourseList from './Pages/TutorPages/CourseList'
 import TutorStudentList from './Pages/TutorPages/TutorStudentList'
+import TutorLessonList from './Pages/TutorPages/TutorLessonList'
 
 
 
@@ -33,6 +34,7 @@ import InstructorList from './Pages/AdminPages/InstructorList'
 import CourseCategoryList from './Pages/AdminPages/CourseCategoryList'
 import AddCategory from './Components/AdminSIde/CourseCategory/AddCategory'
 import CoursesList from './Pages/AdminPages/CoursesList'
+import AdminLessonList from './Pages/AdminPages/AdminLessonList'
 
 
 
@@ -45,8 +47,10 @@ import TutorVerifyOtp from './Pages/Otp/TutorVerifyOtp'
 
 // forgot password import
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword'
-import AdminLessonList from './Pages/AdminPages/AdminLessonList'
-import TutorLessonList from './Pages/TutorPages/TutorLessonList'
+
+
+
+
 
 
 function App() {
@@ -65,6 +69,7 @@ function App() {
         <Route path="/studentlandingpage" element={<StudentLandingPage />} />
         <Route path="/studentallcourselist" element={<StudentCourseList/>} />
         <Route path="/studentcoursedetails/:id" element={<StudentCourseDetails/>} />
+       
 
    {/* tutor Routes */}
 
