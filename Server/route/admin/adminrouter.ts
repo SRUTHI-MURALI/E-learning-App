@@ -6,7 +6,7 @@ const adminrouter=express.Router()
 import {login,getStudentsList,getInstructorList, blockStudent, unBlockStudent,
     getCategoryList, addCategory,getCourseList,getEditCourseList,editCourseList,
     approveCourse,cancelCourse,blockTutor,unBlockTutor,activateCategory,
-    inActivateCategory,editCategory,getEditCategoryList,getAllLessons,} from "../../controller/admin/adminController"
+    inActivateCategory,editCategory,getEditCategoryList,getAllLessons,getOrderHistory} from "../../controller/admin/adminController"
 
 
 adminrouter.post('/login',login)
@@ -44,6 +44,10 @@ adminrouter.put('/cancelcourse/:id',cancelCourse)
 
 // Lessons Management
 adminrouter.get('/getalllessons/:id',getAllLessons) 
+
+
+// order Management
+adminrouter.get('/getorderlist',getOrderHistory) 
 
 
 export default adminrouter

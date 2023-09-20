@@ -16,7 +16,7 @@ function AddLesson({courseId}) {
     const [cloudinaryURL, setCloudinaryURL] = useState('');
 
   const handleAdd = async () => {
-    console.log('hjkj');
+   
     if (title.trim() === '' || 
     duration.trim() === '' || 
     description.trim() === '') 
@@ -24,7 +24,7 @@ function AddLesson({courseId}) {
       return alert('Please fill in all fields before adding a lesson.');
     
     }
-console.log('hjkj');
+
 
     
   
@@ -94,6 +94,10 @@ console.log('hjkj');
 
   }
 
+  const handleAddQuiz= async ()=>{
+    navigate(`/tutoraddquiz/${courseId}`)
+  }
+
   return (
     <div>
          {/* Render individual forms for each lesson */}
@@ -159,7 +163,7 @@ console.log('hjkj');
               </Col>
               
               <Col>
-                <Button onClick={handleAdd}>Add Quiz</Button>
+                <Button onClick={handleAddQuiz}>Add Quiz</Button>
               </Col>
               <Col>
                 <Button onClick={handleAdd}>Add Pdf</Button>

@@ -4,7 +4,7 @@ import generateToken from "../../token/generateToken";
 import Tutor from "../../model/tutor"
 import courseCategory from "../../model/courseCategory"
 import course from "../../model/courses"
-import C from "../../model/courseCategory"
+import OrderModel from "../../model/orders"
 const BaseUrl: string = process.env.BaseUrl|| '';
 
 
@@ -153,7 +153,6 @@ const signUp = async (req: Request, res: Response) => {
  
 const addLesson = async (req: Request, res: Response) => {
     const { lessons, courseId } = req.body;
-  console.log(lessons);
   
     try {
       const updatedCourse = await course.findOneAndUpdate(
@@ -178,7 +177,6 @@ const addLesson = async (req: Request, res: Response) => {
     try {
        const allCourses= await course.find().populate("category instructor")
      
-       
     
        if(allCourses){
           res.status(201).json({
@@ -194,10 +192,8 @@ const addLesson = async (req: Request, res: Response) => {
  const getEditCourseList=async(req:Request,res:Response)=>{
     try {
        const {id}=req.params
-    
-       
        const editCourse= await course.findById({_id:id}).populate("category")
-       const allcategories= await C.find()
+       const allcategories= await courseCategory.find()
        
        if(editCourse){
           res.status(201).json({
@@ -260,7 +256,7 @@ const addLesson = async (req: Request, res: Response) => {
      const allCourses= await course.findById({_id:id})
     
      const allLessons= allCourses?.courseLessons
-     console.log(allLessons,"lllll");
+ 
      
 
      if(allLessons){
@@ -274,8 +270,40 @@ const addLesson = async (req: Request, res: Response) => {
   }
 }
 
+  const enrolledStudents=async(req:Request,res:Response)=>{
+    try {
+      const {id}= req.params;
+      
+      const orders:any = await OrderModel.find()
+    .populate({
+      path: 'courseDetails',
+      populate: {
+        path: 'instructor',
+        model: 'tutor', // Match the 'ref' value in course schema
+      },
+    })
+    .populate('studentDetails')
+    .exec();
+
+    
+
+    const filteredOrders = orders.filter((order: any) => {
+      return order.courseDetails.instructor._id.toString() === id;
+    });
+    
+   
+  
+        if(orders){
+          res.status(200).json({filteredOrders})
+        }
+        
+  
+    } catch (error) {
+      res.status(400).json(error)
+    }
+  }
 
  export{
     sendOtp, signUp,login,getCategory,addCourse,addLesson,
-    getCourseList,getEditCourseList,editCourseList,getAllLessons
+    getCourseList,getEditCourseList,editCourseList,getAllLessons,enrolledStudents
  }

@@ -6,6 +6,7 @@ import student from '../../model/student'
 import tutor from '../../model/tutor'
 import categoryModel from '../../model/courseCategory'
 import courses from "../../model/courses";
+import OrderModel from "../../model/orders"
 import generateEmail from "../../EmailGenerator/emailGenerator";
 
 const login=async(req:Request,res:Response)=>{
@@ -104,7 +105,7 @@ const unBlockStudent=async(req:Request,res:Response)=>{
 
 const getInstructorList=async(req:Request,res:Response)=>{
    try {
-      const instructor= await tutor.find({})
+      const instructor= await tutor.find()
       
       
       if(instructor){
@@ -252,7 +253,7 @@ const editCourseList= async(req:Request,res:Response)=>{
 const approveCourse = async (req: Request, res: Response) => {
    try {
      const { id } = req.params;
- console.log(id,'hkjhkjh');
+
  
      const inst:any = await courses.findById(id).populate('instructor');
      const instructorEmail = inst?.instructor?.email
@@ -273,7 +274,7 @@ const approveCourse = async (req: Request, res: Response) => {
      );
  
      await generateEmail(instructorEmail,coursename,msg);
- const allcourses=await courses.find().populate("instructor")
+   const allcourses=await courses.find().populate("instructor")
      res.status(201).json({
        allcourses,
      });
@@ -306,7 +307,7 @@ const cancelCourse=async(req:Request,res:Response)=>{
     );
 
     await generateEmail(instructorEmail,coursename,msg);
-const allcourses=await courses.find().populate("instructor")
+   const allcourses=await courses.find().populate("instructor")
     res.status(201).json({
       allcourses,
     });
@@ -372,7 +373,8 @@ const activateCategory=async(req:Request,res:Response)=>{
    
    try {
       const {id} =req.params
-      console.log(id,"catid");
+     
+      
       await categoryModel.findByIdAndUpdate(
          id,
          {
@@ -480,8 +482,7 @@ const getAllLessons=async(req:Request,res:Response)=>{
       const allCourses= await courses.findById({_id:id})
      
       const allLessons= allCourses?.courseLessons
-      console.log(allLessons,"lllll");
-      
+     
 
       if(allLessons){
          res.status(201).json({
@@ -495,6 +496,29 @@ const getAllLessons=async(req:Request,res:Response)=>{
 }
 
 
+const getOrderHistory = async (req: Request, res: Response) => {
+   try {
+     const orders: any = await OrderModel.find()
+       .populate({
+         path: 'courseDetails',
+         populate: {
+           path: 'instructor',
+           model: 'tutor', // Assuming 'instructor' is the model name
+         },
+       })
+       .populate('studentDetails');
+ 
+     if (orders) {
+       res.status(201).json({
+         orders,
+       });
+     }
+   } catch (error) {
+     res.status(400).json(error);
+   }
+ };
+ 
+
 
 
  export {
@@ -502,6 +526,6 @@ const getAllLessons=async(req:Request,res:Response)=>{
     unBlockStudent,getCategoryList,addCategory,
     getCourseList,getEditCourseList,editCourseList,
     approveCourse,cancelCourse,blockTutor,unBlockTutor,
-    activateCategory,getEditCategoryList,
+    activateCategory,getEditCategoryList,getOrderHistory,
     inActivateCategory,editCategory,getAllLessons }
 

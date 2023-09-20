@@ -47,6 +47,11 @@ import TutorVerifyOtp from './Pages/Otp/TutorVerifyOtp'
 
 // forgot password import
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword'
+import AdminOrderList from './Pages/AdminPages/AdminOrderList'
+import StudentQuizPage from './Pages/StudentPages/StudentQuizPage'
+
+
+import AddQuizPage from './Pages/TutorPages/AddQuizPage'
 
 
 
@@ -69,6 +74,7 @@ function App() {
         <Route path="/studentlandingpage" element={<StudentLandingPage />} />
         <Route path="/studentallcourselist" element={<StudentCourseList/>} />
         <Route path="/studentcoursedetails/:id" element={<StudentCourseDetails/>} />
+        <Route path="/studentquizpage" element={<StudentQuizPage/>} />
        
 
    {/* tutor Routes */}
@@ -80,6 +86,7 @@ function App() {
         <Route path="/tutorallcourses" element={<CourseList/>} />
         <Route path='/tutorstudentslist' element={<TutorStudentList/>}/>
         <Route path="/tutorlessonslist/:id" element={<TutorLessonList/>} />
+        <Route path="/tutoraddquiz/:id" element={<AddQuizPage/>} />
 
 
 
@@ -94,6 +101,7 @@ function App() {
         <Route path="/addCategory" element={<AddCategory onClose={undefined}/>} />
         <Route path="/allCoursesList" element={<CoursesList/>} />
         <Route path="/adminlessonslist/:id" element={<AdminLessonList/>} />
+        <Route path="/orderhistory" element={<AdminOrderList/>}/>
 
 
   {/* otp */}

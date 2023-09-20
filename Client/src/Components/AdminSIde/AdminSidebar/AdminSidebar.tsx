@@ -49,6 +49,11 @@ function AdminSidebar() {
                 <BsPeopleFill className='icon'/> Students   
                 </a>
             </li>
+            <li className='sidebar-list-item'>
+                <a href="/orderhistory">
+                <BsPeopleFill className='icon'/> Orders   
+                </a>
+            </li>
             
             
             
