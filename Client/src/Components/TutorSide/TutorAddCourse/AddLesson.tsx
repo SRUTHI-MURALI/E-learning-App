@@ -2,203 +2,171 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Lessons_Upload_Url,Base_Url } from '../../../Config/Config';
+import { Lessons_Upload_Url, Base_Url } from '../../../Config/Config';
+import AddQuiz from '../TutorAddQuiz/AddQuiz';
 
-function AddLesson({courseId}) {
- 
-  
+function AddLesson({ courseId, onClose }) {
   const [lessons, setLessons] = useState([]);
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
   const [description, setDescription] = useState('');
-  const navigate=useNavigate()
-  const [video, setVideo] = useState<File | null>(null)
-    const [cloudinaryURL, setCloudinaryURL] = useState('');
+  const [showAddQuiz, setShowAddQuiz] = useState(false);
+  const navigate = useNavigate();
+  const [video, setVideo] = useState(null);
+  const [cloudinaryURL, setCloudinaryURL] = useState('');
+  const [count, setCount] = useState(0);
+  const [pdf, setPdf] = useState(null); // Change to null for file handling
 
   const handleAdd = async () => {
-   
-    if (title.trim() === '' || 
-    duration.trim() === '' || 
-    description.trim() === '') 
-    {
+    if (title.trim() === '' || duration.trim() === '' || description.trim() === '') {
       return alert('Please fill in all fields before adding a lesson.');
-    
     }
-
-
-    
-  
-    await videoHandler()
+    await videoHandler();
 
     if (!cloudinaryURL) {
-      
-      
-      return  alert("Error uploading video");
-     
+      return alert('Error uploading video');
     }
 
     const newLesson = {
-    
       title: title,
       duration: duration,
       description: description,
-      video:cloudinaryURL,
+      video: cloudinaryURL,
+      pdf: pdf ? URL.createObjectURL(pdf) : '', // Store the PDF file as a URL
     };
-
-   
-
+    setCount(count + 1);
     setLessons([...lessons, newLesson]);
     // Clear the form fields
     setTitle('');
     setDuration('');
     setDescription('');
     setVideo(null);
-    setCloudinaryURL([])
-
-
-   
+    setCloudinaryURL('');
+    setPdf(null); // Reset the PDF state
   };
 
-    
   const handleMainSubmit = async () => {
-   
-    // Handle the submission of all lessons here
-    console.log('All lessons:', lessons);
     try {
-      await axios.post(`${Base_Url}/tutor/addlessons`,
-     { lessons,
-      courseId}
-      ).then
-      alert('success')
-      navigate('/tutorallcourses')
+      await axios.post(`${Base_Url}/tutor/addlessons`, {
+        lessons,
+        courseId,
+      });
+      onClose(false);
+      alert('Success');
+      navigate('/tutorallcourses');
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
-  const videoHandler= async ()=>{
-    const formData = new FormData()
-    formData.append("file",video)
-    formData.append("upload_preset","lessonlist")
-    formData.append("cloud_name","dnkc0odiw")
-    const response = await axios.post(
-      `${Lessons_Upload_Url } `,
-      formData
-      
-    )
-    console.log(response.data);
-    
-   
-    setCloudinaryURL(response.data.public_id);
+  const videoHandler = async () => {
+    const formData = new FormData();
+    formData.append('file', video);
+    formData.append('upload_preset', 'lessonlist');
+    formData.append('cloud_name', 'dnkc0odiw');
+    try {
+      const response = await axios.post(`${Lessons_Upload_Url}`, formData);
+      setCloudinaryURL(response.data.public_id);
+    } catch (error) {
+      console.error('Error uploading video', error);
+    }
+  };
 
-
-  }
-
-  const handleAddQuiz= async ()=>{
-    navigate(`/tutoraddquiz/${courseId}`)
-  }
+  const handleAddQuiz = () => {
+    setShowAddQuiz(true);
+  };
 
   return (
     <div>
-         {/* Render individual forms for each lesson */}
-      {lessons.map((lesson, index) => (
-        <>
-        <h2>Lesson:{index+1}</h2>
-        <LessonForm key={index} lesson={lesson} />
-        </>
-        
-      ))}
-      <Container>
-        <Card className='justify-content-center m-2'>
-          <Form className='mt-2 mb-2'>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>Title</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Course Title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </Form.Group>
+      <Button style={{ float: 'right' }} type="submit" onClick={handleMainSubmit}>
+        Submit lessons
+      </Button>
+      <h3 className="mt-4">Add a Lesson ?</h3>
+      <h4> Lesson: {count + 1}</h4>
+      {showAddQuiz === false ? (
+        <div>
+          
+          <Container>
+            <Card className="justify-content-center m-2">
+              <Form className="mt-2 mb-2">
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="formGridEmail">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Course Title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Duration</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Course Duration"
-                  value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
-                />
-              </Form.Group>
-            </Row>
+                  <Form.Group as={Col} controlId="formGridPassword">
+                    <Form.Label>Duration</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Course Duration"
+                      value={duration}
+                      onChange={(e) => setDuration(e.target.value)}
+                    />
+                  </Form.Group>
+                </Row>
 
-            <Form.Group className="mb-3" controlId="formGridAddress1">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                placeholder="Course Description"
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </Form.Group>
+                <Form.Group className="mb-3" controlId="formGridAddress1">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control
+                    placeholder="Course Description"
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </Form.Group>
 
-            <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label></Form.Label>
-            <Form.Control
-              type="file"
-              onChange={(e) => {
-                const inputElement = e.target as HTMLInputElement;
-                if (inputElement && inputElement.files) {
-                  const selectedFile = inputElement.files[0];
-                  setVideo(selectedFile);
-                }
-              }}
-            />
-          </Form.Group>
+                <Form.Group controlId="formFile" className="mb-3">
+                  <Form.Label>Video</Form.Label>
+                  <Form.Control
+                    type="file"
+                    onChange={(e) => {
+                      const inputElement = e.target as HTMLInputElement;
+                      if (inputElement && inputElement.files) {
+                        const selectedFile = inputElement.files[0];
+                        setVideo(selectedFile);
+                      }
+                    }}
+                  />
+                </Form.Group>
 
-            <Row>
-            <Col>
-                <Button onClick={handleAdd}>submit</Button>
-              </Col>
-              
-              <Col>
-                <Button onClick={handleAddQuiz}>Add Quiz</Button>
-              </Col>
-              <Col>
-                <Button onClick={handleAdd}>Add Pdf</Button>
-              </Col>
-              
-              <Col>
-                <Button onClick={handleMainSubmit}>Submit All Lessons</Button>
-              </Col>
-            </Row>
-          </Form>
-        </Card>
-      </Container>
+                <Form.Group controlId="formFile" className="mb-3">
+                  <Form.Label>Add PDF</Form.Label>
+                  <Form.Control
+                    type="file"
+                    onChange={(e) => {
+                      const inputElement = e.target as HTMLInputElement;
+                      if (inputElement && inputElement.files) {
+                        const selectedFile = inputElement.files[0];
+                        setPdf(selectedFile); // Update the PDF state
+                      }
+                    }}
+                  />
+                </Form.Group>
 
-     
+                <Row>
+                  <Col>
+                    <Button onClick={handleAdd}>Add Lesson</Button>
+                  </Col>
+                  <Col>
+                    <Button style={{float:'right'}} onClick={handleAddQuiz}>Add Quiz</Button>
+                  </Col>
+                </Row>
+              </Form>
+            </Card>
+          </Container>
+        </div>
+      ) : (
+        <AddQuiz courseId={courseId} onClose={() => setShowAddQuiz(false)} />
+      )}
     </div>
   );
 }
-
-function LessonForm({ lesson }) {
-    return (
-      <Container key={lesson.title}>
-        <Card className='justify-content-center m-2'>
-          <Form className='mt-2 mb-2'>
-
-            <h4>Title: {lesson.title}</h4>
-            <p>Duration: {lesson.duration}</p>
-            <p>Description: {lesson.description}</p> 
-            <p>Quiz:{lesson?.quiz}</p>
-            <p>pdf:{lesson?.pdf}</p>
-           <img></img>
-          </Form>
-        </Card>
-      </Container>
-    );
-  }
 
 
 export default AddLesson;

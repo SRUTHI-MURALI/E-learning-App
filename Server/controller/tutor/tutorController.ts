@@ -5,6 +5,7 @@ import Tutor from "../../model/tutor"
 import courseCategory from "../../model/courseCategory"
 import course from "../../model/courses"
 import OrderModel from "../../model/orders"
+import courseQuiz from "../../model/courseQuiz";
 const BaseUrl: string = process.env.BaseUrl|| '';
 
 
@@ -154,11 +155,12 @@ const signUp = async (req: Request, res: Response) => {
 const addLesson = async (req: Request, res: Response) => {
     const { lessons, courseId } = req.body;
   
+  
     try {
       const updatedCourse = await course.findOneAndUpdate(
-        { _id: courseId }, // Find the course by its ID
-        { $push: { courseLessons: lessons } }, // Add lessons to the courseLessons array
-        { new: true } // Return the updated course document
+        { _id: courseId }, 
+        { $push: { courseLessons: lessons } }, 
+        { new: true }
       );
   
       if (updatedCourse) {
@@ -303,7 +305,59 @@ const addLesson = async (req: Request, res: Response) => {
     }
   }
 
+  const AddQuiz = async (req: Request, res: Response) => {
+    
+    const { questionset, courseId,count } = req.body;
+    const selectedCourse= await course.findById({_id:courseId})
+    const questionNumber=selectedCourse?.quizQuestions
+    const newcount=questionNumber+count
+    const existQuiz= await courseQuiz.find({course:courseId})
+
+  if(existQuiz==null){
+    try {
+      const updateQuizSet= await courseQuiz.findOneAndUpdate(
+        {course: courseId }, 
+        { $push: { questionset: { $each: questionset } } },
+        { new: true } 
+      );
+  
+      if (updateQuizSet) {
+        await course.findByIdAndUpdate(courseId,{
+          quizQuestions:newcount
+        })
+        res.status(201).json(updateQuizSet);
+      } else {
+        res.status(404).json({ error: 'Course not found' });
+      }
+    } catch (error) {
+      res.status(400).json(error)
+    }
+  }else{
+    console.log("else");
+    
+    try {
+      const newQuiz=await courseQuiz.create({
+        course:courseId,
+        questionset
+      
+    })
+    if(newQuiz){
+      await course.findByIdAndUpdate(courseId,{
+        quizQuestions:count
+      })
+      
+      res.status(201).json(newQuiz);
+    }else{
+      res.status(404).json({ error: 'Course not found' });
+    }
+    } catch (error) {
+      res.status(400).json(error)
+    }
+  }
+    
+  };
+
  export{
-    sendOtp, signUp,login,getCategory,addCourse,addLesson,
+    sendOtp, signUp,login,getCategory,addCourse,addLesson,AddQuiz,
     getCourseList,getEditCourseList,editCourseList,getAllLessons,enrolledStudents
  }

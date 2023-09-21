@@ -1,4 +1,4 @@
-import React from 'react'
+
 import TutorHeader from '../../Components/TutorSide/TutorHeader/TutorHeader'
 import { Col, Row } from 'react-bootstrap'
 import TutorSidebar from '../../Components/TutorSide/TutorSidebar/TutorSidebar'
@@ -20,10 +20,6 @@ function TutorStudentList() {
     </Col>
 
    </Row>
-     
-     
- 
-
     </>
   )
 }

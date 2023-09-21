@@ -32,7 +32,7 @@ function StudentQuizForm() {
 		}
 	};
 	return (
-		<div className='app'>
+		<div className='quiz'>
 			{showScore ? (
 				<div className='score-section'>
 					You scored {score} out of {questions.length}

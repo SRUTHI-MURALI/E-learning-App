@@ -41,7 +41,11 @@ function TutorSidebar() {
                     <BsFillArchiveFill className='icon'/> Add Course
                 </a>
             </li>
-            
+            <li className='sidebar-list-item'>
+                <a href="/tutorquizlist">
+                <BsPeopleFill className='icon'/> Quizes   
+                </a>
+            </li>
             
         </ul>
     </aside>

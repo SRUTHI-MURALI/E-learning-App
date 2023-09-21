@@ -20,6 +20,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
     const [cloudinaryURL, setCloudinaryURL] = useState('');
     const[selectedCourse,setSelectedCourse]= useState('')
     const[show,setShow]=useState(null)
+    const [showLesson,setShowLesson]=useState(false)
     
     const submitHandler = async ()  => {
 
@@ -89,7 +90,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
 
       const addLessonHandler = async ()=>{
 
-        setShow(false)
+        setShowLesson(true)
         
       }
 
@@ -111,20 +112,24 @@ function AddCourse({selectedCategory,onCourseAdded}) {
         )
        
         setCloudinaryURL(response.data.public_id);
-
-  
       }
-    
-    
-  return (
-    <div>
+
       
-      <Container>
+    const handleOnClose =async()=>{
+      setShowLesson(false)
+      
+    }
+
+  return (
+
+          <div>
+          {showLesson==false ?( <Container>
+
       <Card className=' justify-content-center' >
         <Row>
         <ToastContainer position='top-center' autoClose={3000}></ToastContainer>
 
-    <Form className='mt-2 mb-2'>
+      <Form className='mt-2 mb-2'>
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Title</Form.Label>
@@ -132,9 +137,7 @@ function AddCourse({selectedCategory,onCourseAdded}) {
           value={title}
           onChange={(e)=>{setTitle(e.target.value)}}
           />
-        </Form.Group>
-
-       
+        </Form.Group>   
       </Row>
 
       <Row className="mb-3">
@@ -150,67 +153,64 @@ function AddCourse({selectedCategory,onCourseAdded}) {
           onChange={(e)=>{setDuration(e.target.value)}}/>
         </Form.Group>
 
-       
       </Row>
-    
+
       <Form.Group className="mb-3" controlId="formGridAddress1">
         <Form.Label>Description</Form.Label>
         <Form.Control placeholder="course description"  value={description}
           onChange={(e)=>{setDescription(e.target.value)}} />
       </Form.Group>
-      
+
       <Form.Group controlId="formFile" className="mb-3">
-  <Form.Label></Form.Label>
-  <Form.Control
-    type="file"
-    onChange={(e) => {
+      <Form.Label></Form.Label>
+      <Form.Control
+      type="file"
+      onChange={(e) => {
       const inputElement = e.target as HTMLInputElement;
       if (inputElement && inputElement.files) {
         const selectedFile = inputElement.files[0];
         setImage(selectedFile);
       }
-    }}
-  />
-</Form.Group>
+      }}
+      />
+      </Form.Group>
       <Row>
-       
-      {show ? (
       
+      {show ? (
+
         <Col>
       <Button variant="primary" style={{ float: 'right' }} onClick={addLessonHandler}>
         Add Lesson
       </Button>
-    </Col>
-  
-  ) : show === null ? (
-    <Col>
+      </Col>
+
+      ) : show === null ? (
+      <Col>
       <Button variant="primary" onClick={submitHandler}>
         Submit
       </Button>
-    </Col>
-  ) : null}
+      </Col>
+      ) : null}
 
-<Col>
-  <Button variant="primary" onClick={exitHandler} style={{ float: 'right' }}>
-    Exit
-  </Button>
-</Col>
-       
+      <Col>
+      <Button variant="primary" onClick={exitHandler} style={{ float: 'right' }}>
+      Exit
+      </Button>
+      </Col>
+      
         </Row>
-    </Form>
+      </Form>
         </Row>
         </Card>
-        {show==false &&(
-           <Row>
-           <AddLesson courseId={selectedCourse} />
-         </Row>
-        )}
-         
         
-      </Container>
-
-      
-    </div>
+        
+        
+      </Container>):
+              ( <Row>
+                <AddLesson courseId={selectedCourse} onClose={handleOnClose} />
+              </Row>)} 
+          
+          </div>
   )
 }
 

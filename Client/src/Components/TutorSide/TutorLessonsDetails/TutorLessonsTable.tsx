@@ -43,6 +43,13 @@ function TutorLessonsTable() {
         
         setOpenPopUp(true);
     }
+
+
+       
+    const handleOnClose =async()=>{
+      setOpenPopUp(false)
+      
+    }
          const offset = currentPage * itemsPerPage;
           const paginatedData = lessonsList.slice(offset, offset + itemsPerPage);
     
@@ -50,6 +57,8 @@ function TutorLessonsTable() {
 
   return (
     <div>
+       {openPopUp== false && (
+        <>
        <Row>
         <Row>
           <Col>
@@ -63,8 +72,8 @@ function TutorLessonsTable() {
        
       <Col>
        
-       {openPopUp== false && (
-      <>
+      
+      
      
      
       <Table className='mt-5 ms-5' striped bordered hover size="sm">
@@ -74,7 +83,7 @@ function TutorLessonsTable() {
           <th >Title</th>
           <th>Description</th>
           <th>Duration</th>
-          
+          <th>PDF Download</th>
           
           <th>Video</th>
         
@@ -82,6 +91,7 @@ function TutorLessonsTable() {
       </thead>
       <tbody>
           {paginatedData.map((lessons, index) => (
+            
             <tr key={lessons._id}>
               <td>{index + 1}</td>
               <td>{lessons?.title}</td>
@@ -89,7 +99,18 @@ function TutorLessonsTable() {
               <td>{lessons?.description}</td>
               <td>{lessons?.duration}</td>
             
-             
+              <td>
+          {lessons?.pdf && (
+            <a
+              href={lessons?.pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              download // Add 'download' attribute to trigger the download
+            >
+              Download PDF
+            </a>
+          )}
+        </td>
             
               <td><video src={`${Video_Url}/${lessons?.video}`} alt='sample' style={{width:"40px"}} controls/> </td>
             
@@ -98,16 +119,18 @@ function TutorLessonsTable() {
           ))}
         </tbody>
     </Table>
-    </>
-     )}
+  
 
      
 </Col>
       </Row>
+      </>
+    
+       )}
     {openPopUp && (
         <div>
             
-          <AddLesson  courseId={id}/>
+          <AddLesson  courseId={id}  onClose={handleOnClose}/>
           
           
         </div>
@@ -115,20 +138,22 @@ function TutorLessonsTable() {
 
    
 
+{openPopUp==false && (
+  <div style={{float:'right' , margin:'3px', }}>
+  <ReactPaginate 
+  previousLabel={'Previous '} 
+  nextLabel={'Next'}
+  breakLabel={'...'}
+  pageCount={Math.ceil(lessonsList.length / itemsPerPage)}
+  marginPagesDisplayed={2}
+  pageRangeDisplayed={2}
+  onPageChange={handlePageChange}
+  containerClassName={'pagination'} // Remove one of the containerClassName attributes
+  activeClassName={'active'}
+/>
+</div>
+)}
 
-<div style={{float:'right' , margin:'3px', }}>
-        <ReactPaginate 
-        previousLabel={'Previous '} 
-        nextLabel={'Next'}
-        breakLabel={'...'}
-        pageCount={Math.ceil(lessonsList.length / itemsPerPage)}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={2}
-        onPageChange={handlePageChange}
-        containerClassName={'pagination'} // Remove one of the containerClassName attributes
-        activeClassName={'active'}
-      />
-      </div>
     </div>
   )
 }

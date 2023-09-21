@@ -52,6 +52,7 @@ import StudentQuizPage from './Pages/StudentPages/StudentQuizPage'
 
 
 import AddQuizPage from './Pages/TutorPages/AddQuizPage'
+import TutorQuizList from './Pages/TutorPages/TutorQuizList'
 
 
 
@@ -86,7 +87,8 @@ function App() {
         <Route path="/tutorallcourses" element={<CourseList/>} />
         <Route path='/tutorstudentslist' element={<TutorStudentList/>}/>
         <Route path="/tutorlessonslist/:id" element={<TutorLessonList/>} />
-        <Route path="/tutoraddquiz/:id" element={<AddQuizPage/>} />
+        {/* <Route path="/tutoraddquiz/:id" element={<AddQuizPage/>} /> */}
+        <Route path="/tutorquizlist" element={<TutorQuizList/>} />
 
 
 
