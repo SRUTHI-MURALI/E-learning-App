@@ -79,6 +79,11 @@ const courseSchema = new Schema<CourseDocument>({
       pdf:{
         type:String,
         required:true,
+      },
+      isActive:{
+        type:String,
+        required:true,
+        default:true
       }
     },
   ],

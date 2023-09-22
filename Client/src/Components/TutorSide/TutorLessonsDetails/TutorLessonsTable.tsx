@@ -1,21 +1,24 @@
 import Table from 'react-bootstrap/Table';
 import {ImArrowRight} from 'react-icons/im'
-import {AiFillEdit} from 'react-icons/ai';
+import {TiTickOutline} from 'react-icons/ti'
+import {AiOutlineClose} from 'react-icons/ai'
 import {useState,useEffect} from 'react'
 import axios from 'axios';
 import '../../AdminSIde/CourseDetails/CourseTable.css'
+import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Base_Url,Video_Url } from '../../../Config/Config';
 import ReactPaginate from 'react-paginate'; 
 import {  useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
 import AddLesson from '../TutorAddCourse/AddLesson';
+import Swal from 'sweetalert2';
+
 
 
 function TutorLessonsTable() {
     const[lessonsList,setLessonslist]=useState([])
     const [openPopUp, setOpenPopUp] = useState(false);
-   
    
     const [currentPage, setCurrentPage] = useState(0); // Current page number
     const itemsPerPage = 5;
@@ -25,8 +28,6 @@ function TutorLessonsTable() {
     useEffect(() => {
         axios.get(`${Base_Url}/tutor/getalllessons/${id}`)
           .then((response) => {
-        
-          
             setLessonslist(response.data.allLessons);
           })
           .catch((error) => {
@@ -43,20 +44,55 @@ function TutorLessonsTable() {
         
         setOpenPopUp(true);
     }
-
-
-       
     const handleOnClose =async()=>{
-      setOpenPopUp(false)
-      
+      setOpenPopUp(false)      
     }
-         const offset = currentPage * itemsPerPage;
-          const paginatedData = lessonsList.slice(offset, offset + itemsPerPage);
+
+    const activeStatus = async (lessons:any) => {
+      try {
+        // Display a confirmation dialog using SweetAlert
+        const result = await Swal.fire({
+          title: `Are you sure you want to ${
+            lessons.isActive ? 'Disable' : 'Activate'
+          } the lesson "${lessons.title}"?`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+        });
+  
+        if (result.isConfirmed) {
+         
+          
+          if (!lessons.isActive) {
+           await axios.put(`${Base_Url}/tutor/activatelesson/${lessons._id}`,{
+            courseId:id,
+           })
+            lessons.isActive = true;
+            toast.success(`lessons "${lessons.title}" activated successfully`);
+          } else {
+            await  axios.put(`${Base_Url}/tutor/disablelesson/${lessons._id}`,{
+              courseId:id,
+            })
+            lessons.isActive = false;
+            toast.success(`lesson "${lessons.title}" disabled successfully`);
+          }
+          localStorage.setItem(`user_${lessons._id}_status`, lessons.isActive ? 'Not Approved' : 'Approved');
+
+          setLessonslist([...lessonsList]);  
+        }
+      } catch (error) {
+        // Handle errors and display an error message to the user
+        toast.error('Error');
+      }
+    };
+
+      const offset = currentPage * itemsPerPage;
+      const paginatedData = lessonsList.slice(offset, offset + itemsPerPage);
     
-
-
   return (
     <div>
+       <ToastContainer position='top-center' autoClose={3000}></ToastContainer>
        {openPopUp== false && (
         <>
        <Row>
@@ -68,14 +104,7 @@ function TutorLessonsTable() {
           <Button onClick={handleOpenAddForm} type='submit' className='addcategorylist'>Add Lessons</Button>
           </Col>
         </Row>
-       
-       
       <Col>
-       
-      
-      
-     
-     
       <Table className='mt-5 ms-5' striped bordered hover size="sm">
       <thead>
         <tr >
@@ -84,9 +113,8 @@ function TutorLessonsTable() {
           <th>Description</th>
           <th>Duration</th>
           <th>PDF Download</th>
-          
           <th>Video</th>
-        
+          <th>isActive</th>
         </tr>
       </thead>
       <tbody>
@@ -95,10 +123,8 @@ function TutorLessonsTable() {
             <tr key={lessons._id}>
               <td>{index + 1}</td>
               <td>{lessons?.title}</td>
-             
               <td>{lessons?.description}</td>
               <td>{lessons?.duration}</td>
-            
               <td>
           {lessons?.pdf && (
             <a
@@ -111,49 +137,51 @@ function TutorLessonsTable() {
             </a>
           )}
         </td>
-            
               <td><video src={`${Video_Url}/${lessons?.video}`} alt='sample' style={{width:"40px"}} controls/> </td>
-            
-           
+              <td>
+                {lessons?.isActive ? (
+                  <>
+                  <TiTickOutline/>
+                  <Button style={{marginLeft:'30px'}} onClick={()=>{activeStatus(lessons)}}> Disable</Button>
+                  </>
+                  
+                ) : (
+                  <>
+                  <AiOutlineClose/>
+                    <Button  style={{marginLeft:'30px'}}  onClick={()=>{activeStatus(lessons)}}>Activate</Button>
+                  </>
+                
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
-    </Table>
-  
-
-     
-</Col>
+    </Table> 
+  </Col>
       </Row>
       </>
-    
        )}
     {openPopUp && (
-        <div>
-            
+        <div> 
           <AddLesson  courseId={id}  onClose={handleOnClose}/>
-          
-          
         </div>
       )}
 
-   
-
-{openPopUp==false && (
-  <div style={{float:'right' , margin:'3px', }}>
-  <ReactPaginate 
-  previousLabel={'Previous '} 
-  nextLabel={'Next'}
-  breakLabel={'...'}
-  pageCount={Math.ceil(lessonsList.length / itemsPerPage)}
-  marginPagesDisplayed={2}
-  pageRangeDisplayed={2}
-  onPageChange={handlePageChange}
-  containerClassName={'pagination'} // Remove one of the containerClassName attributes
-  activeClassName={'active'}
-/>
-</div>
-)}
-
+    {openPopUp==false && (
+      <div style={{float:'right' , margin:'3px', }}>
+      <ReactPaginate 
+      previousLabel={'Previous '} 
+      nextLabel={'Next'}
+      breakLabel={'...'}
+      pageCount={Math.ceil(lessonsList.length / itemsPerPage)}
+      marginPagesDisplayed={2}
+      pageRangeDisplayed={2}
+      onPageChange={handlePageChange}
+      containerClassName={'pagination'} // Remove one of the containerClassName attributes
+      activeClassName={'active'}
+    />
+    </div>
+    )}
     </div>
   )
 }

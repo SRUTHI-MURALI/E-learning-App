@@ -1,6 +1,6 @@
 import express from 'express'
-import { sendOtp,signUp,login,getCategory,addCourse,addLesson,AddQuiz,
-    getCourseList,getEditCourseList,editCourseList ,getAllLessons,enrolledStudents} from '../../controller/tutor/tutorController'
+import { sendOtp,signUp,login,getCategory,addCourse,addLesson,AddQuiz,activateLesson,
+    getCourseList,getEditCourseList,editCourseList ,getAllLessons,enrolledStudents,disableLesson} from '../../controller/tutor/tutorController'
 
 const tutorRouter=express.Router()
 
@@ -16,5 +16,7 @@ tutorRouter.put('/editcourselist/:id',editCourseList)
 tutorRouter.get('/getalllessons/:id',getAllLessons) 
 tutorRouter.get('/getenrolledstudentlist/:id',enrolledStudents)
 tutorRouter.post('/addquiz',AddQuiz) 
+tutorRouter.put('/activatelesson/:id',activateLesson)
+tutorRouter.put('/disablelesson/:id',disableLesson)
 
 export default tutorRouter

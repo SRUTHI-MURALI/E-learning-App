@@ -42,7 +42,7 @@ function AddLesson({ courseId, onClose }) {
     setDescription('');
     setVideo(null);
     setCloudinaryURL('');
-    setPdf(null); // Reset the PDF state
+    setPdf(null); 
   };
 
   const handleMainSubmit = async () => {

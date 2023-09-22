@@ -6,6 +6,7 @@ import courseCategory from "../../model/courseCategory"
 import course from "../../model/courses"
 import OrderModel from "../../model/orders"
 import courseQuiz from "../../model/courseQuiz";
+import student from "../../model/student";
 const BaseUrl: string = process.env.BaseUrl|| '';
 
 
@@ -151,9 +152,77 @@ const signUp = async (req: Request, res: Response) => {
         })
     }
 }
+
+const disableLesson = async (req: Request, res: Response) => {
+  try {
+    const { courseId } = req.body;
+    const { id } = req.params;
+
+    const selectedcourse: any = await course.findOne({
+      '_id': courseId, // Replace `courseId` with the actual course _id
+      'courseLessons._id': id,
+    });
+
+    if (selectedcourse) {
+      // Construct the update query to set isActive to false for the matching lesson
+      await course.findOneAndUpdate(
+        {
+          '_id': courseId, // Replace `courseId` with the actual course _id
+          'courseLessons._id': id,
+        },
+        {
+          $set: {
+            'courseLessons.$.isActive': false,
+          },
+        }
+      );
+
+      res.status(200).json({ message: 'Lesson disabled successfully' });
+    } else {
+      res.status(404).json({ message: 'Course or lesson not found' });
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+
+const activateLesson = async (req: Request, res: Response) => {
+  try {
+    const { courseId } = req.body;
+    const { id } = req.params;
+
+    const selectedcourse: any = await course.findOne({
+      '_id': courseId, // Replace `courseId` with the actual course _id
+      'courseLessons._id': id,
+    });
+
+    if (selectedcourse) {
+      // Construct the update query to set isActive to false for the matching lesson
+      await course.findOneAndUpdate(
+        {
+          '_id': courseId, // Replace `courseId` with the actual course _id
+          'courseLessons._id': id,
+        },
+        {
+          $set: {
+            'courseLessons.$.isActive': true,
+          },
+        }
+      );
+
+      res.status(200).json({ message: 'Lesson activated successfully' });
+    } else {
+      res.status(404).json({ message: 'Course or lesson not found' });
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
  
 const addLesson = async (req: Request, res: Response) => {
     const { lessons, courseId } = req.body;
+ 
   
   
     try {
@@ -358,6 +427,6 @@ const addLesson = async (req: Request, res: Response) => {
   };
 
  export{
-    sendOtp, signUp,login,getCategory,addCourse,addLesson,AddQuiz,
+    sendOtp, signUp,login,getCategory,addCourse,addLesson,AddQuiz,activateLesson,disableLesson,
     getCourseList,getEditCourseList,editCourseList,getAllLessons,enrolledStudents
  }
