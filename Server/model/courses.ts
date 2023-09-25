@@ -81,7 +81,7 @@ const courseSchema = new Schema<CourseDocument>({
         required:true,
       },
       isActive:{
-        type:String,
+        type: Boolean,
         required:true,
         default:true
       }

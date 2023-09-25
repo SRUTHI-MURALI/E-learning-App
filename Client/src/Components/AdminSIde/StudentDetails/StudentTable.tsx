@@ -23,7 +23,7 @@ function StudentTable() {
            
             setStudentlist(response.data.students);
           })
-          .catch((error) => {
+          .catch((error) => { 
             console.error(error);
           });
       }, []);

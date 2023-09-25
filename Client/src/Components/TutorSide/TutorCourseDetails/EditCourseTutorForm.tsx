@@ -12,15 +12,13 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
   const[category,setCategory]=useState('')
   const[allCategories,setAllCategories]=useState([])
 
- console.log(category,"jhkjhkh");
- 
+
   useEffect(() => {
     axios
       .get(`${Base_Url}/tutor/geteditcourse/${courseId}`)
       .then((response) => {
         const course = response.data.editCourse;
         setAllCategories(response.data.allcategories)
-        
         setTitle(course.title);
         setDuration(course.duration);
        setCategory(course.category.title)

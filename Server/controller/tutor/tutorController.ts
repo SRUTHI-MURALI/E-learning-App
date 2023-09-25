@@ -7,6 +7,7 @@ import course from "../../model/courses"
 import OrderModel from "../../model/orders"
 import courseQuiz from "../../model/courseQuiz";
 import student from "../../model/student";
+import bcrypt from 'bcrypt'
 const BaseUrl: string = process.env.BaseUrl|| '';
 
 
@@ -18,8 +19,6 @@ const globalData = {
 
   const sendOtp = async (req: Request, res: Response) => {
    
-    
-    
     try {
         const {name,email,password,phone} = req.body
         const emailfind = await Tutor.findOne({ email });
@@ -69,10 +68,7 @@ const signUp = async (req: Request, res: Response) => {
                 phone:addUser?.phone,
                 token,
             })
-
-       
-          
-            
+     
     } catch (error) {
       
         res.status(500).json({ error: 'Internal Server Error' });
@@ -154,6 +150,8 @@ const signUp = async (req: Request, res: Response) => {
 }
 
 const disableLesson = async (req: Request, res: Response) => {
+  
+  
   try {
     const { courseId } = req.body;
     const { id } = req.params;
@@ -208,10 +206,23 @@ const activateLesson = async (req: Request, res: Response) => {
           $set: {
             'courseLessons.$.isActive': true,
           },
-        }
+        },
+        {new:true}
       );
+      const allCourses= await course.findById({_id:courseId})
+    
+      const allLessons= allCourses?.courseLessons
+  
+      
+ 
+      if(allLessons){
+         res.status(201).json({
+            allLessons
+            
+        })
+      }
 
-      res.status(200).json({ message: 'Lesson activated successfully' });
+    
     } else {
       res.status(404).json({ message: 'Course or lesson not found' });
     }
@@ -282,8 +293,6 @@ const addLesson = async (req: Request, res: Response) => {
  
   
     try {
-       
-      
        
        const {title,duration,price,category} = req.body
        const {id}=req.params
@@ -426,7 +435,74 @@ const addLesson = async (req: Request, res: Response) => {
     
   };
 
+  const tutorProfile=async(req:Request,res:Response)=>{
+    try {
+       const {id}= req.params
+       const tutorDetails= await Tutor.findById({_id:id})
+      
+       
+       
+  
+       if(tutorDetails){
+          res.status(201).json({
+            tutorDetails
+             
+         })
+       }
+    } catch (error) {
+       res.status(400).json(error)
+    }
+  }
+
+  const tutorEditedProfile= async(req:Request,res:Response)=>{
+ 
+  
+    try {
+      console.log(req.body,"profile");
+      
+       
+       const {name,phone,email,experience,qualification,password,about,photo} = req.body
+       const {id}=req.params
+       const salt = await bcrypt.genSalt(10);
+       const hashedpassword = await bcrypt.hash(password, salt);
+     
+       const editedTutor=await Tutor.findByIdAndUpdate(
+         id, {
+          name,
+          phone,
+          email,
+          experience,
+          qualification,
+          password:hashedpassword,
+          about,
+          photo
+        
+        },
+        { new: true }
+       )
+ 
+       
+       
+       if(editedTutor){
+          res.status(201).json({
+              _id:editedTutor._id,
+              name:editedTutor.name,
+              phone:editedTutor.phone,
+              email:editedTutor.email,
+            
+          })
+      }
+    } catch (error) {
+     
+       
+       
+ 
+       res.status(400).json(error)
+    }
+ 
+ }
+
  export{
     sendOtp, signUp,login,getCategory,addCourse,addLesson,AddQuiz,activateLesson,disableLesson,
-    getCourseList,getEditCourseList,editCourseList,getAllLessons,enrolledStudents
+    getCourseList,getEditCourseList,editCourseList,getAllLessons,enrolledStudents,tutorProfile,tutorEditedProfile,
  }

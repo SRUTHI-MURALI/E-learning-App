@@ -72,7 +72,7 @@ function CourseCategoriesTable() {
             }
           
             setCategorylist([...categoryList]);
-            console.log(categoryList,"hhh");
+           
             
           }
         } catch (error) {

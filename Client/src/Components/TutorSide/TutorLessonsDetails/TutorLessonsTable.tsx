@@ -77,8 +77,7 @@ function TutorLessonsTable() {
             lessons.isActive = false;
             toast.success(`lesson "${lessons.title}" disabled successfully`);
           }
-          localStorage.setItem(`user_${lessons._id}_status`, lessons.isActive ? 'Not Approved' : 'Approved');
-
+        
           setLessonslist([...lessonsList]);  
         }
       } catch (error) {

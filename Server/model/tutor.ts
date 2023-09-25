@@ -11,6 +11,9 @@ interface TutorDocument extends Document {
   experience:number;
   isBlocked:boolean;
   courses: mongoose.Schema.Types.ObjectId;
+  qualification:string;
+  gender:boolean;
+  about:string;
   createdAt: Date;
   
   matchPasswords(enteredPassword: string): Promise<boolean>
@@ -54,6 +57,18 @@ const tutorSchema= new Schema<TutorDocument>({
         type: mongoose.Schema.Types.ObjectId,
         ref:"Courses",
         require: true,
+      },
+      qualification:{
+        type: String,
+        require:true,
+      },
+      gender:{
+        type:Boolean,
+        require:true
+      },
+      about:{
+        type:String,
+        require:true
       },
       createdAt: {
         type:Date,
