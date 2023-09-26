@@ -6,6 +6,7 @@ import pdf from '../../../../Assets/Images/carouselBody/pdf.png'
 import mentor from '../../../../Assets/Images/carouselBody/mentor.webp'
 import './Cards.css'
 import {Col,Row} from 'react-bootstrap'
+import { Link } from 'react-router-dom';
 
 function BasicExample() {
   return (
@@ -19,8 +20,11 @@ function BasicExample() {
        
       </Card.Body>
     </Card>
+   
        </Col>
+      
       <Col xs={12} lg={3}>
+      <Link to={'/studentquizpage'} >
       <Card style={{ width: '18rem' }} >
       <Card.Img variant="top" src={quiz} />
       <Card.Body>
@@ -28,7 +32,9 @@ function BasicExample() {
        
       </Card.Body>
     </Card>
+    </Link>
        </Col>
+      
       <Col xs={12} lg={3}>
       <Card style={{ width: '18rem' }} >
       <Card.Img variant="top" src={pdf} />

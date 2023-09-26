@@ -259,7 +259,6 @@ const addLesson = async (req: Request, res: Response) => {
     try {
        const allCourses= await course.find().populate("category instructor")
      
-    
        if(allCourses){
           res.status(201).json({
              allCourses
@@ -337,8 +336,6 @@ const addLesson = async (req: Request, res: Response) => {
     
      const allLessons= allCourses?.courseLessons
  
-     
-
      if(allLessons){
         res.status(201).json({
            allLessons
@@ -359,17 +356,22 @@ const addLesson = async (req: Request, res: Response) => {
       path: 'courseDetails',
       populate: {
         path: 'instructor',
-        model: 'tutor', // Match the 'ref' value in course schema
+        model: 'tutor', 
       },
     })
     .populate('studentDetails')
     .exec();
-
     
-
+    
+  
+  
     const filteredOrders = orders.filter((order: any) => {
+    
+      
       return order.courseDetails.instructor._id.toString() === id;
     });
+
+   
     
    
   
@@ -439,16 +441,24 @@ const addLesson = async (req: Request, res: Response) => {
     try {
        const {id}= req.params
        const tutorDetails= await Tutor.findById({_id:id})
-      
+      const allCourses = await course.find({instructor:id})
+      let count=0
+       allCourses.map((course)=>{
+        
+        count = count+1
+        
+       })
        
        
-  
+       
        if(tutorDetails){
           res.status(201).json({
-            tutorDetails
+            tutorDetails,
+           courseCount:count,
              
          })
        }
+              
     } catch (error) {
        res.status(400).json(error)
     }

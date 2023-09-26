@@ -2,6 +2,8 @@ import { Request,Response } from "express"
 import generateToken from "../../token/generateToken";
 import Student from "../../model/student";
 import Courses from "../../model/courses";
+import Tutor from "../../model/tutor"
+import Quiz from "../../model/courseQuiz"
 import axios from 'axios'
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
@@ -225,7 +227,96 @@ const resetPassword= async (req:Request,res:Response) =>{
     }
 }
 
+const getAllTutors=async(req:Request,res:Response)=>{
+    try {
+       
+       const tutorDetails:any= await Tutor.find()
+     
+     
+       
+       if(tutorDetails){
+          res.status(201).json({
+            tutorDetails
+             
+         })
+       }
+    } catch (error) {
+       res.status(400).json(error)
+    }
+ }
+
+ const getTutorDetails=async(req:Request,res:Response)=>{
+    try {
+       const {id}= req.params
+       const tutorDetails:any= await Tutor.findById({_id:id})
+       const tutorCourses = await Courses.find({instructor:id})
+    
+       
+       if(tutorDetails){
+          res.status(201).json({
+            tutorDetails,
+            tutorCourses
+             
+         })
+       }
+    } catch (error) {
+       res.status(400).json(error)
+    }
+ }
+ 
+ const getEnrolledCourses=async(req:Request,res:Response)=>{
+    try {
+        const {id}=req.params
+       
+       const studentDetails:any= await Student.findById({_id:id})
+       .populate({
+        path: 'enrolledCourses',
+        populate: {
+          path: 'instructor',
+          model: 'tutor', // Match the 'ref' value in course schema
+        },
+      })
+       const enrolledCourses=studentDetails?.enrolledCourses
+       
+
+       if(enrolledCourses){
+          res.status(201).json({
+            enrolledCourses
+         })
+       }
+    } catch (error) {
+       res.status(400).json(error)
+    }
+ }
+
+ const getQuiz=async(req:Request,res:Response)=>{
+    try {
+       
+        
+        const {id}=req.params
+       const allQuiz=await Quiz.find({course:id})
+       const allQuizSets:any=[]
+       
+       allQuiz.map((quiz)=>(
+        allQuizSets.push(quiz?.questionset)
+       )) 
+      
+      
+
+       if(allQuizSets){
+        res.status(201).json({
+            allQuizSets
+       })
+     }
+       
+       
+    } catch (error) {
+       res.status(400).json(error)
+    }
+ }
+
  export {
-    sendOtp,signUp,login,googleLogin,courseDetails,resetPassword,resetPasswordSentOtp
+    sendOtp,signUp,login,googleLogin,courseDetails,resetPassword,resetPasswordSentOtp,
+    getAllTutors,getTutorDetails,getEnrolledCourses,getQuiz
  }
 

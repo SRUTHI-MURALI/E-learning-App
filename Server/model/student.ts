@@ -50,7 +50,7 @@ const studentSchema= new Schema<StudentDocument>({
        
        enrolledCourses: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"courses",
+        ref:"course",
         require: true,
       }],
       createdAt: {

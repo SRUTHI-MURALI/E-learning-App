@@ -51,9 +51,11 @@ import AdminOrderList from './Pages/AdminPages/AdminOrderList'
 import StudentQuizPage from './Pages/StudentPages/StudentQuizPage'
 
 
-import AddQuizPage from './Pages/TutorPages/AddQuizPage'
+
 import TutorQuizList from './Pages/TutorPages/TutorQuizList'
 import TutorProfile from './Pages/TutorPages/TutorProfile'
+import TutorDetailsPage from './Pages/StudentPages/TutorDetailsPage'
+import StudentProfile from './Pages/StudentPages/StudentProfile'
 
 
 
@@ -77,6 +79,8 @@ function App() {
         <Route path="/studentallcourselist" element={<StudentCourseList/>} />
         <Route path="/studentcoursedetails/:id" element={<StudentCourseDetails/>} />
         <Route path="/studentquizpage" element={<StudentQuizPage/>} />
+        <Route path="/tutordetails/:id" element={<TutorDetailsPage/>} />
+        <Route path="/studentprofile" element={<StudentProfile/>} />
        
 
    {/* tutor Routes */}

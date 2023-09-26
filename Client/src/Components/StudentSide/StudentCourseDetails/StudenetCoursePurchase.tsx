@@ -72,13 +72,12 @@ function StudenetCoursePurchase({data}) {
   
     return (
         <div >
-          <Container className="d-flex text-center m-5">
+          <Container className=" text-center m-5">
           <Row>
           <Card className='mt-5'>
-         
-          <Card.Body >
 
-          <img src={`${Image_Url}/${data?.photo}`} />
+          <Card.Body >
+          <img style={{width:"200px"}} src={`${Image_Url}/${data?.photo}`} />
             <Card.Title style={{color:'rgb(80, 100, 198)',fontWeight:'bolder',fontSize:'30px', margin:'15px'}}>Enroll Now </Card.Title>
             <Card.Text >Rate: {data?.price}</Card.Text>
             <Card.Text >Duration:{data?.duration} </Card.Text>
@@ -87,12 +86,9 @@ function StudenetCoursePurchase({data}) {
             <Card.Text>Instructor: {data?.instructor?.name}</Card.Text>
             <Button onClick={handlePayment}>Buy Now </Button> 
             <Card.Text>Start your learning Now !!!</Card.Text>
-           
-    
           </Card.Body>
          
         </Card>
-        
           </Row>
           </Container>
         </div>

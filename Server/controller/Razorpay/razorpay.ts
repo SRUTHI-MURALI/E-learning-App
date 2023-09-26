@@ -4,6 +4,7 @@ import crypto from 'crypto'
 import 'dotenv/config'
 import courses from "../../model/courses";
 import orderModel from "../../model/orders"
+import Student from '../../model/student'
 
 const key_id= process.env.Razorpay_KEY_ID || '';
 const key_secret= process.env.Razorpay_SECRET_KEY ||''
@@ -72,6 +73,12 @@ try {
                 courseDetails:courseId
         
                })
+
+            await Student.findByIdAndUpdate(
+                studentId,
+                { $push: { enrolledCourses: courseId } },
+                { new: true }
+            )
            
                
                

@@ -26,13 +26,13 @@ function AllCoursesList() {
             <p className='allcourses-header'>All Courses</p>
             <Row>
               {allCourseList.map((courses, index) => (
-                <Col key={courses._id}>
-                  <Link to={`/studentcoursedetails/${courses._id}`}>
+                <Col md={4} key={courses._id}>
+                  <Link style={{textDecoration:'none'}} to={`/studentcoursedetails/${courses._id}`}>
                     <Card style={{ width: '16vw', height: '25rem' }} className='m-2 '>
                       <Card.Img style={{ height: '200px' }} variant="top" src={`${Image_Url}/${courses.photo}`} />
                       <Card.Body className='mt-4 justify-content-center align-items-center'>
-                        <Card.Title className='text-center'>{courses.title}</Card.Title>
-                        <Card.Text className='text-center'>By Tutors name</Card.Text>
+                        <Card.Title className='text-center'>Course:{courses.title}</Card.Title>
+                        <Card.Text className='text-center'>By {courses?.instructor?.name}</Card.Text>
                         <Card.Link>Enroll Now</Card.Link>
                         <Card.Text style={{ float: 'right' }}><FaRupeeSign /> {courses.price}</Card.Text>
                       </Card.Body>

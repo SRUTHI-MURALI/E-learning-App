@@ -15,7 +15,7 @@ import { Base_Url } from '../../Config/Config'
 export default function StudentCourseDetails() {
     const [data,setData]= useState('')
     const {id} = useParams()
-    console.log(id,"courseid");
+   
     
 
     useEffect(() => {
