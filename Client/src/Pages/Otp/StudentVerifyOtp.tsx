@@ -1,14 +1,14 @@
-import React from 'react'
-import StudentOtpVerifyForm from '../../Components/Otp/StudentOtpVerifyForm'
-import { useParams } from 'react-router-dom'
+import React from "react";
+import StudentOtpVerifyForm from "../../Components/Otp/StudentOtpVerifyForm";
+import { useParams } from "react-router-dom";
 
 function StudentVerifyOtp() {
-  const {phone}=useParams()
+  const { phone } = useParams();
   return (
     <div>
-      <StudentOtpVerifyForm phone={phone}/>
+      <StudentOtpVerifyForm phone={phone} />
     </div>
-  )
+  );
 }
 
-export default StudentVerifyOtp
+export default StudentVerifyOtp;

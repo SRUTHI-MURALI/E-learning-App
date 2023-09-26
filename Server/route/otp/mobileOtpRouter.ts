@@ -1,11 +1,10 @@
+import express from "express";
 
-import express from 'express'
+const mobileotprouter = express.Router();
 
-const mobileotprouter=express.Router()
+import { sendMobileOtp, verifyMobileOtp } from "../../controller/otp/mobileOtp";
 
-import { sendMobileOtp ,verifyMobileOtp} from '../../controller/otp/mobileOtp'
+mobileotprouter.post("/sendmobileotp", sendMobileOtp);
+mobileotprouter.post("/verifymobileotp", verifyMobileOtp);
 
-mobileotprouter.post("/sendmobileotp",sendMobileOtp)
-mobileotprouter.post("/verifymobileotp",verifyMobileOtp)
-
-export default mobileotprouter
+export default mobileotprouter;

@@ -1,19 +1,15 @@
-
-import AdminHeader from '../../Components/AdminSIde/AdminHeader/AdminHeader'
-import AdminSidebar from '../../Components/AdminSIde/AdminSidebar/AdminSidebar'
-import AdminDashBoard from '../../Components/AdminSIde/AdminDashBoard/AdminDashBoard'
+import AdminHeader from "../../Components/AdminSIde/AdminHeader/AdminHeader";
+import AdminSidebar from "../../Components/AdminSIde/AdminSidebar/AdminSidebar";
+import AdminDashBoard from "../../Components/AdminSIde/AdminDashBoard/AdminDashBoard";
 
 function AdminHome() {
- 
-
-
   return (
-    <div className='grid-container'>
+    <div className="grid-container">
       <AdminHeader />
       <AdminSidebar />
-      <AdminDashBoard/>
+      <AdminDashBoard />
     </div>
-  )
+  );
 }
 
-export default AdminHome
+export default AdminHome;

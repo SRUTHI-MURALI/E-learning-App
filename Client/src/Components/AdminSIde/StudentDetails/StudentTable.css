@@ -1,8 +1,7 @@
-.studentlistheading{
-    align-items: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size:larger;
-    margin-top: 10px;
-    font-weight: 700;
-    
+.studentlistheading {
+  align-items: center;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: larger;
+  margin-top: 10px;
+  font-weight: 700;
 }

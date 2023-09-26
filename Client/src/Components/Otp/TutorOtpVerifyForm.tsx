@@ -1,69 +1,63 @@
-import Form from 'react-bootstrap/Form';
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import axios from 'axios'
-import {  useNavigate } from 'react-router-dom';
-import { Card, Container,} from 'react-bootstrap';
-import r1 from '../../Assets/Images/otp1.avif'
-import { Base_Url } from '../../Config/Config';
-
+import Form from "react-bootstrap/Form";
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Card, Container } from "react-bootstrap";
+import r1 from "../../Assets/Images/otp1.avif";
+import { Base_Url } from "../../Config/Config";
 
 function TutorOtpVerifyForm() {
-    
-    const [otp, setotp] = useState('');
+  const [otp, setotp] = useState("");
 
-    const navigate=useNavigate()
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        const trimmedOtp = otp.trim();
-    if (
-        trimmedOtp === '' 
-      ) {
-        
-        return;
-      }
+    const trimmedOtp = otp.trim();
+    if (trimmedOtp === "") {
+      return;
+    }
 
-      axios.post(`${Base_Url}/tutor/verifyotp`, {
+    axios
+      .post(`${Base_Url}/tutor/verifyotp`, {
         verificationCode: trimmedOtp,
-        
-    })
-    .then(() => {
-      
-        
-        navigate('/tutorlogin');
-    })
-    .catch(error => {
+      })
+      .then(() => {
+        navigate("/tutorlogin");
+      })
+      .catch((error) => {
         // Handle the error here
         console.log(error);
-        
-    });
-    }
+      });
+  };
   return (
-    <div className="d-grid justify-content-center align-items-center" style={{ minHeight: "100vh" ,backgroundImage: `url(${r1})`}}>
-  <Container  >
-  <Card style={{ width: '18rem' }} className="text-center">
-  <Form onSubmit={handleSubmit}>
-      <Card.Body>
-        <Card.Title > Otp Verification</Card.Title>
-        <Card.Img variant="top" />
-        <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
-                
+    <div
+      className="d-grid justify-content-center align-items-center"
+      style={{ minHeight: "100vh", backgroundImage: `url(${r1})` }}
+    >
+      <Container>
+        <Card style={{ width: "18rem" }} className="text-center">
+          <Form onSubmit={handleSubmit}>
+            <Card.Body>
+              <Card.Title> Otp Verification</Card.Title>
+              <Card.Img variant="top" />
+              <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
                 <Form.Control
                   placeholder="Enter otp"
                   value={otp}
                   onChange={(e) => setotp(e.target.value)}
                 />
               </Form.Group>
-        <Button variant="primary" type="submit">Verify</Button>
-      </Card.Body>
-      </Form>
-    </Card>
-    
-  </Container>
-</div>
-
+              <Button variant="primary" type="submit">
+                Verify
+              </Button>
+            </Card.Body>
+          </Form>
+        </Card>
+      </Container>
+    </div>
   );
 }
 

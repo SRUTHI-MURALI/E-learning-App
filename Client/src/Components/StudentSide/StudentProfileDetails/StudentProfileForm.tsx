@@ -1,17 +1,23 @@
-import React, {useState} from 'react'
-import './Profile.css'
+import React, { useState } from "react";
+import "./Profile.css";
 
 const StudentProfileForm = () => {
-  let studentInfo = localStorage.getItem('studentData')
-  let info = JSON.parse(studentInfo)
-  console.log(info)
-  const [student] = useState(info)
+  let studentInfo = localStorage.getItem("studentData");
+  let info = JSON.parse(studentInfo);
+  console.log(info);
+  const [student] = useState(info);
   return (
     <div>
       <div className="profileContainer">
         <div className="profile-pic-area">
-        <img src={student.picture.large} alt="profile" className="rounded-circle" />
-        <h4>{student.name.first} {student.name.last}</h4>
+          <img
+            src={student.picture.large}
+            alt="profile"
+            className="rounded-circle"
+          />
+          <h4>
+            {student.name.first} {student.name.last}
+          </h4>
         </div>
 
         <div className="profile-info-area">
@@ -35,7 +41,10 @@ const StudentProfileForm = () => {
               </tr>
               <tr>
                 <th>Address:</th>
-                <td>No. {student.location.street.number} {student.location.street.name}</td>
+                <td>
+                  No. {student.location.street.number}{" "}
+                  {student.location.street.name}
+                </td>
               </tr>
               <tr>
                 <th>Phone Number:</th>
@@ -50,7 +59,7 @@ const StudentProfileForm = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default StudentProfileForm
+export default StudentProfileForm;

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import SelectCategory from '../../Components/TutorSide/TutorAddCourse/SelectCategory';
-import AddCourse from '../../Components/TutorSide/TutorAddCourse/AddCourse';
-import { Col, Container, Row } from 'react-bootstrap';
-import TutorHeader from '../../Components/TutorSide/TutorHeader/TutorHeader';
-import TutorSidebar from '../../Components/TutorSide/TutorSidebar/TutorSidebar';
-
+import React, { useState } from "react";
+import SelectCategory from "../../Components/TutorSide/TutorAddCourse/SelectCategory";
+import AddCourse from "../../Components/TutorSide/TutorAddCourse/AddCourse";
+import { Col, Container, Row } from "react-bootstrap";
+import TutorHeader from "../../Components/TutorSide/TutorHeader/TutorHeader";
+import TutorSidebar from "../../Components/TutorSide/TutorSidebar/TutorSidebar";
 
 function TutorAddCourse() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -21,34 +20,30 @@ function TutorAddCourse() {
 
   return (
     <>
-    
-  <Col>
-  <TutorHeader/>
-    <TutorSidebar/>
-  </Col>
- 
-  <Col>
-  
-  <Container className="d-flex justify-content-center align-items-center vh-100">
-    
-    <Row>
-      
-    <Col >
-    
-       {courseAdded==false ? (
-        selectedCategory === null ? (
-          <SelectCategory onSelectCategory={handleCategorySelect} />
-        ) : (
-          <AddCourse selectedCategory={selectedCategory} onCourseAdded={handleCourseAdded} />
-        )
-      ) : null}
-       </Col>
+      <Col>
+        <TutorHeader />
+        <TutorSidebar />
+      </Col>
 
-    </Row>
-  </Container>
-  </Col>
-</>
-
+      <Col>
+        <Container className="d-flex justify-content-center align-items-center vh-100">
+          <Row>
+            <Col>
+              {courseAdded == false ? (
+                selectedCategory === null ? (
+                  <SelectCategory onSelectCategory={handleCategorySelect} />
+                ) : (
+                  <AddCourse
+                    selectedCategory={selectedCategory}
+                    onCourseAdded={handleCourseAdded}
+                  />
+                )
+              ) : null}
+            </Col>
+          </Row>
+        </Container>
+      </Col>
+    </>
   );
 }
 

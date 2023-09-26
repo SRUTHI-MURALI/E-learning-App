@@ -1,12 +1,12 @@
-import React from 'react'
-import TutorOtpVerifyForm from '../../Components/Otp/TutorOtpVerifyForm'
+import React from "react";
+import TutorOtpVerifyForm from "../../Components/Otp/TutorOtpVerifyForm";
 
 function TutorVerifyOtp() {
   return (
     <div>
-      <TutorOtpVerifyForm/>
+      <TutorOtpVerifyForm />
     </div>
-  )
+  );
 }
 
-export default TutorVerifyOtp
+export default TutorVerifyOtp;

@@ -1,12 +1,11 @@
-
-import RegisterForm from '../../Components/StudentSide/StudentRegisterPage/RegisterForm'
+import RegisterForm from "../../Components/StudentSide/StudentRegisterPage/RegisterForm";
 
 function StudentRegister() {
   return (
     <div>
-      <RegisterForm/>
+      <RegisterForm />
     </div>
-  )
+  );
 }
 
-export default StudentRegister
+export default StudentRegister;

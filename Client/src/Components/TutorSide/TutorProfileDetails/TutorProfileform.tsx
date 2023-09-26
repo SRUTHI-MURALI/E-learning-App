@@ -6,44 +6,40 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Base_Url } from "../../../Config/Config";
 import TutorProfileImage from "./TutorProfileImage";
 import TutorEditProfileForm from "./TutorEditProfileForm";
-import { toast,ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function TutorProfileform({ tutor }) {
   const [user, setUser] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
-  const [courses,setCourses]= useState([])
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    
     const getProfileData = async () => {
       try {
         const response = await axios.get(
           `${Base_Url}/tutor/gettutorprofile/${tutor._id}`
         );
         setUser(response.data.tutorDetails);
-      setCourses(response.data.courseCount)
-        
+        setCourses(response.data.courseCount);
       } catch (error) {
         console.log({ error });
       }
     };
     getProfileData();
-  }, []); 
+  }, []);
   const handleEditProfile = async () => {
-    
-    
     setShowEdit(true);
   };
 
-  const handleClose=async ()=>{
-    toast.success("successfully edited profile")
-    setShowEdit(false)
-  }
+  const handleClose = async () => {
+    toast.success("successfully edited profile");
+    setShowEdit(false);
+  };
 
   return (
     <>
-    <ToastContainer position='top-center' autoClose={3000}></ToastContainer>
+      <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
       {showEdit === false ? (
         <>
           <Row>
@@ -84,17 +80,14 @@ function TutorProfileform({ tutor }) {
                 </Col>
 
                 <Col xs={12} md={4}>
-                  
-                    <TutorProfileImage tutor={tutor} />
-                 
+                  <TutorProfileImage tutor={tutor} />
                 </Col>
               </Row>
             </Card>
           </Container>
         </>
-      ) : 
-      (
-        <TutorEditProfileForm tutor={tutor} onClose={handleClose}/>
+      ) : (
+        <TutorEditProfileForm tutor={tutor} onClose={handleClose} />
       )}
     </>
   );

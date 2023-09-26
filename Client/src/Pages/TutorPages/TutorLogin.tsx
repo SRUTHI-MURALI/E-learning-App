@@ -1,12 +1,11 @@
-
-import LoginForm from '../../Components/TutorSide/TutorLoginPage/LoginForm'
+import LoginForm from "../../Components/TutorSide/TutorLoginPage/LoginForm";
 
 function TutorLogin() {
   return (
     <div>
-      <LoginForm/>
+      <LoginForm />
     </div>
-  )
+  );
 }
 
-export default TutorLogin
+export default TutorLogin;

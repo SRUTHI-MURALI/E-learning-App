@@ -1,15 +1,12 @@
-.courseBodyimg{
-    height:400px;
-    width: 100%;
-    position: relative;
-    
+.courseBodyimg {
+  height: 400px;
+  width: 100%;
+  position: relative;
 }
 
-.allcourses-header{
-    color:aqua;
-    font-size: 25px;
-    font-weight:bolder;
-    font-family:'Times New Roman', Times, serif;
-    
-    
+.allcourses-header {
+  color: aqua;
+  font-size: 25px;
+  font-weight: bolder;
+  font-family: "Times New Roman", Times, serif;
 }

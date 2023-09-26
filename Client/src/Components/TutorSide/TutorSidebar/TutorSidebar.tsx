@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
-import {
-  BsGrid1X2Fill,
-  BsFillArchiveFill,
-  BsPeopleFill,
-} from 'react-icons/bs';
-import l1 from '../../../Assets/Images/carouselBody/l1.jpeg';
-import '../Css/Tutor.css';
-import { Row, Col } from 'react-bootstrap';
+import React, { useState } from "react";
+import { BsGrid1X2Fill, BsFillArchiveFill, BsPeopleFill } from "react-icons/bs";
+import l1 from "../../../Assets/Images/carouselBody/l1.jpeg";
+import "../Css/Tutor.css";
+import { Row, Col } from "react-bootstrap";
 
 function TutorSidebar() {
   const [selectedItem, setSelectedItem] = useState(null); // Default to 'dashboard'
@@ -19,70 +15,72 @@ function TutorSidebar() {
     <Row>
       <Col>
         <aside id="sidebar" className="sidebar-responsive">
-          <div className='sidebar-title'>
-            <div className='sidebar-brand'>
-              <img style={{ height: '150px' }} src={l1} alt="Logo" />
+          <div className="sidebar-title">
+            <div className="sidebar-brand">
+              <img style={{ height: "150px" }} src={l1} alt="Logo" />
             </div>
           </div>
 
-          <ul className='sidebar-list'>
+          <ul className="sidebar-list">
             <li
               className={`sidebar-list-item ${
-                selectedItem === 'dashboard' ? 'selected' : ''
+                selectedItem === "dashboard" ? "selected" : ""
               }`}
-              onClick={() => handleItemClick('dashboard')}
+              onClick={() => handleItemClick("dashboard")}
             >
-              <a href='/'>
-                <BsGrid1X2Fill className='icon' /> Dashboard
+              <a href="/">
+                <BsGrid1X2Fill className="icon" /> Dashboard
               </a>
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === 'Courses' ? 'selected' : ''
+                selectedItem === "Courses" ? "selected" : ""
               }`}
-              onClick={() => handleItemClick('Courses')}
+              onClick={() => handleItemClick("Courses")}
             >
-              <a href='/tutorallcourses'>
-                <BsFillArchiveFill className='icon' /> Courses
+              <a href="/tutorallcourses">
+                <BsFillArchiveFill className="icon" /> Courses
               </a>
             </li>
 
-            <li className={`sidebar-list-item ${
-                selectedItem === 'Students' ? 'selected' : ''
-              }`}  
-              onClick={() => handleItemClick('Students')}>
-              <a href='/tutorstudentslist'>
-                <BsPeopleFill className='icon' /> Students
+            <li
+              className={`sidebar-list-item ${
+                selectedItem === "Students" ? "selected" : ""
+              }`}
+              onClick={() => handleItemClick("Students")}
+            >
+              <a href="/tutorstudentslist">
+                <BsPeopleFill className="icon" /> Students
               </a>
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === 'Add Course' ? 'selected' : ''
+                selectedItem === "Add Course" ? "selected" : ""
               }`}
-              onClick={() => handleItemClick('Add Course')}
+              onClick={() => handleItemClick("Add Course")}
             >
-              <a href='/addcourse'>
-                <BsFillArchiveFill className='icon' /> Add Course
+              <a href="/addcourse">
+                <BsFillArchiveFill className="icon" /> Add Course
               </a>
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === 'Quizzes' ? 'selected' : ''
+                selectedItem === "Quizzes" ? "selected" : ""
               }`}
-              onClick={() => handleItemClick('Quizzes')}
+              onClick={() => handleItemClick("Quizzes")}
             >
-              <a href='/tutorquizlist'>
-                <BsPeopleFill className='icon' /> Quizzes
+              <a href="/tutorquizlist">
+                <BsPeopleFill className="icon" /> Quizzes
               </a>
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === 'Profile' ? 'selected' : ''
+                selectedItem === "Profile" ? "selected" : ""
               }`}
-              onClick={() => handleItemClick('Profile')}
+              onClick={() => handleItemClick("Profile")}
             >
-              <a href='/tutorprofile'>
-                <BsPeopleFill className='icon' /> Profile
+              <a href="/tutorprofile">
+                <BsPeopleFill className="icon" /> Profile
               </a>
             </li>
           </ul>

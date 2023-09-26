@@ -1,12 +1,11 @@
-
-import RegisterForm from '../../Components/TutorSide/TutorRegisterPage/RegisterForm'
+import RegisterForm from "../../Components/TutorSide/TutorRegisterPage/RegisterForm";
 
 function TutorRegister() {
   return (
     <div>
-      <RegisterForm/>
+      <RegisterForm />
     </div>
-  )
+  );
 }
 
-export default TutorRegister
+export default TutorRegister;

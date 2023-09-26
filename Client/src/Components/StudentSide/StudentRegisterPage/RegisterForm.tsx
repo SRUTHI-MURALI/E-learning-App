@@ -1,27 +1,24 @@
-import React, { useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import { Col, Row } from 'react-bootstrap';
-import axios from 'axios';
-import './Register.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import r1 from '../../../Assets/Images/r1.avif';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast,ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Base_Url } from '../../../Config/Config';
+import React, { useState } from "react";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import { Col, Row } from "react-bootstrap";
+import axios from "axios";
+import "./Register.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import r1 from "../../../Assets/Images/r1.avif";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Base_Url } from "../../../Config/Config";
 
 function RegisterForm() {
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [confirmPassword,setConfirmPassword]=useState('')
-  const navigate=useNavigate()
-
- 
-  
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,42 +26,42 @@ function RegisterForm() {
     const trimmedPassword = password.trim();
     const trimmedPhone = phone.trim();
     const trimmedEmail = email.trim();
-    const trimmedConfirmPassword= confirmPassword.trim()
-  
+    const trimmedConfirmPassword = confirmPassword.trim();
+
     if (
-      trimmedName === '' ||
-      trimmedEmail === '' ||
-      trimmedPhone === '' ||
-      trimmedPassword === ''||
-      trimmedConfirmPassword===''
+      trimmedName === "" ||
+      trimmedEmail === "" ||
+      trimmedPhone === "" ||
+      trimmedPassword === "" ||
+      trimmedConfirmPassword === ""
     ) {
       toast.error("Please fill all fields");
       return;
     }
 
-     // Validate username format (only letters and spaces allowed)
-     const usernamePattern = /^[A-Za-z\s.]+$/;
-     if (!usernamePattern.test(trimmedName.trim())) {
-       alert('Username can only contain letters and spaces');
-       return;
-     }
+    // Validate username format (only letters and spaces allowed)
+    const usernamePattern = /^[A-Za-z\s.]+$/;
+    if (!usernamePattern.test(trimmedName.trim())) {
+      alert("Username can only contain letters and spaces");
+      return;
+    }
     const phonePattern = /^\d{10}$/;
     if (!phonePattern.test(trimmedPhone.trim())) {
-      alert('Please enter a valid 10-digit phone number');
+      alert("Please enter a valid 10-digit phone number");
       return;
     }
 
     // Validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(trimmedEmail.trim())) {
-      alert('Please enter a valid email address');
+      alert("Please enter a valid email address");
       return;
     }
-    if(password !== confirmPassword){
-      alert('password mismatch');
-      return
+    if (password !== confirmPassword) {
+      alert("password mismatch");
+      return;
     }
-  
+
     try {
       await axios.post(`${Base_Url}/student/sendotp`, {
         name: trimmedName,
@@ -72,12 +69,11 @@ function RegisterForm() {
         phone: trimmedPhone,
         password: trimmedPassword,
       });
-      
+
       // Display success toast
       toast.success("Successfully registered");
- 
-  
-      handleNavigation(trimmedPhone)
+
+      handleNavigation(trimmedPhone);
     } catch (error) {
       toast.error("Registration error");
       return;
@@ -86,19 +82,18 @@ function RegisterForm() {
 
   const handleNavigation = (phone) => {
     navigate(`/studentverifyOtp/${phone}`);
-  }
-  
-  
+  };
+
   return (
     <Container className="mt-5">
       <Card className="regCard">
-        <ToastContainer position='top-center'></ToastContainer>
+        <ToastContainer position="top-center"></ToastContainer>
         <Row>
           <Col xs={12} md={6}>
             <img className="regCardimg" src={r1} alt="Registration" />
           </Col>
           <Col xs={12} md={5}>
-            <h1 style={{ textAlign: 'center' }} className="mt-5">
+            <h1 style={{ textAlign: "center" }} className="mt-5">
               Student Register Form
             </h1>
             <Form onSubmit={handleSubmit} className="mt-5 ">
@@ -119,14 +114,14 @@ function RegisterForm() {
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </Form.Group>
-                
-                <Form.Group className="mb-3 mt-5" controlId="formGridAddress1">
+
+              <Form.Group className="mb-3 mt-5" controlId="formGridAddress1">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
-                   type="text"
-                   placeholder="123@gmail.com"
-                   value={email}
-                   onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  placeholder="123@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
               <Row className="mb-3 mt-4">
@@ -152,11 +147,11 @@ function RegisterForm() {
 
               <div className="d-flex justify-content-center mt-5">
                 <Button variant="primary" type="submit">
-                 New Register
+                  New Register
                 </Button>
               </div>
             </Form>
-            <h6 className="mt-5" style={{ textAlign: 'right' }}>
+            <h6 className="mt-5" style={{ textAlign: "right" }}>
               Have you already registered? <Link to="/studentlogin">Login</Link>
             </h6>
           </Col>

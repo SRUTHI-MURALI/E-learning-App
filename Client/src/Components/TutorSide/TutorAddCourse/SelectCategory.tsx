@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  Row, Form, Card, Button, Container } from "react-bootstrap";
+import { Row, Form, Card, Button, Container } from "react-bootstrap";
 import "./TutorAddCourse.css";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -33,8 +33,7 @@ function SelectCategory({ onSelectCategory }) {
   };
 
   return (
-    <div >
-      
+    <div>
       <Card className="selectcategorycard">
         <Row>
           <Container>

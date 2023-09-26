@@ -1,12 +1,11 @@
-
-import AdminLoginForm from '../../Components/AdminSIde/AdminLogin/AdminLoginForm'
+import AdminLoginForm from "../../Components/AdminSIde/AdminLogin/AdminLoginForm";
 
 function AdminLogin() {
   return (
     <div>
-      <AdminLoginForm/>
+      <AdminLoginForm />
     </div>
-  )
+  );
 }
 
-export default AdminLogin
+export default AdminLogin;

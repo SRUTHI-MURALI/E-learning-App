@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react'; // Import React
-import Table from 'react-bootstrap/Table';
-import { AiFillEdit } from 'react-icons/ai';
-import { ImArrowRight } from 'react-icons/im';
-import axios from 'axios';
-import './CourseTable.css';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import EditCourseForm from './EditCourseForm';
-import { Button } from 'react-bootstrap';
-import { Base_Url, Image_Url } from '../../../Config/Config';
-import ReactPaginate from 'react-paginate';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import React, { useState, useEffect } from "react"; // Import React
+import Table from "react-bootstrap/Table";
+import { AiFillEdit } from "react-icons/ai";
+import { ImArrowRight } from "react-icons/im";
+import axios from "axios";
+import "./CourseTable.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import EditCourseForm from "./EditCourseForm";
+import { Button } from "react-bootstrap";
+import { Base_Url, Image_Url } from "../../../Config/Config";
+import ReactPaginate from "react-paginate";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function CourseTable() {
   const [courseList, setCourselist] = useState([]);
   const [openPopUp, setOpenPopUp] = useState(false);
-  const [courseId, setCourseId] = useState('');
+  const [courseId, setCourseId] = useState("");
   const [currentPage, setCurrentPage] = useState(0); // Current page number
   const itemsPerPage = 5;
 
@@ -51,12 +51,12 @@ function CourseTable() {
       // Display a confirmation dialog using SweetAlert
       const result = await Swal.fire({
         title: `Are you sure you want to ${
-          course.isApproved ? 'unapprove' : 'approve'
+          course.isApproved ? "unapprove" : "approve"
         } the course "${course.title}"?`,
-        icon: 'question',
+        icon: "question",
         showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
       });
 
       if (result.isConfirmed) {
@@ -64,19 +64,17 @@ function CourseTable() {
           await axios.put(`${Base_Url}/admin/approvecourse/${course._id}`);
           course.isApproved = true;
           toast.success(`Course "${course.title}" approved successfully`);
-        
         } else {
           await axios.put(`${Base_Url}/admin/cancelcourse/${course._id}`);
           course.isApproved = false;
           toast.success(`Course "${course.title}" unapproved successfully`);
-        
         }
-      
+
         setCourselist([...courseList]);
       }
     } catch (error) {
       // Handle errors and display an error message to the user
-      toast.error('Error');
+      toast.error("Error");
     }
   };
 
@@ -146,7 +144,7 @@ function CourseTable() {
                     <img
                       src={`${Image_Url}/${course?.photo}`}
                       alt="sample"
-                      style={{ width: '40px' }}
+                      style={{ width: "40px" }}
                     />
                   </td>
                   <td>
@@ -168,21 +166,24 @@ function CourseTable() {
       )}
       {openPopUp && (
         <div>
-          <EditCourseForm courseId={courseId} onCloseEdit={() => setOpenPopUp(false)} />
+          <EditCourseForm
+            courseId={courseId}
+            onCloseEdit={() => setOpenPopUp(false)}
+          />
         </div>
       )}
 
-      <div style={{ float: 'right', margin: '3px' }}>
+      <div style={{ float: "right", margin: "3px" }}>
         <ReactPaginate
-          previousLabel={'Previous '}
-          nextLabel={'Next'}
-          breakLabel={'...'}
+          previousLabel={"Previous "}
+          nextLabel={"Next"}
+          breakLabel={"..."}
           pageCount={Math.ceil(courseList.length / itemsPerPage)}
           marginPagesDisplayed={2}
           pageRangeDisplayed={2}
           onPageChange={handlePageChange}
-          containerClassName={'pagination'} // Remove one of the containerClassName attributes
-          activeClassName={'active'}
+          containerClassName={"pagination"} // Remove one of the containerClassName attributes
+          activeClassName={"active"}
         />
       </div>
     </div>

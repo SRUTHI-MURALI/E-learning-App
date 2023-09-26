@@ -1,30 +1,34 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { Lessons_Upload_Url, Base_Url } from '../../../Config/Config';
-import AddQuiz from '../TutorAddQuiz/AddQuiz';
+import axios from "axios";
+import React, { useState } from "react";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Lessons_Upload_Url, Base_Url } from "../../../Config/Config";
+import AddQuiz from "../TutorAddQuiz/AddQuiz";
 
 function AddLesson({ courseId, onClose }) {
   const [lessons, setLessons] = useState([]);
-  const [title, setTitle] = useState('');
-  const [duration, setDuration] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [duration, setDuration] = useState("");
+  const [description, setDescription] = useState("");
   const [showAddQuiz, setShowAddQuiz] = useState(false);
   const navigate = useNavigate();
   const [video, setVideo] = useState(null);
-  const [cloudinaryURL, setCloudinaryURL] = useState('');
+  const [cloudinaryURL, setCloudinaryURL] = useState("");
   const [count, setCount] = useState(0);
   const [pdf, setPdf] = useState(null); // Change to null for file handling
 
   const handleAdd = async () => {
-    if (title.trim() === '' || duration.trim() === '' || description.trim() === '') {
-      return alert('Please fill in all fields before adding a lesson.');
+    if (
+      title.trim() === "" ||
+      duration.trim() === "" ||
+      description.trim() === ""
+    ) {
+      return alert("Please fill in all fields before adding a lesson.");
     }
     await videoHandler();
 
     if (!cloudinaryURL) {
-      return alert('Error uploading video');
+      return alert("Error uploading video");
     }
 
     const newLesson = {
@@ -32,17 +36,17 @@ function AddLesson({ courseId, onClose }) {
       duration: duration,
       description: description,
       video: cloudinaryURL,
-      pdf: pdf ? URL.createObjectURL(pdf) : '', // Store the PDF file as a URL
+      pdf: pdf ? URL.createObjectURL(pdf) : "", // Store the PDF file as a URL
     };
     setCount(count + 1);
     setLessons([...lessons, newLesson]);
     // Clear the form fields
-    setTitle('');
-    setDuration('');
-    setDescription('');
+    setTitle("");
+    setDuration("");
+    setDescription("");
     setVideo(null);
-    setCloudinaryURL('');
-    setPdf(null); 
+    setCloudinaryURL("");
+    setPdf(null);
   };
 
   const handleMainSubmit = async () => {
@@ -52,8 +56,8 @@ function AddLesson({ courseId, onClose }) {
         courseId,
       });
       onClose(false);
-      alert('Success');
-      navigate('/tutorallcourses');
+      alert("Success");
+      navigate("/tutorallcourses");
     } catch (error) {
       console.log(error);
     }
@@ -61,14 +65,14 @@ function AddLesson({ courseId, onClose }) {
 
   const videoHandler = async () => {
     const formData = new FormData();
-    formData.append('file', video);
-    formData.append('upload_preset', 'lessonlist');
-    formData.append('cloud_name', 'dnkc0odiw');
+    formData.append("file", video);
+    formData.append("upload_preset", "lessonlist");
+    formData.append("cloud_name", "dnkc0odiw");
     try {
       const response = await axios.post(`${Lessons_Upload_Url}`, formData);
       setCloudinaryURL(response.data.public_id);
     } catch (error) {
-      console.error('Error uploading video', error);
+      console.error("Error uploading video", error);
     }
   };
 
@@ -78,14 +82,17 @@ function AddLesson({ courseId, onClose }) {
 
   return (
     <div>
-      <Button style={{ float: 'right' }} type="submit" onClick={handleMainSubmit}>
+      <Button
+        style={{ float: "right" }}
+        type="submit"
+        onClick={handleMainSubmit}
+      >
         Submit lessons
       </Button>
       <h3 className="mt-4">Add a Lesson ?</h3>
       <h4> Lesson: {count + 1}</h4>
       {showAddQuiz === false ? (
         <div>
-          
           <Container>
             <Card className="justify-content-center m-2">
               <Form className="mt-2 mb-2">
@@ -154,7 +161,9 @@ function AddLesson({ courseId, onClose }) {
                     <Button onClick={handleAdd}>Add Lesson</Button>
                   </Col>
                   <Col>
-                    <Button style={{float:'right'}} onClick={handleAddQuiz}>Add Quiz</Button>
+                    <Button style={{ float: "right" }} onClick={handleAddQuiz}>
+                      Add Quiz
+                    </Button>
                   </Col>
                 </Row>
               </Form>
@@ -167,6 +176,5 @@ function AddLesson({ courseId, onClose }) {
     </div>
   );
 }
-
 
 export default AddLesson;

@@ -1,14 +1,18 @@
-import nodemailer from 'nodemailer';
-import Mailgen from 'mailgen';
+import nodemailer from "nodemailer";
+import Mailgen from "mailgen";
 
-const generateEmail = (instructorEmail: string, coursename:string, msg:string)=> {
+const generateEmail = (
+  instructorEmail: string,
+  coursename: string,
+  msg: string
+) => {
   // Your email and password should be defined here or fetched from a secure configuration.
-  const EMAIL = instructorEmail
-  const course= coursename
-  const msgs=msg
+  const EMAIL = instructorEmail;
+  const course = coursename;
+  const msgs = msg;
 
   const config = {
-    service: 'gmail',
+    service: "gmail",
     auth: {
       user: "muhzinsidhiq333@gmail.com",
       pass: "iiue xtwn lkkf jfps",
@@ -18,58 +22,49 @@ const generateEmail = (instructorEmail: string, coursename:string, msg:string)=>
   const transporter = nodemailer.createTransport(config);
 
   const MailGenerator = new Mailgen({
-    theme: 'default',
+    theme: "default",
     product: {
-      name: 'Admin',
-      link: 'https://mailgen.js/',
+      name: "Admin",
+      link: "https://mailgen.js/",
     },
   });
 
   const response = {
     body: {
-      name: 'Tuto E-learning',
-      intro: 'Your course is approved ',
+      name: "Tuto E-learning",
+      intro: "Your course is approved ",
       table: {
         data: [
           {
             item: course,
             description: msgs,
-            
           },
         ],
       },
-      outro: 'Looking for more courses from you',
+      outro: "Looking for more courses from you",
     },
   };
-
-
-  
 
   const mail = MailGenerator.generate(response);
 
   const message = {
     from: "muhzinsidhiq333@gmail.com",
     to: EMAIL, // Use the passed userEmail parameter here
-    subject: 'course confirmation',
+    subject: "course confirmation",
     html: mail,
   };
-console.log("fdsf");
 
   transporter
     .sendMail(message)
     .then(() => {
       return {
         status: 201,
-        message: 'You should receive an email',
+        message: "You should receive an email",
       };
-    }
-    
-    
-    )
+    })
     .catch(() => {
       return {
         status: 500,
-       
       };
     });
 };

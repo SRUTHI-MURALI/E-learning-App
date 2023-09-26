@@ -1,11 +1,10 @@
-
-.footerimg{
-    width: 100%;
+.footerimg {
+  width: 100%;
 }
 
-.footerCard{
-    background-color: rgb(139, 179, 198);
-    color: rgb(24, 28, 28);
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    gap: 100px;
+.footerCard {
+  background-color: rgb(139, 179, 198);
+  color: rgb(24, 28, 28);
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  gap: 100px;
 }

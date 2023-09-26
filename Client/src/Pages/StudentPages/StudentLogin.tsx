@@ -1,12 +1,11 @@
-
-import LoginForm from '../../Components/StudentSide/StudentLoginPage/LoginForm'
+import LoginForm from "../../Components/StudentSide/StudentLoginPage/LoginForm";
 
 function StudentLogin() {
   return (
     <div>
-      <LoginForm/>
+      <LoginForm />
     </div>
-  )
+  );
 }
 
-export default StudentLogin
+export default StudentLogin;

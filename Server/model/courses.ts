@@ -10,7 +10,7 @@ interface CourseDocument extends Document {
   duration: string;
   instructor: mongoose.Schema.Types.ObjectId;
   courseLessons: Lesson[];
-  quizQuestions:number;
+  quizQuestions: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -76,21 +76,21 @@ const courseSchema = new Schema<CourseDocument>({
         type: String,
         required: true,
       },
-      pdf:{
-        type:String,
-        required:true,
+      pdf: {
+        type: String,
+        required: true,
       },
-      isActive:{
+      isActive: {
         type: Boolean,
-        required:true,
-        default:true
-      }
+        required: true,
+        default: true,
+      },
     },
   ],
-  quizQuestions:{
-    type:'number',
-    required:true,
-    default:0
+  quizQuestions: {
+    type: "number",
+    required: true,
+    default: 0,
   },
   createdAt: {
     type: Date,

@@ -1,32 +1,32 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Base_Url } from '../../../Config/Config';
+import axios from "axios";
+import React, { useState } from "react";
+import { Button, Container, Form } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Base_Url } from "../../../Config/Config";
 
 function AddQuiz({ courseId, onClose }) {
   const [questionset, setQuestionset] = useState([]);
-  const [question, setQuestion] = useState('');
-  const [option1, setOption1] = useState('');
-  const [option2, setOption2] = useState('');
-  const [option3, setOption3] = useState('');
-  const [option4, setOption4] = useState('');
-  const [answerOption, setAnswerOption] = useState('');
+  const [question, setQuestion] = useState("");
+  const [option1, setOption1] = useState("");
+  const [option2, setOption2] = useState("");
+  const [option3, setOption3] = useState("");
+  const [option4, setOption4] = useState("");
+  const [answerOption, setAnswerOption] = useState("");
   const [count, setCount] = useState(0);
 
   const handleAddQuiz = (e) => {
     e.preventDefault();
 
     if (
-      question === '' ||
-      option1 === '' ||
-      option2 === '' ||
-      option3 === '' ||
-      option4 === '' ||
-      answerOption === ''
+      question === "" ||
+      option1 === "" ||
+      option2 === "" ||
+      option3 === "" ||
+      option4 === "" ||
+      answerOption === ""
     ) {
-      return toast.error('Please fill all fields');
+      return toast.error("Please fill all fields");
     }
 
     const newQuestion = {
@@ -40,27 +40,28 @@ function AddQuiz({ courseId, onClose }) {
 
     setCount(count + 1);
     setQuestionset([...questionset, newQuestion]);
-    setQuestion('');
-    setOption1('');
-    setOption2('');
-    setOption3('');
-    setOption4('');
-    setAnswerOption('');
+    setQuestion("");
+    setOption1("");
+    setOption2("");
+    setOption3("");
+    setOption4("");
+    setAnswerOption("");
   };
-{console.log(questionset,"questions")}
+  {
+    console.log(questionset, "questions");
+  }
   const handleQuizSubmit = async (e) => {
     e.preventDefault();
-   
-   
+
     try {
       const res = await axios.post(`${Base_Url}/tutor/addquiz`, {
         courseId,
         questionset,
         count,
       });
-      console.log(res, 'qqqq');
+      console.log(res, "qqqq");
 
-      alert('Success');
+      alert("Success");
     } catch (error) {
       console.log(error);
     }
@@ -70,16 +71,22 @@ function AddQuiz({ courseId, onClose }) {
 
   return (
     <div>
-     
       <Container className="align-items-center justify-content-center ">
         <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
-        
-        <Button style={{ float: 'right' }} type="submit" onClick={handleQuizSubmit}>
-            Submit Quiz
-          </Button>
-          <h3 className="mt-4">Add a Question ?</h3>
-        <h4> Question:{count+1}</h4>
-        <Form className="m-5 " style={{ padding: '25px', border: '2px solid #ccc' }}>
+
+        <Button
+          style={{ float: "right" }}
+          type="submit"
+          onClick={handleQuizSubmit}
+        >
+          Submit Quiz
+        </Button>
+        <h3 className="mt-4">Add a Question ?</h3>
+        <h4> Question:{count + 1}</h4>
+        <Form
+          className="m-5 "
+          style={{ padding: "25px", border: "2px solid #ccc" }}
+        >
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Question </Form.Label>
             <Form.Control
@@ -128,7 +135,10 @@ function AddQuiz({ courseId, onClose }) {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Correct Answer</Form.Label>
-            <Form.Select value={answerOption} onChange={(e) => setAnswerOption(e.target.value)}>
+            <Form.Select
+              value={answerOption}
+              onChange={(e) => setAnswerOption(e.target.value)}
+            >
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
               <option value="option3">Option 3</option>
@@ -138,7 +148,11 @@ function AddQuiz({ courseId, onClose }) {
           <Button type="submit" onClick={handleAddQuiz}>
             Add this question
           </Button>
-          <Button style={{ float: 'right' }} type="submit" onClick={handleQuizSubmit}>
+          <Button
+            style={{ float: "right" }}
+            type="submit"
+            onClick={handleQuizSubmit}
+          >
             cancel
           </Button>
         </Form>
