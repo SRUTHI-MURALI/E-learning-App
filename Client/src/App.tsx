@@ -62,6 +62,7 @@ function App() {
           <Route path="/studentquizpage" element={<StudentQuizPage />} />
           <Route path="/tutordetails/:id" element={<TutorDetailsPage />} />
           <Route path="/studentprofile" element={<StudentProfile />} />
+          
 
           {/* tutor Routes */}
 

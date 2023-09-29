@@ -2,8 +2,8 @@ import React from "react";
 import { Container, Row } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
 
-function StudentCourseimage({ data }) {
-  console.log(data, "data2");
+function StudentCourseimage({ courseData }) {
+  
 
   return (
     <div>
@@ -11,7 +11,7 @@ function StudentCourseimage({ data }) {
         <Row>
           <img
             style={{ height: "450px", width: "100%" }}
-            src={`${Image_Url}/${data?.photo}`}
+            src={`${Image_Url}/${courseData?.photo}`}
           />
         </Row>
       </Container>

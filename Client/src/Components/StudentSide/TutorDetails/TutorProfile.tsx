@@ -4,6 +4,7 @@ import t1 from "../../../Assets/Images/tutors/t1.avif";
 import { Link, useParams } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Base_Url, Image_Url } from "../../../Config/Config";
+import { getTutorProfile } from "../AxiosConfigStudents/AxiosConfig";
 
 export default function TutorProfile() {
   const [tutorDetails, setTutorDetails] = useState([]);
@@ -12,19 +13,18 @@ export default function TutorProfile() {
   console.log(id, "idd");
 
   useEffect(() => {
-    const getTutorData = async () => {
+    const getTutorData = async (id) => {
       try {
-        const response = await axios.get(
-          `${Base_Url}/student/gettutordetails/${id}`
-        );
+
+        const response =await getTutorProfile(id)
         setTutorDetails(response.data.tutorDetails);
         setTutorCourses(response.data.tutorCourses);
-        console.log(response.data.tutorDetails, "lklklk");
+       
       } catch (error) {
         console.log({ error });
       }
     };
-    getTutorData();
+    getTutorData(id);
   }, []);
 
   return (

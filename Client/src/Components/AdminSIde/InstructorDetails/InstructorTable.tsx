@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Base_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import { getInstructor } from "../AxiosConfigAdmin/AxiosConfig";
 
 function InstructorTable() {
   const [instructorList, setInstructorlist] = useState([]);
@@ -16,14 +17,16 @@ function InstructorTable() {
   const itemsPerPage = 2;
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/getinstructorlist`)
-      .then((response) => {
+    const getInstructorList = async()=>{
+      try {
+        const response = await getInstructor()
         setInstructorlist(response.data.instructor);
-      })
-      .catch((error) => {
+
+      } catch (error) {
         console.error(error);
-      });
+      }
+    }
+    getInstructorList()
   }, []);
 
   const handlePageChange = ({ selected }) => {

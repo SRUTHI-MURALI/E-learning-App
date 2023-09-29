@@ -62,7 +62,7 @@ function AddCourse({ selectedCategory, onCourseAdded }) {
       setSelectedCourse(response.data._id);
 
       setShow(true);
-      toast.success("successfully registered");
+      toast.success("successfully added course");
     } catch (error) {
       toast.error("registration error");
       return;

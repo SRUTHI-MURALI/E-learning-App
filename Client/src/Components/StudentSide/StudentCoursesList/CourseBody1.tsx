@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Container, Row } from "react-bootstrap";
 import img from "../../../Assets/Images/ci4.jpg";
 import "./StudentCoursesList.css";

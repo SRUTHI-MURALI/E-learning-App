@@ -12,6 +12,7 @@ import { Base_Url, Image_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { getAllCourse } from "../AxiosConfigAdmin/AxiosConfig";
 
 function CourseTable() {
   const [courseList, setCourselist] = useState([]);
@@ -23,15 +24,20 @@ function CourseTable() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/getallcourses`)
-      .then((response) => {
+    const getCourses = async ()=>{
+      try {
+        const response= await getAllCourse()
         setCourselist(response.data.allCourses);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
+      }
+     
+
+    }
+    getCourses();
   }, []);
+
+ 
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);

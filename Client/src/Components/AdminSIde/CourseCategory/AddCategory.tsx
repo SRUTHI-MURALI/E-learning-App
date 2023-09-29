@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./CourseCategoriesTable.css"; // Create a CSS file for your component styles
 import { Base_Url } from "../../../Config/Config";
+import { addCategory } from "../AxiosConfigAdmin/AxiosConfig";
 
 function AddCategory({ onClose }) {
   const [category, setCategory] = useState("");
@@ -27,10 +28,7 @@ function AddCategory({ onClose }) {
     }
 
     try {
-      const response = await axios.post(`${Base_Url}/admin/addcategory`, {
-        category: trimmedCategory,
-        description: trimmedDescription,
-      });
+      const response = await addCategory(trimmedCategory,trimmedDescription);
 
       if (response.status === 201) {
         // OTP sent successfully

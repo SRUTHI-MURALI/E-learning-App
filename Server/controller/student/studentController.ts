@@ -188,6 +188,21 @@ const courseDetails = async (req: Request, res: Response) => {
   }
 };
 
+const getCourseList = async (req: Request, res: Response) => {
+  try {
+    const allCourses = await Courses.find().populate("category instructor");
+
+    if (allCourses) {
+      res.status(201).json({
+        allCourses,
+      });
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+
 const resetPassword = async (req: Request, res: Response) => {
   try {
     const { phone, password } = req.body;
@@ -241,6 +256,23 @@ const getTutorDetails = async (req: Request, res: Response) => {
   }
 };
 
+const getStudentProfile = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const studentDetails: any = await Student.findById({ _id: id });
+
+    if (studentDetails) {
+      res.status(201).json({
+        studentDetails,
+        
+      });
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+
 const getEnrolledCourses = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -282,6 +314,54 @@ const getQuiz = async (req: Request, res: Response) => {
   }
 };
 
+const studentEditedProfile = async (req: Request, res: Response) => {
+  try {
+    console.log(req.body, "kakjamj");
+
+    const {
+      name,
+      phone,
+      email,
+     photo,
+      password,
+      gender,
+      age,
+      country
+    
+    } = req.body;
+    const { id } = req.params;
+    const salt = await bcrypt.genSalt(10);
+    const hashedpassword = await bcrypt.hash(password, salt);
+
+    const editedStudent = await Student.findByIdAndUpdate(
+      id,
+      {
+        name,
+        phone,
+        email,
+       age,
+       country,
+        password: hashedpassword,
+        gender,
+        photo,
+      },
+      { new: true }
+    );
+
+    if (editedStudent) {
+      res.status(201).json({
+        _id: editedStudent._id,
+        name: editedStudent.name,
+        phone: editedStudent.phone,
+        email: editedStudent.email,
+      });
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+
 export {
   sendOtp,
   signUp,
@@ -294,4 +374,7 @@ export {
   getTutorDetails,
   getEnrolledCourses,
   getQuiz,
+  getStudentProfile,
+  studentEditedProfile,
+  getCourseList
 };

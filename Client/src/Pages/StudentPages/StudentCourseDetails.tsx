@@ -34,16 +34,16 @@ export default function StudentCourseDetails() {
           <StudentHeader />
           <Row className="m-3">
             <Col xs={12} md={8}>
-              <StudentCourseimage data={data} />
-              <StudentCourseDescription data={data} />
+              <StudentCourseimage courseData={data} />
+              <StudentCourseDescription courseData={data} />
             </Col>
             <Col xs={12} md={4}>
-              <StudenetCoursePurchase data={data} />
+              <StudenetCoursePurchase courseData={data} />
             </Col>
           </Row>
 
-          <StudentCourseLessons data={data} />
-          <StudentCourseAbout data={data} />
+          <StudentCourseLessons courseData={data} />
+          <StudentCourseAbout courseData={data} />
           <Footer />
         </Row>
       </Container>

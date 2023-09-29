@@ -6,10 +6,13 @@ interface StudentDocument extends Document {
   email: string;
   phone: number;
   password: string;
-  photo: string[];
+  gender:string;
+  photo: string;
   enrolledCourses: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
   isBlocked: boolean;
+  age:number,
+  country:string,
   jti: string;
 
   matchPasswords(enteredPassword: string): Promise<boolean>;
@@ -28,7 +31,19 @@ const studentSchema = new Schema<StudentDocument>({
     type: String,
     require: true,
   },
+  gender: {
+    type: String,
+    require: true,
+  },
   phone: {
+    type: Number,
+    require: true,
+  },
+  country: {
+    type: String,
+    require: true,
+  },
+  age: {
     type: Number,
     require: true,
   },
@@ -40,13 +55,13 @@ const studentSchema = new Schema<StudentDocument>({
     type: String,
   },
 
-  photo: [
+  photo: 
     {
       type: String,
 
       required: true,
     },
-  ],
+  
 
   enrolledCourses: [
     {

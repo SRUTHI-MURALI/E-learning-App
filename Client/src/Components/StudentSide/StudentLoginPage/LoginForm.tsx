@@ -18,6 +18,7 @@ import {
 import { useDispatch } from "react-redux";
 import { login } from "../../ReduxComponents/StudentSlice";
 import { Base_Url } from "../../../Config/Config";
+import { googleLogin, studentLogin } from "../AxiosConfigStudents/AxiosConfig";
 
 function LoginForm() {
   const [password, setPassword] = useState("");
@@ -29,18 +30,15 @@ function LoginForm() {
   const handleGoogleLogin = async (credentialResponse: CredentialResponse) => {
     try {
       const idToken = credentialResponse.credential;
-      console.log(idToken, "id");
 
-      // Send the Google ID token to your server for verification
-      const response = await axios.post(`${Base_Url}/student/googlelogin`, {
-        id_token: idToken,
-      });
+      
+      const response = await googleLogin(idToken)
 
       const studentData = response.data;
 
       localStorage.setItem("studentData", JSON.stringify(studentData));
       dispatch(login(studentData));
-      // If the server verifies the Google token and returns user data
+      
       toast.success("successfully logged in");
       navigate("/studentlandingpage");
     } catch (error) {
@@ -68,11 +66,10 @@ function LoginForm() {
     }
 
     try {
-      const response = await axios.post(`${Base_Url}/student/login`, {
-        email: trimmedEmail,
 
-        password: trimmedPassword,
-      });
+      
+      const response = await studentLogin(trimmedEmail,trimmedPassword)
+        
 
       const studentData = response.data;
 

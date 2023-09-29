@@ -28,18 +28,22 @@ function LoginForm() {
       return;
     }
 
-    try {
-      await axios.post(`${Base_Url}/admin/login`, {
-        email: trimmedEmail,
-
-        password: trimmedPassword,
-      });
-      toast.success("successfully logged in");
-      navigate("/adminhome");
-    } catch (error) {
-      toast.error("logging error");
-      return;
+    const adminLogin = async (email: string,password: string)=>{
+      try {
+        
+           await adminLogin(email,password)
+          toast.success("successfully logged in");
+          navigate("/adminhome");
+        }
+       catch (error) {
+        toast.error("logging error");
+        return;
+        
+      }
     }
+    adminLogin(trimmedEmail,trimmedPassword);
+
+   
   };
   return (
     <Container className="mt-5">

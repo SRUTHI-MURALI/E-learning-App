@@ -12,6 +12,7 @@ import { Base_Url } from "../../../Config/Config";
 import EditCategoryForm from "./EditCategoryForm";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import { getCategory } from "../AxiosConfigAdmin/AxiosConfig";
 
 function CourseCategoriesTable() {
   const [categoryList, setCategorylist] = useState([]);
@@ -22,17 +23,22 @@ function CourseCategoriesTable() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/getcategorylist`)
-      .then((response) => {
+    const getAllCategory = async ()=>{
+    try {
+      
+        const response= await getCategory()
         setCategorylist(response.data.categories);
-        console.log(categoryList, "category");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      }
+     catch (error) {
+      console.log(error);
+      
+    }
+  }
+  getAllCategory();
+    
   }, []);
 
+ 
   const handleOpenDialog = () => {
     setOpenPopUp(true);
   };

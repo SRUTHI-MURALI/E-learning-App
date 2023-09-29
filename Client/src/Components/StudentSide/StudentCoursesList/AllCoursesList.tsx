@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-
-import axios from "axios";
+import {  Card, Col, Container, Row } from "react-bootstrap";
 import "./StudentCoursesList.css";
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Base_Url, Image_Url } from "../../../Config/Config";
+import { Image_Url } from "../../../Config/Config";
+import { getAllCourses } from "../AxiosConfigStudents/AxiosConfig";
 
 function AllCoursesList() {
   const [allCourseList, setAllCourseList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/getallcourses`)
-      .then((response) => {
+    const getCourses = async ()=>{
+      try {
+        const response= await getAllCourses()
         setAllCourseList(response.data.allCourses);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
+      }
+    }
+    getCourses();
+    
   }, []);
   return (
     <div>

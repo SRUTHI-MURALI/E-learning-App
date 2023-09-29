@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 
-function StudentCourseDescription({ data }) {
+function StudentCourseDescription({ courseData }) {
   return (
     <div>
       <Container className="d-flex text-center bg-transparent   justify-content-center align-item-center m-3">

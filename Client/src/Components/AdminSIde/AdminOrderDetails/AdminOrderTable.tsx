@@ -4,6 +4,7 @@ import { ImArrowRight } from "react-icons/im";
 import { Base_Url } from "../../../Config/Config";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import { getorderlist } from "../AxiosConfigAdmin/AxiosConfig";
 
 function AdminOrderTable() {
   const [orderList, setOrderList] = useState([]);
@@ -11,15 +12,22 @@ function AdminOrderTable() {
   const itemsPerPage = 4;
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/getorderlist`)
-      .then((response) => {
+    const getOrders = async ()=>{
+    try {
+      
+        const response= await getorderlist()
         setOrderList(response.data.orders);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      }
+     catch (error) {
+      console.log(error);
+      
+    }
+  }
+  getOrders();
+    
   }, []);
+
+ 
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);

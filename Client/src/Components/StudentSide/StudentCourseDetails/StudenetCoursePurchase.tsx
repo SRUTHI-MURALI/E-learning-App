@@ -1,9 +1,10 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 
 import { Button, Card, Container, Row } from "react-bootstrap";
-import { Base_Url, Image_Url } from "../../../Config/Config";
-import axios from "axios";
+import {  Image_Url } from "../../../Config/Config";
+
 import { useNavigate } from "react-router-dom";
+import { makePayment, verifyPayment } from "../AxiosConfigStudents/AxiosRazorpayConfig";
 
 declare global {
   interface Window {
@@ -11,7 +12,7 @@ declare global {
   }
 }
 
-function StudenetCoursePurchase({ data }) {
+function StudenetCoursePurchase({ courseData }) {
   const studentDetails = localStorage.getItem("studentData");
 
   const students = JSON.parse(studentDetails);
@@ -21,19 +22,20 @@ function StudenetCoursePurchase({ data }) {
     const options = {
       key: "rzp_test_k3gSFHEQ2G2e8U",
       amount: res.amount,
-      name: data?.title,
+      name: courseData?.title,
       currency: res.currency,
       order_id: res.id,
       handler: async (response: any) => {
-        try {
-          await axios.post(`${Base_Url}/Razorpay/verifypayment`, {
-            response,
-            studentId: students._id,
-            courseId: data?._id,
-          });
-        } catch (error) {
-          console.log(error);
+        const verifyRazorPay = async (response: any,studentId: string,courseId: string)=>{
+          try {
+            await verifyPayment(response,studentId,courseId)
+          } catch (error) {
+            console.log(error);
+          }
         }
+
+        verifyRazorPay(response, students._id, courseData?._id)
+        
       },
       theme: {
         color: "#3399cc",
@@ -45,16 +47,18 @@ function StudenetCoursePurchase({ data }) {
 
   const handlePayment = async (e) => {
     if (students) {
-      try {
-        e.preventDefault();
-        const res = await axios.post(
-          `${Base_Url}/Razorpay/makepayment/${data._id}`
-        );
-
-        initPayment(res.data.data);
-      } catch (error) {
-        console.log(error);
+      const makeRazorPay =async (id)=>{
+        try {
+          e.preventDefault();
+          const res = await makePayment(id)
+          initPayment(res.data.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
+
+      makeRazorPay(courseData._id)
+      
     } else {
       navigate("/studentlogin");
     }
@@ -68,7 +72,7 @@ function StudenetCoursePurchase({ data }) {
             <Card.Body>
               <img
                 style={{ width: "200px" }}
-                src={`${Image_Url}/${data?.photo}`}
+                src={`${Image_Url}/${courseData?.photo}`}
               />
               <Card.Title
                 style={{
@@ -80,11 +84,11 @@ function StudenetCoursePurchase({ data }) {
               >
                 Enroll Now{" "}
               </Card.Title>
-              <Card.Text>Rate: {data?.price}</Card.Text>
-              <Card.Text>Duration:{data?.duration} </Card.Text>
+              <Card.Text>Rate: {courseData?.price}</Card.Text>
+              <Card.Text>Duration:{courseData?.duration} </Card.Text>
               <Card.Text>Ratings: 4.5</Card.Text>
               <Card.Text>Offers: 20 %</Card.Text>
-              <Card.Text>Instructor: {data?.instructor?.name}</Card.Text>
+              <Card.Text>Instructor: {courseData?.instructor?.name}</Card.Text>
               <Button onClick={handlePayment}>Buy Now </Button>
               <Card.Text>Start your learning Now !!!</Card.Text>
             </Card.Body>

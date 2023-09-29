@@ -2,12 +2,12 @@ import Table from "react-bootstrap/Table";
 import { AiFillEdit } from "react-icons/ai";
 import { ImArrowRight } from "react-icons/im";
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "react-bootstrap";
 import EditCourseTutorForm from "./EditCourseTutorForm";
-import { Base_Url, Image_Url } from "../../../Config/Config";
+import { getUser, Image_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 
@@ -22,15 +22,20 @@ function TutorCourseTable() {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [courseId, setCourseId] = useState("");
 
-  useEffect(() => {
-    axios
-      .get(`${Base_Url}/tutor/getallcourses`)
-      .then((response) => {
-        setCourselist(response.data.allCourses);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  useEffect( () => {
+    const fetchCourse = async ()=>{
+      try {
+        await getUser()
+        .then((response) => {
+          setCourselist(response.data.allCourses);
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  
+    fetchCourse();
+     
   }, []);
 
   const handlePageChange = ({ selected }) => {
@@ -144,7 +149,7 @@ function TutorCourseTable() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={2}
           onPageChange={handlePageChange}
-          containerClassName={"pagination"} // Remove one of the containerClassName attributes
+          containerClassName={"pagination"} 
           activeClassName={"active"}
         />
       </div>

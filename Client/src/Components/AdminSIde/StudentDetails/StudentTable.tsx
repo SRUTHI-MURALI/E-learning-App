@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Base_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import { getStudents } from "../AxiosConfigAdmin/AxiosConfig";
 
 function StudentTable() {
   const [studentList, setStudentlist] = useState([]);
@@ -16,14 +17,18 @@ function StudentTable() {
   const itemsPerPage = 2;
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/getstudentlist`)
-      .then((response) => {
+
+    const getStudentsList = async()=>{
+      try {
+        const response = await getStudents()
         setStudentlist(response.data.students);
-      })
-      .catch((error) => {
+
+      } catch (error) {
         console.error(error);
-      });
+      }
+    }
+    getStudentsList()
+    
   }, []);
 
   const handlePageChange = ({ selected }) => {

@@ -2,23 +2,27 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 
 import Card from "react-bootstrap/Card";
-import axios from "axios";
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Base_Url, Image_Url } from "../../../Config/Config";
+import { Image_Url } from "../../../Config/Config";
+import { getAllCourses } from "../AxiosConfigStudents/AxiosConfig";
 
-function StudentCourseAbout({ data }) {
+function StudentCourseAbout({ courseData }) {
   const [allCourseList, setAllCourseList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/getallcourses`)
-      .then((response) => {
-        setAllCourseList(response?.data?.allCourses);
-      })
-      .catch((error) => {
+    const getCourses = async ()=>{
+      try {
+        const response= await getAllCourses()
+        setAllCourseList(response.data.allCourses);
+      } catch (error) {
         console.error(error);
-      });
+      }
+     
+
+    }
+    getCourses();
+    
   }, []);
   return (
     <Container className="mt-5 cardLayout ">
@@ -34,7 +38,7 @@ function StudentCourseAbout({ data }) {
       </h2>
       <Row className="m-3">
         {allCourseList.map((courses, index) => {
-          if (data?._id !== courses?._id) {
+          if (courseData?._id !== courses?._id) {
             return (
               <Col key={courses?._id}>
                 <Link to={`/studentcoursedetails/${courses?._id}`}>

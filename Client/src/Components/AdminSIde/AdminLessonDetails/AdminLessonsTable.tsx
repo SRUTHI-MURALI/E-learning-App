@@ -1,12 +1,13 @@
 import Table from "react-bootstrap/Table";
 import { ImArrowRight } from "react-icons/im";
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 import "../CourseDetails/CourseTable.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Base_Url } from "../../../Config/Config";
+
 import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
+import { getalllessons } from "../AxiosConfigAdmin/AxiosConfig";
 
 function AdminLessonsTable() {
   const [lessonsList, setLessonslist] = useState([]);
@@ -17,14 +18,20 @@ function AdminLessonsTable() {
   const { id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/getalllessons/${id}`)
-      .then((response) => {
+    const getLessons = async ()=>{
+    try {
+      
+        const response= await getalllessons(id)
         setLessonslist(response.data.allLessons);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  
+      }
+     catch (error) {
+      console.log(error);
+      
+    }
+  }
+    getLessons();
+    
   }, []);
 
   const handlePageChange = ({ selected }) => {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
-import axios from "axios";
+
 import "./Register.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -10,7 +10,8 @@ import r1 from "../../../Assets/Images/r1.avif";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Base_Url } from "../../../Config/Config";
+
+import { studentSendOtp } from "../AxiosConfigStudents/AxiosConfig";
 
 function RegisterForm() {
   const [userName, setUserName] = useState("");
@@ -63,12 +64,8 @@ function RegisterForm() {
     }
 
     try {
-      await axios.post(`${Base_Url}/student/sendotp`, {
-        name: trimmedName,
-        email: trimmedEmail,
-        phone: trimmedPhone,
-        password: trimmedPassword,
-      });
+      await studentSendOtp(trimmedName,trimmedEmail,trimmedPhone,trimmedPassword)
+     
 
       // Display success toast
       toast.success("Successfully registered");

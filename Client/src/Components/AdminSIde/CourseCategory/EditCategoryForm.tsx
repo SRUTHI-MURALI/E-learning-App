@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Form, Button, Container } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
-import { Base_Url } from "../../../Config/Config";
+
+import { editCategory, getEditCategory } from "../AxiosConfigAdmin/AxiosConfig";
 
 function EditCategoryForm({ onCloseEdit, categoryId }) {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
 
-  useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/geteditcategorylist/${categoryId}`)
-      .then((response) => {
-        const category = response.data.editCategory; // Assuming your response contains the course data
-        setCategory(category.title);
-        setDescription(category.description);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  useEffect(()=>{
+    const getCategory= async(id: string | undefined)=>{
+     try {
+      const response= await getEditCategory(id)
+      const category = response.data.editCategory; 
+      setCategory(category.title);
+      setDescription(category.description);
+     } catch (error) {
+      console.log(error);
+      
+     }
+    }
+    getCategory(categoryId)
+  },[categoryId])
+
+  
 
   const handleSubmit = async () => {
     const trimmedCategory = category.trim();
     const trimmedDescription = description.trim();
-
+    
+    const editCategories= async (categoryId: string,category: string,description: string)=>{
     try {
-      await axios.put(`${Base_Url}/admin/editcategory/${categoryId}`, {
-        category: trimmedCategory,
-        description: trimmedDescription,
-      });
-
+      
+        await editCategory(categoryId,category,description)
+      
+    
       toast.success("Successfully edited");
     } catch (error) {
       if (
@@ -43,6 +47,8 @@ function EditCategoryForm({ onCloseEdit, categoryId }) {
         toast.error("An error occurred while logging in");
       }
     }
+  }
+  editCategories(categoryId,trimmedCategory,trimmedDescription)
   };
 
   const handleClose = () => {
@@ -64,7 +70,7 @@ function EditCategoryForm({ onCloseEdit, categoryId }) {
                 <Form.Label>Category Title</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder={category}
+        
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 />
@@ -76,7 +82,7 @@ function EditCategoryForm({ onCloseEdit, categoryId }) {
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder={description}
+                  
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />

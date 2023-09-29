@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import axios from "axios";
 import "./StudentCoursesList.css";
-import { Base_Url, Image_Url } from "../../../Config/Config";
+import {  Image_Url } from "../../../Config/Config";
+import { getEnrolledCourses } from "../AxiosConfigStudents/AxiosConfig";
 
 function EnrolledCoursesList() {
   const [allCourseList, setAllCourseList] = useState([]);
@@ -11,14 +11,19 @@ function EnrolledCoursesList() {
   const parseData = JSON.parse(student);
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/student/getenrolledcourses/${parseData?._id}`)
-      .then((response) => {
+
+    const enrolledCourses = async (id)=>{
+      try {
+        const response = await getEnrolledCourses(id)
         setAllCourseList(response.data.enrolledCourses);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
+      }
+     
+    }
+
+    enrolledCourses(parseData?._id)
+    
   }, []);
   return (
     <div>

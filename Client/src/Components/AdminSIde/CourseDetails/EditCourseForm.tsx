@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Form, Button, Container } from "react-bootstrap";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { Base_Url } from "../../../Config/Config";
+
+
+import { editCourse, getEditCourse } from "../AxiosConfigAdmin/AxiosConfig";
 
 function EditCourseForm({ onCloseEdit, courseId }) {
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [duration, setDuration] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/admin/geteditcourse/${courseId}`)
-      .then((response) => {
+    const getCourses = async (courseId: string | undefined)=>{
+      try {
+        const response= await getEditCourse(courseId)
         const course = response.data.editCourse;
         setTitle(course.title);
         setDuration(course.duration);
         setPrice(course.price);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
+      }
+     
+
+    }
+    getCourses(courseId);
+    
   }, [courseId]); // Make sure to include courseId as a dependency
 
   const handleSubmit = async (e) => {
@@ -29,19 +34,20 @@ function EditCourseForm({ onCloseEdit, courseId }) {
     const trimmedTitle = title.trim();
     const trimmedDuration = duration.trim();
 
-    try {
-      await axios.put(`${Base_Url}/admin/editcourselist/${courseId}`, {
-        title: trimmedTitle,
-        duration: trimmedDuration,
-        price,
-      });
-
+    const editCourseList= async (id: string | undefined,title: string,duration: string,price: number)=>{
+      try {
+        await editCourse(id,title,duration,price)
       toast.success("Successfully updated");
       window.location.reload();
-      onCloseEdit(false); // Close the edit form after successful update
-    } catch (error) {
-      toast.error("Error");
+      onCloseEdit(false); 
+      } catch (error) {
+        toast.error("Error");
+      }
     }
+
+    editCourseList(courseId,trimmedTitle,trimmedDuration,price)
+
+    
   };
 
   const handleClose = () => {
