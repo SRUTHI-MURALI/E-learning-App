@@ -16,6 +16,8 @@ import {
   getAllLessons,
   enrolledStudents,
   disableLesson,
+  resetPasswordSentOtp,
+  resetPassword,
 } from "../../controller/tutor/tutorController";
 
 const tutorRouter = express.Router();
@@ -37,5 +39,7 @@ tutorRouter.put("/disablelesson/:id", disableLesson);
 tutorRouter.put("/disablelesson/:id", disableLesson);
 tutorRouter.get("/gettutorprofile/:id", tutorProfile);
 tutorRouter.put("/tutoreditedprofile/:id", tutorEditedProfile);
+tutorRouter.post("/resetpasswordsentotp", resetPasswordSentOtp);
+tutorRouter.put("/resetpassword", resetPassword);
 
 export default tutorRouter;

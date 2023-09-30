@@ -1,21 +1,23 @@
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import { Col, Row } from "react-bootstrap";
+
 import "./AdminLoginForm.css";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import {Container,Form,Button,Col,Row,Card} from "react-bootstrap";
+
 import tutorlog from "../../../Assets/Images/carouselBody/hb3.avif";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { Base_Url } from "../../../Config/Config";
+import { useDispatch } from "react-redux";
+import { login } from "../../ReduxComponents/AdminSlice";
+import { adminLogin } from "../AxiosConfigAdmin/AxiosConfig";
+
 
 function LoginForm() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,23 +30,37 @@ function LoginForm() {
       return;
     }
 
-    const adminLogin = async (email: string,password: string)=>{
+ 
       try {
         
-           await adminLogin(email,password)
+          const response= await adminLogin(trimmedEmail,trimmedPassword)
+
+          const adminData = response.data;
+
+          localStorage.setItem("adminData", JSON.stringify(adminData));
+          dispatch(login(adminData));
+          
           toast.success("successfully logged in");
           navigate("/adminhome");
         }
+        
        catch (error) {
         toast.error("logging error");
         return;
         
       }
     }
-    adminLogin(trimmedEmail,trimmedPassword);
+    useEffect(() => {
+      const adminData = localStorage.getItem("adminData");
+      const parseData = JSON.parse(adminData);
+      if (parseData) {
+        navigate("/adminhome");
+      }
+    }, [navigate]);
+  
 
    
-  };
+  
   return (
     <Container className="mt-5">
       <Card className="logCard">

@@ -3,7 +3,7 @@ import StudentHeader from "../../Components/StudentSide/StudentHeader/StudentHea
 import Footer from "../../Components/StudentSide/StudentFooter/Footer";
 import axios from "axios";
 import StudentCourseimage from "../../Components/StudentSide/StudentCourseDetails/StudentCourseimage";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import StudentCourseDescription from "../../Components/StudentSide/StudentCourseDetails/StudentCourseDescription";
 import StudentCourseAbout from "../../Components/StudentSide/StudentCourseDetails/StudentCourseAbout";
 import { Col, Container, Row } from "react-bootstrap";
@@ -14,6 +14,19 @@ import { Base_Url } from "../../Config/Config";
 export default function StudentCourseDetails() {
   const [data, setData] = useState("");
   const { id } = useParams();
+
+  const studentData = localStorage.getItem("studentData");
+  const parseData= JSON.parse(studentData);
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const studentData = localStorage.getItem("studentData");
+  const parseData= JSON.parse(studentData);
+    if (!parseData) {
+      navigate("/studentlogin");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     // Make an HTTP request to fetch data from the backend
@@ -28,7 +41,9 @@ export default function StudentCourseDetails() {
   }, []);
 
   return (
-    <div>
+    <>
+    {parseData && (
+      <div>
       <Container>
         <Row className="m-3">
           <StudentHeader />
@@ -48,5 +63,8 @@ export default function StudentCourseDetails() {
         </Row>
       </Container>
     </div>
+    )}
+    </>
+    
   );
 }

@@ -35,7 +35,7 @@ const api = axios.create({
     return api.post(`/getenrolledcourses/${id_token}`);
   };
 
-  export const studentLogin = (email: string,password: any) => {
+  export const studentLogin = (email: string,password: string) => {
     return api.post('/login',{email,password});
   };
 

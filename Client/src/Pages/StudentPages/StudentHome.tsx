@@ -6,6 +6,8 @@ import Body2 from "../../Components/StudentSide/HomePage/Body2/Body2";
 import Footer from "../../Components/StudentSide/StudentFooter/Footer";
 
 function StudentHome() {
+
+  
   return (
     <div>
       <Header />

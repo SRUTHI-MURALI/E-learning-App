@@ -41,6 +41,7 @@ import TutorQuizList from "./Pages/TutorPages/TutorQuizList";
 import TutorProfile from "./Pages/TutorPages/TutorProfile";
 import TutorDetailsPage from "./Pages/StudentPages/TutorDetailsPage";
 import StudentProfile from "./Pages/StudentPages/StudentProfile";
+import TutorForgotPassword from "./Components/ForgotPassword/TutorForgotPassword";
 
 function App() {
   return (
@@ -102,6 +103,7 @@ function App() {
           {/* forgot password  */}
 
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/tutorforgotpassword" element={<TutorForgotPassword/>} />
         </Routes>
       </Router>
     </>

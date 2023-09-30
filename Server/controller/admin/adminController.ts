@@ -20,6 +20,7 @@ const login = async (req: Request, res: Response) => {
         email: admin.email,
         token,
       });
+      
     } else {
       res.status(400);
     }

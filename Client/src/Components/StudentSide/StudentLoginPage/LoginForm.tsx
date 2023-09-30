@@ -8,8 +8,8 @@ import log1 from "../../../Assets/Images/log1.avif";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import {
   GoogleOAuthProvider,
   GoogleLogin,
@@ -17,7 +17,7 @@ import {
 } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { login } from "../../ReduxComponents/StudentSlice";
-import { Base_Url } from "../../../Config/Config";
+
 import { googleLogin, studentLogin } from "../AxiosConfigStudents/AxiosConfig";
 
 function LoginForm() {
@@ -31,14 +31,13 @@ function LoginForm() {
     try {
       const idToken = credentialResponse.credential;
 
-      
-      const response = await googleLogin(idToken)
+      const response = await googleLogin(idToken);
 
       const studentData = response.data;
 
       localStorage.setItem("studentData", JSON.stringify(studentData));
       dispatch(login(studentData));
-      
+
       toast.success("successfully logged in");
       navigate("/studentlandingpage");
     } catch (error) {
@@ -66,10 +65,7 @@ function LoginForm() {
     }
 
     try {
-
-      
-      const response = await studentLogin(trimmedEmail,trimmedPassword)
-        
+      const response = await studentLogin(trimmedEmail, trimmedPassword);
 
       const studentData = response.data;
 
@@ -90,6 +86,15 @@ function LoginForm() {
       }
     }
   };
+
+  useEffect(() => {
+    const studentData = localStorage.getItem("studentData");
+    const parseData = JSON.parse(studentData);
+    if (parseData) {
+      navigate("/studentlandingpage");
+    }
+  }, [navigate]);
+
   return (
     <GoogleOAuthProvider clientId="1098563032990-ulbr653b8ln8fte1hndcdsi2ugfnbpud.apps.googleusercontent.com">
       <Container className="mt-5">

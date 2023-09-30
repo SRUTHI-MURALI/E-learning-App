@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import tutorlog from "../../../Assets/Images/tutorside/tutorlog.avif";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -65,6 +65,14 @@ function LoginForm() {
       }
     }
   };
+
+  useEffect(() => {
+    const tutorData = localStorage.getItem("tutorData");
+    const parseData = JSON.parse(tutorData);
+    if (parseData) {
+      navigate("/tutorhome");
+    }
+  }, [navigate]);
   return (
     <Container className="mt-5">
       <Card className="logCard">
@@ -117,11 +125,21 @@ function LoginForm() {
                 </Col>
               </Row>
             </Form>
-
-            <h6 className="mt-3 ">
-              {" "}
-              If you are a new user? <Link to="/tutorregister">Register</Link>
-            </h6>
+            <Row>
+              <Col>
+                <h6 className="mt-3 ">
+                  {" "}
+                  <Link to="/tutorforgotpassword">Forgot Password</Link>
+                </h6>
+              </Col>
+              <Col>
+                <h6 className="mt-3 ">
+                  {" "}
+                  If you are a new user?{" "}
+                  <Link to="/tutorregister">Register</Link>
+                </h6>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Card>

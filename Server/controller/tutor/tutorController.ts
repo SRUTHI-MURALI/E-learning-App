@@ -448,6 +448,48 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
   }
 };
 
+const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { phone, password } = req.body;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedpassword = await bcrypt.hash(password, salt);
+    const tutorPassword = await Tutor.findOneAndUpdate(
+      { phone },
+      {
+        password: hashedpassword,
+      },
+      { new: true }
+    );
+
+    if (tutorPassword) {
+      res.status(400).json({ tutorPassword });
+    }
+  } catch (error) {
+    res.status(400).json("reset error");
+  }
+};
+
+const resetPasswordSentOtp = async (req: Request, res: Response) => {
+  try {
+    const { phone } = req.body;
+
+    const phonefind = await Tutor.findOne({ phone });
+
+    if (phonefind != null) {
+      await axios.post(`${BaseUrl}/otp/sendmobileotp`, {
+        phone: phonefind.phone,
+      });
+      res.status(200).json({ message: "OTP sent successfully" });
+    } else {
+      res.status(400).json({ message: "No Number Exists" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export {
   sendOtp,
   signUp,
@@ -465,4 +507,6 @@ export {
   enrolledStudents,
   tutorProfile,
   tutorEditedProfile,
+  resetPasswordSentOtp,
+  resetPassword
 };
