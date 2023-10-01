@@ -66,7 +66,7 @@ function StudentCourseQuizList() {
             ))}
           </>
         ) : (
-          <StudentQuizForm courseId={selectedCourseId} />
+          <StudentQuizForm courseId={selectedCourseId} onClose={()=>setShowQuiz(false)}/>
         )}
       </Container>
     </Row>

@@ -300,6 +300,8 @@ const getQuiz = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const allQuiz = await Quiz.find({ course: id });
+    
+    
     const allQuizSets: any = [];
 
     allQuiz.map((quiz) => allQuizSets.push(quiz?.questionset));
@@ -316,7 +318,7 @@ const getQuiz = async (req: Request, res: Response) => {
 
 const studentEditedProfile = async (req: Request, res: Response) => {
   try {
-    console.log(req.body, "kakjamj");
+  
 
     const {
       name,
