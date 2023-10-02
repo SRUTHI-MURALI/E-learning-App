@@ -202,7 +202,6 @@ const getCourseList = async (req: Request, res: Response) => {
   }
 };
 
-
 const resetPassword = async (req: Request, res: Response) => {
   try {
     const { phone, password } = req.body;
@@ -264,14 +263,12 @@ const getStudentProfile = async (req: Request, res: Response) => {
     if (studentDetails) {
       res.status(201).json({
         studentDetails,
-        
       });
     }
   } catch (error) {
     res.status(400).json(error);
   }
 };
-
 
 const getEnrolledCourses = async (req: Request, res: Response) => {
   try {
@@ -300,8 +297,7 @@ const getQuiz = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const allQuiz = await Quiz.find({ course: id });
-    
-    
+
     const allQuizSets: any = [];
 
     allQuiz.map((quiz) => allQuizSets.push(quiz?.questionset));
@@ -318,19 +314,8 @@ const getQuiz = async (req: Request, res: Response) => {
 
 const studentEditedProfile = async (req: Request, res: Response) => {
   try {
-  
-
-    const {
-      name,
-      phone,
-      email,
-     photo,
-      password,
-      gender,
-      age,
-      country
-    
-    } = req.body;
+    const { name, phone, email, photo, password, gender, age, country } =
+      req.body;
     const { id } = req.params;
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(password, salt);
@@ -341,8 +326,8 @@ const studentEditedProfile = async (req: Request, res: Response) => {
         name,
         phone,
         email,
-       age,
-       country,
+        age,
+        country,
         password: hashedpassword,
         gender,
         photo,
@@ -363,7 +348,6 @@ const studentEditedProfile = async (req: Request, res: Response) => {
   }
 };
 
-
 export {
   sendOtp,
   signUp,
@@ -378,5 +362,5 @@ export {
   getQuiz,
   getStudentProfile,
   studentEditedProfile,
-  getCourseList
+  getCourseList,
 };

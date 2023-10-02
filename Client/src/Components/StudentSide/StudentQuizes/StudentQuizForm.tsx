@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./StudentQuiz.css";
 import axios from "axios";
+import {GrChapterNext} from 'react-icons/gr'
 import { Base_Url } from "../../../Config/Config";
 import { Card, Container, Row,Button } from "react-bootstrap";
 import img from "../../../Assets/Images/quizimg.jpeg";
+import { Link } from "react-router-dom";
 
 function StudentQuizForm({ courseId,onClose }) {
   const [questionset, setQuestionSet] = useState([]);
@@ -53,7 +55,7 @@ function StudentQuizForm({ courseId,onClose }) {
     setIndex(index + 1);
   };
 
-  const handleRightOptions=()=>{
+  const handleRightOptions=(index)=>{
     if (index === questionset[0].length) {
       onClose(false)
       
@@ -90,39 +92,48 @@ function StudentQuizForm({ courseId,onClose }) {
           
   {result==false &&           
               <div >
+                 <section className="question-section d-flex justify-content-center align-items-center">
+            <h1>
+            Question {index }:{currentQuestion?.question}
+            </h1>
+           
+          </section>
+          <section className="answer-section m-5 d-grid justify-content-center align-items-center">
+           
+              <Button variant="transparent" onClick={()=>setCurrentAnswer('option1')} >
+             1: {currentQuestion?.option1}
+              </Button>
+              <Button variant="transparent" onClick={()=>setCurrentAnswer('option2')} >
+              2: {currentQuestion?.option2}
+              </Button>
+              <Button variant="transparent" onClick={()=>setCurrentAnswer('option3')} >
+             3: {currentQuestion?.option3}
+              </Button>
+              <Button variant="transparent" onClick={()=>setCurrentAnswer('option4')} >
+             4: {currentQuestion?.option4}
+              </Button>
+            
+          </section>
                 
-              
-                <Card.Text className="m-4 d-flex justify-content-center align-items-center">
-                 Question {index }: {currentQuestion?.question} 
-                </Card.Text>
-                <Card.Text className="m-4 d-flex justify-content-center align-items-center">
-                 <Button onClick={()=>setCurrentAnswer('option1')} >Option 1: {currentQuestion?.option1}</Button>
-                </Card.Text>
-                <Card.Text className="m-4 d-flex justify-content-center align-items-center">
-                 <Button onClick={()=>setCurrentAnswer('option2')}>Option 2: {currentQuestion?.option2}</Button> 
-                </Card.Text>
-                <Card.Text className="m-4 d-flex justify-content-center align-items-center">
-                 <Button onClick={()=>setCurrentAnswer('option3')}> Option 3: {currentQuestion?.option3}</Button>
-                </Card.Text>
-                <Card.Text className="m-4 d-flex justify-content-center align-items-center">
-                 <Button onClick={()=>setCurrentAnswer('option4')}> Option 4: {currentQuestion?.option4}</Button>
-                </Card.Text>
+                
+               <section className="next d-flex justify-content-center align-items-center">
+                
                 {showAll==false ? (
-                   <Button  className="m-4 d-flex justify-content-center align-items-center" onClick={()=>handleAnswerOptionClick(index)}> Next</Button>
+                   <Button variant="transparent" onClick={()=>handleAnswerOptionClick(index)}> Next</Button>
                 ):(
                  <>
                   <Card.Text className="m-4 d-flex justify-content-center align-items-center">
                   <Button > Right answer: {currentQuestion?.answerOption}</Button>
                   </Card.Text>
-                  <Button  className="m-4 d-flex justify-content-center align-items-center" onClick={()=>handleRightOptions(index)}> Next</Button>
+                  <Button className="m-3 result-button" onClick={()=>handleRightOptions(index)}> <GrChapterNext/> Next</Button>
                  </>
                 )}
-               
+               </section>
               </div>
 }
               {result && 
                <>
-                <Card.Text className="m-4 d-flex justify-content-center align-items-center">
+                <Card.Text className="m-4 d-grid justify-content-center align-items-center">
                 <h1>Your Score: {score}/{questionset[0].length}</h1>
                 <Button onClick={handleRightAnswers}>Right Answers</Button>
               </Card.Text>
