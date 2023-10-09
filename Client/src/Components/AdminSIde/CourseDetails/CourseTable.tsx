@@ -123,7 +123,10 @@ function CourseTable() {
                   <td>{course?.duration}</td>
                   <td>{course?.instructor?.name}</td>
                   <td>
-                    {course.isApproved ? (
+                    {!course?.instructor?.isBlocked ?(
+                    
+                      
+                    course?.isApproved ? (
                       <Button
                         variant="info"
                         size="sm"
@@ -134,6 +137,16 @@ function CourseTable() {
                         Approved
                       </Button>
                     ) : (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => {
+                          courseStatus(course);
+                        }}
+                      >
+                        Unapproved
+                      </Button>
+                    )):(
                       <Button
                         variant="secondary"
                         size="sm"

@@ -67,27 +67,49 @@ const resetPasswordSentOtp = async (req: Request, res: Response) => {
 
 const signUp = async (req: Request, res: Response) => {
   try {
+    // Validate and extract data from the request body
     const { verificationCode } = req.body;
+    if (!verificationCode) {
+      return res.status(400).json({ error: 'Verification code is required' });
+    }
+
+    // Assuming you have a valid 'globalData.student' object
     const phone = globalData.student?.phone;
 
-    await axios.post(`${BaseUrl}/otp/verifymobileotp`, {
+    // Verify OTP
+    const otpResponse = await axios.post(`${BaseUrl}/otp/verifymobileotp`, {
       phone,
       verificationCode,
     });
 
-    const addUser = await Student.create(globalData.student);
-    const token = generateToken(addUser._id);
+    if (otpResponse.status !== 200) {
+      // Handle OTP verification failure
+      console.log("error");
+      
+      return res.status(400).json({ error: 'OTP verification failed' });
+    }
+
+    // Create a new user
+    const newUser = await Student.create(globalData.student);
+    console.log('User created successfully:');
+
+    // Generate a token for the user
+    const token = generateToken(newUser._id);
+
+    // Return user data and token in the response
     return res.status(200).json({
-      _id: addUser?._id,
-      name: addUser?.name,
-      email: addUser?.email,
-      phone: addUser?.phone,
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      phone: newUser.phone,
       token,
     });
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error in sign-up:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 const login = async (req: Request, res: Response) => {
   try {
@@ -190,7 +212,7 @@ const courseDetails = async (req: Request, res: Response) => {
 
 const getCourseList = async (req: Request, res: Response) => {
   try {
-    const allCourses = await Courses.find().populate("category instructor");
+    const allCourses = await Courses.find({isApproved:true}).populate("category instructor");
 
     if (allCourses) {
       res.status(201).json({
@@ -226,7 +248,7 @@ const resetPassword = async (req: Request, res: Response) => {
 
 const getAllTutors = async (req: Request, res: Response) => {
   try {
-    const tutorDetails: any = await Tutor.find();
+    const tutorDetails: any = await Tutor.find({ isBlocked: false });
 
     if (tutorDetails) {
       res.status(201).json({

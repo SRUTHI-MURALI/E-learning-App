@@ -5,12 +5,12 @@ import t1 from "../../../../Assets/Images/tutors/t1.avif";
 
 import "./Body2.css";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getInstructors } from "../../AxiosConfigStudents/AxiosConfig";
 
 function BasicExample() {
   const [tutorDetails, setTutorDetails] = useState([]);
-  const navigate = useNavigate();
+ 
 
   useEffect(() => {
     const getTutorData = async () => {

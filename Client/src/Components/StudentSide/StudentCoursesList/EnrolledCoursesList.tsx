@@ -3,6 +3,7 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 import "./StudentCoursesList.css";
 import {  Image_Url } from "../../../Config/Config";
 import { getEnrolledCourses } from "../AxiosConfigStudents/AxiosConfig";
+import { Link } from "react-router-dom";
 
 function EnrolledCoursesList() {
   const [allCourseList, setAllCourseList] = useState([]);
@@ -32,9 +33,13 @@ function EnrolledCoursesList() {
         <Row>
           {allCourseList.length !== 0 ? (
             allCourseList.map((course) => (
-              <Col key={course._id}>
+              <Col xs={12} md={3} key={course._id}>
+                <Link
+                style={{ textDecoration: "none" }}
+                to={`/studentviewcourse/${course._id}`}>
+                
                 <Card
-                  style={{ width: "16vw", height: "25rem" }}
+                  style={{ width: "16rem",  }}
                   className="mt-4 justify-content-center align-items-center"
                 >
                   <Card.Img
@@ -50,6 +55,7 @@ function EnrolledCoursesList() {
                     </Card.Text>
                   </Card.Body>
                 </Card>
+                </Link>
               </Col>
             ))
           ) : (

@@ -42,6 +42,9 @@ import TutorProfile from "./Pages/TutorPages/TutorProfile";
 import TutorDetailsPage from "./Pages/StudentPages/TutorDetailsPage";
 import StudentProfile from "./Pages/StudentPages/StudentProfile";
 import TutorForgotPassword from "./Components/ForgotPassword/TutorForgotPassword";
+import Room from "./Pages/room";
+import StudentMentors from "./Pages/StudentPages/StudentMentors";
+import StudentCoureseView from "./Pages/StudentPages/StudentCoureseView";
 
 function App() {
   return (
@@ -58,11 +61,16 @@ function App() {
           <Route path="/studentallcourselist" element={<StudentCourseList />} />
           <Route
             path="/studentcoursedetails/:id"
-            element={<StudentCourseDetails />}
+            element={<StudentCourseDetails />}  
+          />
+          <Route
+            path="/studentviewcourse/:id"
+            element={<StudentCoureseView />}  
           />
           <Route path="/studentquizpage" element={<StudentQuizPage />} />
           <Route path="/tutordetails/:id" element={<TutorDetailsPage />} />
           <Route path="/studentprofile" element={<StudentProfile />} />
+          <Route path="/mentoring" element={<StudentMentors/>}/>
           
 
           {/* tutor Routes */}
@@ -104,6 +112,8 @@ function App() {
 
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/tutorforgotpassword" element={<TutorForgotPassword/>} />
+
+          <Route path="/room" element={<Room/>} />
         </Routes>
       </Router>
     </>

@@ -264,13 +264,14 @@ const cancelCourse = async (req: Request, res: Response) => {
 const blockTutor = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    await tutor.findByIdAndUpdate(
+   const blocked= await tutor.findByIdAndUpdate(
       id,
       {
         isBlocked: true,
       },
       { new: true }
     );
+  
     const tutorlist = await tutor.find();
     if (tutorlist) {
       res.status(201).json({

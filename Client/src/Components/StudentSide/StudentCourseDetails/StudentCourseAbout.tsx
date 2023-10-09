@@ -5,10 +5,11 @@ import Card from "react-bootstrap/Card";
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Image_Url } from "../../../Config/Config";
-import { getAllCourses } from "../AxiosConfigStudents/AxiosConfig";
+import { getAllCourses, getEnrolledCourses } from "../AxiosConfigStudents/AxiosConfig";
 
 function StudentCourseAbout({ courseData }) {
   const [allCourseList, setAllCourseList] = useState([]);
+  const [enrolledCourses,setEnrolledCourses]= useState([])
 
   useEffect(() => {
     const getCourses = async ()=>{
@@ -22,8 +23,35 @@ function StudentCourseAbout({ courseData }) {
 
     }
     getCourses();
+
     
   }, []);
+
+  const studentData = localStorage.getItem("studentData");
+  const parseData= JSON.parse(studentData);
+
+  useEffect(() => {
+
+    const enrolledCourses = async (id)=>{
+      try {
+        const response = await getEnrolledCourses(id)
+        
+        
+        setEnrolledCourses(response.data.enrolledCourses);
+      } catch (error) {
+        console.error(error);
+      }
+     
+    }
+  
+    
+    enrolledCourses(parseData?._id)
+    
+  }, []);
+
+  const filteredCourses = allCourseList.filter((course) => {
+    return !enrolledCourses.some((enrolledCourse) => enrolledCourse._id === course._id);
+  });
   return (
     <Container className="mt-5 cardLayout ">
       <h2
@@ -37,10 +65,10 @@ function StudentCourseAbout({ courseData }) {
         Explore More...
       </h2>
       <Row className="m-3">
-        {allCourseList.map((courses, index) => {
+        {filteredCourses.map((courses, index) => {
           if (courseData?._id !== courses?._id) {
             return (
-              <Col key={courses?._id}>
+              <Col xs={12} md={3} key={courses?._id}>
                 <Link to={`/studentcoursedetails/${courses?._id}`}>
                   <Card
                     style={{ width: "16vw", height: "25rem" }}
@@ -68,7 +96,7 @@ function StudentCourseAbout({ courseData }) {
               </Col>
             );
           } else {
-            return null; // Skip rendering when the condition is not met
+            return null; 
           }
         })}
       </Row>

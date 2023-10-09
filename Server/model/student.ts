@@ -59,7 +59,7 @@ const studentSchema = new Schema<StudentDocument>({
     {
       type: String,
 
-      required: true,
+     
     },
   
 

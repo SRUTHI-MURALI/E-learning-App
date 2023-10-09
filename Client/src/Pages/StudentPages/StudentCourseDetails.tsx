@@ -14,6 +14,7 @@ import { Base_Url } from "../../Config/Config";
 export default function StudentCourseDetails() {
   const [data, setData] = useState("");
   const { id } = useParams();
+  const showVideo= false;
 
   const studentData = localStorage.getItem("studentData");
   const parseData= JSON.parse(studentData);
@@ -52,12 +53,13 @@ export default function StudentCourseDetails() {
               <StudentCourseimage courseData={data} />
               <StudentCourseDescription courseData={data} />
             </Col>
+
             <Col xs={12} md={4}>
               <StudenetCoursePurchase courseData={data} />
             </Col>
           </Row>
 
-          <StudentCourseLessons courseData={data} />
+          <StudentCourseLessons courseData={data} show={showVideo} />
           <StudentCourseAbout courseData={data} />
           <Footer />
         </Row>

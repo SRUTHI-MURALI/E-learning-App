@@ -93,7 +93,8 @@ function TutorCourseTable() {
                     <td>{course?.description}</td>
                     <td>{course?.duration}</td>
                     <td>
-                      {course?.isApproved ? (
+                      {! course?.instructor?.isBlocked ?(
+                      course?.isApproved ? (
                         <Button variant="info" size="sm">
                           Approved
                         </Button>
@@ -101,6 +102,10 @@ function TutorCourseTable() {
                         <Button variant="secondary" size="sm">
                           UnApproved
                         </Button>
+                      )):(
+                        <Button variant="secondary" size="sm">
+                        UnApproved
+                      </Button>
                       )}
                     </td>
                     <td>{course?.price}</td>

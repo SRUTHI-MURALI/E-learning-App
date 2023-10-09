@@ -4,6 +4,7 @@ import AddCourse from "../../Components/TutorSide/TutorAddCourse/AddCourse";
 import { Col, Container, Row } from "react-bootstrap";
 import TutorHeader from "../../Components/TutorSide/TutorHeader/TutorHeader";
 import TutorSidebar from "../../Components/TutorSide/TutorSidebar/TutorSidebar";
+import { useNavigate } from "react-router-dom";
 
 function TutorAddCourse() {
   const tutorData = localStorage.getItem("tutorData");

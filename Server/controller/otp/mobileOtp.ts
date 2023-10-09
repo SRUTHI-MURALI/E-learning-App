@@ -15,10 +15,23 @@ const sendMobileOtp = async (req: Request, res: Response) => {
 };
 
 const verifyMobileOtp = async (req: Request, res: Response) => {
+ 
+  
+ try {
   const { phone, verificationCode } = req.body;
 
   await verifyOTP(phone, verificationCode);
-  res.status(200).json({ message: "OTP verified successfully" });
+  
+  
+  
+  
+ return res.status(200).json({ message: "OTP verified successfully" });
+  
+ } catch (error) {
+  console.log(error);
+  
+  
+ }
 };
 
 export { sendMobileOtp, verifyMobileOtp };

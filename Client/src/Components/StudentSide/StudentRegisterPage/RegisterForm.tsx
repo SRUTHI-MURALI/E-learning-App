@@ -25,7 +25,7 @@ function RegisterForm() {
     e.preventDefault();
     const trimmedName = userName.trim();
     const trimmedPassword = password.trim();
-    const trimmedPhone = phone.trim();
+    const trimmedPhone = phone;
     const trimmedEmail = email.trim();
     const trimmedConfirmPassword = confirmPassword.trim();
 
@@ -67,8 +67,7 @@ function RegisterForm() {
       await studentSendOtp(trimmedName,trimmedEmail,trimmedPhone,trimmedPassword)
      
 
-      // Display success toast
-      toast.success("Successfully registered");
+     
 
       handleNavigation(trimmedPhone);
     } catch (error) {

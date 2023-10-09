@@ -30,7 +30,7 @@ function StudentCourseQuizList() {
         {showQuiz == false ? (
           <>
             {allCourseList.map((courses, index) => (
-              <Card className="m-5">
+              <Card className="m-5 ">
                 <>
                   <Row>
                     <Col key={courses?._id} xs={12} md={4}>

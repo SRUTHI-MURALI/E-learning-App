@@ -16,6 +16,7 @@
     "@react-oauth/google": "^0.11.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/recharts": "^1.8.24",
+    "@zegocloud/zego-uikit-prebuilt": "^1.8.11",
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
     "mdb-react-ui-kit": "^6.3.0",

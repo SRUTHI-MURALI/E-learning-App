@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, Container } from "react-bootstrap";
 import r1 from "../../Assets/Images/otp1.avif";
 import { Base_Url } from "../../Config/Config";
-import { useParams } from "react-router-dom";
+
 
 function StudentOtpVerifyForm({ phone }) {
   const [otp, setotp] = useState("");
@@ -30,18 +30,20 @@ function StudentOtpVerifyForm({ phone }) {
       return;
     }
 
-    axios
-      .post(`${Base_Url}/student/verifyotp`, {
+    try {
+      const response = await axios.post(`${Base_Url}/student/verifyotp`, {
         verificationCode: trimmedOtp,
-      })
-      .then(() => {
-        navigate("/studentlogin");
-      })
-      .catch((error) => {
-        // Handle the error here
-        console.log(error);
       });
+      console.log(response.data);
+      navigate("/studentlogin");
+    } catch (error) {
+      // Handle the error here
+      console.error("An error occurred:", error);
+      // You can display an error message to the user or take other actions as needed
+    }
   };
+
+
   useEffect(() => {
     let countdownInterval: any;
 

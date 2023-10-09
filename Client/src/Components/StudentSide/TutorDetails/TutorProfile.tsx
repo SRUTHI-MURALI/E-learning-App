@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import t1 from "../../../Assets/Images/tutors/t1.avif";
 import { Link, useParams } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { Base_Url, Image_Url } from "../../../Config/Config";
+import {  Image_Url } from "../../../Config/Config";
 import { getTutorProfile } from "../AxiosConfigStudents/AxiosConfig";
 
 export default function TutorProfile() {
   const [tutorDetails, setTutorDetails] = useState([]);
   const [tutorCourses, setTutorCourses] = useState([]);
   const { id } = useParams();
-  console.log(id, "idd");
+ 
 
   useEffect(() => {
     const getTutorData = async (id) => {

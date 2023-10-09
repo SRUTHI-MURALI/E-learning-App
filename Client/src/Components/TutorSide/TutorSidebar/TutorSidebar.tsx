@@ -83,6 +83,16 @@ function TutorSidebar() {
                 <BsPeopleFill className="icon" /> Profile
               </a>
             </li>
+            <li
+              className={`sidebar-list-item ${
+                selectedItem === "video" ? "selected" : ""
+              }`}
+              onClick={() => handleItemClick("video")}
+            >
+              <a href="/room">
+                <BsPeopleFill className="icon" /> Online
+              </a>
+            </li>
           </ul>
         </aside>
       </Col>

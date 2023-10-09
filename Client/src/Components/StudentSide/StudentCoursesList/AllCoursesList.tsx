@@ -4,10 +4,13 @@ import "./StudentCoursesList.css";
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Image_Url } from "../../../Config/Config";
-import { getAllCourses } from "../AxiosConfigStudents/AxiosConfig";
+import { getAllCourses, getEnrolledCourses } from "../AxiosConfigStudents/AxiosConfig";
 
 function AllCoursesList() {
   const [allCourseList, setAllCourseList] = useState([]);
+  const [enrolledCourses,setEnrolledCourses] = useState([])
+  const student = localStorage.getItem("studentData");
+  const parseData = JSON.parse(student);
 
   useEffect(() => {
     const getCourses = async ()=>{
@@ -21,13 +24,38 @@ function AllCoursesList() {
     getCourses();
     
   }, []);
+
+  useEffect(() => {
+
+    const enrolledCourses = async (id)=>{
+      try {
+        const response = await getEnrolledCourses(id)
+        
+        
+        setEnrolledCourses(response.data.enrolledCourses);
+      } catch (error) {
+        console.error(error);
+      }
+     
+    }
+  
+    
+
+    enrolledCourses(parseData?._id)
+    
+  }, []);
+
+  const filteredCourses = allCourseList.filter((course) => {
+    return !enrolledCourses.some((enrolledCourse) => enrolledCourse._id === course._id);
+  });
   return (
     <div>
       <Container className="mt-5 ">
         <p className="allcourses-header">All Courses</p>
         <Row>
-          {allCourseList.map((courses, index) => (
-            <Col md={4} key={courses._id}>
+          {filteredCourses.map((courses, index) => (
+           
+            <Col  xs={12} md={3} key={courses._id}>
               <Link
                 style={{ textDecoration: "none" }}
                 to={`/studentcoursedetails/${courses._id}`}

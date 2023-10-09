@@ -19,27 +19,43 @@ import {
   resetPasswordSentOtp,
   resetPassword,
 } from "../../controller/tutor/tutorController";
+import { tutorLoogedin } from "../../middlewares/tutorMiddlewares";
 
 const tutorRouter = express.Router();
+
+// tutor logging
 
 tutorRouter.post("/sendotp", sendOtp);
 tutorRouter.post("/verifyotp", signUp);
 tutorRouter.post("/login", login);
-tutorRouter.get("/getCourseCategory", getCategory);
-tutorRouter.post("/addcourse", addCourse);
-tutorRouter.post("/addlessons", addLesson);
-tutorRouter.get("/getallcourses", getCourseList);
-tutorRouter.get("/geteditcourse/:id", getEditCourseList);
-tutorRouter.put("/editcourselist/:id", editCourseList);
-tutorRouter.get("/getalllessons/:id", getAllLessons);
-tutorRouter.get("/getenrolledstudentlist/:id", enrolledStudents);
-tutorRouter.post("/addquiz", AddQuiz);
-tutorRouter.put("/activatelesson/:id", activateLesson);
-tutorRouter.put("/disablelesson/:id", disableLesson);
-tutorRouter.put("/disablelesson/:id", disableLesson);
-tutorRouter.get("/gettutorprofile/:id", tutorProfile);
-tutorRouter.put("/tutoreditedprofile/:id", tutorEditedProfile);
+
+// tutor resetpassword
 tutorRouter.post("/resetpasswordsentotp", resetPasswordSentOtp);
 tutorRouter.put("/resetpassword", resetPassword);
+
+//tutor category management
+tutorRouter.get("/getCourseCategory", tutorLoogedin, getCategory);
+
+//tutor course management
+tutorRouter.post("/addcourse", tutorLoogedin, addCourse);
+tutorRouter.get("/getallcourses", tutorLoogedin, getCourseList);
+tutorRouter.get("/geteditcourse/:id", tutorLoogedin, getEditCourseList);
+tutorRouter.put("/editcourselist/:id", tutorLoogedin, editCourseList);
+
+//tutor lessosn management
+tutorRouter.post("/addlessons", tutorLoogedin, addLesson);
+tutorRouter.get("/getalllessons/:id", tutorLoogedin, getAllLessons);
+tutorRouter.put("/activatelesson/:id", tutorLoogedin, activateLesson);
+tutorRouter.put("/disablelesson/:id", tutorLoogedin, disableLesson);
+
+//tutor student management
+tutorRouter.get("/getenrolledstudentlist/:id", tutorLoogedin, enrolledStudents);
+
+//tutor quiz management
+tutorRouter.post("/addquiz", tutorLoogedin, AddQuiz);
+
+//tutor profile managemnet
+tutorRouter.get("/gettutorprofile/:id", tutorLoogedin, tutorProfile);
+tutorRouter.put("/tutoreditedprofile/:id", tutorLoogedin, tutorEditedProfile);
 
 export default tutorRouter;

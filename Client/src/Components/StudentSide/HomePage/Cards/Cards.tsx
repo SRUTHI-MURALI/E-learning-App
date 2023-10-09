@@ -41,6 +41,7 @@ function BasicExample() {
           </Card>
         </Col>
         <Col xs={12} lg={3}>
+          <Link to="/mentoring">
           <Card style={{ width: "18rem" }}>
             <Card.Img variant="top" src={mentor} />
             <Card.Body>
@@ -49,6 +50,7 @@ function BasicExample() {
               </Card.Title>
             </Card.Body>
           </Card>
+          </Link>
         </Col>
       </Row>
     </Container>

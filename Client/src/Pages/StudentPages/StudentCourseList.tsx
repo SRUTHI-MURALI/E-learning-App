@@ -27,7 +27,6 @@ function StudentCourseList() {
        <Container>
          <Row>
            <StudentHeader />
- 
            <CourseBody1 />
            <AllCoursesList />
            <EnrolledCoursesList />
