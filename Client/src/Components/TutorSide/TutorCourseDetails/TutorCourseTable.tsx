@@ -2,14 +2,14 @@ import Table from "react-bootstrap/Table";
 import { AiFillEdit } from "react-icons/ai";
 import { ImArrowRight } from "react-icons/im";
 import { useState, useEffect } from "react";
-
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "react-bootstrap";
 import EditCourseTutorForm from "./EditCourseTutorForm";
-import { getUser, Image_Url } from "../../../Config/Config";
+import { Image_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../AxiosConfigInstructors/AxiosConfig";
 
 function TutorCourseTable() {
   const tutorData = localStorage.getItem("tutorData");
@@ -22,20 +22,18 @@ function TutorCourseTable() {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [courseId, setCourseId] = useState("");
 
-  useEffect( () => {
-    const fetchCourse = async ()=>{
+  useEffect(() => {
+    const fetchCourse = async () => {
       try {
-        await getUser()
-        .then((response) => {
+        await getUser().then((response) => {
           setCourselist(response.data.allCourses);
-        })
+        });
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
-  
+    };
+
     fetchCourse();
-     
   }, []);
 
   const handlePageChange = ({ selected }) => {
@@ -93,19 +91,20 @@ function TutorCourseTable() {
                     <td>{course?.description}</td>
                     <td>{course?.duration}</td>
                     <td>
-                      {! course?.instructor?.isBlocked ?(
-                      course?.isApproved ? (
-                        <Button variant="info" size="sm">
-                          Approved
-                        </Button>
+                      {!course?.instructor?.isBlocked ? (
+                        course?.isApproved ? (
+                          <Button variant="info" size="sm">
+                            Approved
+                          </Button>
+                        ) : (
+                          <Button variant="secondary" size="sm">
+                            UnApproved
+                          </Button>
+                        )
                       ) : (
                         <Button variant="secondary" size="sm">
                           UnApproved
                         </Button>
-                      )):(
-                        <Button variant="secondary" size="sm">
-                        UnApproved
-                      </Button>
                       )}
                     </td>
                     <td>{course?.price}</td>
@@ -154,7 +153,7 @@ function TutorCourseTable() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={2}
           onPageChange={handlePageChange}
-          containerClassName={"pagination"} 
+          containerClassName={"pagination"}
           activeClassName={"active"}
         />
       </div>

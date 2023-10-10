@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsGrid1X2Fill, BsFillArchiveFill, BsPeopleFill } from "react-icons/bs";
+import { BsFillArchiveFill, BsPeopleFill } from "react-icons/bs";
 import l1 from "../../../Assets/Images/carouselBody/l1.jpeg";
 import "../Css/Tutor.css";
 import { Row, Col } from "react-bootstrap";
@@ -22,16 +22,6 @@ function TutorSidebar() {
           </div>
 
           <ul className="sidebar-list">
-            <li
-              className={`sidebar-list-item ${
-                selectedItem === "dashboard" ? "selected" : ""
-              }`}
-              onClick={() => handleItemClick("dashboard")}
-            >
-              <a href="/">
-                <BsGrid1X2Fill className="icon" /> Dashboard
-              </a>
-            </li>
             <li
               className={`sidebar-list-item ${
                 selectedItem === "Courses" ? "selected" : ""

@@ -3,16 +3,20 @@ import { ImArrowRight } from "react-icons/im";
 import { TiTickOutline } from "react-icons/ti";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "../../AdminSIde/CourseDetails/CourseTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Base_Url, Video_Url } from "../../../Config/Config";
+import { Video_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
 import AddLesson from "../TutorAddCourse/AddLesson";
 import Swal from "sweetalert2";
+import {
+  activateLesson,
+  getAllLessons,
+  inactivateLesson,
+} from "../AxiosConfigInstructors/AxiosConfig";
 
 function TutorLessonsTable() {
   const [lessonsList, setLessonslist] = useState([]);
@@ -24,14 +28,16 @@ function TutorLessonsTable() {
   const { id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/tutor/getalllessons/${id}`)
-      .then((response) => {
-        setLessonslist(response.data.allLessons);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const getLessons = async (id: string) => {
+      try {
+        await getAllLessons(id).then((response) => {
+          setLessonslist(response.data.allLessons);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getLessons(id);
   }, []);
 
   const handlePageChange = ({ selected }) => {
@@ -59,16 +65,14 @@ function TutorLessonsTable() {
       });
 
       if (result.isConfirmed) {
+        const courseId = id;
         if (!lessons.isActive) {
-          await axios.put(`${Base_Url}/tutor/activatelesson/${lessons._id}`, {
-            courseId: id,
-          });
+          await activateLesson(lessons._id, courseId);
+
           lessons.isActive = true;
           toast.success(`lessons "${lessons.title}" activated successfully`);
         } else {
-          await axios.put(`${Base_Url}/tutor/disablelesson/${lessons._id}`, {
-            courseId: id,
-          });
+          await inactivateLesson(lessons._id, courseId);
           lessons.isActive = false;
           toast.success(`lesson "${lessons.title}" disabled successfully`);
         }

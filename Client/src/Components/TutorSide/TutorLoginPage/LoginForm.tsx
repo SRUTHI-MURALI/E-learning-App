@@ -9,10 +9,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../../ReduxComponents/TutorSlice";
-import { Base_Url } from "../../../Config/Config";
+import { tutorLogin } from "../AxiosConfigInstructors/AxiosConfig";
 
 function LoginForm() {
   const [password, setPassword] = useState("");
@@ -40,11 +39,8 @@ function LoginForm() {
     }
 
     try {
-      const response = await axios.post(`${Base_Url}/tutor/login`, {
-        email: trimmedEmail,
+      const response = await tutorLogin(trimmedEmail, trimmedPassword);
 
-        password: trimmedPassword,
-      });
       const tutorData = response.data;
 
       localStorage.setItem("tutorData", JSON.stringify(tutorData));

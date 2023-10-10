@@ -1,13 +1,11 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-
 import { ImArrowRight } from "react-icons/im";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { Base_Url } from "../../../Config/Config";
 import TutorProfileImage from "./TutorProfileImage";
 import TutorEditProfileForm from "./TutorEditProfileForm";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getTutorProfile } from "../AxiosConfigInstructors/AxiosConfig";
 
 function TutorProfileform({ tutor }) {
   const [user, setUser] = useState([]);
@@ -17,9 +15,8 @@ function TutorProfileform({ tutor }) {
   useEffect(() => {
     const getProfileData = async () => {
       try {
-        const response = await axios.get(
-          `${Base_Url}/tutor/gettutorprofile/${tutor._id}`
-        );
+        const response = await getTutorProfile(tutor._id);
+
         setUser(response.data.tutorDetails);
         setCourses(response.data.courseCount);
       } catch (error) {

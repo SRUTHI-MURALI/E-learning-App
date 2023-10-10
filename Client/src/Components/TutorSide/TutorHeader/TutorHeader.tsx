@@ -1,4 +1,4 @@
-import { BsPersonCircle,} from "react-icons/bs";
+import { BsPersonCircle } from "react-icons/bs";
 import "../Css/Tutor.css";
 import { logout } from "../../ReduxComponents/TutorSlice";
 import { Link, useNavigate } from "react-router-dom";

@@ -1,9 +1,8 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Base_Url } from "../../../Config/Config";
+import { addQuiz } from "../AxiosConfigInstructors/AxiosConfig";
 
 function AddQuiz({ courseId, onClose }) {
   const [questionset, setQuestionset] = useState([]);
@@ -54,12 +53,7 @@ function AddQuiz({ courseId, onClose }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${Base_Url}/tutor/addquiz`, {
-        courseId,
-        questionset,
-        count,
-      });
-      console.log(res, "qqqq");
+      await addQuiz(questionset, courseId, count);
 
       alert("Success");
     } catch (error) {

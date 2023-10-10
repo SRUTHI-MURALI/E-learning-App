@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Row, Form, Card, Button, Container } from "react-bootstrap";
 import "./TutorAddCourse.css";
-import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Base_Url } from "../../../Config/Config";
+import { getAllCategory } from "../AxiosConfigInstructors/AxiosConfig";
 
 function SelectCategory({ onSelectCategory }) {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/tutor/getCourseCategory`)
-      .then((response) => {
-        console.log(response.data);
-        setCategories(response.data.Category);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const fetchData = async () => {
+      try {
+        const response = await getAllCategory();
+        setCategories(response?.data.Category);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleCategorySelection = () => {

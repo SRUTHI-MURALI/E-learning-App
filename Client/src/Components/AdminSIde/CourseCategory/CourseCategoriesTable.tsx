@@ -8,11 +8,10 @@ import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import "./CourseCategoriesTable.css";
 import AddCategory from "./AddCategory";
-import { Base_Url } from "../../../Config/Config";
 import EditCategoryForm from "./EditCategoryForm";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import { getCategory } from "../AxiosConfigAdmin/AxiosConfig";
+import { activateCategory, getCategory, inactivateCategory } from "../AxiosConfigAdmin/AxiosConfig";
 
 function CourseCategoriesTable() {
   const [categoryList, setCategorylist] = useState([]);
@@ -62,13 +61,11 @@ function CourseCategoriesTable() {
 
       if (result.isConfirmed) {
         if (!category.isActive) {
-          await axios.put(`${Base_Url}/admin/activatecategory/${category._id}`);
+          await activateCategory(category._id);
           category.isActive = true;
           toast.success(`category ${category.title} approved successfully`);
         } else {
-          await axios.put(
-            `${Base_Url}/admin/inactivatecategory/${category._id}`
-          );
+          await inactivateCategory(category._id)
           category.isActive = false;
           toast.success(`category "${category.title}" unapproved successfully`);
         }

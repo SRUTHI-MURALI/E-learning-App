@@ -65,6 +65,8 @@ function LoginForm() {
     }
 
     try {
+      console.log('log1');
+      
       const response = await studentLogin(trimmedEmail, trimmedPassword);
 
       const studentData = response.data;

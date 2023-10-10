@@ -1,45 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Form, Button, Container } from "react-bootstrap";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { Base_Url } from "../../../Config/Config";
+
+import {
+  editCourseList,
+  getEditCourse,
+} from "../AxiosConfigInstructors/AxiosConfig";
 
 function EditCourseTutorForm({ onCloseEdit, courseId }) {
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [duration, setDuration] = useState("");
+  const [price, setPrice] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [category, setCategory] = useState("");
   const [allCategories, setAllCategories] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/tutor/geteditcourse/${courseId}`)
-      .then((response) => {
+    const getcourse = async () => {
+      try {
+        const response = await getEditCourse(courseId);
         const course = response.data.editCourse;
         setAllCategories(response.data.allcategories);
         setTitle(course.title);
         setDuration(course.duration);
         setCategory(course.category.title);
         setPrice(course.price);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getcourse();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const trimmedTitle = title.trim();
-    const trimmedDuration = duration.trim();
+    const trimmedDuration = duration;
 
     try {
-      await axios.put(`${Base_Url}/tutor/editcourselist/${courseId}`, {
-        title: trimmedTitle,
-        duration: trimmedDuration,
-        price,
+      await editCourseList(
+        courseId,
+        trimmedTitle,
+        trimmedDuration,
         category,
-      });
+        price
+      );
 
       toast.success("Successfully added");
       window.location.reload();

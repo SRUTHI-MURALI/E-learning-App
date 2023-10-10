@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Base_Url } from "../../../Config/Config";
 import { ImArrowRight } from "react-icons/im";
 import { Button, Table } from "react-bootstrap";
-
 import ReactPaginate from "react-paginate";
 import AddQuiz from "./AddQuiz";
+import { getAllCourses } from "../AxiosConfigInstructors/AxiosConfig";
 
 function TutorQuizTable() {
   const [courseList, setCourseList] = useState([]);
@@ -27,14 +25,15 @@ function TutorQuizTable() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/tutor/getallcourses`)
-      .then((response) => {
+    const getCourses = async () => {
+      try {
+        const response = await getAllCourses();
         setCourseList(response.data.allCourses);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCourses();
   }, [addQuiz]);
 
   const handlePageChange = ({ selected }) => {

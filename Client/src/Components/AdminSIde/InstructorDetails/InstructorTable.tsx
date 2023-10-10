@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Base_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import { getInstructor } from "../AxiosConfigAdmin/AxiosConfig";
+import { blockInstructor, getInstructor, unBlockInstructor } from "../AxiosConfigAdmin/AxiosConfig";
 
 function InstructorTable() {
   const [instructorList, setInstructorlist] = useState([]);
@@ -48,15 +48,11 @@ function InstructorTable() {
 
       if (result.isConfirmed) {
         if (!instructor.isBlocked) {
-          await axios.put(
-            `${Base_Url}/admin/blockinstructor/${instructor._id}`
-          );
+          await blockInstructor(instructor._id)
           instructor.isBlocked = true;
           toast.success(`instructor "${instructor.name}" blocked successfully`);
         } else {
-          await axios.put(
-            `${Base_Url}/admin/unblockinstructor/${instructor._id}`
-          );
+          await  unBlockInstructor(instructor._id)
           instructor.isBlocked = false;
           toast.success(
             `instructor "${instructor.name}" unblocked successfully`

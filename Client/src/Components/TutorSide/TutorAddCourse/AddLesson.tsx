@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Lessons_Upload_Url, Base_Url } from "../../../Config/Config";
+import { Lessons_Upload_Url } from "../../../Config/Config";
 import AddQuiz from "../TutorAddQuiz/AddQuiz";
+import { addNewLesson } from "../AxiosConfigInstructors/AxiosConfig";
 
 function AddLesson({ courseId, onClose }) {
   const [lessons, setLessons] = useState([]);
@@ -51,10 +52,7 @@ function AddLesson({ courseId, onClose }) {
 
   const handleMainSubmit = async () => {
     try {
-      await axios.post(`${Base_Url}/tutor/addlessons`, {
-        lessons,
-        courseId,
-      });
+      await addNewLesson(lessons, courseId);
       onClose(false);
       alert("Success");
       navigate("/tutorallcourses");

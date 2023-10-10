@@ -70,7 +70,7 @@ const signUp = async (req: Request, res: Response) => {
     // Validate and extract data from the request body
     const { verificationCode } = req.body;
     if (!verificationCode) {
-      return res.status(400).json({ error: 'Verification code is required' });
+      return res.status(400).json({ error: "Verification code is required" });
     }
 
     // Assuming you have a valid 'globalData.student' object
@@ -85,13 +85,13 @@ const signUp = async (req: Request, res: Response) => {
     if (otpResponse.status !== 200) {
       // Handle OTP verification failure
       console.log("error");
-      
-      return res.status(400).json({ error: 'OTP verification failed' });
+
+      return res.status(400).json({ error: "OTP verification failed" });
     }
 
     // Create a new user
     const newUser = await Student.create(globalData.student);
-    console.log('User created successfully:');
+    console.log("User created successfully:");
 
     // Generate a token for the user
     const token = generateToken(newUser._id);
@@ -105,15 +105,19 @@ const signUp = async (req: Request, res: Response) => {
       token,
     });
   } catch (error) {
-    console.error('Error in sign-up:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error in sign-up:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-
 const login = async (req: Request, res: Response) => {
+
+  
   try {
+    
+    
     const { email, password } = req.body;
+   
     const student = await Student.findOne({ email });
     if (student && (await student.matchPasswords(password))) {
       if (student.isBlocked) {
@@ -212,7 +216,9 @@ const courseDetails = async (req: Request, res: Response) => {
 
 const getCourseList = async (req: Request, res: Response) => {
   try {
-    const allCourses = await Courses.find({isApproved:true}).populate("category instructor");
+    const allCourses = await Courses.find({ isApproved: true }).populate(
+      "category instructor"
+    );
 
     if (allCourses) {
       res.status(201).json({

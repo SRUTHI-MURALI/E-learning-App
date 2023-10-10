@@ -9,15 +9,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { Base_Url } from "../../../Config/Config";
+
+import { tutorSendOtp } from "../AxiosConfigInstructors/AxiosConfig";
 
 function RegisterForm() {
   const [tutorName, setTutorName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(0);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,12 +64,13 @@ function RegisterForm() {
     }
 
     try {
-      await axios.post(`${Base_Url}/tutor/sendotp`, {
-        name: trimmedTutorName,
-        email: trimmedEmail,
-        phone: trimmedPhone,
-        password: trimmedPassword,
-      });
+      await tutorSendOtp(
+        trimmedTutorName,
+        trimmedEmail,
+        trimmedPhone,
+        trimmedPassword
+      );
+
       toast.success("successfully registered");
       navigate("/tutorverifyOtp");
     } catch (error) {

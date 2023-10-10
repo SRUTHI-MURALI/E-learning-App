@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react"; // Import React
 import Table from "react-bootstrap/Table";
 import { AiFillEdit } from "react-icons/ai";
 import { ImArrowRight } from "react-icons/im";
-import axios from "axios";
+
 import "./CourseTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditCourseForm from "./EditCourseForm";
 import { Button } from "react-bootstrap";
-import { Base_Url, Image_Url } from "../../../Config/Config";
+import {  Image_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { getAllCourse } from "../AxiosConfigAdmin/AxiosConfig";
+import { approveCourse, cancelCourse, getAllCourse } from "../AxiosConfigAdmin/AxiosConfig";
 
 function CourseTable() {
   const [courseList, setCourselist] = useState([]);
@@ -24,20 +24,16 @@ function CourseTable() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getCourses = async ()=>{
+    const getCourses = async () => {
       try {
-        const response= await getAllCourse()
+        const response = await getAllCourse();
         setCourselist(response.data.allCourses);
       } catch (error) {
         console.error(error);
       }
-     
-
-    }
+    };
     getCourses();
   }, []);
-
- 
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
@@ -67,11 +63,15 @@ function CourseTable() {
 
       if (result.isConfirmed) {
         if (!course.isApproved) {
-          await axios.put(`${Base_Url}/admin/approvecourse/${course._id}`);
+        
+          
+          await approveCourse(course._id);
           course.isApproved = true;
           toast.success(`Course "${course.title}" approved successfully`);
         } else {
-          await axios.put(`${Base_Url}/admin/cancelcourse/${course._id}`);
+       
+          
+          await cancelCourse(course._id);
           course.isApproved = false;
           toast.success(`Course "${course.title}" unapproved successfully`);
         }
@@ -123,30 +123,29 @@ function CourseTable() {
                   <td>{course?.duration}</td>
                   <td>{course?.instructor?.name}</td>
                   <td>
-                    {!course?.instructor?.isBlocked ?(
-                    
-                      
-                    course?.isApproved ? (
-                      <Button
-                        variant="info"
-                        size="sm"
-                        onClick={() => {
-                          courseStatus(course);
-                        }}
-                      >
-                        Approved
-                      </Button>
+                    {!course?.instructor?.isBlocked ? (
+                      course?.isApproved ? (
+                        <Button
+                          variant="info"
+                          size="sm"
+                          onClick={() => {
+                            courseStatus(course);
+                          }}
+                        >
+                          Approved
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => {
+                            courseStatus(course);
+                          }}
+                        >
+                          Unapproved
+                        </Button>
+                      )
                     ) : (
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        onClick={() => {
-                          courseStatus(course);
-                        }}
-                      >
-                        Unapproved
-                      </Button>
-                    )):(
                       <Button
                         variant="secondary"
                         size="sm"

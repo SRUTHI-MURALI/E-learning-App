@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-const tutorLoogedin =  (
+const tutorLoggedin =  (
   async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(" ")[1]; // Use optional chaining to handle potential undefined headers
     const JWT_SECRET = process.env.JWT_SECRET as string; // Assuming JWT_SECRET is a string in your .env file
@@ -30,7 +30,7 @@ const tutorLoogedin =  (
       try {
         const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
-        const tutorId: string = decoded.user_id;
+        const tutorId: string = decoded?.userId;
 
         const tutor: Document | null = await Tutor.findById(tutorId).select(
           "-password"
@@ -55,6 +55,6 @@ const tutorLoogedin =  (
   }
 );
 
-export { tutorLoogedin };
+export { tutorLoggedin };
 
 

@@ -20,7 +20,6 @@ const login = async (req: Request, res: Response) => {
         email: admin.email,
         token,
       });
-      
     } else {
       res.status(400);
     }
@@ -172,8 +171,6 @@ const getEditCourseList = async (req: Request, res: Response) => {
 
 const editCourseList = async (req: Request, res: Response) => {
   try {
-    
-
     const { title, duration, price } = req.body;
     const { id } = req.params;
 
@@ -203,6 +200,7 @@ const editCourseList = async (req: Request, res: Response) => {
 const approveCourse = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+console.log('hhhhhh');
 
     const inst: any = await courses.findById(id).populate("instructor");
     const instructorEmail = inst?.instructor?.email;
@@ -264,14 +262,14 @@ const cancelCourse = async (req: Request, res: Response) => {
 const blockTutor = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-   const blocked= await tutor.findByIdAndUpdate(
+   await tutor.findByIdAndUpdate(
       id,
       {
         isBlocked: true,
       },
       { new: true }
     );
-  
+
     const tutorlist = await tutor.find();
     if (tutorlist) {
       res.status(201).json({
@@ -348,7 +346,6 @@ const inActivateCategory = async (req: Request, res: Response) => {
 
 const getEditCategoryList = async (req: Request, res: Response) => {
   try {
-
     const { id } = req.params;
     const editCategory = await categoryModel.findById({ _id: id });
     if (editCategory) {
@@ -365,10 +362,10 @@ const editCategory = async (req: Request, res: Response) => {
   try {
     const { category, description } = req.body;
     const { id } = req.params;
-    console.log(id,category,description,'admin');
-    
+    console.log(id, category, description, "admin");
+
     const check = await categoryModel.findOne({ title: category });
-    if (check  && check._id.toString() !== id) {
+    if (check && check._id.toString() !== id) {
       res.status(400).json("Category with the same title already exists.");
     } else {
       const editedCategory = await categoryModel.findByIdAndUpdate(

@@ -1,13 +1,11 @@
 import Table from "react-bootstrap/Table";
 import { ImArrowRight } from "react-icons/im";
-
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "./TutorStudentTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Base_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
+import { getEnrolledStudents } from "../AxiosConfigInstructors/AxiosConfig";
 
 function TutorStudentTable() {
   const [orderList, setOrderlist] = useState([]);
@@ -18,14 +16,16 @@ function TutorStudentTable() {
   const parseData = JSON.parse(tutorData);
 
   useEffect(() => {
-    axios
-      .get(`${Base_Url}/tutor/getenrolledstudentlist/${parseData._id}`)
-      .then((response) => {
+    const enrolledStudents = async (id: string) => {
+      try {
+        const response = await getEnrolledStudents(id);
         setOrderlist(response.data.filteredOrders);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    enrolledStudents(parseData._id);
   }, []);
 
   const handlePageChange = ({ selected }) => {

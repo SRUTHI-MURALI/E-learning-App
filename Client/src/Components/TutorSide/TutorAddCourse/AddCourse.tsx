@@ -4,15 +4,21 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import AddLesson from "./AddLesson";
-import { Base_Url, Course_Upload_Url } from "../../../Config/Config";
+import { Course_Upload_Url } from "../../../Config/Config";
+import { addCourse } from "../AxiosConfigInstructors/AxiosConfig";
 
-function AddCourse({ selectedCategory, onCourseAdded }) {
+interface AddCourseProps {
+  selectedCategory: string;
+  onCourseAdded: (added: boolean) => void;
+}
+
+function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
   const tutorData = localStorage.getItem("tutorData");
   const parseData = JSON.parse(tutorData);
 
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [duration, setDuration] = useState("");
+  const [price, setPrice] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [cloudinaryURL, setCloudinaryURL] = useState("");
@@ -22,13 +28,12 @@ function AddCourse({ selectedCategory, onCourseAdded }) {
 
   const submitHandler = async () => {
     const trimmedTitle = title.trim();
-    const trimmedPrice = price.trim();
+    const trimmedPrice = price;
     const trimmedDuration = duration.trim();
     const trimmedDescription = description.trim();
 
     if (
       trimmedTitle === "" ||
-      trimmedPrice === "" ||
       trimmedDuration === "" ||
       trimmedDescription === ""
     ) {
@@ -50,15 +55,15 @@ function AddCourse({ selectedCategory, onCourseAdded }) {
     }
 
     try {
-      const response = await axios.post(`${Base_Url}/tutor/addcourse`, {
-        title: trimmedTitle,
-        price: trimmedPrice,
-        duration: trimmedDuration,
-        description: trimmedDescription,
-        category: selectedCategory,
-        photo: cloudinaryURL,
-        instructor: parseData?._id,
-      });
+      const response = await addCourse(
+        trimmedTitle,
+        trimmedPrice,
+        trimmedDuration,
+        trimmedDescription,
+        selectedCategory,
+        cloudinaryURL,
+        parseData?._id
+      );
       setSelectedCourse(response.data._id);
 
       setShow(true);

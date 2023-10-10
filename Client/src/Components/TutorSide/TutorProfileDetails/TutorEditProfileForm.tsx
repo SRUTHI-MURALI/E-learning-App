@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Form, Container, Card, Button } from "react-bootstrap";
-import { Base_Url, Course_Upload_Url } from "../../../Config/Config";
-import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import {
+  getTutorProfile,
+  tutorEditProfile,
+} from "../AxiosConfigInstructors/AxiosConfig";
 
 function TutorEditProfileForm({ tutor, onClose }) {
   const [tutorDetails, setTutorDetails] = useState([]);
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [qualification, setQualification] = useState("");
-  const [experience, setExperience] = useState("");
+  const [experience, setExperience] = useState(0);
   const [about, setAbout] = useState("");
 
   useEffect(() => {
     const getProfileData = async () => {
       try {
-        const response = await axios.get(
-          `${Base_Url}/tutor/gettutorprofile/${tutor._id}`
-        );
+        const response = await getTutorProfile(tutor._id);
+
         const profile = response.data.tutorDetails;
         setTutorDetails(response.data.tutorDetails);
         setAbout(profile?.about);
@@ -42,15 +42,16 @@ function TutorEditProfileForm({ tutor, onClose }) {
     e.preventDefault();
 
     try {
-      await axios.put(`${Base_Url}/tutor/tutoreditedprofile/${tutor._id}`, {
+      await tutorEditProfile(
+        tutor._id,
         name,
         phone,
         email,
         experience,
         qualification,
         password,
-        about,
-      });
+        about
+      );
 
       window.location.reload();
     } catch (error) {

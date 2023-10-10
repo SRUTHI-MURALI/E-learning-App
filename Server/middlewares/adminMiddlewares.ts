@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
-import Admin from '../model/admin'
+import Admin from "../model/admin";
 import * as dotenv from "dotenv";
 import { Document } from "mongoose";
 dotenv.config();
@@ -21,40 +21,47 @@ declare global {
   }
 }
 
-const adminLoggedin =  (
-  async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization?.split(" ")[1]; // Use optional chaining to handle potential undefined headers
-    const JWT_SECRET = process.env.JWT_SECRET as string; // Assuming JWT_SECRET is a string in your .env file
+const adminLoggedin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const token = req.headers.authorization?.split(" ")[1]; // Use optional chaining to handle potential undefined headers
+  
+  
+  const JWT_SECRET = process.env.JWT_SECRET as string; // Assuming JWT_SECRET is a string in your .env file
 
-    if (token) {
-      try {
-        const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
-        const adminId: string = decoded.user_id;
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+   
+      
 
-        const admin: Document | null = await Admin.findById(adminId).select(
-          "-password"
-        );
+      const adminId: string = decoded?.userId;
+      
+      
 
-        if (admin) {
-          req.admin = admin as unknown as CustomUser;
-          next();
-        } else {
-          res.status(404);
-          throw new Error("User not found");
-        }
-      } catch (error) {
-        res.status(401);
-        throw new Error("Not authorized, invalid token");
+      const admin: Document | null = await Admin.findById(adminId).select(
+        "-password"
+      );
+
+      if (admin) {
+        req.admin = admin as unknown as CustomUser;
+        next();
+      } else {
+        res.status(404);
+        throw new Error("User not found");
       }
-    }
-
-    if (!token) {
+    } catch (error) {
       res.status(401);
+      throw new Error("Not authorized, invalid token");
     }
   }
-);
+
+  if (!token) {
+    res.status(401);
+  }
+};
 
 export { adminLoggedin };
-
-
