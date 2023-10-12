@@ -103,4 +103,7 @@ export const inactivateCategory = (id: string | undefined) => {
   return api.put(`/inactivatecategory/${id}`);
 };
 
+export const getCount = () => {
+  return api.get("/getstudentcount");
+};
 export default api;

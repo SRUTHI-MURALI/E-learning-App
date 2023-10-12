@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import {
   BsFillArchiveFill,
   BsFillGrid3X3GapFill,
@@ -18,53 +18,54 @@ import {
   Line,
 } from "recharts";
 import "../Css/Admin.css";
+import { getCount } from "../AxiosConfigAdmin/AxiosConfig";
 
 function AdminDashBoard() {
-  const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+  const [students,setStudents] = useState()
+  const [tutors,setTutors] = useState()
+  const [orders,setOrders] = useState()
+  const [totalIncome,setTotalIncome] = useState()
+  const [monthlyIncome,setMonthlyIncome] = useState([])
+  const [courses,setCourses] = useState()
+  useEffect(()=>{
+    const getStudents= async ()=>{
+      try {
+        const response=await getCount()
+        setStudents(response.data.studentCount)
+        setTutors(response.data.tutorCount)
+        setOrders(response.data.orderCount)
+        setTotalIncome(response.data.totalIncome)
+        setCourses(response.data.totalCourses)
+       
+        const currentMonth = new Date().getMonth() + 1;
+        const initialMonthlySales = Array.from({ length: 12 }, (_, index) => {
+          const month = ((currentMonth + index - 1) % 12) + 1; // Ensure January is the first month
+          return { _id: month, totalIncome: 0 };
+        });
+        // Update the initial array with the fetched data
+        const updatedMonthlySales = initialMonthlySales.map((item) => {
+          const matchingData = response.data.monthlyIncomeData.find((data) => data._id === item._id);
+          return matchingData || item;
+        });
+        updatedMonthlySales.sort((a, b) => a._id - b._id);
 
+ 
+        
+        setMonthlyIncome(updatedMonthlySales);
+
+
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
+    getStudents()
+  },[])
+
+ 
+       console.log(monthlyIncome,'iiii');
+     
+ 
   return (
     <main className="main-container">
       <div className="main-title">
@@ -77,37 +78,57 @@ function AdminDashBoard() {
             <h3>Students</h3>
             <BsFillArchiveFill className="card_icon" />
           </div>
-          <h1>300</h1>
+          <h1>{students}</h1>
         </div>
         <div className="card">
           <div className="card-inner">
             <h3>Tutors</h3>
             <BsFillGrid3X3GapFill className="card_icon" />
           </div>
-          <h1>12</h1>
+          <h1>{tutors}</h1>
         </div>
         <div className="card">
           <div className="card-inner">
-            <h3>Monthly Income</h3>
+            <h3>Total Enrolls</h3>
             <BsPeopleFill className="card_icon" />
           </div>
-          <h1>33</h1>
+          <h1>{orders}</h1>
         </div>
         <div className="card">
           <div className="card-inner">
-            <h3>Daily</h3>
+            <h3>Total Income</h3>
             <BsFillBellFill className="card_icon" />
           </div>
-          <h1>42</h1>
+          <h1>{totalIncome}</h1>
         </div>
       </div>
 
       <div className="charts">
-        <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height={300}>
+  <BarChart
+    data={monthlyIncome}
+    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+  >
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis
+      dataKey="_id"
+      tickFormatter={(month) =>
+        new Date(0, month - 1, 1).toLocaleDateString("en-US", {
+          month: "short",
+        })
+      }
+    />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    <Bar dataKey="totalIncome" fill="#8884d8" name="Monthly Sales" />
+  </BarChart>
+</ResponsiveContainer>
+        {/* <ResponsiveContainer width="100%" height="100%">
           <BarChart
             width={500}
             height={300}
-            data={data}
+           data={monthlyIncome}
             margin={{
               top: 5,
               right: 30,
@@ -116,20 +137,25 @@ function AdminDashBoard() {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis  dataKey="_id"
+            tickFormatter={(month) =>
+              new Date(0, month - 1, 1).toLocaleDateString("en-US", {
+                month: "short",
+              })
+            } />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="pv" fill="#8884d8" />
-            <Bar dataKey="uv" fill="#82ca9d" />
+            
+            <Bar dataKey="monthlyincome" fill="#82ca9d" />
           </BarChart>
-        </ResponsiveContainer>
-
+        </ResponsiveContainer> */}
+{/* 
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             width={500}
             height={300}
-            data={data}
+            
             margin={{
               top: 5,
               right: 30,
@@ -150,7 +176,7 @@ function AdminDashBoard() {
             />
             <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
           </LineChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer> */}
       </div>
     </main>
   );

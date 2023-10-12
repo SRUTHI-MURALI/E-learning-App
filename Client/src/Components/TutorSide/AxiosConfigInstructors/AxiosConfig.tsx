@@ -139,4 +139,11 @@ export const getEnrolledStudents = (id: string) => {
   return api.get(`/getenrolledstudentlist/${id}`);
 };
 
+export const tutorEditPhoto = (id:string,photo:string)=>{
+  
+  
+  return  api.put(`/editprofilephoto/${id}`,{photo});
+ 
+}
+
 export default api;

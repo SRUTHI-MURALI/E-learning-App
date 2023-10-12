@@ -8,10 +8,10 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const studentData = localStorage.getItem("studentData");
-    console.log("kkkk", studentData);
+    
     const parseData = JSON.parse(studentData);
     const token = parseData.token;
-    console.log(token);
+    
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -35,7 +35,8 @@ export const getEnrolledCourses = (id: string) => {
 };
 
 export const googleLogin = (id_token: any) => {
-  return api.post(`/getenrolledcourses/${id_token}`);
+
+  return axios.post(`${Base_Url}/student/googlelogin`,{id_token},);
 };
 
 export const studentLogin = (email: string, password: string) => {
@@ -57,7 +58,8 @@ export const getStudentEditProfile = (
   age: string,
   country: string
 ) => {
-  return api.put(`/getstudentprofile/${id}`, {
+  console.log(photo,'photo');
+  return api.put(`/studenteditedprofile/${id}`, {
     name,
     phone,
     email,

@@ -42,6 +42,70 @@ const getStudentsList = async (req: Request, res: Response) => {
   }
 };
 
+const getStudentCount = async (req: Request, res: Response) => {
+  try {
+    const studentCount = await student.countDocuments({});
+    const orderCount = await OrderModel.countDocuments({});
+    const tutorCount = await tutor.countDocuments({});
+    const totalCourses = await courses.countDocuments({});
+
+    const orders: any = await OrderModel.find().populate("courseDetails");
+
+    let totalIncome = 0;
+    for (let i = 0; i < orders.length; i++) {
+      totalIncome = totalIncome + orders[i]?.courseDetails?.price;
+    }
+
+    const matchStage = {
+      $match: {
+        createdAt: {
+          $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+          $lt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+        },
+      },
+    };
+
+    const monthlyIncomeData = await OrderModel.aggregate([
+      matchStage,
+      {
+        $lookup: {
+          from: 'courses', // Replace with the actual name of the collection containing course details
+          localField: 'courseDetails',
+          foreignField: '_id',
+          as: 'courseDetails',
+        },
+      },
+      {
+        $unwind: '$courseDetails',
+      },
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          totalIncome: { $sum: '$courseDetails.price' },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          totalIncome: 1,
+        },
+      },
+    ]);
+
+
+    res.status(201).json({
+      studentCount,
+      tutorCount,
+      orderCount,
+      totalIncome,
+      totalCourses,
+      monthlyIncomeData
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 const blockStudent = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -200,7 +264,6 @@ const editCourseList = async (req: Request, res: Response) => {
 const approveCourse = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-console.log('hhhhhh');
 
     const inst: any = await courses.findById(id).populate("instructor");
     const instructorEmail = inst?.instructor?.email;
@@ -262,7 +325,7 @@ const cancelCourse = async (req: Request, res: Response) => {
 const blockTutor = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-   await tutor.findByIdAndUpdate(
+    await tutor.findByIdAndUpdate(
       id,
       {
         isBlocked: true,
@@ -429,6 +492,10 @@ const getOrderHistory = async (req: Request, res: Response) => {
   }
 };
 
+
+
+
+
 export {
   login,
   getStudentsList,
@@ -450,4 +517,6 @@ export {
   inActivateCategory,
   editCategory,
   getAllLessons,
+  getStudentCount,
+  
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {  Card, Col, Container, Row } from "react-bootstrap";
+import Carousel from 'react-multi-carousel'
 import "./StudentCoursesList.css";
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -45,25 +46,70 @@ function AllCoursesList() {
     
   }, []);
 
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+      slidesToSlide: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+  };
+
   const filteredCourses = allCourseList.filter((course) => {
     return !enrolledCourses.some((enrolledCourse) => enrolledCourse._id === course._id);
   });
   return (
-    <div>
+    <>
+    
       <Container className="mt-5 ">
-        <p className="allcourses-header">All Courses</p>
-        <Row>
+      <p className="allcourses-header">All Courses</p>
+      
+      <Carousel
+          swipeable={false}
+          draggable={false}
+          showDots={true}
+          responsive={responsive}
+          ssr={true}
+          infinite={true}
+          autoPlay={false}
+          autoPlaySpeed={1000}
+          keyBoardControl={true}
+          customTransition="all .5"
+          transitionDuration={500}
+          containerClass="carousel-container"
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          dotListClass="custom-dot-list-style"
+          itemClass="carousel-item-padding-40-px"
+          
+        >
+            
+       
+        
+        <div>
+       
           {filteredCourses.map((courses, index) => (
            
-            <Col  xs={12} md={3} key={courses._id}>
+            <Col  key={courses._id}>
+              
               <Link
                 style={{ textDecoration: "none" }}
                 to={`/studentcoursedetails/${courses._id}`}
               >
+               
                 <Card
                   style={{ width: "16vw", height: "25rem" }}
                   className="m-2 "
                 >
+                 
                   <Card.Img
                     style={{ height: "200px" }}
                     variant="top"
@@ -81,13 +127,23 @@ function AllCoursesList() {
                       <FaRupeeSign /> {courses.price}
                     </Card.Text>
                   </Card.Body>
+                 
                 </Card>
+               
               </Link>
+             
             </Col>
-          ))}
-        </Row>
-      </Container>
-    </div>
+            
+          ))
+          }
+         
+        </div>
+        </Carousel>
+        </Container>
+        
+     
+     
+    </>
   );
 }
 

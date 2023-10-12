@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { Card, Container, Row ,Form, Col, Button} from 'react-bootstrap'
 import axios from 'axios'
-import { Base_Url,Course_Upload_Url, Image_Url } from '../../../Config/Config'
+import { Course_Upload_Url, Image_Url } from '../../../Config/Config'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getStudentEditProfile, getStudentProfile } from '../AxiosConfigStudents/AxiosConfig';
@@ -53,9 +53,11 @@ function StudentEditProfileForm({student,onClose}) {
               }
 
               setPhoto(image ? cloudinaryURL : existingImage)
+              
+              
         
         try {
-          await getStudentEditProfile(student._id,name,phone,email,password,gender,photo,age,country)
+          await getStudentEditProfile(student._id,name,phone,email,password,gender,photo,age,country);
             
             window.location.reload();
           

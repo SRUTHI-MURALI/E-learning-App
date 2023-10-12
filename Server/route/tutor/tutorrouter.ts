@@ -18,6 +18,7 @@ import {
   disableLesson,
   resetPasswordSentOtp,
   resetPassword,
+  editProfilePhoto
 } from "../../controller/tutor/tutorController";
 import { tutorLoggedin } from "../../middlewares/tutorMiddlewares";
 
@@ -42,7 +43,7 @@ tutorRouter.get("/getallcourses", tutorLoggedin, getCourseList);
 tutorRouter.get("/geteditcourse/:id", tutorLoggedin, getEditCourseList);
 tutorRouter.put("/editcourselist/:id", tutorLoggedin, editCourseList);
 
-//tutor lessosn management
+//tutor lesson management
 tutorRouter.post("/addlessons", tutorLoggedin, addLesson);
 tutorRouter.get("/getalllessons/:id", tutorLoggedin, getAllLessons);
 tutorRouter.put("/activatelesson/:id", tutorLoggedin, activateLesson);
@@ -57,5 +58,6 @@ tutorRouter.post("/addquiz", tutorLoggedin, AddQuiz);
 //tutor profile managemnet
 tutorRouter.get("/gettutorprofile/:id", tutorLoggedin, tutorProfile);
 tutorRouter.put("/tutoreditedprofile/:id", tutorLoggedin, tutorEditedProfile);
+tutorRouter.put("/editprofilephoto/:id", tutorLoggedin, editProfilePhoto);
 
 export default tutorRouter;

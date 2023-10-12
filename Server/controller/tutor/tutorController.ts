@@ -404,7 +404,7 @@ const tutorProfile = async (req: Request, res: Response) => {
 
 const tutorEditedProfile = async (req: Request, res: Response) => {
   try {
-    console.log(req.body, "profile");
+    
 
     const {
       name,
@@ -414,7 +414,7 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
       qualification,
       password,
       about,
-      photo,
+      
     } = req.body;
     const { id } = req.params;
     const salt = await bcrypt.genSalt(10);
@@ -430,7 +430,7 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
         qualification,
         password: hashedpassword,
         about,
-        photo,
+        
       },
       { new: true }
     );
@@ -447,6 +447,41 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
     res.status(400).json(error);
   }
 };
+
+const editProfilePhoto = async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+    
+    console.log('hai');
+    
+
+    const {
+      
+      photo
+    } = req.body;
+    const { id } = req.params;
+    
+
+    const editedTutor = await Tutor.findByIdAndUpdate(
+      id,
+      {
+        
+        photo
+      },
+      { new: true }
+    );
+
+    if (editedTutor) {
+      res.status(201).json({
+        _id: editedTutor._id,
+       
+      });
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 
 const resetPassword = async (req: Request, res: Response) => {
   try {
@@ -508,5 +543,6 @@ export {
   tutorProfile,
   tutorEditedProfile,
   resetPasswordSentOtp,
-  resetPassword
+  resetPassword,
+  editProfilePhoto
 };

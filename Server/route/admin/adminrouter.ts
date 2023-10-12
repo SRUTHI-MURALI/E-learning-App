@@ -23,6 +23,8 @@ import {
   getEditCategoryList,
   getAllLessons,
   getOrderHistory,
+  getStudentCount,
+  
 } from "../../controller/admin/adminController";
 import { adminLoggedin } from "../../middlewares/adminMiddlewares";
 
@@ -32,6 +34,7 @@ adminrouter.post("/login", login);
 adminrouter.get("/getstudentlist", adminLoggedin, getStudentsList);
 adminrouter.put("/blockstudent/:id", adminLoggedin, blockStudent);
 adminrouter.put("/unblockstudent/:id", adminLoggedin, unBlockStudent);
+adminrouter.get("/getstudentcount", adminLoggedin, getStudentCount);
 
 //Instructor management
 adminrouter.get("/getinstructorlist", adminLoggedin, getInstructorList);
@@ -58,5 +61,6 @@ adminrouter.get("/getalllessons/:id", adminLoggedin, getAllLessons);
 
 // order Management
 adminrouter.get("/getorderlist", adminLoggedin, getOrderHistory);
+
 
 export default adminrouter;

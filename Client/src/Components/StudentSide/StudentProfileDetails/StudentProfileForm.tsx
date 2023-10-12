@@ -11,7 +11,7 @@ import { getEnrolledCourses, getStudentProfile } from "../AxiosConfigStudents/Ax
 const StudentProfileForm = () => {
   const studentInfo = localStorage.getItem("studentData");
   const info = JSON.parse(studentInfo);
-  console.log(info);
+ 
   const [student,setStudent] = useState([]);
   const [showEdit,setShowEdit]= useState(false)
 

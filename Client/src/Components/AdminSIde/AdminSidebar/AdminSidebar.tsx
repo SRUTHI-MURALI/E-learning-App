@@ -33,7 +33,7 @@ function AdminSidebar() {
               }`}
               onClick={() => handleItemClick("dashboard")}
             >
-              <a href="">
+              <a href="adminlogin">
                 <BsGrid1X2Fill className="icon" /> Dashboard
               </a>
             </li>

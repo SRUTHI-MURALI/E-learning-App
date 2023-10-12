@@ -145,6 +145,7 @@ const login = async (req: Request, res: Response) => {
 
 const googleLogin = async (req: Request, res: Response) => {
   try {
+    
     const { id_token } = req.body;
 
     // Define a type for your decoded token
@@ -341,9 +342,13 @@ const getQuiz = async (req: Request, res: Response) => {
 };
 
 const studentEditedProfile = async (req: Request, res: Response) => {
+ 
+  
   try {
     const { name, phone, email, photo, password, gender, age, country } =
       req.body;
+     
+      
     const { id } = req.params;
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(password, salt);
