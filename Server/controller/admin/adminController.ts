@@ -42,7 +42,7 @@ const getStudentsList = async (req: Request, res: Response) => {
   }
 };
 
-const getStudentCount = async (req: Request, res: Response) => {
+const getDashboardData = async (req: Request, res: Response) => {
   try {
     const studentCount = await student.countDocuments({});
     const orderCount = await OrderModel.countDocuments({});
@@ -69,7 +69,7 @@ const getStudentCount = async (req: Request, res: Response) => {
       matchStage,
       {
         $lookup: {
-          from: 'courses', // Replace with the actual name of the collection containing course details
+          from: 'courses', 
           localField: 'courseDetails',
           foreignField: '_id',
           as: 'courseDetails',
@@ -93,13 +93,45 @@ const getStudentCount = async (req: Request, res: Response) => {
     ]);
 
 
+    const matchStage2 = {
+      $match: {
+        createdAt: {
+          $gte: new Date(new Date().getFullYear(), 0, 1), // Start of the year
+          $lt: new Date(new Date().getFullYear() + 1, 0, 1), // Start of the next year
+        },
+      },
+    };
+    
+    const monthlyCoursesData = await courses.aggregate([
+      matchStage2,
+      {
+        $group: {
+          _id: {
+            
+           $month: "$createdAt" 
+          },
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          count: 1,
+        },
+      },
+    ]);
+    
+
+
+
     res.status(201).json({
       studentCount,
       tutorCount,
       orderCount,
       totalIncome,
       totalCourses,
-      monthlyIncomeData
+      monthlyIncomeData,
+      monthlyCoursesData
     });
   } catch (error) {
     res.status(400).json(error);
@@ -517,6 +549,6 @@ export {
   inActivateCategory,
   editCategory,
   getAllLessons,
-  getStudentCount,
+  getDashboardData,
   
 };

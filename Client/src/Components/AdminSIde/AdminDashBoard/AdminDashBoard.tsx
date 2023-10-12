@@ -26,6 +26,7 @@ function AdminDashBoard() {
   const [orders,setOrders] = useState()
   const [totalIncome,setTotalIncome] = useState()
   const [monthlyIncome,setMonthlyIncome] = useState([])
+  const [monthlyCourses,setMonthlyCourses] = useState([])
   const [courses,setCourses] = useState()
   useEffect(()=>{
     const getStudents= async ()=>{
@@ -53,6 +54,22 @@ function AdminDashBoard() {
         
         setMonthlyIncome(updatedMonthlySales);
 
+        
+        const initialMonthlyCourses = Array.from({ length: 12 }, (_, index) => {
+          const month = ((currentMonth + index - 1) % 12) + 1; // Ensure January is the first month
+          return { _id: month, count: 0 };
+        });
+
+
+        const updatedMonthlyCourses = initialMonthlyCourses.map((item) => {
+          const matchingData = response.data.monthlyCoursesData.find((data) => data._id === item._id);
+          return matchingData || item;
+        });
+        updatedMonthlyCourses.sort((a, b) => a._id - b._id);
+
+       
+        setMonthlyCourses(updatedMonthlyCourses)
+
 
       } catch (error) {
         console.log(error);
@@ -63,7 +80,7 @@ function AdminDashBoard() {
   },[])
 
  
-       console.log(monthlyIncome,'iiii');
+       
      
  
   return (
@@ -104,27 +121,8 @@ function AdminDashBoard() {
       </div>
 
       <div className="charts">
-      <ResponsiveContainer width="100%" height={300}>
-  <BarChart
-    data={monthlyIncome}
-    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-  >
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis
-      dataKey="_id"
-      tickFormatter={(month) =>
-        new Date(0, month - 1, 1).toLocaleDateString("en-US", {
-          month: "short",
-        })
-      }
-    />
-    <YAxis />
-    <Tooltip />
-    <Legend />
-    <Bar dataKey="totalIncome" fill="#8884d8" name="Monthly Sales" />
-  </BarChart>
-</ResponsiveContainer>
-        {/* <ResponsiveContainer width="100%" height="100%">
+    
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             width={500}
             height={300}
@@ -147,15 +145,15 @@ function AdminDashBoard() {
             <Tooltip />
             <Legend />
             
-            <Bar dataKey="monthlyincome" fill="#82ca9d" />
+            <Bar dataKey="totalIncome" fill="#82ca9d" name="Monthly Sales"/>
           </BarChart>
-        </ResponsiveContainer> */}
-{/* 
+        </ResponsiveContainer>
+
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             width={500}
             height={300}
-            
+            data={monthlyCourses}
             margin={{
               top: 5,
               right: 30,
@@ -164,19 +162,25 @@ function AdminDashBoard() {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis  dataKey="_id"
+            tickFormatter={(month) =>
+              new Date(0, month - 1, 1).toLocaleDateString("en-US", {
+                month: "short",
+              })
+            } />
             <YAxis />
             <Tooltip />
             <Legend />
             <Line
               type="monotone"
-              dataKey="pv"
+              dataKey="count"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
+              name="Monthly Courses"
             />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+            
           </LineChart>
-        </ResponsiveContainer> */}
+        </ResponsiveContainer>
       </div>
     </main>
   );
