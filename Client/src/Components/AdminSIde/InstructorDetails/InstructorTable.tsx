@@ -2,14 +2,16 @@ import Table from "react-bootstrap/Table";
 import { ImArrowRight } from "react-icons/im";
 import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "./InstructorTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Base_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import { blockInstructor, getInstructor, unBlockInstructor } from "../AxiosConfigAdmin/AxiosConfig";
+import {
+  blockInstructor,
+  getInstructor,
+  unBlockInstructor,
+} from "../AxiosConfigAdmin/AxiosConfig";
 
 function InstructorTable() {
   const [instructorList, setInstructorlist] = useState([]);
@@ -17,16 +19,15 @@ function InstructorTable() {
   const itemsPerPage = 2;
 
   useEffect(() => {
-    const getInstructorList = async()=>{
+    const getInstructorList = async () => {
       try {
-        const response = await getInstructor()
+        const response = await getInstructor();
         setInstructorlist(response.data.instructor);
-
       } catch (error) {
         console.error(error);
       }
-    }
-    getInstructorList()
+    };
+    getInstructorList();
   }, []);
 
   const handlePageChange = ({ selected }) => {
@@ -48,11 +49,11 @@ function InstructorTable() {
 
       if (result.isConfirmed) {
         if (!instructor.isBlocked) {
-          await blockInstructor(instructor._id)
+          await blockInstructor(instructor._id);
           instructor.isBlocked = true;
           toast.success(`instructor "${instructor.name}" blocked successfully`);
         } else {
-          await  unBlockInstructor(instructor._id)
+          await unBlockInstructor(instructor._id);
           instructor.isBlocked = false;
           toast.success(
             `instructor "${instructor.name}" unblocked successfully`

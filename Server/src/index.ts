@@ -1,8 +1,9 @@
 import "dotenv/config";
 import "../connection/connection";
-
 import express from "express";
+import http from "http";
 import cors from "cors";
+import { Server as SocketIOServer, Socket } from "socket.io";
 
 const app = express();
 
@@ -20,5 +21,32 @@ app.use("/student", studentrouter);
 app.use("/tutor", tutorrouter);
 app.use("/otp", otprouter);
 app.use("/Razorpay", razorpayroute);
+
+const server = http.createServer(app); // Create an HTTP server using 'http' module
+
+const io = new SocketIOServer(server, {
+  // Create a new Socket.IO server instance
+  cors: {
+    origin: "http://localhost:5173",
+    credentials: true,
+  },
+});
+
+const onlineUsers: Map<string, string> = new Map(); // Assuming userId is a string
+
+let chatSocket: Socket;
+
+io.on("connection", (socket) => {
+  chatSocket = socket;
+  socket.on("add-user", (userId: string) => {
+    onlineUsers.set(userId, socket.id);
+  });
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    }
+  });
+});
 
 app.listen(3001);

@@ -3,12 +3,14 @@ import { Button, Card, FormLabel } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import "./CourseCategoriesTable.css"; // Create a CSS file for your component styles
-import { Base_Url } from "../../../Config/Config";
 import { addCategory } from "../AxiosConfigAdmin/AxiosConfig";
 
-function AddCategory({ onClose }) {
+interface addCategoryProps {
+  onClose: () => void;
+}
+
+function AddCategory({ onClose }: addCategoryProps) {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
 
@@ -28,7 +30,7 @@ function AddCategory({ onClose }) {
     }
 
     try {
-      const response = await addCategory(trimmedCategory,trimmedDescription);
+      const response = await addCategory(trimmedCategory, trimmedDescription);
 
       if (response.status === 201) {
         // OTP sent successfully

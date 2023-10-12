@@ -17,6 +17,8 @@ import {
   getStudentProfile,
   studentEditedProfile,
   getCourseList,
+  sendMsg,
+  receivemsg
 } from "../../controller/student/studentController";
 import { studentLoggedin } from "../../middlewares/studentMiddlewares";
 
@@ -39,16 +41,21 @@ studentrouter.get("/getalltutors", getAllTutors);
 studentrouter.get("/gettutordetails/:id", getTutorDetails);
 
 //student course management
-studentrouter.get("/getenrolledcourses/:id", getEnrolledCourses);
+studentrouter.get("/getenrolledcourses/:id",studentLoggedin, getEnrolledCourses);
 studentrouter.get("/getallcourses", getCourseList);
 studentrouter.get("/getquiz/:id", studentLoggedin, getQuiz);
 
 //student profile
-studentrouter.get("/getstudentprofile/:id", getStudentProfile);
+studentrouter.get("/getstudentprofile/:id",studentLoggedin, getStudentProfile);
 studentrouter.put(
   "/studenteditedprofile/:id",
   studentLoggedin,
   studentEditedProfile
 );
+
+//student Chats
+studentrouter.post("/sendmsg",studentLoggedin,sendMsg)
+studentrouter.post("/receivemsg",studentLoggedin,receivemsg)
+
 
 export default studentrouter;

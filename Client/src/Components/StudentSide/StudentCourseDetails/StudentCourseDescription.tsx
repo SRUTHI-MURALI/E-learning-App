@@ -1,7 +1,13 @@
 import React from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 
-function StudentCourseDescription({ courseData }) {
+interface StudentCourseDescriptionProps {
+  courseData: object;
+}
+
+function StudentCourseDescription({
+  courseData,
+}: StudentCourseDescriptionProps) {
   return (
     <div>
       <Container className="d-flex text-center bg-transparent   justify-content-center align-item-center m-3">
@@ -18,16 +24,7 @@ function StudentCourseDescription({ courseData }) {
                 What you will learn{" "}
               </Card.Title>
               <Card.Text style={{ color: "#fff" }}>
-                With supporting text below as a natural lead-in to additional
-                content. With supporting text below as a natural lead-in to
-                additional content. With supporting text below as a natural
-                lead-in to additional content. With supporting text below as a
-                natural lead-in to additional content. With supporting text
-                below as a natural lead-in to additional content. With
-                supporting text below as a natural lead-in to additional
-                content. With supporting text below as a natural lead-in to
-                additional content. With supporting text below as a natural
-                lead-in to additional content.
+                {courseData?.description}
               </Card.Text>
               <Row>
                 <Col>

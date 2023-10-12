@@ -1,56 +1,51 @@
 import React, { useEffect, useState } from "react";
-import {  Card, Col, Container, Row } from "react-bootstrap";
-import Carousel from 'react-multi-carousel'
-import "./StudentCoursesList.css";
+import { Card, Col, Container } from "react-bootstrap";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css"; // Import carousel styles
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Image_Url } from "../../../Config/Config";
-import { getAllCourses, getEnrolledCourses } from "../AxiosConfigStudents/AxiosConfig";
+import {
+  getAllCourses,
+  getEnrolledCourses,
+} from "../AxiosConfigStudents/AxiosConfig";
 
 function AllCoursesList() {
   const [allCourseList, setAllCourseList] = useState([]);
-  const [enrolledCourses,setEnrolledCourses] = useState([])
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
   const student = localStorage.getItem("studentData");
   const parseData = JSON.parse(student);
 
   useEffect(() => {
-    const getCourses = async ()=>{
+    const getCourses = async () => {
       try {
-        const response= await getAllCourses()
+        const response = await getAllCourses();
         setAllCourseList(response.data.allCourses);
       } catch (error) {
         console.error(error);
       }
-    }
+    };
     getCourses();
-    
   }, []);
 
   useEffect(() => {
-
-    const enrolledCourses = async (id)=>{
+    const enrolledCoursesData = async (id) => {
       try {
-        const response = await getEnrolledCourses(id)
-        
-        
+        const response = await getEnrolledCourses(id);
         setEnrolledCourses(response.data.enrolledCourses);
       } catch (error) {
         console.error(error);
       }
-     
-    }
-  
-    
+    };
 
-    enrolledCourses(parseData?._id)
-    
+    enrolledCoursesData(parseData?._id);
   }, []);
 
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-      slidesToSlide: 3,
+      items: 4,
+      slidesToSlide: 1,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -65,14 +60,14 @@ function AllCoursesList() {
   };
 
   const filteredCourses = allCourseList.filter((course) => {
-    return !enrolledCourses.some((enrolledCourse) => enrolledCourse._id === course._id);
+    return !enrolledCourses.some(
+      (enrolledCourse) => enrolledCourse._id === course._id
+    );
   });
+
   return (
-    <>
-    
-      <Container className="mt-5 ">
+    <Container className="mt-5 ">
       <p className="allcourses-header">All Courses</p>
-      
       <Carousel
           swipeable={false}
           draggable={false}
@@ -91,59 +86,35 @@ function AllCoursesList() {
           itemClass="carousel-item-padding-40-px"
           
         >
+        {filteredCourses.map((courses, index) => (
+          <Col >
+          <Link key={courses._id} to={`/studentcoursedetails/${courses._id}`}>
             
-       
-        
-        <div>
-       
-          {filteredCourses.map((courses, index) => (
-           
-            <Col  key={courses._id}>
-              
-              <Link
-                style={{ textDecoration: "none" }}
-                to={`/studentcoursedetails/${courses._id}`}
-              >
-               
-                <Card
-                  style={{ width: "16vw", height: "25rem" }}
-                  className="m-2 "
-                >
-                 
-                  <Card.Img
-                    style={{ height: "200px" }}
-                    variant="top"
-                    src={`${Image_Url}/${courses.photo}`}
-                  />
-                  <Card.Body className="mt-4 justify-content-center align-items-center">
-                    <Card.Title className="text-center">
-                      Course:{courses.title}
-                    </Card.Title>
-                    <Card.Text className="text-center">
-                      By {courses?.instructor?.name}
-                    </Card.Text>
-                    <Card.Link>Enroll Now</Card.Link>
-                    <Card.Text style={{ float: "right" }}>
-                      <FaRupeeSign /> {courses.price}
-                    </Card.Text>
-                  </Card.Body>
-                 
-                </Card>
-               
-              </Link>
-             
-            </Col>
+              <Card style={{ width: "16rem", height: "25rem" }} className="m-2">
+                <Card.Img
+                  style={{ height: "200px" }}
+                  variant="top"
+                  src={`${Image_Url}/${courses.photo}`}
+                />
+                <Card.Body className="mt-4 justify-content-center align-items-center">
+                  <Card.Title className="text-center">
+                    Course: {courses.title}
+                  </Card.Title>
+                  <Card.Text className="text-center">
+                    By {courses?.instructor?.name}
+                  </Card.Text>
+                  <Card.Link>Enroll Now</Card.Link>
+                  <Card.Text style={{ float: "right" }}>
+                    <FaRupeeSign /> {courses.price}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
             
-          ))
-          }
-         
-        </div>
-        </Carousel>
-        </Container>
-        
-     
-     
-    </>
+          </Link>
+          </Col>
+        ))}
+      </Carousel>
+    </Container>
   );
 }
 

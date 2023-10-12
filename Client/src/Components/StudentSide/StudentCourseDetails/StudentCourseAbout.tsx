@@ -1,56 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
-
 import Card from "react-bootstrap/Card";
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Image_Url } from "../../../Config/Config";
-import { getAllCourses, getEnrolledCourses } from "../AxiosConfigStudents/AxiosConfig";
+import {
+  getAllCourses,
+  getEnrolledCourses,
+} from "../AxiosConfigStudents/AxiosConfig";
 
-function StudentCourseAbout({ courseData }) {
+interface StudentCourseAboutProps {
+  courseData: object;
+}
+
+function StudentCourseAbout({ courseData }: StudentCourseAboutProps) {
   const [allCourseList, setAllCourseList] = useState([]);
-  const [enrolledCourses,setEnrolledCourses]= useState([])
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
 
   useEffect(() => {
-    const getCourses = async ()=>{
+    const getCourses = async () => {
       try {
-        const response= await getAllCourses()
+        const response = await getAllCourses();
         setAllCourseList(response.data.allCourses);
       } catch (error) {
         console.error(error);
       }
-     
-
-    }
+    };
     getCourses();
-
-    
   }, []);
 
   const studentData = localStorage.getItem("studentData");
-  const parseData= JSON.parse(studentData);
+  const parseData = JSON.parse(studentData);
 
   useEffect(() => {
-
-    const enrolledCourses = async (id)=>{
+    const enrolledCourses = async (id) => {
       try {
-        const response = await getEnrolledCourses(id)
-        
-        
+        const response = await getEnrolledCourses(id);
+
         setEnrolledCourses(response.data.enrolledCourses);
       } catch (error) {
         console.error(error);
       }
-     
-    }
-  
-    
-    enrolledCourses(parseData?._id)
-    
+    };
+
+    enrolledCourses(parseData?._id);
   }, []);
 
   const filteredCourses = allCourseList.filter((course) => {
-    return !enrolledCourses.some((enrolledCourse) => enrolledCourse._id === course._id);
+    return !enrolledCourses.some(
+      (enrolledCourse) => enrolledCourse._id === course._id
+    );
   });
   return (
     <Container className="mt-5 cardLayout ">
@@ -96,7 +95,7 @@ function StudentCourseAbout({ courseData }) {
               </Col>
             );
           } else {
-            return null; 
+            return null;
           }
         })}
       </Row>

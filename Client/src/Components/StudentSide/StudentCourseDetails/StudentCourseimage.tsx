@@ -2,9 +2,11 @@ import React from "react";
 import { Container, Row } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
 
-function StudentCourseimage({ courseData }) {
-  
+interface StudentCourseImageProps {
+  courseData: object;
+}
 
+function StudentCourseimage({ courseData }: StudentCourseImageProps) {
   return (
     <div>
       <Container className="d-flex justify-content-center align-item-center">

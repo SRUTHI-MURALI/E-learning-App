@@ -8,6 +8,7 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import bcrypt from "bcrypt";
+import chats from "../../model/chats";
 
 const BaseUrl: string = process.env.BaseUrl || "";
 
@@ -347,11 +348,16 @@ const studentEditedProfile = async (req: Request, res: Response) => {
   try {
     const { name, phone, email, photo, password, gender, age, country } =
       req.body;
-     
+     let hashedpassword;
+      
       
     const { id } = req.params;
-    const salt = await bcrypt.genSalt(10);
-    const hashedpassword = await bcrypt.hash(password, salt);
+   
+    if(password){
+      const salt = await bcrypt.genSalt(10);
+   hashedpassword = await bcrypt.hash(password, salt);
+    }
+    
 
     const editedStudent = await Student.findByIdAndUpdate(
       id,
@@ -368,6 +374,7 @@ const studentEditedProfile = async (req: Request, res: Response) => {
       { new: true }
     );
 
+
     if (editedStudent) {
       res.status(201).json({
         _id: editedStudent._id,
@@ -378,6 +385,46 @@ const studentEditedProfile = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(400).json(error);
+  }
+};
+
+const sendMsg = async (req: Request, res: Response) => {
+  try {
+    const { from, to, message } = req.body;
+
+
+    const data = await chats.create({
+      message:message,
+      users: [from, to],
+      sender: from,
+    });
+
+    if (data) return res.json({ msg: "Message added successfully." });
+    else return res.json({ msg: "Failed to add message to the database" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const receivemsg = async (req: Request, res: Response) => {
+  try {
+    const { from, to } = req.body;
+
+    const messages = await chats.find({
+      users: {
+        $all: [from, to],
+      },
+    }).sort({ updatedAt: 1 });
+
+    const projectedMessages = messages.map((msg) => {
+      return {
+        fromSelf: msg.sender.toString() === from,
+        message: msg.message,
+      };
+    });
+    res.json(projectedMessages);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -396,4 +443,6 @@ export {
   getStudentProfile,
   studentEditedProfile,
   getCourseList,
+  sendMsg,
+  receivemsg
 };

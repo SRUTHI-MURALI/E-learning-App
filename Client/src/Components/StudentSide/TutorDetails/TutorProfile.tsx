@@ -2,23 +2,23 @@ import React, { useState, useEffect } from "react";
 import t1 from "../../../Assets/Images/tutors/t1.avif";
 import { Link, useParams } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import {  Image_Url } from "../../../Config/Config";
+import { Image_Url } from "../../../Config/Config";
 import { getTutorProfile } from "../AxiosConfigStudents/AxiosConfig";
+
 
 export default function TutorProfile() {
   const [tutorDetails, setTutorDetails] = useState([]);
   const [tutorCourses, setTutorCourses] = useState([]);
-  const { id } = useParams();
- 
+  const { id } = useParams<{ id: string }>() as { id: string };
+
+
 
   useEffect(() => {
-    const getTutorData = async (id) => {
+    const getTutorData = async (id:string) => {
       try {
-
-        const response =await getTutorProfile(id)
+        const response = await getTutorProfile(id);
         setTutorDetails(response.data.tutorDetails);
         setTutorCourses(response.data.tutorCourses);
-       
       } catch (error) {
         console.log({ error });
       }

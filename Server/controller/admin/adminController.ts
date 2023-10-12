@@ -56,17 +56,18 @@ const getDashboardData = async (req: Request, res: Response) => {
       totalIncome = totalIncome + orders[i]?.courseDetails?.price;
     }
 
-    const matchStage = {
+    
+    const matchStage2 = {
       $match: {
         createdAt: {
-          $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-          $lt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+          $gte: new Date(new Date().getFullYear(), 0, 1), // Start of the year
+          $lt: new Date(new Date().getFullYear() + 1, 0, 1), // Start of the next year
         },
       },
     };
 
     const monthlyIncomeData = await OrderModel.aggregate([
-      matchStage,
+      matchStage2,
       {
         $lookup: {
           from: 'courses', 
@@ -93,14 +94,6 @@ const getDashboardData = async (req: Request, res: Response) => {
     ]);
 
 
-    const matchStage2 = {
-      $match: {
-        createdAt: {
-          $gte: new Date(new Date().getFullYear(), 0, 1), // Start of the year
-          $lt: new Date(new Date().getFullYear() + 1, 0, 1), // Start of the next year
-        },
-      },
-    };
     
     const monthlyCoursesData = await courses.aggregate([
       matchStage2,

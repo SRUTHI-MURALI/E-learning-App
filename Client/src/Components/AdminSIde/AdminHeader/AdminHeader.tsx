@@ -1,19 +1,17 @@
 import React from "react";
-import { BsPersonCircle, BsJustify } from "react-icons/bs";
+import { BsJustify } from "react-icons/bs";
 import "../Css/Admin.css";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../ReduxComponents/AdminSlice";
 import { Button } from "react-bootstrap";
 
 function AdminHeader() {
-  
-
-  const navigate= useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    localStorage.removeItem("adminData");  
+    localStorage.removeItem("adminData");
     await dispatch(logout);
     navigate("/adminlogin");
   };
@@ -26,10 +24,7 @@ function AdminHeader() {
         <h3 style={{ color: "#fff" }}>Admin</h3>
       </div>
       <div className="header-right">
-        <Button
-          onClick={handleLogout}>
-          Logout
-          </Button>
+        <Button onClick={handleLogout}>Logout</Button>
       </div>
     </header>
   );

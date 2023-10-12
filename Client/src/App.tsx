@@ -45,6 +45,8 @@ import TutorForgotPassword from "./Components/ForgotPassword/TutorForgotPassword
 import Room from "./Pages/room";
 import StudentMentors from "./Pages/StudentPages/StudentMentors";
 import StudentCoureseView from "./Pages/StudentPages/StudentCoureseView";
+import StudentChatPage from "./Pages/StudentPages/StudentChatPage";
+import TutorChatPage from "./Pages/TutorPages/TutorChatPage";
 
 
 function App() {
@@ -72,6 +74,7 @@ function App() {
           <Route path="/tutordetails/:id" element={<TutorDetailsPage />} />
           <Route path="/studentprofile" element={<StudentProfile />} />
           <Route path="/mentoring" element={<StudentMentors/>}/>
+          <Route path="/chat" element={<StudentChatPage/>}/>
           
 
           {/* tutor Routes */}
@@ -85,6 +88,7 @@ function App() {
           <Route path="/tutorlessonslist/:id" element={<TutorLessonList />} />
           <Route path="/tutorquizlist" element={<TutorQuizList />} />
           <Route path="/tutorprofile" element={<TutorProfile />} />
+          <Route path="/tutorchat" element={<TutorChatPage/>}/>
 
           {/* admin Routes */}
 

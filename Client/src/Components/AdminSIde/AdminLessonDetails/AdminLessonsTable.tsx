@@ -1,10 +1,8 @@
 import Table from "react-bootstrap/Table";
 import { ImArrowRight } from "react-icons/im";
 import { useState, useEffect } from "react";
-
 import "../CourseDetails/CourseTable.css";
 import "react-toastify/dist/ReactToastify.css";
-
 import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
 import { getalllessons } from "../AxiosConfigAdmin/AxiosConfig";
@@ -18,20 +16,15 @@ function AdminLessonsTable() {
   const { id } = useParams();
 
   useEffect(() => {
-    const getLessons = async ()=>{
-    try {
-      
-        const response= await getalllessons(id)
+    const getLessons = async () => {
+      try {
+        const response = await getalllessons(id);
         setLessonslist(response.data.allLessons);
-  
+      } catch (error) {
+        console.log(error);
       }
-     catch (error) {
-      console.log(error);
-      
-    }
-  }
+    };
     getLessons();
-    
   }, []);
 
   const handlePageChange = ({ selected }) => {

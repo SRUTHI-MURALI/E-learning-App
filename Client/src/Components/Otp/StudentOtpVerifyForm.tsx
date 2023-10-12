@@ -7,8 +7,11 @@ import { Card, Container } from "react-bootstrap";
 import r1 from "../../Assets/Images/otp1.avif";
 import { Base_Url } from "../../Config/Config";
 
+interface StudentOtpVerifyFormProps {
+  phone: number;
+}
 
-function StudentOtpVerifyForm({ phone }) {
+function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
   const [otp, setotp] = useState("");
   const [count, setCount] = useState(8);
   const [otpSent, setOtpSent] = useState(true);
@@ -42,7 +45,6 @@ function StudentOtpVerifyForm({ phone }) {
       // You can display an error message to the user or take other actions as needed
     }
   };
-
 
   useEffect(() => {
     let countdownInterval: any;

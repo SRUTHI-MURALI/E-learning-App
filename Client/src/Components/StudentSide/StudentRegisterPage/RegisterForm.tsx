@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
-
 import "./Register.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -17,7 +16,7 @@ function RegisterForm() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(0);
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
@@ -25,14 +24,14 @@ function RegisterForm() {
     e.preventDefault();
     const trimmedName = userName.trim();
     const trimmedPassword = password.trim();
-    const trimmedPhone = phone;
+    const trimmedPhone = phone 
     const trimmedEmail = email.trim();
     const trimmedConfirmPassword = confirmPassword.trim();
 
     if (
       trimmedName === "" ||
       trimmedEmail === "" ||
-      trimmedPhone === "" ||
+      trimmedPhone === 0 ||
       trimmedPassword === "" ||
       trimmedConfirmPassword === ""
     ) {
@@ -47,7 +46,7 @@ function RegisterForm() {
       return;
     }
     const phonePattern = /^\d{10}$/;
-    if (!phonePattern.test(trimmedPhone.trim())) {
+    if (!phonePattern.test(trimmedPhone.toString().trim())) {
       alert("Please enter a valid 10-digit phone number");
       return;
     }
@@ -64,10 +63,12 @@ function RegisterForm() {
     }
 
     try {
-      await studentSendOtp(trimmedName,trimmedEmail,trimmedPhone,trimmedPassword)
-     
-
-     
+      await studentSendOtp(
+        trimmedName,
+        trimmedEmail,
+        trimmedPhone,
+        trimmedPassword
+      );
 
       handleNavigation(trimmedPhone);
     } catch (error) {
@@ -76,7 +77,7 @@ function RegisterForm() {
     }
   };
 
-  const handleNavigation = (phone) => {
+  const handleNavigation = (phone:number) => {
     navigate(`/studentverifyOtp/${phone}`);
   };
 

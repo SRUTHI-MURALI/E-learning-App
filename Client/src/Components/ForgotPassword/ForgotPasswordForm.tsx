@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Card, Container } from "react-bootstrap";
-import r1 from "../../Assets/Images/p2.webp";
 import { Base_Url } from "../../Config/Config";
 import { toast, ToastContainer } from "react-toastify";
 

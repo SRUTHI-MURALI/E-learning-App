@@ -11,7 +11,11 @@ import AddCategory from "./AddCategory";
 import EditCategoryForm from "./EditCategoryForm";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import { activateCategory, getCategory, inactivateCategory } from "../AxiosConfigAdmin/AxiosConfig";
+import {
+  activateCategory,
+  getCategory,
+  inactivateCategory,
+} from "../AxiosConfigAdmin/AxiosConfig";
 
 function CourseCategoriesTable() {
   const [categoryList, setCategorylist] = useState([]);
@@ -22,22 +26,17 @@ function CourseCategoriesTable() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    const getAllCategory = async ()=>{
-    try {
-      
-        const response= await getCategory()
+    const getAllCategory = async () => {
+      try {
+        const response = await getCategory();
         setCategorylist(response.data.categories);
+      } catch (error) {
+        console.log(error);
       }
-     catch (error) {
-      console.log(error);
-      
-    }
-  }
-  getAllCategory();
-    
+    };
+    getAllCategory();
   }, []);
 
- 
   const handleOpenDialog = () => {
     setOpenPopUp(true);
   };
@@ -65,7 +64,7 @@ function CourseCategoriesTable() {
           category.isActive = true;
           toast.success(`category ${category.title} approved successfully`);
         } else {
-          await inactivateCategory(category._id)
+          await inactivateCategory(category._id);
           category.isActive = false;
           toast.success(`category "${category.title}" unapproved successfully`);
         }

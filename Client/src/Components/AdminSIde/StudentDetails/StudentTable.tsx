@@ -17,18 +17,15 @@ function StudentTable() {
   const itemsPerPage = 2;
 
   useEffect(() => {
-
-    const getStudentsList = async()=>{
+    const getStudentsList = async () => {
       try {
-        const response = await getStudents()
+        const response = await getStudents();
         setStudentlist(response.data.students);
-
       } catch (error) {
         console.error(error);
       }
-    }
-    getStudentsList()
-    
+    };
+    getStudentsList();
   }, []);
 
   const handlePageChange = ({ selected }) => {

@@ -8,11 +8,15 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditCourseForm from "./EditCourseForm";
 import { Button } from "react-bootstrap";
-import {  Image_Url } from "../../../Config/Config";
+import { Image_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { approveCourse, cancelCourse, getAllCourse } from "../AxiosConfigAdmin/AxiosConfig";
+import {
+  approveCourse,
+  cancelCourse,
+  getAllCourse,
+} from "../AxiosConfigAdmin/AxiosConfig";
 
 function CourseTable() {
   const [courseList, setCourselist] = useState([]);
@@ -63,14 +67,10 @@ function CourseTable() {
 
       if (result.isConfirmed) {
         if (!course.isApproved) {
-        
-          
           await approveCourse(course._id);
           course.isApproved = true;
           toast.success(`Course "${course.title}" approved successfully`);
         } else {
-       
-          
           await cancelCourse(course._id);
           course.isApproved = false;
           toast.success(`Course "${course.title}" unapproved successfully`);

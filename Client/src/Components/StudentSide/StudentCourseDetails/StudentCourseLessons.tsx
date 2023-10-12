@@ -3,7 +3,11 @@ import { Container, Row } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import { Video_Url } from "../../../Config/Config";
 
-function StudentCourseLessons({ courseData,show }) {
+interface StudentCourseLessonsProps {
+  courseData: object;
+  show: () => void;
+}
+function StudentCourseLessons({ courseData, show }: StudentCourseLessonsProps) {
   return (
     <div>
       <Container>
@@ -29,19 +33,15 @@ function StudentCourseLessons({ courseData,show }) {
                 <Accordion.Body>
                   Duration : {courses?.duration} Hours
                 </Accordion.Body>
-                {show && 
-                <Accordion.Body>
-      
-                <video
-                  src={`${Video_Url}/${courses?.video}`}
-                  controls
-                  style={{ width: "50%", height: "100px" }}
-                >
-           
-                </video>
-   
-              </Accordion.Body>
-                }
+                {show && (
+                  <Accordion.Body>
+                    <video
+                      src={`${Video_Url}/${courses?.video}`}
+                      controls
+                      style={{ width: "50%", height: "100px" }}
+                    ></video>
+                  </Accordion.Body>
+                )}
               </Accordion.Item>
             </Accordion>
           </Row>

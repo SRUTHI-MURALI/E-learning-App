@@ -1,10 +1,12 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 
 import { Button, Card, Container, Row } from "react-bootstrap";
-import {  Image_Url } from "../../../Config/Config";
-
+import { Image_Url } from "../../../Config/Config";
 import { useNavigate } from "react-router-dom";
-import { makePayment, verifyPayment } from "../AxiosConfigStudents/AxiosRazorpayConfig";
+import {
+  makePayment,
+  verifyPayment,
+} from "../AxiosConfigStudents/AxiosRazorpayConfig";
 
 declare global {
   interface Window {
@@ -12,7 +14,10 @@ declare global {
   }
 }
 
-function StudenetCoursePurchase({ courseData }) {
+interface StudentCoursePurchaseProps {
+  courseData: object;
+}
+function StudenetCoursePurchase({ courseData }: StudentCoursePurchaseProps) {
   const studentDetails = localStorage.getItem("studentData");
 
   const students = JSON.parse(studentDetails);
@@ -26,16 +31,19 @@ function StudenetCoursePurchase({ courseData }) {
       currency: res.currency,
       order_id: res.id,
       handler: async (response: any) => {
-        const verifyRazorPay = async (response: any,studentId: string,courseId: string)=>{
+        const verifyRazorPay = async (
+          response: any,
+          studentId: string,
+          courseId: string
+        ) => {
           try {
-            await verifyPayment(response,studentId,courseId)
+            await verifyPayment(response, studentId, courseId);
           } catch (error) {
             console.log(error);
           }
-        }
+        };
 
-        verifyRazorPay(response, students._id, courseData?._id)
-        
+        verifyRazorPay(response, students._id, courseData?._id);
       },
       theme: {
         color: "#3399cc",
@@ -47,18 +55,17 @@ function StudenetCoursePurchase({ courseData }) {
 
   const handlePayment = async (e) => {
     if (students) {
-      const makeRazorPay =async (id)=>{
+      const makeRazorPay = async (id) => {
         try {
           e.preventDefault();
-          const res = await makePayment(id)
+          const res = await makePayment(id);
           initPayment(res.data.data);
         } catch (error) {
           console.log(error);
         }
-      }
+      };
 
-      makeRazorPay(courseData._id)
-      
+      makeRazorPay(courseData._id);
     } else {
       navigate("/studentlogin");
     }
