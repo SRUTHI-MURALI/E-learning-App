@@ -116,11 +116,15 @@ const login = async (req: Request, res: Response) => {
   
   try {
     
+    console.log(req.body,'log');
     
     const { email, password } = req.body;
    
     const student = await Student.findOne({ email });
+    
     if (student && (await student.matchPasswords(password))) {
+      
+      
       if (student.isBlocked) {
         res.status(300).json({ message: "Student is Blocked" });
       } else {
@@ -235,22 +239,30 @@ const getCourseList = async (req: Request, res: Response) => {
 const resetPassword = async (req: Request, res: Response) => {
   try {
     const { phone, password } = req.body;
+    console.log(req.body, 'kkk');
 
     const salt = await bcrypt.genSalt(10);
-    const hashedpassword = await bcrypt.hash(password, salt);
-    const studentPassword = await Student.findOneAndUpdate(
-      { phone },
-      {
-        password: hashedpassword,
-      },
-      { new: true }
-    );
+    const hashedPassword = await bcrypt.hash(password, salt);
+    
 
-    if (studentPassword) {
-      res.status(400).json({ studentPassword });
+    const student = await Student.findOne({ phone });
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    // Update the student's password
+    student.password = hashedPassword;
+    const updatedStudent = await student.save();
+
+    if (updatedStudent) {
+      return res.status(200).json({ message: 'Password reset successful' });
+    } else {
+      return res.status(500).json({ message: 'Password reset failed' });
     }
   } catch (error) {
-    res.status(400).json("reset error");
+    console.error(error);
+    res.status(500).json({ message: 'Password reset error' });
   }
 };
 

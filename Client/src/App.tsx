@@ -47,6 +47,7 @@ import StudentMentors from "./Pages/StudentPages/StudentMentors";
 import StudentCoureseView from "./Pages/StudentPages/StudentCoureseView";
 import StudentChatPage from "./Pages/StudentPages/StudentChatPage";
 import TutorChatPage from "./Pages/TutorPages/TutorChatPage";
+import StudentCoursePdf from "./Pages/StudentPages/StudentCoursesPdf";
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
           <Route path="/tutordetails/:id" element={<TutorDetailsPage />} />
           <Route path="/studentprofile" element={<StudentProfile />} />
           <Route path="/mentoring" element={<StudentMentors/>}/>
+          <Route path="/studentpdfs" element={<StudentCoursePdf/>}/>
           <Route path="/chat" element={<StudentChatPage/>}/>
           
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import t1 from "../../../Assets/Images/tutors/t1.avif";
 import { Link, useParams } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
@@ -36,7 +35,7 @@ export default function TutorProfile() {
                 <Card className="mb-4">
                   <Card.Body className="text-center">
                     <Card.Img
-                      src={t1}
+                      src={`${Image_Url}/${tutorDetails?.photo}`}
                       className="rounded-circle"
                       style={{ width: "150px" }}
                     />

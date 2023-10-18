@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
-import StudentHeader from "../../Components/StudentSide/StudentHeader/StudentHeader";
-import StudentCourseQuizList from "../../Components/StudentSide/StudentQuizes/StudentCourseQuizList";
-import { useNavigate } from "react-router-dom";
 
-function StudentQuizPage() {
+
+import { useNavigate } from "react-router-dom";
+import StudentHeader from "../../Components/StudentSide/StudentHeader/StudentHeader";
+import StudentPdfCourses from "../../Components/StudentSide/StudentPdfs/StudentPdfCourses";
+
+function StudentCoursePdf() {
   const studentData = localStorage.getItem("studentData");
   const parseData = JSON.parse(studentData);
 
@@ -25,7 +27,7 @@ function StudentQuizPage() {
             <StudentHeader />
           </Row>
           <Row>
-            <StudentCourseQuizList />
+            <StudentPdfCourses/>
           </Row>
         </Container>
       )}
@@ -33,4 +35,4 @@ function StudentQuizPage() {
   );
 }
 
-export default StudentQuizPage;
+export default StudentCoursePdf;

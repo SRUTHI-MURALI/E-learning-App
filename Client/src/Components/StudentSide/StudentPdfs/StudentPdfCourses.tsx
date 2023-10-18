@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { Base_Url, Image_Url } from "../../../Config/Config";
-import axios from "axios";
-import StudentQuizForm from "./StudentQuizForm";
+import { Image_Url } from "../../../Config/Config";
 import { getAllCourses } from "../AxiosConfigStudents/AxiosConfig";
+import StudentPdfLessons from "./StudentPdfLessons";
 
-function StudentCourseQuizList() {
+function StudentPdfCourses() {
   const [allCourseList, setAllCourseList] = useState([]);
-  const [showQuiz, setShowQuiz] = useState(false);
-  const [selectedCourseId, setSelectedCourseId] = useState(null);
+  const [show, setShow] = useState(false);
+  const [selectedCourseId, setSelectedCourseId] = useState([]);
 
   useEffect(() => {
     const getCourses = async ()=>{
       try {
         const response=await getAllCourses();
         setAllCourseList(response.data.allCourses);
+        console.log(allCourseList,'ooo');
+        
       } catch (error) {
         console.log(error);
         
@@ -24,14 +25,16 @@ function StudentCourseQuizList() {
    getCourses()
   }, []);
 
+  
+
   const handleQuiz = async (id) => {
     setSelectedCourseId(id);
-    setShowQuiz(true);
+    setShow(true);
   };
   return (
     <Row>
       <Container>
-        {showQuiz == false ? (
+        {show == false ? (
           <>
             {allCourseList.map((courses, index) => (
               <Card className="m-5 ">
@@ -47,9 +50,7 @@ function StudentCourseQuizList() {
                     <Col xs={12} md={8}>
                       <Card.Body>
                         <Card.Title>Title: {courses?.title}</Card.Title>
-                        <Card.Text>
-                          Number of Questions: {courses?.quizQuestions}
-                        </Card.Text>
+                       
                         <Card.Text>
                           Name of Tutor: {courses?.instructor?.name}
                         </Card.Text>
@@ -57,10 +58,10 @@ function StudentCourseQuizList() {
                           variant="primary"
                           type="submit"
                           onClick={() => {
-                            handleQuiz(courses._id);
+                            handleQuiz(courses?.courseLessons);
                           }}
                         >
-                          Attempt Quiz
+                          Get Lessons
                         </Button>
                       </Card.Body>
                     </Col>
@@ -70,9 +71,9 @@ function StudentCourseQuizList() {
             ))}
           </>
         ) : (
-          <StudentQuizForm
-            courseId={selectedCourseId}
-            onClose={() => setShowQuiz(false)}
+          <StudentPdfLessons
+          courseId={selectedCourseId}
+           
           />
         )}
       </Container>
@@ -80,4 +81,4 @@ function StudentCourseQuizList() {
   );
 }
 
-export default StudentCourseQuizList;
+export default StudentPdfCourses;

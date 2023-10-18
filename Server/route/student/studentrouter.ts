@@ -43,7 +43,7 @@ studentrouter.get("/gettutordetails/:id", getTutorDetails);
 //student course management
 studentrouter.get("/getenrolledcourses/:id",studentLoggedin, getEnrolledCourses);
 studentrouter.get("/getallcourses", getCourseList);
-studentrouter.get("/getquiz/:id", studentLoggedin, getQuiz);
+studentrouter.get("/getquiz/:id", getQuiz);
 
 //student profile
 studentrouter.get("/getstudentprofile/:id",studentLoggedin, getStudentProfile);

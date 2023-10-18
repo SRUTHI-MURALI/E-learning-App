@@ -5,6 +5,7 @@ import t1 from "../../../../Assets/Images/tutors/t1.avif";
 import "./Body2.css";
 import { Link } from "react-router-dom";
 import { getInstructors } from "../../AxiosConfigStudents/AxiosConfig";
+import { Image_Url } from "../../../../Config/Config";
 
 function BasicExample() {
   const [tutorDetails, setTutorDetails] = useState([]);
@@ -31,7 +32,7 @@ function BasicExample() {
               to={`/tutordetails/${tutor?._id}`}
             >
               <Card style={{ width: "18rem" }}>
-                <Card.Img style={{ height: "240px" }} variant="top" src={t1} />
+                <Card.Img style={{ height: "240px" }} variant="top" src={`${Image_Url}/${tutor?.photo}`} />
                 <Card.Body>
                   <Card.Title> Name:{tutor?.name}</Card.Title>
                   <Card.Text>

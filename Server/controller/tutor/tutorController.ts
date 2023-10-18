@@ -306,8 +306,11 @@ const getAllLessons = async (req: Request, res: Response) => {
 };
 
 const enrolledStudents = async (req: Request, res: Response) => {
+  
   try {
     const { id } = req.params;
+
+console.log(id,'kkk');
 
     const orders: any = await OrderModel.find()
       .populate({
@@ -319,10 +322,13 @@ const enrolledStudents = async (req: Request, res: Response) => {
       })
       .populate("studentDetails")
       .exec();
-
+     
+      
     const filteredOrders = orders.filter((order: any) => {
-      return order.courseDetails.instructor._id.toString() === id;
+     return  order.courseDetails.instructor._id.toString() === id;
     });
+
+    
 
     if (orders) {
       res.status(200).json({ filteredOrders });

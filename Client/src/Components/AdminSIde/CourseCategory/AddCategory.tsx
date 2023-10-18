@@ -3,7 +3,7 @@ import { Button, Card, FormLabel } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./CourseCategoriesTable.css"; // Create a CSS file for your component styles
+import "./CourseCategoriesTable.css"; 
 import { addCategory } from "../AxiosConfigAdmin/AxiosConfig";
 
 interface addCategoryProps {

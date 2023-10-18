@@ -3,6 +3,7 @@ import { getInstructors } from "../AxiosConfigStudents/AxiosConfig";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import t1 from "../../../Assets/Images/tutors/t1.avif";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+import { Image_Url } from "../../../Config/Config";
 
 interface StudentMentorsListProps {
   studentData: object;
@@ -83,7 +84,7 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
                   <>
                     <Row>
                       <Col key={tutor?._id} xs={12} md={2}>
-                        <Card.Img src={t1} style={{ width: "180px" }} />
+                        <Card.Img src={`${Image_Url}/${tutor?.photo}`} style={{ width: "180px" }} />
                       </Col>
                       <Col xs={12} md={10}>
                         <Card.Body>

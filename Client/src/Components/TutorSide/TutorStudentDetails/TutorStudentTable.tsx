@@ -20,6 +20,8 @@ function TutorStudentTable() {
       try {
         const response = await getEnrolledStudents(id);
         setOrderlist(response.data.filteredOrders);
+        console.log(orderList,'students');
+        
       } catch (error) {
         console.log(error);
       }

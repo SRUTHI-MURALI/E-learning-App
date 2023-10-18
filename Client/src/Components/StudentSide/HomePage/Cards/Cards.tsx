@@ -33,12 +33,14 @@ function BasicExample() {
         </Col>
 
         <Col xs={12} lg={3}>
+          <Link to="/studentpdfs">
           <Card style={{ width: "18rem" }}>
             <Card.Img variant="top" src={pdf} />
             <Card.Body>
               <Card.Title style={{ textAlign: "center" }}>Pdfs</Card.Title>
             </Card.Body>
           </Card>
+          </Link>
         </Col>
         <Col xs={12} lg={3}>
           <Link to="/mentoring">
