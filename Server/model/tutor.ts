@@ -14,6 +14,7 @@ interface TutorDocument extends Document {
   qualification: string;
   gender: boolean;
   about: string;
+  availabletime:number;
   createdAt: Date;
 
   matchPasswords(enteredPassword: string): Promise<boolean>;
@@ -51,6 +52,10 @@ const tutorSchema = new Schema<TutorDocument>({
     require: true,
   },
   phone: {
+    type: Number,
+    require: true,
+  },
+  availabletime: {
     type: Number,
     require: true,
   },

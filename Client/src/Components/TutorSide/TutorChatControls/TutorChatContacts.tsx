@@ -1,4 +1,4 @@
-import { all } from "axios";
+
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
@@ -19,7 +19,7 @@ export default function TutorChatContacts({ contacts, changeChat }) {
       
         
         if (userData) {
-          setCurrentUserName(userData.name);
+          setCurrentUserName(userData?.name);
         
         }
       } catch (error) {
@@ -52,12 +52,13 @@ export default function TutorChatContacts({ contacts, changeChat }) {
   
     setAllContacts(uniqueContacts);
   }, [contacts]);
-  console.log(allContacts,'ffff');
+ 
   
   
   return (
+    
     <Container>
-        
+      
       {currentUserName && (
         <>
           <div className="brand">
@@ -65,6 +66,7 @@ export default function TutorChatContacts({ contacts, changeChat }) {
            
           </div>
           <div className="contacts">
+          <h1 style={{color:'white'}}>Students</h1>
           {allContacts.map((contact, index) => (
     <div
       key={contact._id}
@@ -75,15 +77,15 @@ export default function TutorChatContacts({ contacts, changeChat }) {
     >
                
                 
-                <div className="username">
-                  <h3>{contact.studentDetails.name}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
+    <div className="username">
+      <h3>{contact?.studentDetails?.name}</h3>
+    </div>
+    </div>
+      ))}
+    </div>
           
         </>
-      )}
+    )}
     </Container>
   );
 }

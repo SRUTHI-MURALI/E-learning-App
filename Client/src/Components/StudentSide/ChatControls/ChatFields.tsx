@@ -7,6 +7,7 @@ import { receiveMessage, sendMessage } from "../AxiosConfigStudents/AxiosConfig"
 
 export default function ChatFields({ currentChat, socket }) {
   
+  console.log(currentChat,'surrr');
   
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
@@ -18,7 +19,7 @@ export default function ChatFields({ currentChat, socket }) {
         const studentDetails = localStorage.getItem("studentData");
         const students = JSON.parse(studentDetails);
         const response = await receiveMessage(students._id,currentChat._id)
-         setMessages(response.data.projectedMessages);
+         setMessages(response.data);
          
          
       } catch (error) {
@@ -55,12 +56,10 @@ export default function ChatFields({ currentChat, socket }) {
     
     await sendMessage(data._id,currentChat._id,msg)
     
-   
-    
-
     const msgs = [...messages];
     msgs.push({ fromSelf: true, message: msg });
     setMessages(msgs);
+  
   };
 
   useEffect(() => {
@@ -69,6 +68,7 @@ export default function ChatFields({ currentChat, socket }) {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
+    
   }, []);
 
   useEffect(() => {

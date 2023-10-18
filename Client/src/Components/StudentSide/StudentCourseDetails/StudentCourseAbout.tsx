@@ -68,7 +68,7 @@ function StudentCourseAbout({ courseData }: StudentCourseAboutProps) {
           if (courseData?._id !== courses?._id) {
             return (
               <Col xs={12} md={3} key={courses?._id}>
-                <Link to={`/studentcoursedetails/${courses?._id}`}>
+                <Link to={`/studentcoursedetails/${courses?._id}`} style={{textDecoration:'none'}}>
                   <Card
                     style={{ width: "16vw", height: "25rem" }}
                     className="m-2 "

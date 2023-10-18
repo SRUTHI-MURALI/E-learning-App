@@ -13,16 +13,18 @@ function BasicExample() {
     <Container className="mt-5">
       <Row className="cardlayout">
         <Col xs={12} lg={3}>
+          <Link to="/chat" style={{textDecoration:'none'}}>
           <Card style={{ width: "18rem" }}>
             <Card.Img variant="top" src={QA} />
             <Card.Body>
-              <Card.Title style={{ textAlign: "center" }}>Q and A</Card.Title>
+              <Card.Title style={{ textAlign: "center" }}>Chat with Tutor</Card.Title>
             </Card.Body>
           </Card>
+          </Link>
         </Col>
 
         <Col xs={12} lg={3}>
-          <Link to={"/studentquizpage"}>
+          <Link to={"/studentquizpage"} style={{textDecoration:'none'}}>
             <Card style={{ width: "18rem" }}>
               <Card.Img variant="top" src={quiz} />
               <Card.Body>
@@ -33,7 +35,7 @@ function BasicExample() {
         </Col>
 
         <Col xs={12} lg={3}>
-          <Link to="/studentpdfs">
+          <Link to="/studentpdfs" style={{textDecoration:'none'}}>
           <Card style={{ width: "18rem" }}>
             <Card.Img variant="top" src={pdf} />
             <Card.Body>
@@ -43,7 +45,7 @@ function BasicExample() {
           </Link>
         </Col>
         <Col xs={12} lg={3}>
-          <Link to="/mentoring">
+          <Link to="/mentoring" style={{textDecoration:'none'}}>
             <Card style={{ width: "18rem" }}>
               <Card.Img variant="top" src={mentor} />
               <Card.Body>

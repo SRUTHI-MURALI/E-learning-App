@@ -84,7 +84,10 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
                   <>
                     <Row>
                       <Col key={tutor?._id} xs={12} md={2}>
-                        <Card.Img src={`${Image_Url}/${tutor?.photo}`} style={{ width: "180px" }} />
+                        <Card.Img
+                          src={`${Image_Url}/${tutor?.photo}`}
+                          style={{ width: "180px" }}
+                        />
                       </Col>
                       <Col xs={12} md={10}>
                         <Card.Body>

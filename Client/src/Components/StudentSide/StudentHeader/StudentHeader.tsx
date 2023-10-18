@@ -51,9 +51,7 @@ function StudentHeader() {
             >
               Courses
             </Nav.Link>
-            <Nav.Link className="nav-header-student" href="#action2">
-              Contacts
-            </Nav.Link>
+            
             <Nav.Link className="nav-header-student" href="/studentprofile">
               Profile
             </Nav.Link>

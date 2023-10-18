@@ -149,6 +149,7 @@ function TutorEditProfileForm({ tutor, onClose }) {
                 />
               </Col>
             </Form.Group>
+            
             <Form.Group as={Row} className="mb-3">
               <Form.Label column sm="2">
                 Password :

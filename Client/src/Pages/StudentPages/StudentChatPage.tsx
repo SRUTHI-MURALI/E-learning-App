@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import  { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import styled from "styled-components";
@@ -55,12 +54,7 @@ export default function StudentChatPage() {
       try {
         if (currentUser) {
           const response = await getInstructors();
-          
-         
-          
-          setContacts(response.data.tutorDetails);
-          
-          
+          setContacts(response.data.tutorDetails);  
         } 
       } catch (error) {
         console.error("Error fetching contacts:", error);

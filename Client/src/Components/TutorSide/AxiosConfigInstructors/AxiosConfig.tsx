@@ -108,7 +108,7 @@ export const tutorEditProfile = (
   experience: number,
   qualification: string,
   password: any,
-  about: string
+  about: string,
 ) => {
   return api.put(`/tutoreditedprofile/${id}`, {
     name,

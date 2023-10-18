@@ -6,7 +6,6 @@ import courseCategory from "../../model/courseCategory";
 import course from "../../model/courses";
 import OrderModel from "../../model/orders";
 import courseQuiz from "../../model/courseQuiz";
-import student from "../../model/student";
 import bcrypt from "bcrypt";
 const BaseUrl: string = process.env.BaseUrl || "";
 
@@ -207,6 +206,7 @@ const activateLesson = async (req: Request, res: Response) => {
   }
 };
 
+
 const addLesson = async (req: Request, res: Response) => {
   const { lessons, courseId } = req.body;
 
@@ -310,7 +310,7 @@ const enrolledStudents = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-console.log(id,'kkk');
+
 
     const orders: any = await OrderModel.find()
       .populate({
@@ -456,9 +456,9 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
 
 const editProfilePhoto = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
+   
     
-    console.log('hai');
+  
     
 
     const {

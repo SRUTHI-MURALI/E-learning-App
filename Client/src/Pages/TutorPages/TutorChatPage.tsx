@@ -36,11 +36,10 @@ export default function TutorChatPage() {
 
     fetchData();
   }, [navigate]);
-
   useEffect(() => {
     if (currentUser) {
       socket.current = io(Base_Url);
-      socket.current.emit("add-user", currentUser._id);
+      socket.current.emit("add-user", tutor._id);
     }
     
     return () => {
@@ -51,17 +50,15 @@ export default function TutorChatPage() {
     };
   }, [currentUser]);
 
+  
+
   useEffect(() => {
     async function fetchContacts() {
       try {
         if (currentUser) {
           const response = await getEnrolledStudents(tutor._id);
-          
-         
-          
+           
           setContacts(response.data.filteredOrders);
-          console.log(contacts,'tutor');
-          
           
         } 
       } catch (error) {
@@ -76,7 +73,7 @@ export default function TutorChatPage() {
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
-console.log(currentChat,'chat');
+
 
 
   return (

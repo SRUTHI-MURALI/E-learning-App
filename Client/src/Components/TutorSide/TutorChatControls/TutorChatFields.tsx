@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import ChatInput from "./TutorChatInputs"
+import ChatInput from "./TutorChatInputs";
 import { v4 as uuidv4 } from "uuid";
-import { receiveMessage, sendMessage } from "../../StudentSide/AxiosConfigStudents/AxiosConfig";
-
-
+import {
+  receiveMessage,
+  sendMessage,
+} from "../../StudentSide/AxiosConfigStudents/AxiosConfig";
 
 export default function TutorChatFields({ currentChat, socket }) {
- 
+
   
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
@@ -18,26 +19,26 @@ export default function TutorChatFields({ currentChat, socket }) {
       try {
         const tutorDetails = localStorage.getItem("tutorData");
         const tutor = JSON.parse(tutorDetails);
-        const response = await receiveMessage(tutor._id,currentChat._id)
-         setMessages(response.data.projectedMessages);
-       
-         
+        console.log(tutor._id,'tututu');
+        
+        const response = await receiveMessage(tutor._id, currentChat?.studentDetails?._id);
+        setMessages(response?.data);
+       console.log(response,'msg');
+      
+        
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
     };
-  
+
     fetchData();
   }, [currentChat]);
-  
 
   useEffect(() => {
     const getCurrentChat = async () => {
       if (currentChat) {
         const tutorDetails = localStorage.getItem("tutorData");
-        await JSON.parse(
-            tutorDetails
-        )._id;
+        await JSON.parse(tutorDetails)._id;
       }
     };
     getCurrentChat();
@@ -45,19 +46,17 @@ export default function TutorChatFields({ currentChat, socket }) {
 
   const handleSendMsg = async (msg) => {
     const tutorDetails = localStorage.getItem("tutorData");
-    const data = await JSON.parse(
-        tutorDetails
-    );
+    const data = await JSON.parse(tutorDetails);
+ 
+    
     socket.current.emit("send-msg", {
-      to: currentChat._id,
+      to: currentChat?.studentDetails?._id,
       from: data._id,
       msg,
     });
-    
-    await sendMessage(data._id,currentChat._id,msg)
-    
-   
-    
+
+
+    await sendMessage(data._id, currentChat?.studentDetails?._id, msg);
 
     const msgs = [...messages];
     msgs.push({ fromSelf: true, message: msg });
@@ -86,15 +85,14 @@ export default function TutorChatFields({ currentChat, socket }) {
         <div className="user-details">
           <div className="avatar">
             <img
-              src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
+              src={`data:image/svg+xml;base64,${currentChat?.avatarImage}`}
               alt=""
             />
           </div>
           <div className="username">
-            <h3>{currentChat.name}</h3>
+            <h3>{currentChat?.name}</h3>
           </div>
         </div>
-        
       </div>
       <div className="chat-messages">
         {messages.map((message) => {
@@ -105,9 +103,8 @@ export default function TutorChatFields({ currentChat, socket }) {
                   message.fromSelf ? "sended" : "recieved"
                 }`}
               >
-               
                 <div className="content ">
-                  <p>{message.message}</p>
+                  <p>{message?.message}</p>
                 </div>
               </div>
             </div>

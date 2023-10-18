@@ -239,7 +239,7 @@ const getCourseList = async (req: Request, res: Response) => {
 const resetPassword = async (req: Request, res: Response) => {
   try {
     const { phone, password } = req.body;
-    console.log(req.body, 'kkk');
+   
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -405,14 +405,15 @@ const sendMsg = async (req: Request, res: Response) => {
     const { from, to, message } = req.body;
 
 
+
     const data = await chats.create({
       message:message,
       users: [from, to],
       sender: from,
     });
 
-    if (data) return res.json({ msg: "Message added successfully." });
-    else return res.json({ msg: "Failed to add message to the database" });
+    if (data) return res.status(201).json({ msg: "Message added successfully." });
+    else return res.status(400).json({ msg: "Failed to add message to the database" });
   } catch (error) {
     console.log(error);
   }
@@ -420,13 +421,18 @@ const sendMsg = async (req: Request, res: Response) => {
 
 const receivemsg = async (req: Request, res: Response) => {
   try {
+
+    
     const { from, to } = req.body;
 
     const messages = await chats.find({
-      users: {
-        $all: [from, to],
-      },
+      $or: [
+        { users: { $all: [from, to] } },
+        { users: { $all: [to, from] } },
+      ],
     }).sort({ updatedAt: 1 });
+   
+    
 
     const projectedMessages = messages.map((msg) => {
       return {
@@ -434,7 +440,9 @@ const receivemsg = async (req: Request, res: Response) => {
         message: msg.message,
       };
     });
-    res.json(projectedMessages);
+  
+  
+    res.status(201).json(projectedMessages);
   } catch (error) {
     console.log(error);
   }

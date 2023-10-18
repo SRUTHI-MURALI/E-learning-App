@@ -46,6 +46,7 @@ export default function ChatContacts({ contacts, changeChat }) {
            
           </div>
           <div className="contacts">
+          <h1 style={{color:'white'}}>Teachers</h1>
             {contacts.map((contact, index) => (
               <div
                 key={contact._id}

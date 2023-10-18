@@ -22,7 +22,7 @@ api.interceptors.request.use(
   }
 );
 
-export const getInstructors = () => {
+export const getInstructors = () => { 
   return api.get("/getalltutors");
 };
 
@@ -44,12 +44,17 @@ export const studentLogin = (email: string, password: string) => {
 
 export const sendMessage = (from: string, to: string,message:string) => {
  
+  console.log(from,'from');
   
   return api.post(`/sendmsg`, { from, to,message });
 };
 
 export const receiveMessage = (from: string, to: string) => {
-  return api.get(`/receivemsg`, { from, to });
+ 
+  
+  console.log(from,'from');
+  
+  return api.post('/receivemsg', { from, to });
 };
 
 export const getStudentProfile = (id: string) => {

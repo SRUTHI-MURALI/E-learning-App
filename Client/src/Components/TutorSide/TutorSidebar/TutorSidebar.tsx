@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsFillArchiveFill, BsPeopleFill } from "react-icons/bs";
 import l1 from "../../../Assets/Images/carouselBody/l1.jpeg";
 import "../Css/Tutor.css";
 import { Row, Col } from "react-bootstrap";
 
 function TutorSidebar() {
-  const [selectedItem, setSelectedItem] = useState(null); // Default to 'dashboard'
+  const [selectedItem, setSelectedItem] = useState(''); // Default to 'dashboard'
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (item:string) => {
     setSelectedItem(item);
   };
 
@@ -28,7 +28,7 @@ function TutorSidebar() {
               }`}
               onClick={() => handleItemClick("Courses")}
             >
-              <a href="/tutorallcourses">
+              <a href="/tutorallcourses" style={{textDecoration:'none'}}>
                 <BsFillArchiveFill className="icon" /> Courses
               </a>
             </li>
@@ -81,6 +81,16 @@ function TutorSidebar() {
             >
               <a href="/room">
                 <BsPeopleFill className="icon" /> Online
+              </a>
+            </li>
+            <li
+              className={`sidebar-list-item ${
+                selectedItem === "chats" ? "selected" : ""
+              }`}
+              onClick={() => handleItemClick("chats")}
+            >
+              <a href="/tutorchat">
+                <BsPeopleFill className="icon" /> Chats
               </a>
             </li>
           </ul>

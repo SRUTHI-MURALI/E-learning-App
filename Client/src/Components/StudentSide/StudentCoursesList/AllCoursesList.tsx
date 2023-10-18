@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Col, Container } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css"; // Import carousel styles
@@ -69,27 +69,29 @@ function AllCoursesList() {
     <Container className="mt-5 ">
       <p className="allcourses-header">All Courses</p>
       <Carousel
-          swipeable={false}
-          draggable={false}
-          showDots={true}
-          responsive={responsive}
-          ssr={true}
-          infinite={true}
-          autoPlay={false}
-          autoPlaySpeed={1000}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          containerClass="carousel-container"
-          removeArrowOnDeviceType={["tablet", "mobile"]}
-          dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px"
-          
-        >
+        swipeable={false}
+        draggable={false}
+        showDots={true}
+        responsive={responsive}
+        ssr={true}
+        infinite={true}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        keyBoardControl={true}
+        customTransition="all .5"
+        transitionDuration={500}
+        containerClass="carousel-container"
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        dotListClass="custom-dot-list-style"
+        itemClass="carousel-item-padding-40-px"
+      >
         {filteredCourses.map((courses, index) => (
-          <Col >
-          <Link key={courses._id} to={`/studentcoursedetails/${courses._id}`}>
-            
+          <Col>
+            <Link
+              key={courses._id}
+              to={`/studentcoursedetails/${courses._id}`}
+              style={{ textDecoration: "none" }}
+            >
               <Card style={{ width: "16rem", height: "25rem" }} className="m-2">
                 <Card.Img
                   style={{ height: "200px" }}
@@ -109,8 +111,7 @@ function AllCoursesList() {
                   </Card.Text>
                 </Card.Body>
               </Card>
-            
-          </Link>
+            </Link>
           </Col>
         ))}
       </Carousel>

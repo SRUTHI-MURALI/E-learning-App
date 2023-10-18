@@ -1,11 +1,11 @@
-import React from "react";
+
 import { Container, Row } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import { Video_Url } from "../../../Config/Config";
 
 interface StudentCourseLessonsProps {
   courseData: object;
-  show: () => void;
+  show: boolean;
 }
 function StudentCourseLessons({ courseData, show }: StudentCourseLessonsProps) {
   return (
