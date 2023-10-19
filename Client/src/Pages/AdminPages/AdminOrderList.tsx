@@ -27,8 +27,8 @@ function AdminOrderList() {
 
       <Col xs={12} md={2}>
         <AdminSidebar />
-      </Col>
-      <Col xs={12} md={8}>
+      </Col>  
+      <Col xs={12} md={8}>  
         <AdminOrderTable />
       </Col>
     </Row>

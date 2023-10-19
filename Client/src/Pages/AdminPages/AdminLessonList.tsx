@@ -26,7 +26,7 @@ function AdminLessonList() {
       <Row>
         <AdminHeader />
         <Col xs={12} md={2}>
-          <AdminSidebar />
+        <AdminSidebar />
         </Col>
         <Col xs={12} md={8}>
           <AdminLessonsTable />

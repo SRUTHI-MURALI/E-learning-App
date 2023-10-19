@@ -33,7 +33,7 @@ function AdminSidebar() {
               }`}
               onClick={() => handleItemClick("dashboard")}
             >
-              <a href="adminlogin">
+              <a href="/adminhome">
                 <BsGrid1X2Fill className="icon" /> Dashboard
               </a>
             </li>
@@ -43,7 +43,7 @@ function AdminSidebar() {
               }`}
               onClick={() => handleItemClick("Courses")}
             >
-              <a href="allCoursesList">
+              <a href="/allCoursesList">
                 <BsFillArchiveFill className="icon" /> Courses
               </a>
             </li>
@@ -53,7 +53,7 @@ function AdminSidebar() {
               }`}
               onClick={() => handleItemClick("Categories")}
             >
-              <a href="courseCategoryList">
+              <a href="/courseCategoryList">
                 <BsFillGrid3X3GapFill className="icon" /> Categories
               </a>
             </li>
@@ -63,7 +63,7 @@ function AdminSidebar() {
               }`}
               onClick={() => handleItemClick("Instructors")}
             >
-              <a href="instructorsList">
+              <a href="/instructorsList">
                 <BsPeopleFill className="icon" /> Instructors
               </a>
             </li>

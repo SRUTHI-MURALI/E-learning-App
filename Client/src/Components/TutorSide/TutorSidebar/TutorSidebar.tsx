@@ -28,7 +28,7 @@ function TutorSidebar() {
               }`}
               onClick={() => handleItemClick("Courses")}
             >
-              <a href="/tutorallcourses" style={{textDecoration:'none'}}>
+              <a href="/tutorallcourses" >
                 <BsFillArchiveFill className="icon" /> Courses
               </a>
             </li>

@@ -23,7 +23,7 @@ function CourseTable() {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [courseId, setCourseId] = useState("");
   const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
 
   const navigate = useNavigate();
 

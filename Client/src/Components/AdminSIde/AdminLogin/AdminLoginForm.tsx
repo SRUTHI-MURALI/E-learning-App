@@ -33,6 +33,7 @@ function LoginForm() {
       const adminData = response.data;
 
       localStorage.setItem("adminData", JSON.stringify(adminData));
+      
       dispatch(login(adminData));
 
       toast.success("successfully logged in");
@@ -77,6 +78,7 @@ function LoginForm() {
               <Form.Group className="mb-3 mt-5" controlId="formGridAddress2">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                 type="password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => {

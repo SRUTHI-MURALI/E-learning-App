@@ -15,7 +15,7 @@ function TutorStudentList() {
     const tutorData = localStorage.getItem("tutorData");
     const parseData= JSON.parse(tutorData);
     if (!parseData) {
-      navigate("/studentlogin");
+      navigate("/tutorlogin");
     }
   }, [navigate]);
   return (

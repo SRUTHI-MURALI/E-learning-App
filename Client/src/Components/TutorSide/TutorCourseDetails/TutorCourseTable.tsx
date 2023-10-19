@@ -15,7 +15,7 @@ function TutorCourseTable() {
   const tutorData = localStorage.getItem("tutorData");
   const parseData = JSON.parse(tutorData);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 10;
+  const itemsPerPage = 3;
 
   const navigate = useNavigate();
   const [courseList, setCourselist] = useState([]);

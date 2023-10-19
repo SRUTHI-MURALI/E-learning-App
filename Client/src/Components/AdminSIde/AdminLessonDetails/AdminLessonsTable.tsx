@@ -18,6 +18,8 @@ function AdminLessonsTable() {
   useEffect(() => {
     const getLessons = async () => {
       try {
+        console.log(id);
+        
         const response = await getalllessons(id);
         setLessonslist(response.data.allLessons);
       } catch (error) {

@@ -64,10 +64,12 @@ export default function ChatFields({ currentChat, socket }) {
 
   useEffect(() => {
     if (socket.current) {
+     
       socket.current.on("msg-recieve", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
+    
     
   }, []);
 

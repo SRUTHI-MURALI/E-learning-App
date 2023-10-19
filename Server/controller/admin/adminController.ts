@@ -56,7 +56,6 @@ const getDashboardData = async (req: Request, res: Response) => {
       totalIncome = totalIncome + orders[i]?.courseDetails?.price;
     }
 
-    
     const matchStage2 = {
       $match: {
         createdAt: {
@@ -70,19 +69,19 @@ const getDashboardData = async (req: Request, res: Response) => {
       matchStage2,
       {
         $lookup: {
-          from: 'courses', 
-          localField: 'courseDetails',
-          foreignField: '_id',
-          as: 'courseDetails',
+          from: "courses",
+          localField: "courseDetails",
+          foreignField: "_id",
+          as: "courseDetails",
         },
       },
       {
-        $unwind: '$courseDetails',
+        $unwind: "$courseDetails",
       },
       {
         $group: {
           _id: { $month: "$createdAt" },
-          totalIncome: { $sum: '$courseDetails.price' },
+          totalIncome: { $sum: "$courseDetails.price" },
         },
       },
       {
@@ -93,15 +92,12 @@ const getDashboardData = async (req: Request, res: Response) => {
       },
     ]);
 
-
-    
     const monthlyCoursesData = await courses.aggregate([
       matchStage2,
       {
         $group: {
           _id: {
-            
-           $month: "$createdAt" 
+            $month: "$createdAt",
           },
           count: { $sum: 1 },
         },
@@ -113,9 +109,6 @@ const getDashboardData = async (req: Request, res: Response) => {
         },
       },
     ]);
-    
-
-
 
     res.status(201).json({
       studentCount,
@@ -124,7 +117,7 @@ const getDashboardData = async (req: Request, res: Response) => {
       totalIncome,
       totalCourses,
       monthlyIncomeData,
-      monthlyCoursesData
+      monthlyCoursesData,
     });
   } catch (error) {
     res.status(400).json(error);
@@ -317,7 +310,7 @@ const approveCourse = async (req: Request, res: Response) => {
     res.status(400).json({ message: "error.message" }); // Send the error message in the response
   }
 };
-
+/* cancel courses in admin side */
 const cancelCourse = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -346,6 +339,11 @@ const cancelCourse = async (req: Request, res: Response) => {
     res.status(400).json(error);
   }
 };
+
+/* cancel courses in admin side */
+
+
+/* cancel courses in admin side */
 
 const blockTutor = async (req: Request, res: Response) => {
   try {
@@ -517,10 +515,6 @@ const getOrderHistory = async (req: Request, res: Response) => {
   }
 };
 
-
-
-
-
 export {
   login,
   getStudentsList,
@@ -543,5 +537,4 @@ export {
   editCategory,
   getAllLessons,
   getDashboardData,
-  
 };
