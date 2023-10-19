@@ -18,7 +18,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
 
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState<number>(0);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [cloudinaryURL, setCloudinaryURL] = useState("");
@@ -26,18 +26,20 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
   const [show, setShow] = useState(null);
   const [showLesson, setShowLesson] = useState(false);
 
-  const submitHandler = async () => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const trimmedTitle = title.trim();
     const trimmedPrice = price;
-    const trimmedDuration = duration.trim();
+    const trimmedDuration = duration;
     const trimmedDescription = description.trim();
 
     if (
       trimmedTitle === "" ||
-      trimmedDuration === "" ||
-      trimmedDescription === ""
+      trimmedDuration === 0 ||
+      trimmedDescription === ""||
+      trimmedPrice===0
     ) {
-      return toast.error("Please fill all fields");
+      return toast.error("Please fill in all fields");
     }
 
     // Validate username format (only letters and spaces allowed)
@@ -46,13 +48,22 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
       alert("title can only contain letters and spaces");
       return;
     }
+    if (image) {
+      const allowedFormats = ["image/jpeg", "image/png"];
+      if (!allowedFormats.includes(image.type)) {
+        toast.error("Invalid image format. Please select a JPEG or PNG image.");
+        return;
+      }
+    } else {
+      toast.error("Please select an image for the course.");
+      return;
+    }
 
     await imageHandler();
 
-    if (!cloudinaryURL) {
-      toast.error("Error uploading photo");
-      return;
-    }
+    if (cloudinaryURL) {
+      
+    
 
     try {
       const response = await addCourse(
@@ -72,6 +83,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
       toast.error("registration error");
       return;
     }
+  }
   };
 
   const addLessonHandler = async () => {
@@ -123,12 +135,14 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                 </Row>
 
                 <Row className="mb-3">
-                  <Form.Group as={Col} controlId="formGridCity">
+                <Form.Group as={Col} controlId="formGridCity">
                     <Form.Label>Price</Form.Label>
                     <Form.Control
                       value={price}
                       onChange={(e) => {
-                        setPrice(e.target.value);
+                        const inputValue = e.target.value;
+                        const numericValue = parseInt(inputValue, 10); // Parse the input as an integer
+                        setPrice(numericValue); // Update the state with the parsed integer
                       }}
                     />
                   </Form.Group>
@@ -138,10 +152,13 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                     <Form.Control
                       value={duration}
                       onChange={(e) => {
-                        setDuration(e.target.value);
+                        const inputValue = e.target.value;
+                        const numericValue = parseInt(inputValue, 10); // Parse the input as an integer
+                        setDuration(numericValue); // Update the state with the parsed integer
                       }}
                     />
                   </Form.Group>
+
                 </Row>
 
                 <Form.Group className="mb-3" controlId="formGridAddress1">
@@ -156,7 +173,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                 </Form.Group>
 
                 <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label></Form.Label>
+                  <Form.Label>Image</Form.Label>
                   <Form.Control
                     type="file"
                     onChange={(e) => {
@@ -166,7 +183,9 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                         setImage(selectedFile);
                       }
                     }}
+                  
                   />
+                  <Form.Label>Allowed formats: JPEG, PNG</Form.Label>
                 </Form.Group>
                 <Row>
                   {show ? (

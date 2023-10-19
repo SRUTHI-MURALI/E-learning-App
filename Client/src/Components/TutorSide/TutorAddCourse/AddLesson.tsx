@@ -1,5 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState ,useRef} from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Lessons_Upload_Url } from "../../../Config/Config";
@@ -16,9 +18,12 @@ function AddLesson({ courseId, onClose }) {
   const [video, setVideo] = useState(null);
   const [cloudinaryURL, setCloudinaryURL] = useState("");
   const [count, setCount] = useState(0);
+  const pdfInputRef = useRef<HTMLInputElement | null>(null);
+  const videoInputRef = useRef<HTMLInputElement | null>(null);
   const [pdf, setPdf] = useState(null); // Change to null for file handling
 
   const handleAdd = async () => {
+    
     if (
       title.trim() === "" ||
       duration.trim() === "" ||
@@ -26,11 +31,30 @@ function AddLesson({ courseId, onClose }) {
     ) {
       return alert("Please fill in all fields before adding a lesson.");
     }
-    await videoHandler();
-
-    if (!cloudinaryURL) {
-      return alert("Error uploading video");
+    if (video) {
+      const allowedVideoFormats = ["video/mp4", "video/avi"]; // Add allowed video formats
+      if (!allowedVideoFormats.includes(video.type)) {
+        toast.error("Invalid video format. Please select a MP4 or AVI video.");
+        return;
+      }
+    } else {
+      toast.error("Please select a video for the lesson.");
+      return;
     }
+    if (pdf) {
+      const allowedPdfFormats = ["application/pdf"]; // Add allowed PDF formats
+      if (!allowedPdfFormats.includes(pdf.type)) {
+        toast.error("Invalid PDF format. Please select a PDF file.");
+        return;
+      }
+    } else {
+      toast.error("Please select a PDF for the lesson.");
+      return;
+    }
+    await videoHandler();
+    
+    if (cloudinaryURL) {
+      
 
     const newLesson = {
       title: title,
@@ -39,18 +63,29 @@ function AddLesson({ courseId, onClose }) {
       video: cloudinaryURL,
       pdf: pdf ? URL.createObjectURL(pdf) : "", // Store the PDF file as a URL
     };
-    setCount(count + 1);
+    toast.success("successfully added lesson ");
+   
     setLessons([...lessons, newLesson]);
     // Clear the form fields
+    if (pdfInputRef.current) {
+      pdfInputRef.current.value = "";
+    }
+    if (videoInputRef.current) {
+      videoInputRef.current.value = "";
+    }
+    setCount(count + 1);
     setTitle("");
     setDuration("");
     setDescription("");
     setVideo(null);
-    setCloudinaryURL("");
     setPdf(null);
+    setCloudinaryURL("");
+   
+  }
   };
 
-  const handleMainSubmit = async () => {
+  const handleMainSubmit = async  () => {
+   
     try {
       await addNewLesson(lessons, courseId);
       onClose(false);
@@ -87,6 +122,11 @@ function AddLesson({ courseId, onClose }) {
       >
         Submit lessons
       </Button>
+      <ToastContainer
+                position="top-center"
+                autoClose={3000}
+              ></ToastContainer>
+
       <h3 className="mt-4">Add a Lesson ?</h3>
       <h4> Lesson: {count + 1}</h4>
       {showAddQuiz === false ? (
@@ -130,6 +170,9 @@ function AddLesson({ courseId, onClose }) {
                   <Form.Label>Video</Form.Label>
                   <Form.Control
                     type="file"
+                    ref={(input) => {
+                      videoInputRef.current = input;
+                    }}
                     onChange={(e) => {
                       const inputElement = e.target as HTMLInputElement;
                       if (inputElement && inputElement.files) {
@@ -138,21 +181,27 @@ function AddLesson({ courseId, onClose }) {
                       }
                     }}
                   />
+                  <Form.Label>Allowed formats: MP4, AVI</Form.Label>
                 </Form.Group>
 
                 <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label>Add PDF</Form.Label>
-                  <Form.Control
-                    type="file"
-                    onChange={(e) => {
-                      const inputElement = e.target as HTMLInputElement;
-                      if (inputElement && inputElement.files) {
-                        const selectedFile = inputElement.files[0];
-                        setPdf(selectedFile); // Update the PDF state
-                      }
-                    }}
-                  />
-                </Form.Group>
+                      <Form.Label>Add PDF</Form.Label>
+                      <Form.Control
+                        type="file"
+                        ref={(input) => {
+                          pdfInputRef.current = input;
+                        }}
+                        onChange={(e) => {
+                          const inputElement = e.target as HTMLInputElement;
+                          if (inputElement && inputElement.files) {
+                            const selectedFile = inputElement.files[0];
+                            setPdf(selectedFile); // Update the PDF state
+                          }
+                        }}
+                      />
+                      <Form.Label>Allowed formats: PDF</Form.Label>
+                    </Form.Group>
+
 
                 <Row>
                   <Col>

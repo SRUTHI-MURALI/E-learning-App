@@ -87,7 +87,7 @@ function TutorCourseTable() {
                   <tr key={course._id}>
                     <td>{index + 1}</td>
                     <td>{course?.title}</td>
-                    <td>{course?.category.title}</td>
+                    <td>{course?.category?.title}</td>
                     <td>{course?.description}</td>
                     <td>{course?.duration}</td>
                     <td>

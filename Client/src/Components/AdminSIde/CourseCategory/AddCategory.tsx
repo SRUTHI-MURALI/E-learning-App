@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Card, FormLabel } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./CourseCategoriesTable.css"; 
 import { addCategory } from "../AxiosConfigAdmin/AxiosConfig";
+
 
 interface addCategoryProps {
   onClose: () => void;
@@ -14,18 +15,22 @@ function AddCategory({ onClose }: addCategoryProps) {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = async () => {
+  
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const trimmedCategory = category.trim();
     const trimmedDescription = description.trim();
 
     if (trimmedCategory === "" || trimmedDescription === "") {
-      toast.error("Please fill all fields");
+      toast.error("Please fill in all fields");
       return;
+    
     }
 
-    const usernamePattern = /^[A-Za-z\s.]+$/;
+    const usernamePattern = /^[A-Za-z0-9\s]+/;
     if (!usernamePattern.test(trimmedCategory.trim())) {
-      alert("category can only contain letters and spaces");
+      toast.error("category name can only contain letters ,numbers and spaces");
       return;
     }
 
@@ -33,8 +38,12 @@ function AddCategory({ onClose }: addCategoryProps) {
       const response = await addCategory(trimmedCategory, trimmedDescription);
 
       if (response.status === 201) {
-        // OTP sent successfully
+       
         toast.success("category added");
+        
+        onClose(false);
+        window.location.reload()
+        
       } else if (response.status == 400) {
         toast.error("Category already exists");
       }
@@ -48,7 +57,7 @@ function AddCategory({ onClose }: addCategoryProps) {
         toast.error(error.response.data.message);
       } else {
         // Handle unexpected errors
-        toast.error("An error occurred while sending OTP");
+        toast.error("An error occurred while adding category");
       }
     }
   };
@@ -59,8 +68,9 @@ function AddCategory({ onClose }: addCategoryProps) {
 
   return (
     <div className="add-category-form-container">
-      <ToastContainer position="top-center"></ToastContainer>
+      
       <Card className="responsive-card">
+      <ToastContainer position="top-center"></ToastContainer>
         <Form onSubmit={handleSubmit}>
           <FormLabel style={{ color: "black" }}>Add Category</FormLabel>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

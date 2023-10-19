@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
 import { getalllessons } from "../AxiosConfigAdmin/AxiosConfig";
+import { Video_Url } from "../../../Config/Config";
 
 function AdminLessonsTable() {
   const [lessonsList, setLessonslist] = useState([]);
@@ -61,9 +62,17 @@ function AdminLessonsTable() {
               <td>{lessons?.description}</td>
               <td>{lessons?.duration}</td>
 
-              <td></td>
+              <td>
+              <video
+                          src={`${Video_Url}/${lessons?.video}`}
+                          alt="sample"
+                          style={{ width: "40px" }}
+                          controls
+                        />{" "}
+              </td>
 
-              {/* <td><img src={`${Image_Url}/${lessons?.video}`} alt='sample' style={{width:"40px"}}/> </td> */}
+
+             
             </tr>
           ))}
         </tbody>

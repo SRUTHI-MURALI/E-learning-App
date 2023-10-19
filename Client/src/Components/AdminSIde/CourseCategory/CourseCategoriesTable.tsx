@@ -89,6 +89,8 @@ function CourseCategoriesTable() {
     <div>
       <Row>
         <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
+        {openPopUp == false && editPopUp == false ? (
+          <>
         <Row>
           <Col>
             <p className="categorylistheading">
@@ -107,7 +109,7 @@ function CourseCategoriesTable() {
         </Row>
 
         <Col>
-          {openPopUp == false && editPopUp == false ? (
+          
             <Table className="mt-5 ms-5" striped bordered hover size="sm">
               <thead>
                 <tr>
@@ -152,8 +154,23 @@ function CourseCategoriesTable() {
                 ))}
               </tbody>
             </Table>
-          ) : null}
+           
         </Col>
+        <div style={{ float: "left", margin: "3px" }}>
+        <ReactPaginate
+          previousLabel={"Previous "}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={Math.ceil(categoryList.length / itemsPerPage)}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={2}
+          onPageChange={handlePageChange}
+          containerClassName={"pagination"} // Remove one of the containerClassName attributes
+          activeClassName={"active"}
+        />
+      </div>
+        </>
+          ) : null}
       </Row>
 
       {openPopUp && (
@@ -171,19 +188,7 @@ function CourseCategoriesTable() {
         </div>
       )}
 
-      <div style={{ float: "right", margin: "3px" }}>
-        <ReactPaginate
-          previousLabel={"Previous "}
-          nextLabel={"Next"}
-          breakLabel={"..."}
-          pageCount={Math.ceil(categoryList.length / itemsPerPage)}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={2}
-          onPageChange={handlePageChange}
-          containerClassName={"pagination"} // Remove one of the containerClassName attributes
-          activeClassName={"active"}
-        />
-      </div>
+      
     </div>
   );
 }
