@@ -10,6 +10,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+// Import your routes here
 import adminrouter from "../route/admin/adminrouter";
 import studentrouter from "../route/student/studentrouter";
 import tutorrouter from "../route/tutor/tutorrouter";
@@ -22,25 +24,23 @@ app.use("/tutor", tutorrouter);
 app.use("/otp", otprouter);
 app.use("/Razorpay", razorpayroute);
 
-const server = http.createServer(app); // Create an HTTP server using 'http' module
+const server = http.createServer(app);
 
 const io = new SocketIOServer(server, {
-  // Create a new Socket.IO server instance
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true,
+    methods: ["GET", "POST"],
   },
 });
 
-const onlineUsers: Map<string, string> = new Map(); // Assuming userId is a string
+const onlineUsers: Map<string, string> = new Map();
 
-let chatSocket: Socket;
-
-io.on("connection", (socket) => {
-  chatSocket = socket;
+io.on("connection", (socket: Socket) => {
   socket.on("add-user", (userId: string) => {
     onlineUsers.set(userId, socket.id);
   });
+
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
@@ -49,4 +49,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.listen(3001);
+server.listen(3001, () => {
+  console.log("Socket server is running on port 3001");
+});

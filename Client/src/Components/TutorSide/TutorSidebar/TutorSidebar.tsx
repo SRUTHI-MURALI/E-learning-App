@@ -3,13 +3,20 @@ import { BsFillArchiveFill, BsPeopleFill } from "react-icons/bs";
 import l1 from "../../../Assets/Images/carouselBody/l1.jpeg";
 import "../Css/Tutor.css";
 import { Row, Col } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 function TutorSidebar() {
-  const [selectedItem, setSelectedItem] = useState(''); // Default to 'dashboard'
+  
+  const location = useLocation()
+  const isCourses = location.pathname === "/tutorallcourses"
+  const isStudents = location.pathname === "/tutorstudentslist"
+  const isAddCourse = location.pathname === "/addcourse"
+  const isQuizzes = location.pathname === "/tutorquizlist"
+  const isProfile = location.pathname === "/tutorprofile"
+  const isOnline = location.pathname === "/room"
+  const isChats = location.pathname === "/tutorchat"
 
-  const handleItemClick = (item:string) => {
-    setSelectedItem(item);
-  };
+  
 
   return (
     <Row>
@@ -24,9 +31,9 @@ function TutorSidebar() {
           <ul className="sidebar-list">
             <li
               className={`sidebar-list-item ${
-                selectedItem === "Courses" ? "selected" : ""
+                isCourses ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("Courses")}
+              
             >
               <a href="/tutorallcourses" >
                 <BsFillArchiveFill className="icon" /> Courses
@@ -34,10 +41,10 @@ function TutorSidebar() {
             </li>
 
             <li
-              className={`sidebar-list-item ${
-                selectedItem === "Students" ? "selected" : ""
+               className={`sidebar-list-item ${
+                isStudents ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("Students")}
+             
             >
               <a href="/tutorstudentslist">
                 <BsPeopleFill className="icon" /> Students
@@ -45,9 +52,9 @@ function TutorSidebar() {
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === "Add Course" ? "selected" : ""
+                isAddCourse ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("Add Course")}
+           
             >
               <a href="/addcourse">
                 <BsFillArchiveFill className="icon" /> Add Course
@@ -55,9 +62,9 @@ function TutorSidebar() {
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === "Quizzes" ? "selected" : ""
+                isQuizzes ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("Quizzes")}
+             
             >
               <a href="/tutorquizlist">
                 <BsPeopleFill className="icon" /> Quizzes
@@ -65,29 +72,29 @@ function TutorSidebar() {
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === "Profile" ? "selected" : ""
+                isProfile ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("Profile")}
+              
             >
               <a href="/tutorprofile">
                 <BsPeopleFill className="icon" /> Profile
               </a>
             </li>
             <li
-              className={`sidebar-list-item ${
-                selectedItem === "video" ? "selected" : ""
+               className={`sidebar-list-item ${
+                isOnline ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("video")}
+              
             >
               <a href="/room">
                 <BsPeopleFill className="icon" /> Online
               </a>
             </li>
             <li
-              className={`sidebar-list-item ${
-                selectedItem === "chats" ? "selected" : ""
-              }`}
-              onClick={() => handleItemClick("chats")}
+             className={`sidebar-list-item ${
+              isChats ? "bg-white" : "#1d2634"
+            }`}
+             
             >
               <a href="/tutorchat">
                 <BsPeopleFill className="icon" /> Chats

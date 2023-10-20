@@ -23,7 +23,7 @@ function TutorLessonList() {
   return (
     <>
     {parseData && (
-       <div>
+       <div style={{overflow:'hidden'}}>
        <Row>
          <TutorHeader />
          <Col xs={12} md={2}>

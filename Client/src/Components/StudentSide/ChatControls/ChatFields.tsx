@@ -7,8 +7,6 @@ import { receiveMessage, sendMessage } from "../AxiosConfigStudents/AxiosConfig"
 
 export default function ChatFields({ currentChat, socket }) {
   
-  console.log(currentChat,'surrr');
-  
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);

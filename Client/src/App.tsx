@@ -83,7 +83,7 @@ function App() {
 
           <Route path="/tutorregister" element={<TutorRegister />} />
           <Route path="/tutorlogin" element={<TutorLogin />} />
-          <Route path="/tutorhome" element={<TutorHome />} />
+          <Route path="/tutorhome" element={<CourseList  />} />
           <Route path="/addcourse" element={<TutorAddCourse />} />
           <Route path="/tutorallcourses" element={<CourseList />} />
           <Route path="/tutorstudentslist" element={<TutorStudentList />} />

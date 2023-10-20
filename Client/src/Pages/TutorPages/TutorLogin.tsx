@@ -2,7 +2,7 @@ import LoginForm from "../../Components/TutorSide/TutorLoginPage/LoginForm";
 
 function TutorLogin() {
   return (
-    <div>
+    <div style={{overflow:'hidden'}}>
       <LoginForm />
     </div>
   );

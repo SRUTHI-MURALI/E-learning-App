@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "react-bootstrap/Navbar";
+import {Navbar} from "react-bootstrap";
 import logo from "../../../../Assets/Images/carouselBody/l1.jpeg";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
@@ -9,11 +9,12 @@ import "./Header.css";
 
 function NavScrollExample() {
   return (
-    <Navbar expand="lg">
-      <Container>
+    <Navbar expand="md">
+      <Container fluid>
         <img className="logo" src={logo} />
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
+        <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle nav-student" />
+
+        <Navbar.Collapse id="navbarScroll" >
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: "80px" }}

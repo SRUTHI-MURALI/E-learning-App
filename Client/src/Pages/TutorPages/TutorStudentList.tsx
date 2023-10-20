@@ -21,7 +21,7 @@ function TutorStudentList() {
   return (
     <>
     {parseData && (
-       <>
+       <div style={{overflow:'hidden'}}>
        <Row>
          <TutorHeader />
        </Row>
@@ -33,7 +33,7 @@ function TutorStudentList() {
            <TutorStudentTable />
          </Col>
        </Row>
-     </>
+     </div>
     )}
     </>
    

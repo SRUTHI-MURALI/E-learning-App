@@ -38,11 +38,10 @@ function AddCategory({ onClose }: addCategoryProps) {
       const response = await addCategory(trimmedCategory, trimmedDescription);
 
       if (response.status === 201) {
-       
-        toast.success("category added");
-        
+      
+         toast.success("category added");
         onClose(false);
-        window.location.reload()
+       
         
       } else if (response.status == 400) {
         toast.error("Category already exists");
@@ -70,7 +69,7 @@ function AddCategory({ onClose }: addCategoryProps) {
     <div className="add-category-form-container">
       
       <Card className="responsive-card">
-      <ToastContainer position="top-center"></ToastContainer>
+      
         <Form onSubmit={handleSubmit}>
           <FormLabel style={{ color: "black" }}>Add Category</FormLabel>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

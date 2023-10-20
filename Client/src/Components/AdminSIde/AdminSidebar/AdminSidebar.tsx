@@ -8,13 +8,21 @@ import {
 import "../Css/Admin.css";
 import l1 from "../../../Assets/Images/carouselBody/l1.jpeg";
 import { Row, Col } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 function AdminSidebar() {
-  const [selectedItem, setSelectedItem] = useState(null); // Default to 'dashboard'
 
-  const handleItemClick = (item) => {
-    setSelectedItem(item);
-  };
+  
+  
+
+  const location = useLocation()
+  const isDashboard = location.pathname === "/adminhome"
+  const isCourses = location.pathname === "/allCoursesList"
+  const isCategories = location.pathname === "/courseCategoryList"
+  const isInstructors = location.pathname === "/instructorsList"
+  const isStudents = location.pathname === "/studentsList"
+  const isOrders = location.pathname === "/orderhistory"
+  
 
   return (
     <Row>
@@ -29,19 +37,19 @@ function AdminSidebar() {
           <ul className="sidebar-list">
             <li
               className={`sidebar-list-item ${
-                selectedItem === "dashboard" ? "selected" : ""
+                isDashboard ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("dashboard")}
+             
             >
               <a href="/adminhome">
                 <BsGrid1X2Fill className="icon" /> Dashboard
               </a>
             </li>
             <li
-              className={`sidebar-list-item ${
-                selectedItem === "Courses" ? "selected" : ""
-              }`}
-              onClick={() => handleItemClick("Courses")}
+             className={`sidebar-list-item ${
+              isCourses ? "bg-white" : "#1d2634"
+            }`}
+              
             >
               <a href="/allCoursesList">
                 <BsFillArchiveFill className="icon" /> Courses
@@ -49,19 +57,19 @@ function AdminSidebar() {
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === "Categories" ? "selected" : ""
+                isCategories ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("Categories")}
+             
             >
               <a href="/courseCategoryList">
                 <BsFillGrid3X3GapFill className="icon" /> Categories
               </a>
             </li>
             <li
-              className={`sidebar-list-item ${
-                selectedItem === "Instructors" ? "selected" : ""
-              }`}
-              onClick={() => handleItemClick("Instructors")}
+             className={`sidebar-list-item ${
+              isInstructors ? "bg-white" : "#1d2634"
+            }`}
+             
             >
               <a href="/instructorsList">
                 <BsPeopleFill className="icon" /> Instructors
@@ -69,9 +77,9 @@ function AdminSidebar() {
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === "Students" ? "selected" : ""
+                isStudents ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("Students")}
+             
             >
               <a href="/studentsList">
                 <BsPeopleFill className="icon" /> Students
@@ -79,9 +87,9 @@ function AdminSidebar() {
             </li>
             <li
               className={`sidebar-list-item ${
-                selectedItem === "Orders" ? "selected" : ""
+                isOrders ? "bg-white" : "#1d2634"
               }`}
-              onClick={() => handleItemClick("Orders")}
+             
             >
               <a href="/orderhistory">
                 <BsPeopleFill className="icon" /> Orders

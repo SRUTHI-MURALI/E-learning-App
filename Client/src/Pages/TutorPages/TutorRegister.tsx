@@ -2,7 +2,7 @@ import RegisterForm from "../../Components/TutorSide/TutorRegisterPage/RegisterF
 
 function TutorRegister() {
   return (
-    <div>
+    <div style={{overflow:'hidden'}}>
       <RegisterForm />
     </div>
   );

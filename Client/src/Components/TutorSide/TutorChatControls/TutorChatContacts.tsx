@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { io } from "socket.io-client";
+import { Base_Url } from "../../../Config/Config";
 
 
 export default function TutorChatContacts({ contacts, changeChat }) {
@@ -32,6 +34,7 @@ export default function TutorChatContacts({ contacts, changeChat }) {
 
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
+   
     changeChat(contact);
   };
 

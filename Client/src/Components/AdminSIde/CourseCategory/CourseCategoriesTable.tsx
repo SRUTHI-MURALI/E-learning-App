@@ -5,7 +5,6 @@ import { AiFillEdit, AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import { Button, Col, Row } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
 import "./CourseCategoriesTable.css";
 import AddCategory from "./AddCategory";
 import EditCategoryForm from "./EditCategoryForm";
@@ -35,7 +34,7 @@ function CourseCategoriesTable() {
       }
     };
     getAllCategory();
-  }, []);
+  }, [openPopUp,editPopUp]);
 
   const handleOpenDialog = () => {
     setOpenPopUp(true);
@@ -58,7 +57,7 @@ function CourseCategoriesTable() {
         cancelButtonText: "No",
       });
 
-      if (result.isConfirmed) {
+      if (result.isConfirmed) { 
         if (!category.isActive) {
           await activateCategory(category._id);
           category.isActive = true;

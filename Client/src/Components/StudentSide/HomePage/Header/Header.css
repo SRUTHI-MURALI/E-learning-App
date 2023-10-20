@@ -1,3 +1,9 @@
 .nav-student {
   color: #fff !important;
 }
+
+/* Custom CSS to change the color of the toggle lines to white */
+.custom-navbar-toggle button.navbar-toggler-icon {
+  background-color: white; /* Change to your desired color */
+}
+

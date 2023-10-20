@@ -149,14 +149,6 @@ body {
   border-radius: 5px;
 }
 
-.card:first-child {
-}
-
-
-
-
-
-
 
 .card-inner {
   display: flex;

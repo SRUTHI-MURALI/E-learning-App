@@ -35,7 +35,7 @@ function TutorAddCourse() {
   return (
     <>
       {parseData && (
-        <>
+        < >
           <Col>
             <TutorHeader />
             <TutorSidebar />

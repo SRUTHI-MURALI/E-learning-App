@@ -19,7 +19,7 @@ function TutorHome() {
   return (
     <>
     {parseData && (
-      <div className="grid-container">
+      <div className="grid-container" style={{overflow:'hidden'}}>
       <TutorHeader />
       <TutorSidebar />
     </div>

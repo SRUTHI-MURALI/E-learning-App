@@ -54,7 +54,7 @@ const StudentProfileForm = () => {
 
   return (
     <Container>
-      {!showEdit ? (
+      {!showEdit ? ( 
         <Row>
           <p className="allcourses-header mt-3">Profile Details</p>
           <div className="profileContainer">
@@ -129,6 +129,7 @@ const StudentProfileForm = () => {
                         </Card.Text>
                       </Card.Body>
                     </Card>
+                    
                   </Col>
                 ))
               ) : (
