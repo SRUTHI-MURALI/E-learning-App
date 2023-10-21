@@ -42,26 +42,34 @@ function RegisterForm() {
     // Validate username format (only letters and spaces allowed)
     const usernamePattern = /^[A-Za-z\s]+$/;
     if (!usernamePattern.test(trimmedTutorName.trim())) {
-      alert("Username can only contain letters and spaces");
+      toast.error("Username can only contain letters and spaces");
       return;
     }
     const phonePattern = /^\d{10}$/;
     if (!phonePattern.test(trimmedPhone.trim())) {
-      alert("Please enter a valid 10-digit phone number");
+      toast.error("Please enter a valid 10-digit phone number");
       return;
     }
 
     // Validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(trimmedEmail.trim())) {
-      alert("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
       return;
     }
 
-    if (confirmPassword !== password) {
-      alert("password mismatch");
+    if (trimmedPassword !== trimmedConfirmPassword) {
+
+      toast.error("password mismatch");
       return;
+    }else{
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/;
+      if(!regex.test(trimmedPassword)){
+        toast.error("Password should be 8 characters and should contain a lowercase letter , a uppercase letter , a number and a symbol ");
+        return;
+      }
     }
+   
 
     try {
       await tutorSendOtp(

@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { BsFillArchiveFill, BsPeopleFill } from "react-icons/bs";
 import l1 from "../../../Assets/Images/carouselBody/l1.jpeg";
 import "../Css/Tutor.css";
@@ -20,8 +20,8 @@ function TutorSidebar() {
 
   return (
     <Row>
-      <Col>
-        <aside id="sidebar" className="sidebar-responsive">
+      <Col   >
+        <aside  id="sidebar" className="sidebar-responsive">
           <div className="sidebar-title">
             <div className="sidebar-brand">
               <img style={{ height: "150px" }} src={l1} alt="Logo" />

@@ -57,12 +57,10 @@ function StudentEditProfileForm({
     if (image) {
       await imageHandler();
 
-      if (!cloudinaryURL) {
-        toast.error("Error uploading photo");
-        return;
-      }
-    } else {
+    } else if(existingImage) {
       setPhoto(existingImage);
+    }else{
+      setPhoto("No Pic")
     }
 
     if (photo) {
@@ -222,28 +220,29 @@ function StudentEditProfileForm({
                 </Row>
               </Form>
             </Col>
-            <Col>
-              <Form.Group controlId="formFile" className="mb-3">
-                <Form.Label className="m-5"></Form.Label>
-                <img
-                  style={{ width: "300px" }}
-                  src={`${Image_Url}/${existingImage}`}
-                  alt="profile"
-                  className="rounded-circle"
-                />
-                <Form.Control
-                  className="mt-5"
-                  type="file"
-                  onChange={(e) => {
-                    const inputElement = e.target as HTMLInputElement;
-                    if (inputElement && inputElement.files) {
-                      const selectedFile = inputElement.files[0];
-                      setImage(selectedFile);
-                    }
-                  }}
-                />
-              </Form.Group>
-            </Col>
+            <Col xs={12} md={6}>
+  <Form.Group controlId="formFile" className="mb-3">
+    <Form.Label className="m-5"></Form.Label>
+    <img
+      style={{ maxWidth: "100%" }}
+      src={`${Image_Url}/${existingImage}`}
+      alt="profile"
+      className="rounded-circle"
+    />
+    <Form.Control
+      className="mt-5"
+      type="file"
+      onChange={(e) => {
+        const inputElement = e.target as HTMLInputElement;
+        if (inputElement && inputElement.files) {
+          const selectedFile = inputElement.files[0];
+          setImage(selectedFile);
+        }
+      }}
+    />
+  </Form.Group>
+</Col>
+
           </Row>
         </Card>
       </Container>

@@ -18,9 +18,9 @@ function StudentQuizPage() {
     }
   }, [navigate]);
   return (
-    <>
+    < >
       {parseData && (
-        <Container>
+        <Container >
           <Row>
             <StudentHeader />
           </Row>

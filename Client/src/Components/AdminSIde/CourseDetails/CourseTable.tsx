@@ -31,6 +31,8 @@ function CourseTable() {
     const getCourses = async () => {
       try {
         const response = await getAllCourse();
+        console.log(response.data,"kkk");
+        
         setCourselist(response.data.allCourses);
       } catch (error) {
         console.error(error);
@@ -118,7 +120,7 @@ function CourseTable() {
                 <tr key={course._id}>
                   <td>{index + 1}</td>
                   <td>{course?.title}</td>
-                  <td>{course?.category.title}</td>
+                  <td>{course?.category?.title}</td>
                   <td>{course?.description}</td>
                   <td>{course?.duration}</td>
                   <td>{course?.instructor?.name}</td>

@@ -81,40 +81,37 @@ export default function ChatFields({ currentChat, socket }) {
 
   return (
     <Container>
-      <div className="chat-header">
-        <div className="user-details">
-          <div className="avatar">
-            <img
-              src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
-              alt=""
-            />
-          </div>
-          <div className="username">
-            <h3>{currentChat.name}</h3>
-          </div>
+    <div className="chat-header">
+      <div className="user-details">
+        <div className="avatar">
+          <img
+            src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
+            alt=""
+          />
         </div>
-        
+        <div className="username">
+          <h3>{currentChat.name}</h3>
+        </div>
       </div>
-      <div className="chat-messages">
-        {messages.map((message) => {
-          return (
-            <div ref={scrollRef} key={uuidv4()}>
-              <div
-                className={`message ${
-                  message.fromSelf ? "sended" : "recieved"
-                }`}
-              >
-               
-                <div className="content ">
-                  <p>{message.message}</p>
-                </div>
+    </div>
+    <div className="chat-messages">
+      {messages.map((message) => {
+        return (
+          <div ref={scrollRef} key={uuidv4()}>
+            <div
+              className={`message ${message.fromSelf ? "sended" : "received"}`}
+            >
+              <div className="content">
+                <p>{message.message}</p>
               </div>
             </div>
-          );
-        })}
-      </div>
-      <ChatInput handleSendMsg={handleSendMsg} />
-    </Container>
+          </div>
+        );
+      })}
+    </div>
+    <ChatInput handleSendMsg={handleSendMsg} />
+  </Container>
+  
   );
 }
 

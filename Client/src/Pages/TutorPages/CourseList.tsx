@@ -18,14 +18,14 @@ function CourseList() {
     if (!parseData) {
       navigate("/tutorlogin");
     }
-  }, [navigate]);
+  }, [navigate]); 
   return (
     <>
     {parseData && (
-       <div style={{overflow:'hidden'}}>
+       <div style={{overflow:'hidden',}}>
        <Row>
          <TutorHeader />
-         <Col xs={12} md={2}>
+         <Col xs={12} md={2} style={{backgroundColor:"#263043"}} >
            <TutorSidebar />
          </Col>
          <Col xs={12} md={8}>

@@ -67,20 +67,17 @@ function StudentQuizForm({ courseId, onClose }: StudentQuizFormProps) {
   };
 
   return (
-    <Row>
+    <>
       <Container className="d-flex justify-content-center align-items-center mt-2">
-        <Card className=" text-white" style={{ width: "65rem" }}>
-          <Card.Img
-            src={img}
-            style={{ width: "60rem", height: "30rem" }}
-            className="m-4"
-            alt="Card image"
-          />
-          <Card.ImgOverlay>
-            <Card.Title className="m-4 d-flex justify-content-center align-items-center">
-              Quiz Time
-            </Card.Title>
-            <br />
+        <Card className=" text-white" style={{ width: "100%" }}>
+      
+   
+    <div className="col-lg-6 col-md-12">
+      <Card.ImgOverlay>
+        <Card.Title className="m-4 d-flex justify-content-center align-items-center">
+          Quiz Time
+        </Card.Title>
+        <br />
 
             {result == false && (
               <div>
@@ -155,10 +152,12 @@ function StudentQuizForm({ courseId, onClose }: StudentQuizFormProps) {
                 </Card.Text>
               </>
             )}
-          </Card.ImgOverlay>
-        </Card>
+        </Card.ImgOverlay>
+    </div>
+  
+  </Card>
       </Container>
-    </Row>
+    </>
   );
 }
 

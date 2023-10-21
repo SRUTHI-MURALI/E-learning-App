@@ -20,7 +20,7 @@ function TutorQuizList() {
     }
   }, [navigate]);
   return (
-    <>
+    <div style={{overflow:'hidden'}}>
      {parseData && (
       <>
       <Row>
@@ -36,7 +36,7 @@ function TutorQuizList() {
       </Row>
     </>
     )}
-    </>
+    </div>
    
    
   );

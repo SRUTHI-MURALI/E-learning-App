@@ -26,12 +26,18 @@ export default function ChatWelcome() {
 
   return (
     <Container>
-      {/* <img src={} alt="" /> */}
-      <h1>
-        Welcome, <span>{userName?.name}!</span>
-      </h1>
-      <h3>Please select a chat to start messaging.</h3>
-    </Container>
+    {/* Add an optional responsive image */}
+    {/* <img src={} alt="" /> */}
+    
+    <h1>
+      Welcome, <span>{userName?.name}!</span>
+    </h1>
+    
+    <h3 className="text-center">
+      Please select a chat to start messaging.
+    </h3>
+  </Container>
+  
   );
 }
 

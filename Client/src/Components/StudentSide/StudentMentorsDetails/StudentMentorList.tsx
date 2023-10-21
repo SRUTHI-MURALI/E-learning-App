@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getInstructors } from "../AxiosConfigStudents/AxiosConfig";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import t1 from "../../../Assets/Images/tutors/t1.avif";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { Image_Url } from "../../../Config/Config";
 
@@ -23,6 +22,18 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
       }
     };
     getTutorData();
+  }, []);
+
+  useEffect(() => {
+    const handleUnload = () => {
+      setShowCall(false);
+    };
+
+    window.addEventListener("beforeunload", handleUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+    };
   }, []);
 
   function generateToken(tokenServerUrl, userID) {
@@ -49,7 +60,7 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
           res.token,
           tutorID,
           studentID,
-          studentData.name
+          studentData?.name
         );
 
         const zp = ZegoUIKitPrebuilt.create(token);

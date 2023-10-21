@@ -3,16 +3,18 @@ import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Navbar} from "react-bootstrap";
 import logo from "../../../../Assets/Images/carouselBody/l1.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "./Header.css";
 
 function NavScrollExample() {
+
+ 
   return (
     <Navbar expand="md">
       <Container fluid>
         <img className="logo" src={logo} />
-        <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle nav-student" />
+        <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle " style={{backgroundColor:'white'}} />
 
         <Navbar.Collapse id="navbarScroll" >
           <Nav
@@ -26,9 +28,7 @@ function NavScrollExample() {
             <Nav.Link className="nav-student" href="/studentallcourselist">
               Courses
             </Nav.Link>
-            <Nav.Link className="nav-student" href="/studentregister">
-              Contacts
-            </Nav.Link>
+           
             <Nav.Link className="nav-student" href="/studentregister">
               Profile
             </Nav.Link>

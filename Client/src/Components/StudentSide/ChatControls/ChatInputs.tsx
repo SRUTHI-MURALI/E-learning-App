@@ -18,27 +18,26 @@ export default function ChatInputs({ handleSendMsg }) {
 
   return (
     <Container>
-      
-      <form className="input-container" onSubmit={(event) => sendChat(event)}>
-       <div className="row">
-       <div className="col-lg-10 ">
-       <input style={{borderRadius:'10px',height:'50px',width:'550px', marginLeft:'100px'}}
-          type="text"
-          placeholder="type your message here"
-          onChange={(e) => setMsg(e.target.value)}
-          value={msg} 
-         
-        />
-        
-       </div>
-       <div className="col-lg-2">
-       <button type="submit">
-          <IoMdSend />
-        </button>
-       </div>
-       </div>
-      </form>
-    </Container>
+    <form className="input-container" onSubmit={(event) => sendChat(event)}>
+      <div className="row">
+        <div className="col-lg-10 col-md-8">
+          <input
+            style={{ borderRadius: '10px', height: '50px', width: '100%', maxWidth: '550px' }}
+            type="text"
+            placeholder="Type your message here"
+            onChange={(e) => setMsg(e.target.value)}
+            value={msg}
+          />
+        </div>
+        <div className="col-lg-2 col-md-4">
+          <button type="submit" className="btn btn-primary">
+            <IoMdSend />
+          </button>
+        </div>
+      </div>
+    </form>
+  </Container>
+  
   );
 }
 

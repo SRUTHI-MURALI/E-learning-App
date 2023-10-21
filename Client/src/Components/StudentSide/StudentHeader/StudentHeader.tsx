@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "react-bootstrap/Navbar";
 import logo from "../../../Assets/Images/carouselBody/l1.jpeg";
 import { Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./StudentHeader.css";
 import { logout } from "../../ReduxComponents/StudentSlice";
 import { useDispatch } from "react-redux";
@@ -16,6 +16,11 @@ function StudentHeader() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const location = useLocation()
+  const isHome = location.pathname === "/studentlandingpage"
+  const isCourses = location.pathname === "/studentallcourselist"
+  const isProfile = location.pathname === "/studentprofile"
+
   const handleLogout = async () => {
     localStorage.removeItem("studentData");
     await dispatch(logout);
@@ -25,6 +30,7 @@ function StudentHeader() {
     <Navbar expand="lg">
       <Container>
         <img className="logo" src={logo} />
+        <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle " style={{backgroundColor:'white'}} />
 
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -34,25 +40,27 @@ function StudentHeader() {
           >
             {parseData ? (
               <Nav.Link
-                className="nav-header-student"
+              className={`nav-header-student ${isHome ? "highlight" : ""}`}
+
+
                 href="/studentlandingpage"
               >
                 Home
               </Nav.Link>
             ) : (
-              <Nav.Link className="nav-header-student" href="/">
+              <Nav.Link className={`nav-header-student `} href="/">
                 Home
               </Nav.Link>
             )}
 
             <Nav.Link
-              className="nav-header-student"
+              className={`nav-header-student ${isCourses ? "highlight" : ""}`}
               href="/studentallcourselist"
             >
               Courses
             </Nav.Link>
             
-            <Nav.Link className="nav-header-student" href="/studentprofile">
+            <Nav.Link   className={`nav-header-student ${isProfile ? "highlight" : ""}`}href="/studentprofile">
               Profile
             </Nav.Link>
           </Nav>

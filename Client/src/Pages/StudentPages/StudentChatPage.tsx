@@ -23,7 +23,7 @@ export default function StudentChatPage() {
         const students = localStorage.getItem("studentData");
         
         if (!students) {
-          navigate("/login");
+          navigate("/studentlogin");
         } else {
           setCurrentUser(JSON.parse(students));
         }
@@ -72,20 +72,20 @@ console.log(currentChat,'chat');
 
 
   return (
-    <>
-    <StudentHeader/>
-    <Container>
-      <div className="container">
-      
-        <ChatContacts contacts={contacts} changeChat={handleChatChange} />
-        {currentChat === undefined ? (
-          <ChatWelcome />
-        ) : (
-          <ChatFields currentChat={currentChat} socket={socket} />
-        )}
-      </div>
-    </Container>
-    </>
+      <>
+      <StudentHeader/>
+      <Container>
+        <div className="container">
+        
+          <ChatContacts contacts={contacts} changeChat={handleChatChange} />
+          {currentChat === undefined ? (
+            <ChatWelcome />
+          ) : (
+            <ChatFields currentChat={currentChat} socket={socket} />
+          )}
+        </div>
+      </Container>
+      </>
   );
 }
 

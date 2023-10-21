@@ -29,7 +29,7 @@ function StudentCourseQuizList() {
     setShowQuiz(true);
   };
   return (
-    <Row>
+    <>
       <Container>
         {showQuiz == false ? (
           <>
@@ -76,7 +76,7 @@ function StudentCourseQuizList() {
           />
         )}
       </Container>
-    </Row>
+    </>
   );
 }
 

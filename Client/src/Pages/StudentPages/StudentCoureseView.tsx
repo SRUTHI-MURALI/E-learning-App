@@ -18,10 +18,7 @@ function StudentCoureseView() {
     const studentData = localStorage.getItem("studentData");
     const parseData= JSON.parse(studentData);
   
-    
   
-   
-
     useEffect(() => {
         // Make an HTTP request to fetch data from the backend
         axios

@@ -38,38 +38,37 @@ export default function ChatContacts({ contacts, changeChat }) {
 
   return (
     <Container>
-        
-      {currentUserName && (
-        <>
-          <div className="brand">
-           
-           
-          </div>
-          <div className="contacts">
-          <h1 style={{color:'white'}}>Teachers</h1>
-            {contacts.map((contact, index) => (
-              <div
-                key={contact._id}
-                className={`contact ${
-                  index === currentSelected ? "selected" : ""
-                }`}
-                onClick={() => changeCurrentChat(index, contact)}
-              >
-               
+  {currentUserName && (
+    <>
+      <div className="brand">
+        {/* Content for the "brand" section */}
+      </div>
+      <div className="contacts">
+        <h1 style={{ color: 'white' }}>Teachers</h1>
+        <div className="d-flex flex-column">
+          {contacts.map((contact, index) => (
+            <div
+              key={contact._id}
+              className={`contact ${index === currentSelected ? "selected" : ""}`}
+              onClick={() => changeCurrentChat(index, contact)}
+            >
+              {/* Content for each contact */}
+              <div className="username">
+                <h3>{contact.name}</h3>
                 
-                <div className="username">
-                  <h3>{contact.name}</h3>
-                </div>
               </div>
-            ))}
-          </div>
-          
-        </>
-      )}
-    </Container>
+              <br/>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )}
+</Container>
+
+   
   );
 }
-
 
 
 const Container = styled.div`

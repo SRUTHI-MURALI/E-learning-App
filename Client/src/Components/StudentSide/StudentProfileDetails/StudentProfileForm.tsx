@@ -54,97 +54,103 @@ const StudentProfileForm = () => {
 
   return (
     <Container>
-      {!showEdit ? ( 
+  {!showEdit ? (
+    <Row>
+      <div className="col-lg-6 col-md-12">
+        <p className="allcourses-header mt-3">Profile Details</p>
+        <div className="profileContainer">
+        <div className="profile-pic-area">
+        {student?.photo !=="No Pic"  ? (
+          <img
+            style={{ width: "200px" }}
+            src={`${Image_Url}/${student?.photo}`}
+            alt="profile"
+            className="rounded-circle"
+          />
+        ) : (
+          <img style={{ width: "200px" }} src={pic}  className="rounded-circle" />
+        )}
+
+        <h4>{student?.name}</h4>
+      </div>
+      <Button
+        style={{ float: "right" }}
+        onClick={handleEditStudentProfile}
+      >
+        Edit Profile
+      </Button>
+
+      <div className="profile-info-area">
+        <table>
+          <tbody>
+            <tr>
+              <th>Gender:</th>
+              <td>{student?.gender}</td>
+            </tr>
+            <tr>
+              <th>Age:</th>
+              <td>{student?.age}</td>
+            </tr>
+            <tr>
+              <th>Country:</th>
+              <td>{student?.country}</td>
+            </tr>
+
+            <tr>
+              <th>Phone Number:</th>
+              <td>{student?.phone}</td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td>{student?.email}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        </div>
+      </div>
+      <div className="col-lg-6 col-md-12">
         <Row>
-          <p className="allcourses-header mt-3">Profile Details</p>
-          <div className="profileContainer">
-            <div className="profile-pic-area">
-              {student?.photo ? (
-                <img
-                  style={{ width: "200px" }}
-                  src={`${Image_Url}/${student?.photo}`}
-                  alt="profile"
-                  className="rounded-circle"
+          <p className="allcourses-header">Enrolled Courses</p>
+          {allCourseList.length !== 0 ? (
+            allCourseList.map((course) => (
+              <div className="col-12 col-md-4" key={course?._id}>
+                <Card
+                  style={{ width: "100%" }}
+                  className="mt-4 justify-content-center align-items-center"
+                >
+                  <Card.Img
+                  style={{ height: "10rem" }}
+                  variant="top"
+                  src={`${Image_Url}/${course?.photo}`}
                 />
-              ) : (
-                <img src={pic} alt="sample" className="rounded-circle" />
-              )}
 
-              <h4>{student?.name}</h4>
-            </div>
-            <Button
-              style={{ float: "right" }}
-              onClick={handleEditStudentProfile}
-            >
-              Edit Profile
-            </Button>
-
-            <div className="profile-info-area">
-              <table>
-                <tbody>
-                  <tr>
-                    <th>Gender:</th>
-                    <td>{student?.gender}</td>
-                  </tr>
-                  <tr>
-                    <th>Age:</th>
-                    <td>{student?.age}</td>
-                  </tr>
-                  <tr>
-                    <th>Country:</th>
-                    <td>{student?.country}</td>
-                  </tr>
-
-                  <tr>
-                    <th>Phone Number:</th>
-                    <td>{student?.phone}</td>
-                  </tr>
-                  <tr>
-                    <th>Email:</th>
-                    <td>{student?.email}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p className="allcourses-header">Enrolled Courses</p>
-            <Row>
-              {allCourseList.length !== 0 ? (
-                allCourseList.map((course) => (
-                  <Col xs={12} md={4} key={course._id}>
-                    <Card
-                      style={{ width: "16vw", height: "25rem" }}
-                      className="mt-4 justify-content-center align-items-center"
-                    >
-                      <Card.Img
-                        style={{ height: "15rem" }}
-                        variant="top"
-                        src={`${Image_Url}/${course?.photo}`}
-                      />
-
-                      <Card.Body>
-                        <Card.Title>Course:{course?.title}</Card.Title>
-                        <Card.Text className="text-center">
-                          By {course?.instructor?.name}{" "}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                    
-                  </Col>
-                ))
-              ) : (
-                <h2 style={{ color: "red", fontStyle: "italic" }}>
-                  Sorry No enrolled courses available !{" "}
-                </h2>
-              )}
-            </Row>
-          </div>
+                <Card.Body>
+                  <Card.Title>Course:{course?.title}</Card.Title>
+                  <Card.Text className="text-center">
+                    By {course?.instructor?.name}{" "}
+                  </Card.Text>
+                </Card.Body>
+                </Card>
+              </div>
+            ))
+          ) : (
+            <h2 style={{ color: "red", fontStyle: "italic" }}>
+              Sorry, no enrolled courses available!
+            </h2>
+          )}
         </Row>
-      ) : (
-        <StudentEditProfileForm student={info} onClose={handleClose} />
-      )}
-    </Container>
+      </div>
+    </Row>
+  ) : (
+    <StudentEditProfileForm student={info} onClose={handleClose} />
+  )}
+</Container>
+
+   
   );
 };
 
 export default StudentProfileForm;
+
+
