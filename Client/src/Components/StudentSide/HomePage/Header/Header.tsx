@@ -1,9 +1,10 @@
-import Container from "react-bootstrap/Container";
+
 import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Navbar} from "react-bootstrap";
 import logo from "../../../../Assets/Images/carouselBody/l1.jpeg";
-import { Link, useLocation } from "react-router-dom";
+import signup from '../../../../Assets/Images/signup.png'
+import { Link} from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "./Header.css";
 
@@ -12,38 +13,34 @@ function NavScrollExample() {
  
   return (
     <Navbar expand="md">
-      <Container fluid>
-        <img className="logo" src={logo} />
+      
+        <img className="logo"style={{ height: "8rem",width:'20rem' }} src={logo} />
         <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle " style={{backgroundColor:'white'}} />
 
         <Navbar.Collapse id="navbarScroll" >
           <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "80px" }}
-            navbarScroll
+            
           >
-            <Nav.Link className="nav-student" href="/">
-              Home
-            </Nav.Link>
-            <Nav.Link className="nav-student" href="/studentallcourselist">
+            
+            {/* <Nav.Link className="nav-student" href="/studentallcourselist">
               Courses
             </Nav.Link>
-           
-            <Nav.Link className="nav-student" href="/studentregister">
-              Profile
-            </Nav.Link>
+            */}
+            
           </Nav>
+          <div >
           <Link to="/studentregister">
-            <Button>Sign Up</Button>
+            <Button className="m-2" variant="info">Sign Up</Button>
           </Link>
           <Link to="/studentlogin">
-            <Button className="m-3">Login</Button>
+            <Button variant="info" className="m-3">Student</Button>
           </Link>
           <Link to="/tutorregister">
-            <Button>Instructor</Button>
+            <Button className="m-3" variant="info">Instructor</Button>
           </Link>
+          </div>
         </Navbar.Collapse>
-      </Container>
+     
     </Navbar>
   );
 }

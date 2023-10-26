@@ -27,7 +27,10 @@ function AddLesson({ courseId, onClose }) {
     if (
       title.trim() === "" ||
       duration.trim() === "" ||
-      description.trim() === ""
+      description.trim() === ""||
+      isNaN(parseInt(duration, 10)) || 
+      parseInt(duration, 10) < 0    
+    
     ) {
       return alert("Please fill in all fields before adding a lesson.");
     }

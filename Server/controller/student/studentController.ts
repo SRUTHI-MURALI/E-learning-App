@@ -225,10 +225,12 @@ const getCourseList = async (req: Request, res: Response) => {
     const allCourses = await Courses.find({ isApproved: true }).populate(
       "category instructor"
     );
+    const quizList= await Quiz.find()
 
     if (allCourses) {
       res.status(201).json({
         allCourses,
+        quizList
       });
     }
   } catch (error) {

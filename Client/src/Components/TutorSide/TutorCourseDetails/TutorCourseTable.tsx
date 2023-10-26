@@ -34,7 +34,7 @@ function TutorCourseTable() {
     };
 
     fetchCourse();
-  }, []);
+  }, [openPopUp]);
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);

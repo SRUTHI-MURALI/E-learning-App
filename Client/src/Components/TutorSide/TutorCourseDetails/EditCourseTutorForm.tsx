@@ -12,6 +12,7 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
   const [price, setPrice] = useState(0);
   const [duration, setDuration] = useState(0);
   const [category, setCategory] = useState("");
+  const [categoryName,setCategoryName]= useState('')
   const [allCategories, setAllCategories] = useState([]);
 
   useEffect(() => {
@@ -22,7 +23,8 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
         setAllCategories(response.data.allcategories);
         setTitle(course.title);
         setDuration(course.duration);
-        setCategory(course.category.title);
+        setCategory(course.category._id);
+        setCategoryName(course.category.title)
         setPrice(course.price);
       } catch (error) {
         console.log(error);
@@ -31,28 +33,41 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
     getcourse();
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    const trimmedTitle = title.trim();
-    const trimmedDuration = duration;
-
-    try {
-      await editCourseList(
-        courseId,
-        trimmedTitle,
-        trimmedDuration,
-        category,
-        price
-      );
-
-      toast.success("Successfully added");
-      window.location.reload();
-      onCloseEdit(false);
-    } catch (error) {
-      toast.error("Error");
-    }
-  };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      // Trim values and parse numeric fields
+      const trimmedTitle = title.trim();
+      const trimmedDuration = parseInt(duration, 10);
+      const trimmedPrice = parseFloat(price);
+      const trimmedCategory = category.trim();
+    
+      
+      if (
+        !trimmedTitle || 
+        !trimmedCategory || 
+        isNaN(trimmedDuration) || 
+        isNaN(trimmedPrice) ||     
+        trimmedDuration < 0 ||     
+        trimmedPrice < 0           
+      ) {
+        toast.error("Please fill in all required fields and ensure non-negative numeric values.");
+        return;
+      }
+      try {
+        
+        await editCourseList(courseId, trimmedTitle, trimmedDuration, trimmedCategory, trimmedPrice);
+        toast.success("Course successfully edited.");
+        
+        onCloseEdit(false);
+      } catch (error) {
+      console.log(error,'ddd');
+      
+        toast.error("An error occurred while editing the course.");
+      }
+    };
+  
 
   const handleClose = () => {
     onCloseEdit(false);
@@ -108,7 +123,7 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
               >
                 <Form.Label>Category</Form.Label>
                 <Form.Select onChange={(e) => setCategory(e.target.value)}>
-                  <option value={category._id}>{category}</option>
+                  <option value={category._id}>{categoryName}</option>
                   {allCategories
                     .filter((categoryItem) => categoryItem._id !== category._id)
                     .map((categoryItem) => (

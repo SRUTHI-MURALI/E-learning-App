@@ -11,7 +11,7 @@ function AddQuiz({ courseId, onClose }) {
   const [option2, setOption2] = useState("");
   const [option3, setOption3] = useState("");
   const [option4, setOption4] = useState("");
-  const [answerOption, setAnswerOption] = useState("");
+  const [answerOption, setAnswerOption] = useState("option1");
   const [count, setCount] = useState(0);
 
   const handleAddQuiz = (e) => {
@@ -131,6 +131,7 @@ function AddQuiz({ courseId, onClose }) {
             <Form.Label>Correct Answer</Form.Label>
             <Form.Select
               value={answerOption}
+              
               onChange={(e) => setAnswerOption(e.target.value)}
             >
               <option value="option1">Option 1</option>

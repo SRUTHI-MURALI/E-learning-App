@@ -8,6 +8,7 @@ import {
   getEnrolledCourses,
   getStudentProfile,
 } from "../AxiosConfigStudents/AxiosConfig";
+import { Link } from "react-router-dom";
 
 const StudentProfileForm = () => {
   const studentInfo = localStorage.getItem("studentData");
@@ -84,7 +85,7 @@ const StudentProfileForm = () => {
         <table>
           <tbody>
             <tr>
-              <th>Gender:</th>
+              <th>Gender : </th>
               <td>{student?.gender}</td>
             </tr>
             <tr>
@@ -114,6 +115,8 @@ const StudentProfileForm = () => {
           <p className="allcourses-header">Enrolled Courses</p>
           {allCourseList.length !== 0 ? (
             allCourseList.map((course) => (
+              <Link to={`/studentcoursedetails/${course?._id}`} style={{ textDecoration: 'none' }}>
+             
               <div className="col-12 col-md-4" key={course?._id}>
                 <Card
                   style={{ width: "100%" }}
@@ -133,6 +136,7 @@ const StudentProfileForm = () => {
                 </Card.Body>
                 </Card>
               </div>
+              </Link>
             ))
           ) : (
             <h2 style={{ color: "red", fontStyle: "italic" }}>

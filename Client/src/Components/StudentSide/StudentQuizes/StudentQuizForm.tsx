@@ -38,7 +38,7 @@ function StudentQuizForm({ courseId, onClose }: StudentQuizFormProps) {
       setScore(score + 1);
     }
 
-    console.log(score, ";;");
+
 
     if (index === questionset[0].length) {
       setResult(true);

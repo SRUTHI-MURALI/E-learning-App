@@ -14,6 +14,8 @@ import { Base_Url } from "../../Config/Config";
 export default function StudentCourseDetails() {
   const [data, setData] = useState("");
   const { id } = useParams();
+
+  
   const showVideo= false;
 
   const studentData = localStorage.getItem("studentData");
@@ -39,7 +41,7 @@ export default function StudentCourseDetails() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [id]);
 
   return (
     <>

@@ -17,7 +17,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
   const parseData = JSON.parse(tutorData);
 
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
@@ -27,6 +27,8 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
   const [showLesson, setShowLesson] = useState(false);
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    
+    
     e.preventDefault();
     const trimmedTitle = title.trim();
     const trimmedPrice = price;
@@ -37,7 +39,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
       trimmedTitle === "" ||
       trimmedDuration === 0 ||
       trimmedDescription === ""||
-      trimmedPrice===0
+      trimmedPrice=== 0
     ) {
       return toast.error("Please fill in all fields");
     }
@@ -80,7 +82,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
       setShow(true);
       toast.success("successfully added course");
     } catch (error) {
-      toast.error("registration error");
+      toast.error(" error");
       return;
     }
   }

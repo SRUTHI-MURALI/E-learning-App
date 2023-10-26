@@ -231,10 +231,12 @@ const addLesson = async (req: Request, res: Response) => {
 const getCourseList = async (req: Request, res: Response) => {
   try {
     const allCourses = await course.find().populate("category instructor");
+    
 
     if (allCourses) {
       res.status(201).json({
         allCourses,
+    
       });
     }
   } catch (error) {
@@ -261,8 +263,10 @@ const getEditCourseList = async (req: Request, res: Response) => {
 
 const editCourseList = async (req: Request, res: Response) => {
   try {
+   
     const { title, duration, price, category } = req.body;
     const { id } = req.params;
+
 
     const editedCourse = await course.findByIdAndUpdate(
       id,
@@ -275,6 +279,8 @@ const editCourseList = async (req: Request, res: Response) => {
       { new: true }
     );
 
+  
+
     if (editedCourse) {
       res.status(201).json({
         _id: editedCourse._id,
@@ -284,6 +290,8 @@ const editCourseList = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
+    
+    
     res.status(400).json(error);
   }
 };
@@ -340,38 +348,16 @@ const enrolledStudents = async (req: Request, res: Response) => {
 
 const AddQuiz = async (req: Request, res: Response) => {
   const { questionset, courseId, count } = req.body;
-  const selectedCourse = await course.findById({ _id: courseId });
-  const questionNumber = selectedCourse?.quizQuestions;
-  const newcount = questionNumber + count;
+
   const existQuiz = await courseQuiz.find({ course: courseId });
 
-  if (existQuiz == null) {
-    try {
-      const updateQuizSet = await courseQuiz.findOneAndUpdate(
-        { course: courseId },
-        { $push: { questionset: { $each: questionset } } },
-        { new: true }
-      );
-
-      if (updateQuizSet) {
-        await course.findByIdAndUpdate(courseId, {
-          quizQuestions: newcount,
-        });
-        res.status(201).json(updateQuizSet);
-      } else {
-        res.status(404).json({ error: "Course not found" });
-      }
-    } catch (error) {
-      res.status(400).json(error);
-    }
-  } else {
-    console.log("else");
-
+  if (existQuiz.length === 0) { 
     try {
       const newQuiz = await courseQuiz.create({
         course: courseId,
         questionset,
       });
+
       if (newQuiz) {
         await course.findByIdAndUpdate(courseId, {
           quizQuestions: count,
@@ -384,8 +370,30 @@ const AddQuiz = async (req: Request, res: Response) => {
     } catch (error) {
       res.status(400).json(error);
     }
+  } else {
+    try {
+      const numberOfQuestionSets = existQuiz[0].questionset.length;
+
+      const updateQuizSet = await courseQuiz.findOneAndUpdate(
+        { course: courseId },
+        { $push: { questionset: { $each: questionset } } },
+        { new: true }
+      );
+
+      if (updateQuizSet) {
+        await course.findByIdAndUpdate(courseId, {
+          quizQuestions: numberOfQuestionSets,
+        });
+        res.status(201).json(updateQuizSet);
+      } else {
+        res.status(404).json({ error: "Course not found" });
+      }
+    } catch (error) {
+      res.status(400).json(error);
+    }
   }
 };
+
 
 const tutorProfile = async (req: Request, res: Response) => {
   try {
