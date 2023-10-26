@@ -107,7 +107,7 @@ function TutorCourseTable() {
                         </Button>
                       )}
                     </td>
-                    <td>{course?.price}</td>
+                    <td>₹{course?.price}</td>
                     <td>
                       <img
                         src={`${Image_Url}/${course.photo}`}

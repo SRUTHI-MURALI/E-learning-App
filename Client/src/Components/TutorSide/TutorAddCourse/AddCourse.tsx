@@ -37,11 +37,15 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
 
     if (
       trimmedTitle === "" ||
-      trimmedDuration === 0 ||
+      
       trimmedDescription === ""||
-      trimmedPrice=== 0
+    
+      isNaN(trimmedDuration) || 
+        isNaN(trimmedPrice) ||     
+        trimmedDuration <= 0 ||     
+        trimmedPrice <= 0   
     ) {
-      return toast.error("Please fill in all fields");
+      return  toast.error("Please fill in all required fields and ensure non-negative numeric values greater than 0.");
     }
 
     // Validate username format (only letters and spaces allowed)
@@ -143,8 +147,8 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                       value={price}
                       onChange={(e) => {
                         const inputValue = e.target.value;
-                        const numericValue = parseInt(inputValue, 10); // Parse the input as an integer
-                        setPrice(numericValue); // Update the state with the parsed integer
+                         // Parse the input as an integer
+                        setPrice(inputValue); // Update the state with the parsed integer
                       }}
                     />
                   </Form.Group>
@@ -155,8 +159,8 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                       value={duration}
                       onChange={(e) => {
                         const inputValue = e.target.value;
-                        const numericValue = parseInt(inputValue, 10); // Parse the input as an integer
-                        setDuration(numericValue); // Update the state with the parsed integer
+                        // Parse the input as an integer
+                        setDuration(inputValue); // Update the state with the parsed integer
                       }}
                     />
                   </Form.Group>

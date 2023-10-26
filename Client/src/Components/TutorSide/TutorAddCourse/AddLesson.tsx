@@ -29,10 +29,11 @@ function AddLesson({ courseId, onClose }) {
       duration.trim() === "" ||
       description.trim() === ""||
       isNaN(parseInt(duration, 10)) || 
-      parseInt(duration, 10) < 0    
+      parseInt(duration, 10) <= 0    
     
     ) {
-      return alert("Please fill in all fields before adding a lesson.");
+     toast.error("Please fill in all required fields and ensure non-negative numeric values greater than 0.")
+     return;
     }
     if (video) {
       const allowedVideoFormats = ["video/mp4", "video/avi"]; // Add allowed video formats

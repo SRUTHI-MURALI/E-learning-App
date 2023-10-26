@@ -49,10 +49,10 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
         !trimmedCategory || 
         isNaN(trimmedDuration) || 
         isNaN(trimmedPrice) ||     
-        trimmedDuration < 0 ||     
-        trimmedPrice < 0           
+        trimmedDuration <= 0 ||     
+        trimmedPrice <= 0           
       ) {
-        toast.error("Please fill in all required fields and ensure non-negative numeric values.");
+        toast.error("Please fill in all required fields and ensure non-negative numeric values greater than 0.");
         return;
       }
       try {
