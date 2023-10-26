@@ -30,7 +30,7 @@ const StudentProfileForm = () => {
       }
     };
     getProfileData(info._id);
-  }, []);
+  }, [showEdit]);
 
   useEffect(() => {
     const enrolledCourses = async (id) => {
@@ -50,6 +50,7 @@ const StudentProfileForm = () => {
   };
 
   const handleClose = async () => {
+    
     setShowEdit(false);
   };
 

@@ -4,7 +4,7 @@ import axios from "axios";
 import { GrChapterNext } from "react-icons/gr";
 import { Base_Url } from "../../../Config/Config";
 import { Card, Container, Row, Button } from "react-bootstrap";
-import img from "../../../Assets/Images/quizimg.jpeg";
+
 
 interface StudentQuizFormProps {
   courseId: string;

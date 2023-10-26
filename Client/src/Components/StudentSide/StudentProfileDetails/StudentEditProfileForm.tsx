@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, Container, Row, Form, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { Course_Upload_Url, Image_Url } from "../../../Config/Config";
-import {  ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   getStudentEditProfile,
@@ -62,26 +62,56 @@ function StudentEditProfileForm({
     }else{
       setPhoto("No Pic")
     }
-
+    const namePattern = /^[A-Za-z\s.]+$/;
     if(name === ''){
       setName("No Name")
+    }else{
+      
+      if (!namePattern.test(name)) {
+        toast.error("Username can only contain letters and spaces");
+        return;
+      }
     }
     if(gender === ''){
       setGender("No Gender")
+    }else{
+      if (!namePattern.test(gender)) {
+        toast.error("Username can only contain letters and spaces");
+        return;
+      }
     }
     if(country === ''){
       setCountry("No Country")
+    }else{
+      if (!namePattern.test(country)) {
+        toast.error("Username can only contain letters and spaces");
+        return;
+      }
     }
     if(age === ''){
       setAge("No Age")
     }
     if(phone === ''){
       setPhone("No Number")
+    }else{
+      const phonePattern = /^\d{10}$/;
+      if (!phonePattern.test(phone.toString().trim())) {
+        toast.error("Please enter a valid 10-digit phone number");
+        return;
+      }
     }
     if(email === ''){
       setEmail("No Mail")
+    }else{
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email.trim())) {
+        toast.error("Please enter a valid email address");
+        return;
+      }
+  
     }
 
+  
     if (photo) {
      
       try {
@@ -96,8 +126,8 @@ function StudentEditProfileForm({
           age,
           country
         );
-
-        window.location.reload();
+        toast.success("successfully edited");
+       onClose()
       } catch (error) {
         return;
       }
