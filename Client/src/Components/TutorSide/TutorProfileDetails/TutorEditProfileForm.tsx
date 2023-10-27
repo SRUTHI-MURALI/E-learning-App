@@ -10,11 +10,11 @@ import {
 function TutorEditProfileForm({ tutor, onClose }) {
   const [tutorDetails, setTutorDetails] = useState([]);
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState(0);
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [qualification, setQualification] = useState("");
-  const [experience, setExperience] = useState(0);
+  const [experience, setExperience] = useState("");
   const [about, setAbout] = useState("");
 
   useEffect(() => {
@@ -40,7 +40,64 @@ function TutorEditProfileForm({ tutor, onClose }) {
 
   const handleEditTutor = async (e) => {
     e.preventDefault();
+   
+    
+    const namePattern = /^[A-Za-z\s.]+$/;
+    if(name === ''){
+      setName("No Name")
+    }else{
+      
+      if (!namePattern.test(name)) {
+        toast.error("Username can only contain letters and spaces");
+        return;
+      }
+    }
 
+    if(about === ''){
+      setAbout("No Description")
+    }else{
+      
+      if (!namePattern.test(about)) {
+        toast.error("About can only contain letters and spaces");
+        return;
+      }
+    }
+
+    if(qualification === ''){
+      setQualification("Not Specified")
+    }else{
+      
+      if (!namePattern.test(qualification)) {
+        toast.error("Qualification can only contain letters and spaces");
+        return;
+      }
+    }
+   
+    if(experience === ''){
+      setExperience("No Experience")
+    }
+    if(phone === ''){
+      setPhone("No Number")
+    }else{
+      const phonePattern = /^\d{10}$/;
+      if (!phonePattern.test(phone.toString().trim())) {
+        toast.error("Please enter a valid 10-digit phone number");
+        return;
+      }
+      
+    }
+    if(email === ''){
+      setEmail("No Mail")
+    }else{
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email.trim())) {
+        toast.error("Please enter a valid email address");
+        return;
+      }
+  
+    }
+
+  
     try {
       await tutorEditProfile(
         tutor._id,
@@ -53,7 +110,8 @@ function TutorEditProfileForm({ tutor, onClose }) {
         about
       );
 
-      window.location.reload();
+      toast.success("SUccessfully updated the profile");
+      onClose(false);
     } catch (error) {
       toast.error("edit error");
       return;
@@ -61,6 +119,7 @@ function TutorEditProfileForm({ tutor, onClose }) {
   };
 
   const handleClose = () => {
+    toast.success("Edit profile page exited");
     onClose(false);
   };
 
@@ -150,19 +209,7 @@ function TutorEditProfileForm({ tutor, onClose }) {
               </Col>
             </Form.Group>
             
-            <Form.Group as={Row} className="mb-3">
-              <Form.Label column sm="2">
-                Password :
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control
-                  type="password"
-                  placeholder={tutorDetails?.password}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Col>
-            </Form.Group>
+           
             <Row>
               <Col>
                 <Button type="submit">Submit</Button>

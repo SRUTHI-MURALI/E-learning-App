@@ -11,8 +11,7 @@ import {
   getCategoryList,
   addCategory,
   getCourseList,
-  getEditCourseList,
-  editCourseList,
+ 
   approveCourse,
   cancelCourse,
   blockTutor,
@@ -51,8 +50,7 @@ adminrouter.put("/editcategory/:id", adminLoggedin, editCategory);
 
 //Course management
 adminrouter.get("/getallcourses", adminLoggedin, getCourseList);
-adminrouter.get("/geteditcourse/:id", adminLoggedin, getEditCourseList);
-adminrouter.put("/editcourselist/:id", adminLoggedin, editCourseList);
+
 adminrouter.put("/approvecourse/:id", adminLoggedin, approveCourse);
 adminrouter.put("/cancelcourse/:id", adminLoggedin, cancelCourse);
 

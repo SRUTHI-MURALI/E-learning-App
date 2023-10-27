@@ -3,7 +3,7 @@ import { ImArrowRight } from "react-icons/im";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import TutorProfileImage from "./TutorProfileImage";
 import TutorEditProfileForm from "./TutorEditProfileForm";
-import { toast, ToastContainer } from "react-toastify";
+import {  ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getTutorProfile } from "../AxiosConfigInstructors/AxiosConfig";
 
@@ -24,13 +24,13 @@ function TutorProfileform({ tutor }) {
       }
     };
     getProfileData();
-  }, []);
+  }, [showEdit]);
   const handleEditProfile = async () => {
     setShowEdit(true);
   };
 
   const handleClose = async () => {
-    toast.success("successfully edited profile");
+   
     setShowEdit(false);
   };
 
@@ -64,7 +64,7 @@ function TutorProfileform({ tutor }) {
                     <p>Name: {user?.name}</p>
                     <p>Email: {user?.email}</p>
                     <p>Contact: {user?.phone}</p>
-                    <p>Gender: {user?.gender}</p>
+                   
                     <p>Experience: {user?.experience}</p>
                     <p>Qualification: {user?.qualification}</p>
                     <p>About: {user?.about}</p>

@@ -10,14 +10,12 @@ import {
 } from "../AxiosConfigStudents/AxiosConfig";
 import PropTypes from "prop-types";
 
-interface StudentEditProfileFormProps {
-  student: object;
-  onClose: () => void;
-}
+
+
 function StudentEditProfileForm({
   student,
   onClose,
-}: StudentEditProfileFormProps) {
+}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -127,7 +125,7 @@ function StudentEditProfileForm({
           country
         );
         toast.success("successfully edited");
-       onClose()
+       onClose(false)
       } catch (error) {
         return;
       }
@@ -135,7 +133,8 @@ function StudentEditProfileForm({
   };
 
   const handleClose = () => {
-    onClose();
+    toast.success("successfully closed edit page");
+    onClose(false);
   };
 
   const imageHandler = async () => {

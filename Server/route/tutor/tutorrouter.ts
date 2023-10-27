@@ -18,7 +18,9 @@ import {
   disableLesson,
   resetPasswordSentOtp,
   resetPassword,
-  editProfilePhoto
+  editProfilePhoto,
+  removeQuiz,
+  activateQuiz
 } from "../../controller/tutor/tutorController";
 import { tutorLoggedin } from "../../middlewares/tutorMiddlewares";
 
@@ -54,6 +56,8 @@ tutorRouter.get("/getenrolledstudentlist/:id", tutorLoggedin, enrolledStudents);
 
 //tutor quiz management
 tutorRouter.post("/addquiz", tutorLoggedin, AddQuiz);
+tutorRouter.put("/removequiz/:id",tutorLoggedin,removeQuiz)
+tutorRouter.put("/activatequiz/:id",tutorLoggedin,activateQuiz)
 
 //tutor profile managemnet
 tutorRouter.get("/gettutorprofile/:id", tutorLoggedin, tutorProfile);

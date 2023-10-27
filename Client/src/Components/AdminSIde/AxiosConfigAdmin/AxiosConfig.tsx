@@ -58,18 +58,9 @@ export const getAllCourse = () => {
   return api.get("/getallcourses");
 };
 
-export const getEditCourse = (id: string | undefined) => {
-  return api.get(`/geteditcourse/${id}`);
-};
 
-export const editCourse = (
-  id: string | undefined,
-  title: string,
-  duration: string,
-  price: number
-) => {
-  return api.put(`/editcourselist/${id}`, { title, duration, price });
-};
+
+
 
 export const getInstructor = () => {
   return api.get("/getinstructorlist");

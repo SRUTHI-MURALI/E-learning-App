@@ -206,7 +206,6 @@ const activateLesson = async (req: Request, res: Response) => {
   }
 };
 
-
 const addLesson = async (req: Request, res: Response) => {
   const { lessons, courseId } = req.body;
 
@@ -231,12 +230,12 @@ const addLesson = async (req: Request, res: Response) => {
 const getCourseList = async (req: Request, res: Response) => {
   try {
     const allCourses = await course.find().populate("category instructor");
-    
+    const quizQuestions = await courseQuiz.find();
 
     if (allCourses) {
       res.status(201).json({
         allCourses,
-    
+        quizQuestions,
       });
     }
   } catch (error) {
@@ -263,10 +262,8 @@ const getEditCourseList = async (req: Request, res: Response) => {
 
 const editCourseList = async (req: Request, res: Response) => {
   try {
-   
     const { title, duration, price, category } = req.body;
     const { id } = req.params;
-
 
     const editedCourse = await course.findByIdAndUpdate(
       id,
@@ -279,8 +276,6 @@ const editCourseList = async (req: Request, res: Response) => {
       { new: true }
     );
 
-  
-
     if (editedCourse) {
       res.status(201).json({
         _id: editedCourse._id,
@@ -290,8 +285,6 @@ const editCourseList = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
-    
-    
     res.status(400).json(error);
   }
 };
@@ -314,11 +307,8 @@ const getAllLessons = async (req: Request, res: Response) => {
 };
 
 const enrolledStudents = async (req: Request, res: Response) => {
-  
   try {
     const { id } = req.params;
-
-
 
     const orders: any = await OrderModel.find()
       .populate({
@@ -330,13 +320,10 @@ const enrolledStudents = async (req: Request, res: Response) => {
       })
       .populate("studentDetails")
       .exec();
-     
-      
-    const filteredOrders = orders.filter((order: any) => {
-     return  order.courseDetails.instructor._id.toString() === id;
-    });
 
-    
+    const filteredOrders = orders.filter((order: any) => {
+      return order.courseDetails.instructor._id.toString() === id;
+    });
 
     if (orders) {
       res.status(200).json({ filteredOrders });
@@ -351,7 +338,7 @@ const AddQuiz = async (req: Request, res: Response) => {
 
   const existQuiz = await courseQuiz.find({ course: courseId });
 
-  if (existQuiz.length === 0) { 
+  if (existQuiz.length === 0) {
     try {
       const newQuiz = await courseQuiz.create({
         course: courseId,
@@ -394,7 +381,6 @@ const AddQuiz = async (req: Request, res: Response) => {
   }
 };
 
-
 const tutorProfile = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -418,18 +404,8 @@ const tutorProfile = async (req: Request, res: Response) => {
 
 const tutorEditedProfile = async (req: Request, res: Response) => {
   try {
-    
-
-    const {
-      name,
-      phone,
-      email,
-      experience,
-      qualification,
-      password,
-      about,
-      
-    } = req.body;
+    const { name, phone, email, experience, qualification, password, about } =
+      req.body;
     const { id } = req.params;
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(password, salt);
@@ -444,7 +420,6 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
         qualification,
         password: hashedpassword,
         about,
-        
       },
       { new: true }
     );
@@ -464,23 +439,13 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
 
 const editProfilePhoto = async (req: Request, res: Response) => {
   try {
-   
-    
-  
-    
-
-    const {
-      
-      photo
-    } = req.body;
+    const { photo } = req.body;
     const { id } = req.params;
-    
 
     const editedTutor = await Tutor.findByIdAndUpdate(
       id,
       {
-        
-        photo
+        photo,
       },
       { new: true }
     );
@@ -488,14 +453,12 @@ const editProfilePhoto = async (req: Request, res: Response) => {
     if (editedTutor) {
       res.status(201).json({
         _id: editedTutor._id,
-       
       });
     }
   } catch (error) {
     res.status(400).json(error);
   }
 };
-
 
 const resetPassword = async (req: Request, res: Response) => {
   try {
@@ -516,6 +479,49 @@ const resetPassword = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(400).json("reset error");
+  }
+};
+
+const removeQuiz = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const quiz = await courseQuiz.findOneAndUpdate(
+      { "questionset._id": id },
+      { $set: { "questionset.$.isActive": false } },
+      { new: true }
+    );
+
+    if (quiz) {
+      res.status(201).json({
+        _id: quiz._id,
+      });
+    } else {
+      res.status(404).json({ error: "Quiz not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const activateQuiz = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const quiz = await courseQuiz.findOneAndUpdate(
+      { "questionset._id": id },
+      { $set: { "questionset.$.isActive": true } },
+      { new: true }
+    );
+    if (quiz) {
+      res.status(201).json({
+        _id: quiz._id,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -558,5 +564,7 @@ export {
   tutorEditedProfile,
   resetPasswordSentOtp,
   resetPassword,
-  editProfilePhoto
+  editProfilePhoto,
+  removeQuiz,
+  activateQuiz,
 };

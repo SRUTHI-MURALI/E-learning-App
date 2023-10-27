@@ -21,10 +21,6 @@ function TutorProfileImage({ tutor }) {
     getPhoto()
   }, []);
 
- 
-
-
-  
 
   const handleImageSubmit = async (e) => {
     e.preventDefault();

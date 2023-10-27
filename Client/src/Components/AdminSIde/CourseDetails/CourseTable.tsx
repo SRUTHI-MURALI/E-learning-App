@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react"; // Import React
+import  { useState, useEffect } from "react"; // Import React
 import Table from "react-bootstrap/Table";
-import { AiFillEdit } from "react-icons/ai";
+
 import { ImArrowRight } from "react-icons/im";
 
 import "./CourseTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EditCourseForm from "./EditCourseForm";
+
 import { Button } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
@@ -20,8 +20,8 @@ import {
 
 function CourseTable() {
   const [courseList, setCourselist] = useState([]);
-  const [openPopUp, setOpenPopUp] = useState(false);
-  const [courseId, setCourseId] = useState("");
+  
+  
   const [currentPage, setCurrentPage] = useState(0); // Current page number
   const itemsPerPage = 3;
 
@@ -49,10 +49,7 @@ function CourseTable() {
     navigate(`/adminlessonslist/${Id}`);
   };
 
-  const handleEditCourse = (Id) => {
-    setCourseId(Id);
-    setOpenPopUp(true);
-  };
+ 
 
   const courseStatus = async (course) => {
     try {
@@ -93,7 +90,7 @@ function CourseTable() {
     <div>
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
 
-      {!openPopUp && (
+     
         <>
           <p className="studentlistheading">
             <ImArrowRight /> <u>Course List</u>
@@ -111,7 +108,7 @@ function CourseTable() {
                 <th>isApproved</th>
                 <th>Price</th>
                 <th>Image</th>
-                <th>Edit</th>
+              
                 <th>Lessons</th>
               </tr>
             </thead>
@@ -167,9 +164,7 @@ function CourseTable() {
                       style={{ width: "40px" }}
                     />
                   </td>
-                  <td>
-                    <AiFillEdit onClick={() => handleEditCourse(course._id)} />
-                  </td>
+                 
                   <td>
                     <Button
                       variant="link"
@@ -183,15 +178,8 @@ function CourseTable() {
             </tbody>
           </Table>
         </>
-      )}
-      {openPopUp && (
-        <div>
-          <EditCourseForm
-            courseId={courseId}
-            onCloseEdit={() => setOpenPopUp(false)}
-          />
-        </div>
-      )}
+   
+      
 
       <div style={{ float: "right", margin: "3px" }}>
         <ReactPaginate

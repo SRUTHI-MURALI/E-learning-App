@@ -235,50 +235,6 @@ const getCourseList = async (req: Request, res: Response) => {
   }
 };
 
-const getEditCourseList = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-
-    const editCourse = await courses.findById({ _id: id });
-
-    if (editCourse) {
-      res.status(201).json({
-        editCourse,
-      });
-    }
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
-
-const editCourseList = async (req: Request, res: Response) => {
-  try {
-    const { title, duration, price } = req.body;
-    const { id } = req.params;
-
-    const editedCourse = await courses.findByIdAndUpdate(
-      id,
-      {
-        title: title,
-        duration: duration,
-        price: price,
-      },
-      { new: true }
-    );
-
-    if (editedCourse) {
-      res.status(201).json({
-        _id: editedCourse._id,
-        title: editedCourse.title,
-        duration: editedCourse.duration,
-        price: editedCourse.price,
-      });
-    }
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
-
 const approveCourse = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -341,7 +297,6 @@ const cancelCourse = async (req: Request, res: Response) => {
 };
 
 /* cancel courses in admin side */
-
 
 /* cancel courses in admin side */
 
@@ -524,8 +479,6 @@ export {
   getCategoryList,
   addCategory,
   getCourseList,
-  getEditCourseList,
-  editCourseList,
   approveCourse,
   cancelCourse,
   blockTutor,

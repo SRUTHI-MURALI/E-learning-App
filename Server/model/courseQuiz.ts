@@ -5,6 +5,7 @@ interface CourseQuizDocument extends Document {
   createdAt: Date;
   updatedAt: Date;
   course: mongoose.Schema.Types.ObjectId;
+  isActive: boolean;
 }
 
 const courseQuizSchema = new Schema<CourseQuizDocument>({
@@ -33,6 +34,11 @@ const courseQuizSchema = new Schema<CourseQuizDocument>({
       answerOption: {
         type: String,
         required: true,
+      },
+      isActive: {
+        type: Boolean,
+        required: true,
+        default:true,
       },
     },
   ],

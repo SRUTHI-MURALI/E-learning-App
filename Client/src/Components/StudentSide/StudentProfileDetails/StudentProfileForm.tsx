@@ -9,6 +9,8 @@ import {
   getStudentProfile,
 } from "../AxiosConfigStudents/AxiosConfig";
 import { Link } from "react-router-dom";
+import {  ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StudentProfileForm = () => {
   const studentInfo = localStorage.getItem("studentData");
@@ -56,6 +58,7 @@ const StudentProfileForm = () => {
 
   return (
     <Container>
+       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
   {!showEdit ? (
     <Row>
       <div className="col-lg-6 col-md-12">

@@ -55,8 +55,6 @@ export const addQuiz = (
   courseId: string,
   count: number
 ) => {
-  
-  
   return api.post("/addquiz", { questionset, courseId, count });
 };
 
@@ -92,6 +90,18 @@ export const activateLesson = (id: string, courseId: string) => {
 
 export const inactivateLesson = (id: string, courseId: string) => {
   return api.put(`/disablelesson/${id}`, { courseId });
+};
+
+export const removeQuiz = ( id: string) => {
+  console.log('remove...');
+  
+  return api.put(`/removequiz/${id}`);
+};
+
+export const activateQuiz = (id: string) => {
+  console.log('active....');
+  
+  return api.put(`/activatequiz/${id}`);
 };
 
 export const tutorLogin = (email: string, password: any) => {
