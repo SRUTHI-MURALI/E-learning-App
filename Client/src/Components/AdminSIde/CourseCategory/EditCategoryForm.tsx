@@ -27,34 +27,33 @@ function EditCategoryForm({ onCloseEdit, categoryId }: EditCategoryFormProps) {
     getCategory(categoryId);
   }, [categoryId]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
     const trimmedCategory = category.trim();
     const trimmedDescription = description.trim();
-
-    const editCategories = async (
-      categoryId: string,
-      category: string,
-      description: string
-    ) => {
+  
+    const namePattern = /^[A-Za-z\s.,]+$/;
+  
+    if (trimmedCategory === "" || trimmedDescription === "") {
+      toast.error("Category name and description cannot be empty.");
+    } else if (!namePattern.test(trimmedCategory) ) {
+      toast.error("Category and description can only contain letters, spaces, periods, and commas.");
+    } else {
       try {
-        await editCategory(categoryId, category, description);
-
-        toast.success("Successfully edited");
+        await editCategory(categoryId, trimmedCategory, trimmedDescription);
+        toast.success("Successfully edited.");
+        onCloseEdit(false)
       } catch (error) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
+        if (error.response && error.response.data && error.response.data.message) {
           toast.error(error.response.data.message);
         } else {
-          toast.error("An error occurred while logging in");
+          toast.error("An error occurred while editing the category.");
         }
       }
-    };
-    editCategories(categoryId, trimmedCategory, trimmedDescription);
+    }
   };
-
+  
   const handleClose = () => {
     onCloseEdit(false);
   };
@@ -62,7 +61,7 @@ function EditCategoryForm({ onCloseEdit, categoryId }: EditCategoryFormProps) {
   return (
     <div>
       <Container className="d-flex align-item-center justify-content-center mt-5">
-        <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
+       
         <Row>
           <Card className="responsive-card">
             <Form onSubmit={handleSubmit}>

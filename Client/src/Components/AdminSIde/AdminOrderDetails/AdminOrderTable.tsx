@@ -8,7 +8,7 @@ import { getorderlist } from "../AxiosConfigAdmin/AxiosConfig";
 function AdminOrderTable() {
   const [orderList, setOrderList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 4;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const getOrders = async () => {

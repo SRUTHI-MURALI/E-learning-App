@@ -1,12 +1,10 @@
-import  { useState, useEffect } from "react"; // Import React
+import { useState, useEffect } from "react"; // Import React
 import Table from "react-bootstrap/Table";
 
 import { ImArrowRight } from "react-icons/im";
-
 import "./CourseTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { Button } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
 import ReactPaginate from "react-paginate";
@@ -20,10 +18,8 @@ import {
 
 function CourseTable() {
   const [courseList, setCourselist] = useState([]);
-  
-  
-  const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState(0); 
+  const itemsPerPage = 10;
 
   const navigate = useNavigate();
 
@@ -31,8 +27,8 @@ function CourseTable() {
     const getCourses = async () => {
       try {
         const response = await getAllCourse();
-        console.log(response.data,"kkk");
-        
+        console.log(response.data, "kkk");
+
         setCourselist(response.data.allCourses);
       } catch (error) {
         console.error(error);
@@ -48,8 +44,6 @@ function CourseTable() {
   const handleLessons = (Id) => {
     navigate(`/adminlessonslist/${Id}`);
   };
-
- 
 
   const courseStatus = async (course) => {
     try {
@@ -90,60 +84,47 @@ function CourseTable() {
     <div>
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
 
-     
-        <>
-          <p className="studentlistheading">
-            <ImArrowRight /> <u>Course List</u>
-          </p>
+      <>
+        <p className="studentlistheading">
+          <ImArrowRight /> <u>Course List</u>
+        </p>
 
-          <Table className="mt-5 ms-5" striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Duration</th>
-                <th>Instructor</th>
-                <th>isApproved</th>
-                <th>Price</th>
-                <th>Image</th>
-              
-                <th>Lessons</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedData.map((course, index) => (
-                <tr key={course._id}>
-                  <td>{index + 1}</td>
-                  <td>{course?.title}</td>
-                  <td>{course?.category?.title}</td>
-                  <td>{course?.description}</td>
-                  <td>{course?.duration}</td>
-                  <td>{course?.instructor?.name}</td>
-                  <td>
-                    {!course?.instructor?.isBlocked ? (
-                      course?.isApproved ? (
-                        <Button
-                          variant="info"
-                          size="sm"
-                          onClick={() => {
-                            courseStatus(course);
-                          }}
-                        >
-                          Approved
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          onClick={() => {
-                            courseStatus(course);
-                          }}
-                        >
-                          Unapproved
-                        </Button>
-                      )
+        <Table className="mt-5 ms-5" striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Duration</th>
+              <th>Instructor</th>
+              <th>isApproved</th>
+              <th>Price</th>
+              <th>Image</th>
+              <th>Lessons</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedData.map((course, index) => (
+              <tr key={course._id}>
+                <td>{index + 1}</td>
+                <td>{course?.title}</td>
+                <td>{course?.category?.title}</td>
+                <td>{course?.description}</td>
+                <td>{course?.duration}</td>
+                <td>{course?.instructor?.name}</td>
+                <td>
+                  {!course?.instructor?.isBlocked ? (
+                    course?.isApproved ? (
+                      <Button
+                        variant="info"
+                        size="sm"
+                        onClick={() => {
+                          courseStatus(course);
+                        }}
+                      >
+                        Approved
+                      </Button>
                     ) : (
                       <Button
                         variant="secondary"
@@ -154,32 +135,41 @@ function CourseTable() {
                       >
                         Unapproved
                       </Button>
-                    )}
-                  </td>
-                  <td>{course?.price}</td>
-                  <td>
-                    <img
-                      src={`${Image_Url}/${course?.photo}`}
-                      alt="sample"
-                      style={{ width: "40px" }}
-                    />
-                  </td>
-                 
-                  <td>
+                    )
+                  ) : (
                     <Button
-                      variant="link"
-                      onClick={() => handleLessons(course._id)}
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => {
+                        courseStatus(course);
+                      }}
                     >
-                      Lessons
+                      Unapproved
                     </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </>
-   
-      
+                  )}
+                </td>
+                <td>{course?.price}</td>
+                <td>
+                  <img
+                    src={`${Image_Url}/${course?.photo}`}
+                    alt="sample"
+                    style={{ width: "40px" }}
+                  />
+                </td>
+
+                <td>
+                  <Button
+                    variant="link"
+                    onClick={() => handleLessons(course._id)}
+                  >
+                    Lessons
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </>
 
       <div style={{ float: "right", margin: "3px" }}>
         <ReactPaginate

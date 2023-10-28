@@ -121,7 +121,11 @@ export const tutorEditProfile = (
   qualification: string,
   password: any,
   about: string,
+  startOnline:number,
+  onlineEnd:number
 ) => {
+
+  
   return api.put(`/tutoreditedprofile/${id}`, {
     name,
     phone,
@@ -130,6 +134,8 @@ export const tutorEditProfile = (
     qualification,
     password,
     about,
+    startOnline,
+    onlineEnd
   });
 };
 

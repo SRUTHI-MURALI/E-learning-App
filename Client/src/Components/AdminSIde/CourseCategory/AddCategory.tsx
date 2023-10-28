@@ -21,19 +21,14 @@ function AddCategory({ onClose }: addCategoryProps) {
     e.preventDefault();
     const trimmedCategory = category.trim();
     const trimmedDescription = description.trim();
-
+  
+    const namePattern = /^[A-Za-z\s.,]+$/;
+  
     if (trimmedCategory === "" || trimmedDescription === "") {
-      toast.error("Please fill in all fields");
-      return;
-    
-    }
-
-    const usernamePattern = /^[A-Za-z0-9\s]+/;
-    if (!usernamePattern.test(trimmedCategory.trim())) {
-      toast.error("category name can only contain letters ,numbers and spaces");
-      return;
-    }
-
+      toast.error("Category name and description cannot be empty.");
+    } else if (!namePattern.test(trimmedCategory) ) {
+      toast.error("Category and description can only contain letters, spaces, periods, and commas.");
+    } else {
     try {
       const response = await addCategory(trimmedCategory, trimmedDescription);
 
@@ -56,9 +51,10 @@ function AddCategory({ onClose }: addCategoryProps) {
         toast.error(error.response.data.message);
       } else {
         // Handle unexpected errors
-        toast.error("An error occurred while adding category");
+        toast.error("Category already exists");
       }
     }
+  }
   };
 
   const handleClose = () => {

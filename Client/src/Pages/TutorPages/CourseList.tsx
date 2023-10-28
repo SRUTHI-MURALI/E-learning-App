@@ -25,7 +25,7 @@ function CourseList() {
        <div style={{overflow:'hidden',}}>
        <Row>
          <TutorHeader />
-         <Col xs={12} md={2} style={{backgroundColor:"#263043"}} >
+         <Col xs={12} md={2}  >
            <TutorSidebar />
          </Col>
          <Col xs={12} md={8}>

@@ -20,7 +20,7 @@ function TutorSidebar() {
 
   return (
     <Row>
-      <Col   >
+      <Col>
         <aside  id="sidebar" className="sidebar-responsive">
           <div className="sidebar-title">
             <div className="sidebar-brand">

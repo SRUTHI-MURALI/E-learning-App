@@ -19,6 +19,8 @@ function TutorProfileform({ tutor }) {
 
         setUser(response.data.tutorDetails);
         setCourses(response.data.courseCount);
+        
+        
       } catch (error) {
         console.log({ error });
       }
@@ -64,8 +66,8 @@ function TutorProfileform({ tutor }) {
                     <p>Name: {user?.name}</p>
                     <p>Email: {user?.email}</p>
                     <p>Contact: {user?.phone}</p>
-                   
-                    <p>Experience: {user?.experience}</p>
+                   <p> Online Time: {user?.startOnline} am to {user?.onlineEnd} am</p>
+                    <p>Experience: {user?.experience} Years</p>
                     <p>Qualification: {user?.qualification}</p>
                     <p>About: {user?.about}</p>
                     <p>Courses: {courses} </p>

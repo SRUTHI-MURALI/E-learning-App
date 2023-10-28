@@ -4,7 +4,7 @@ import { Button, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import AddQuiz from "./AddQuiz";
 import { getAllCourses } from "../AxiosConfigInstructors/AxiosConfig";
-import { Link } from "react-router-dom";
+
 import ViewQuiz from "./ViewQuiz";
 
 function TutorQuizTable() {
@@ -76,7 +76,7 @@ function TutorQuizTable() {
               <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Total Questions</th>
+              
                 <th>View</th>
                 <th> Add</th>
               </tr>
@@ -87,7 +87,7 @@ function TutorQuizTable() {
                 <tr key={course._id}>
                   <td>{index + 1}</td>
                   <td>{course?.title}</td>             
-                <td>{course?.quizQuestions}</td>
+              
                   <td><Button onClick={()=>handleView(course._id)}>view</Button></td>
                   <td>
                     <Button onClick={() => handleAddQuiz(course._id)}>

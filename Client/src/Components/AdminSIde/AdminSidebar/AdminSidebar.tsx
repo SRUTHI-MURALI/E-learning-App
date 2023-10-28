@@ -12,8 +12,6 @@ import { useLocation } from "react-router-dom";
 
 function AdminSidebar() {
 
-  
-  
 
   const location = useLocation()
   const isDashboard = location.pathname === "/adminhome"

@@ -10,7 +10,7 @@ import { getEnrolledStudents } from "../AxiosConfigInstructors/AxiosConfig";
 function TutorStudentTable() {
   const [orderList, setOrderlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
 
   const tutorData = localStorage.getItem("tutorData");
   const parseData = JSON.parse(tutorData);

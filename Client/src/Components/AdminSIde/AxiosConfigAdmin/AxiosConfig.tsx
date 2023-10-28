@@ -59,9 +59,6 @@ export const getAllCourse = () => {
 };
 
 
-
-
-
 export const getInstructor = () => {
   return api.get("/getinstructorlist");
 };

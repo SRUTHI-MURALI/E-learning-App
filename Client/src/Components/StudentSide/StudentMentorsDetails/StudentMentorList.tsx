@@ -110,7 +110,7 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
                             <Card.Text>
                               Experience: {tutor?.experience}
                             </Card.Text>
-                            <Card.Text>Duration: {tutor?.time}</Card.Text>
+                            <Card.Text>Duration: {tutor?.startOnline} am to {tutor?.onlineEnd} pm</Card.Text>
                           </Col>
                           <Col xs={12} md={5}>
                             <Button

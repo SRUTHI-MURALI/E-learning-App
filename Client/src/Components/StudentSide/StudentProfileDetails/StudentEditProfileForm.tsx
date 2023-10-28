@@ -10,16 +10,11 @@ import {
 } from "../AxiosConfigStudents/AxiosConfig";
 import PropTypes from "prop-types";
 
-
-
-function StudentEditProfileForm({
-  student,
-  onClose,
-}) {
+function StudentEditProfileForm({ student, onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("")
+  const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
   const [country, setCountry] = useState("");
@@ -51,67 +46,62 @@ function StudentEditProfileForm({
 
   const handleEditStudentProfile = async (e) => {
     e.preventDefault();
-    
+
     if (image) {
       await imageHandler();
-
-    } else if(existingImage) {
+    } else if (existingImage) {
       setPhoto(existingImage);
-    }else{
-      setPhoto("No Pic")
+    } else {
+      setPhoto("No Pic");
     }
     const namePattern = /^[A-Za-z\s.]+$/;
-    if(name === ''){
-      setName("No Name")
-    }else{
-      
+    if (name === "") {
+      setName("No Name");
+    } else {
       if (!namePattern.test(name)) {
         toast.error("Username can only contain letters and spaces");
         return;
       }
     }
-    if(gender === ''){
-      setGender("No Gender")
-    }else{
+    if (gender === "") {
+      setGender("No Gender");
+    } else {
       if (!namePattern.test(gender)) {
         toast.error("Username can only contain letters and spaces");
         return;
       }
     }
-    if(country === ''){
-      setCountry("No Country")
-    }else{
+    if (country === "") {
+      setCountry("No Country");
+    } else {
       if (!namePattern.test(country)) {
         toast.error("Username can only contain letters and spaces");
         return;
       }
     }
-    if(age === ''){
-      setAge("No Age")
+    if (age === "") {
+      setAge("No Age");
     }
-    if(phone === ''){
-      setPhone("No Number")
-    }else{
+    if (phone === "") {
+      setPhone("No Number");
+    } else {
       const phonePattern = /^\d{10}$/;
       if (!phonePattern.test(phone.toString().trim())) {
         toast.error("Please enter a valid 10-digit phone number");
         return;
       }
     }
-    if(email === ''){
-      setEmail("No Mail")
-    }else{
+    if (email === "") {
+      setEmail("No Mail");
+    } else {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(email.trim())) {
         toast.error("Please enter a valid email address");
         return;
       }
-  
     }
 
-  
     if (photo) {
-     
       try {
         await getStudentEditProfile(
           student._id,
@@ -125,7 +115,7 @@ function StudentEditProfileForm({
           country
         );
         toast.success("successfully edited");
-       onClose(false)
+        onClose(false);
       } catch (error) {
         return;
       }
@@ -163,22 +153,22 @@ function StudentEditProfileForm({
           <Row>
             <Col>
               <Form>
-              <Form.Group as={Row} className="mb-3">
-                <Form.Label column sm="2">
-                  Name:
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control
-                    type="text"
-                    placeholder={name}
-                    value={name}
-                    onChange={(e) => {
-                      const trimmedName = e.target.value.trim();
-                      setName(trimmedName);
-                    }}
-                  />
-                </Col>
-              </Form.Group>
+                <Form.Group as={Row} className="mb-3">
+                  <Form.Label column sm="2">
+                    Name:
+                  </Form.Label>
+                  <Col sm="10">
+                    <Form.Control
+                      type="text"
+                      placeholder={name}
+                      value={name}
+                      onChange={(e) => {
+                        const trimmedName = e.target.value.trim();
+                        setName(trimmedName);
+                      }}
+                    />
+                  </Col>
+                </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                   <Form.Label column sm="2">
                     Email :
@@ -188,26 +178,29 @@ function StudentEditProfileForm({
                       type="email"
                       placeholder={email}
                       value={email}
-                      onChange={(e) => { const trimmedEmail = e.target.value.trim();
-                        setEmail(trimmedEmail);}}
+                      onChange={(e) => {
+                        const trimmedEmail = e.target.value.trim();
+                        setEmail(trimmedEmail);
+                      }}
                     />
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="4">
-                    Contact Number :
+                  <Form.Label column sm="2">
+                    Phone
                   </Form.Label>
-                  <Col sm="8">
+                  <Col sm="10">
                     <Form.Control
                       type="number"
                       placeholder={phone}
                       value={phone}
-                      onChange={(e) => { const trimmedPhone= e.target.value.trim();
-                        setPhone(trimmedPhone);}}
+                      onChange={(e) => {
+                        const trimmedPhone = e.target.value.trim();
+                        setPhone(trimmedPhone);
+                      }}
                     />
                   </Col>
                 </Form.Group>
-               
 
                 <Form.Group as={Row} className="mb-3">
                   <Form.Label column sm="2">
@@ -218,9 +211,11 @@ function StudentEditProfileForm({
                       type="text"
                       placeholder={gender}
                       value={gender}
-                      onChange={(e) => { const trimmedGender = e.target.value.trim();
-                        
-                        setGender(trimmedGender);}}
+                      onChange={(e) => {
+                        const trimmedGender = e.target.value.trim();
+
+                        setGender(trimmedGender);
+                      }}
                     />
                   </Col>
                 </Form.Group>
@@ -233,8 +228,10 @@ function StudentEditProfileForm({
                       type="number"
                       placeholder={age}
                       value={age}
-                      onChange={(e) => { const trimmedAge = e.target.value.trim();
-                        setAge(trimmedAge);}}
+                      onChange={(e) => {
+                        const trimmedAge = e.target.value.trim();
+                        setAge(trimmedAge);
+                      }}
                     />
                   </Col>
                 </Form.Group>
@@ -247,8 +244,10 @@ function StudentEditProfileForm({
                       type="text"
                       placeholder={country}
                       value={country}
-                      onChange={(e) => { const trimmedCountry = e.target.value.trim();
-                        setCountry(trimmedCountry);}}
+                      onChange={(e) => {
+                        const trimmedCountry = e.target.value.trim();
+                        setCountry(trimmedCountry);
+                      }}
                     />
                   </Col>
                 </Form.Group>
@@ -267,28 +266,27 @@ function StudentEditProfileForm({
               </Form>
             </Col>
             <Col xs={12} md={6}>
-  <Form.Group controlId="formFile" className="mb-3">
-    <Form.Label className="m-5"></Form.Label>
-    <img
-      style={{ maxWidth: "100%" }}
-      src={`${Image_Url}/${existingImage}`}
-      alt="profile"
-      className="rounded-circle"
-    />
-    <Form.Control
-      className="mt-5"
-      type="file"
-      onChange={(e) => {
-        const inputElement = e.target as HTMLInputElement;
-        if (inputElement && inputElement.files) {
-          const selectedFile = inputElement.files[0];
-          setImage(selectedFile);
-        }
-      }}
-    />
-  </Form.Group>
-</Col>
-
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label className="m-5"></Form.Label>
+                <img
+                  style={{ maxWidth: "50%" }}
+                  src={`${Image_Url}/${existingImage}`}
+                  alt="profile"
+                  className="rounded-circle img-fluid"
+                />
+                <Form.Control
+                  className="mt-5"
+                  type="file"
+                  onChange={(e) => {
+                    const inputElement = e.target as HTMLInputElement;
+                    if (inputElement && inputElement.files) {
+                      const selectedFile = inputElement.files[0];
+                      setImage(selectedFile);
+                    }
+                  }}
+                />
+              </Form.Group>
+            </Col>
           </Row>
         </Card>
       </Container>

@@ -13,25 +13,30 @@ function TutorProfileImage({ tutor }) {
   const [newImage, setNewImage] = useState("");
   const [photo, setPhoto] = useState("");
   const [cloudinaryURL, setCloudinaryURL] = useState("");
+  
   useEffect(() => {
     const getPhoto = async ()=>{
       const response= await getTutorProfile(tutor._id)
       setImage(response.data.tutorDetails.photo);
     }
     getPhoto()
-  }, []);
+  }, [photo]);
 
 
   const handleImageSubmit = async (e) => {
     e.preventDefault();
     
-      await imageHandler();
-      if (!cloudinaryURL) {
+      const img=await imageHandler();
+     
+      
+      if (!img) {
         toast.error("Error uploading photo");
         return;
+      }else{
+        setPhoto(newImage ? img?.data?.public_id : image);
       }
-      setPhoto(newImage ? cloudinaryURL : image);
-      console.log(photo,"ooo");
+      
+  
       
     try {
 
@@ -51,7 +56,7 @@ function TutorProfileImage({ tutor }) {
       formData.append("cloud_name", "dnkc0odiw");
       const response = await axios.post(`${Course_Upload_Url}`, formData);
       setCloudinaryURL(response.data.public_id);
-      
+      return response
     } catch (err) {
       console.error("Image Upload Error:", err);
       toast.error("Error uploading image to Cloudinary.");
@@ -69,7 +74,7 @@ function TutorProfileImage({ tutor }) {
                 <img
                   src={`${Image_Url}/${image}`}
                   alt="sample"
-                  style={{ width: "40px" }}
+                  style={{ width: "6rem",height:'6rem' }}
                 />{" "}
               </>
             ) : newImage ? (
@@ -85,7 +90,7 @@ function TutorProfileImage({ tutor }) {
                   alt="sample"
                   style={{ width: "100px" }}
                 />
-                <Form.Control className='mt-5 '
+                <Form.Control 
                 type="file"
                 onChange={(e) => {
                 const inputElement = e.target as HTMLInputElement;
@@ -100,7 +105,7 @@ function TutorProfileImage({ tutor }) {
             )}
           </Card.Body>
          
-          <Form.Control className='mt-5 '
+          <Form.Control 
                 type="file"
                 onChange={(e) => {
                 const inputElement = e.target as HTMLInputElement;
@@ -110,7 +115,7 @@ function TutorProfileImage({ tutor }) {
                       }
                     }}
                   />
-          {newImage && <Button type="submit" onClick={handleImageSubmit}>SUbmit</Button>}
+          {newImage && <Button type="submit" className="m-3" onClick={handleImageSubmit}>Submit</Button>}
         </Card>
       </Form>
     </>

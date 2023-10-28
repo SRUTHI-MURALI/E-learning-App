@@ -24,7 +24,7 @@ function CoursesList() {
       <div  style={{overflow:'hidden',}}>
       <Row>
         <AdminHeader />
-        <Col xs={12} md={2}  style={{backgroundColor:"#263043"}} >
+        <Col xs={12} md={2}   >
           <AdminSidebar />
         </Col>
         <Col xs={12} md={8}>

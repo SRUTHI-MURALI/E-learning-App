@@ -16,6 +16,9 @@ function TutorEditProfileForm({ tutor, onClose }) {
   const [qualification, setQualification] = useState("");
   const [experience, setExperience] = useState("");
   const [about, setAbout] = useState("");
+  const [startOnline, setStartOnline] = useState(0);
+  const [onlineEnd, setOnlineEnd] = useState(0);
+
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -31,6 +34,8 @@ function TutorEditProfileForm({ tutor, onClose }) {
         setQualification(profile?.qualification);
         setPhone(profile?.phone);
         setPassword(profile?.password);
+        setStartOnline(profile?.start)
+        setOnlineEnd(profile?.end)
       } catch (error) {
         console.log({ error });
       }
@@ -96,7 +101,8 @@ function TutorEditProfileForm({ tutor, onClose }) {
       }
   
     }
-
+    
+    
   
     try {
       await tutorEditProfile(
@@ -107,10 +113,12 @@ function TutorEditProfileForm({ tutor, onClose }) {
         experience,
         qualification,
         password,
-        about
+        about,
+        startOnline,
+        onlineEnd
       );
 
-      toast.success("SUccessfully updated the profile");
+      toast.success("Successfully updated the profile");
       onClose(false);
     } catch (error) {
       toast.error("edit error");
@@ -156,10 +164,10 @@ function TutorEditProfileForm({ tutor, onClose }) {
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3">
-              <Form.Label column sm="4">
-                Contact Number :
+              <Form.Label column sm="2">
+                 Number :
               </Form.Label>
-              <Col sm="8">
+              <Col sm="10">
                 <Form.Control
                   type="number"
                   placeholder={tutorDetails?.phone}
@@ -168,11 +176,50 @@ function TutorEditProfileForm({ tutor, onClose }) {
                 />
               </Col>
             </Form.Group>
+           
+           <Row>
+              <Col>
+              <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="4">
+                 Online Time :
+              </Form.Label>
+              <Col sm="5">
+                <Form.Control
+                  type="number"
+                  placeholder={tutorDetails?.start}
+                  value={startOnline}
+                  onChange={(e) => setStartOnline(e.target.value)}
+                />
+                
+              </Col>
+              </Form.Group>
+              </Col>
+              <Col>
+              <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm="4">
+                to
+              </Form.Label>
+              <Col sm="5">
+                <Form.Control
+                  type="number"
+                  placeholder={tutorDetails?.end}
+                  value={onlineEnd}
+                  onChange={(e) => setOnlineEnd(e.target.value)}
+                />
+                
+              </Col>
+              </Form.Group>
+              </Col>
+              </Row>
+           
+           
+           
+           
             <Form.Group as={Row} className="mb-3">
-              <Form.Label column sm="3">
+              <Form.Label column sm="2">
                 Qualification :
               </Form.Label>
-              <Col sm="9">
+              <Col sm="10">
                 <Form.Control
                   type="text"
                   placeholder={tutorDetails?.qualification}

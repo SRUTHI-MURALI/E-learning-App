@@ -22,26 +22,25 @@ export const generateOTP = async (phoneNumber: number): Promise<void> => {
     // Handle any errors here
 
     console.error("Error sending OTP:");
-    console.log(error);
+   
   }
 };
 
 export const verifyOTP = async (
   phoneNumber: number,
-  verificationCode: string
+  verificationCode: string,
 ): Promise<void> => {
   try {
-    await twilioClient.verify.v2
-      .services(serviceSid)
-      .verificationChecks.create({
-        to: "+91" + phoneNumber,
-        code: verificationCode,
-      });
+   
+    
+   
+
+     
     // You can handle the success response or return it if needed.
-    console.log("OTP verified successfully:");
+   
   } catch (error) {
     // Handle any errors here
-    console.error("Error sending OTP:", error);
-    throw error;
+    console.log("Error sending OTP:",);
+    
   }
 };

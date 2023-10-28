@@ -57,6 +57,7 @@ export default function TutorChatContacts({ contacts, changeChat }) {
   }, [contacts]);
  
   
+  console.log(allContacts,"ll");
   
   return (
     
@@ -81,7 +82,7 @@ export default function TutorChatContacts({ contacts, changeChat }) {
                
                 
     <div className="username">
-      <h3>{contact?.studentDetails?.name}</h3>
+      <h3>{contact?.studentDetails?.email}</h3>
     </div>
     </div>
       ))}

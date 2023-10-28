@@ -404,11 +404,12 @@ const tutorProfile = async (req: Request, res: Response) => {
 
 const tutorEditedProfile = async (req: Request, res: Response) => {
   try {
-    const { name, phone, email, experience, qualification, password, about } =
+    const { name, phone, email, experience, qualification, about,startOnline,onlineEnd } =
       req.body;
+      console.log(req.body.startOnline,'body');
+      
     const { id } = req.params;
-    const salt = await bcrypt.genSalt(10);
-    const hashedpassword = await bcrypt.hash(password, salt);
+    
 
     const editedTutor = await Tutor.findByIdAndUpdate(
       id,
@@ -418,11 +419,13 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
         email,
         experience,
         qualification,
-        password: hashedpassword,
         about,
+        startOnline,
+        onlineEnd
       },
       { new: true }
     );
+console.log(editedTutor,'tutor');
 
     if (editedTutor) {
       res.status(201).json({
