@@ -33,42 +33,38 @@ function StudentPdfCourses() {
   };
   return (
     <Row>
-      <Container>
+      <Container style={{marginTop:'120px'}}>
+      <h4 style={{fontFamily:"Vollkorn serif",color:'white',fontStyle:'italic'}} className="m-3">PDF Downloads</h4>
         {show == false ? (
           <>
+           <div className="row" >
+           <div style={{cursor:'pointer'}}  className="row mt-3">
             {allCourseList.map((courses, index) => (
-              <Card className="m-5 ">
-                <>
-                  <Row>
-                    <Col key={courses?._id} xs={12} md={4}>
-                      <Card.Img
-                        style={{ height: "200px" }}
-                        variant="top"
-                        src={`${Image_Url}/${courses.photo}`}
-                      />
-                    </Col>
-                    <Col xs={12} md={8}>
-                      <Card.Body>
-                        <Card.Title>Title: {courses?.title}</Card.Title>
-                       
-                        <Card.Text>
-                          Name of Tutor: {courses?.instructor?.name}
-                        </Card.Text>
-                        <Button
-                          variant="primary"
-                          type="submit"
-                          onClick={() => {
-                            handleQuiz(courses?.courseLessons);
-                          }}
-                        >
-                          Get Lessons
-                        </Button>
-                      </Card.Body>
-                    </Col>
-                  </Row>
-                </>
-              </Card>
+             
+              <>
+                    <div className="col-md-2 mt-4">
+                        <img className="bg-white mt-2"
+                            src={`${Image_Url}/${courses?.photo}`} style={{width:'10rem'}}
+                            alt=""
+                            onClick={() => {
+                              handleQuiz(courses?.courseLessons);
+                            }}
+                        />
+                    </div>
+                    <div  onClick={() => {
+                     handleQuiz(courses?.courseLessons);
+                   }} className="col-lg-2 mt-5">
+                    <h5 style={{fontFamily:"Vollkorn serif",color:'white'}}>Title: {courses?.title}</h5>
+                    <h6 style={{fontFamily:"Vollkorn serif",color:'white'}}> By : {courses?.instructor?.name}</h6>
+                    </div>
+                    
+                 
+                    </>
+                  
             ))}
+            </div>
+            </div>
+             
           </>
         ) : (
           <StudentPdfLessons
@@ -82,3 +78,5 @@ function StudentPdfCourses() {
 }
 
 export default StudentPdfCourses;
+
+

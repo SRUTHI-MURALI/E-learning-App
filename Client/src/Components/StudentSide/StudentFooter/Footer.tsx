@@ -2,25 +2,32 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
 import "./Footer.css";
+import {AiFillFacebook} from 'react-icons/ai'
+import {BsInstagram} from 'react-icons/bs'
+import {BiLogoGmail} from 'react-icons/bi'
 import l1 from "../../../Assets/Images/carouselBody/l1.jpeg";
 
 function Footer() {
   return (
-    <Container className="mt-5">
+    <div className="mt-5">
       <Card className="footerCard">
         <Row>
-          <Col xs={12} md={2}>
+          <Col xs={12} md={3}>
+            <h4 style={{ textAlign: "center" }} className="mt-5 ms-5">
+            Tuto 
+            </h4>
+            <h6 className="ms-5" style={{ textAlign: "center" }}>Integer vitae triagna. Praesent bibendum quam tellus, quis rhoncus orci cursus vel. Aenean suscipilacerat elit sit amet lacinia. Phasellus volutt ligula eget urna egestas vehicula. Proinpus est sed mauris viverra, eu congue tellus tempus. e </h6>
+           
+          </Col>
+          <Col xs={12} md={4}>
             <h4 style={{ textAlign: "center" }} className="mt-5">
               Quick Links
             </h4>
-            <h6 style={{ textAlign: "center" }}>About Us </h6>
-            <h6 style={{ textAlign: "center" }}>Contact Us</h6>
-            <h6 style={{ textAlign: "center" }}>Privacy Policy</h6>
-            <h6 style={{ textAlign: "center" }}>Terms & Conditions</h6>
-            <h6 style={{ textAlign: "center" }}>Help</h6>
+           <h2 style={{justifyContent:'center', alignItems:'center'}}className="ms-5"><AiFillFacebook className="ms-5"/><BsInstagram className="ms-5"/><BiLogoGmail className="ms-5"/><AiFillFacebook className="ms-5" /></h2>
           </Col>
-          <Col xs={12} md={2}>
-            <h4 style={{ textAlign: "center" }} className="mt-5">
+
+          <Col xs={12} md={3}>
+          <h4 style={{ textAlign: "center" }} className="mt-5">
               Contacts
             </h4>
             <h6 style={{ textAlign: "center" }} className="mt-1">
@@ -36,33 +43,13 @@ function Footer() {
               tuto@gmil.com
             </h6>
           </Col>
-
-          <Col xs={12} md={5}>
-            <h4 style={{ textAlign: "center" }} className="mt-5">
-              Subscribe to our Channel
-            </h4>
-            <h6 style={{ textAlign: "center" }} className="mt-1">
-              Quick Links
-            </h6>
-            <h6 style={{ textAlign: "center" }} className="mt-1">
-              Quick Links
-            </h6>
-            <h6 style={{ textAlign: "center" }} className="mt-1">
-              Quick Links
-            </h6>
-            <h6 style={{ textAlign: "center" }} className="mt-1">
-              Quick Links
-            </h6>
-            <h6 style={{ textAlign: "center" }} className="mt-1">
-              Quick Links
-            </h6>
-          </Col>
-          <Col xs={12} md={3}>
-            <img className="footerimg" src={l1} />
+          <Col xs={12} md={2}>
+            <img src={l1}/>
+           
           </Col>
         </Row>
       </Card>
-    </Container>
+    </div>
   );
 }
 

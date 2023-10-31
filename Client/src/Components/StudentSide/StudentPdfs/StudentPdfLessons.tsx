@@ -3,6 +3,7 @@ import { Container, Row } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 
 
+
 interface StudentCourseLessonsProps {
     courseId: object;
   
@@ -13,6 +14,7 @@ function StudentPdfLessons({ courseId }: StudentCourseLessonsProps) {
   return (
     <div>
       <Container>
+      {courseId?.length !== 0 && 
         <h2
           className="m-3"
           style={{
@@ -23,6 +25,7 @@ function StudentPdfLessons({ courseId }: StudentCourseLessonsProps) {
         >
           Course Highlights
         </h2>
+}
         {courseId?.map((courses, index) => (
           <Row className="m-3">
             <Accordion key={courses?._id}>
@@ -49,6 +52,10 @@ function StudentPdfLessons({ courseId }: StudentCourseLessonsProps) {
             </Accordion>
           </Row>
         ))}
+         {courseId?.length === 0 && 
+         <h2 style={{ color: "red", fontStyle: "italic" ,margin:'2rem'}}>
+         Sorry No lessons  available !{" "}
+       </h2>}
       </Container>
     </div>
   );

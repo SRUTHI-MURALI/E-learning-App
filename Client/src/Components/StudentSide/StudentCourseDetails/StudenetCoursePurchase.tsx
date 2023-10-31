@@ -73,8 +73,8 @@ function StudenetCoursePurchase({ courseData }: StudentCoursePurchaseProps) {
 
   return (
     <div>
-      <Container className=" text-center m-5">
-        <Row>
+      <Container  className=" text-center m-5">
+        <Row style={{marginTop:'280px'}}>
           <Card className="mt-5">
             <Card.Body>
               <img

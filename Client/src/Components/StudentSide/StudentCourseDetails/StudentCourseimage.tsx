@@ -9,8 +9,14 @@ interface StudentCourseImageProps {
 function StudentCourseimage({ courseData }: StudentCourseImageProps) {
   return (
     <div>
-      <Container className="d-flex justify-content-center align-item-center">
+      <Container style={{marginTop:'120px'}} className="d-flex justify-content-center align-item-center">
         <Row>
+        <h1
+          className="text-center text-white mb-4"
+          style={{fontStyle:'italic'}}
+        >
+       {courseData?.title}
+        </h1>
           <img
             style={{ height: "450px", width: "100%" }}
             src={`${Image_Url}/${courseData?.photo}`}

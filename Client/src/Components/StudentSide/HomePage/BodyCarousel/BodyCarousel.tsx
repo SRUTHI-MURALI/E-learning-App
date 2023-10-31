@@ -5,26 +5,27 @@ import c2 from "../../../../Assets/Images/carouselBody/hb3.avif";
 import c1 from "../../../../Assets/Images/img3.avif";
 import c5 from "../../../../Assets/Images/kk.jpg";
 import "./BodyCarousel.css";
-import Container from "react-bootstrap/Container";
+
 
 function  BodyCarousel() {
   return (
-    <Container className="bodyContainer">
+    <div className="bodyContainer">
       <Carousel>
-        <Carousel.Item>
-          <img className="bodyCarouselImg" src={c5} />
+        <Carousel.Item >
+          <img className="bodyCarouselImg" style={{height:'40rem'}} src={c5} />
+          
         </Carousel.Item>
-        <Carousel.Item>
-          <img className="bodyCarouselImg" src={c5} />
+        <Carousel.Item >
+          <img className="bodyCarouselImg" style={{height:'40rem'}} src={c4} />
+          
         </Carousel.Item>
-        <Carousel.Item>
-          <img className="bodyCarouselImg" src={c2} />
+        <Carousel.Item >
+          <img className="bodyCarouselImg" style={{height:'40rem'}} src={c3} />
+          
         </Carousel.Item>
-        <Carousel.Item>
-          <img className="bodyCarouselImg" src={c1} />
-        </Carousel.Item>
+       
       </Carousel>
-    </Container>
+    </div>
   );
 }
 

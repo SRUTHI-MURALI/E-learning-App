@@ -5,11 +5,11 @@ import "./StudentCoursesList.css";
 function CourseBody1() {
   return (
     <div>
-      <Container>
-        <Row>
-          <img className="courseBodyimg mt-4" src={img} />
+      
+        <Row className="bodyContainer">
+          <img className="courseBodyimg " style={{height:'40rem'}} src={img} />
         </Row>
-      </Container>
+   
     </div>
   );
 }

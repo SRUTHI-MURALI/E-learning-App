@@ -1,0 +1,4 @@
+.join-button{
+    border-radius: 50%;      /* Make the button round (50% of width/height) */
+  cursor: pointer; 
+}

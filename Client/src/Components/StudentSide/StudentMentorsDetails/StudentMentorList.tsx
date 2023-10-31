@@ -3,6 +3,7 @@ import { getInstructors } from "../AxiosConfigStudents/AxiosConfig";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { Image_Url } from "../../../Config/Config";
+import './studentMentor.css'
 
 interface StudentMentorsListProps {
   studentData: object;
@@ -85,50 +86,44 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
     setShowCall(true);
   };
   return (
-    <Container>
+    <Container style={{ marginTop: '120px' }}>
       <Row>
-        {showCall == false ? (
+        {showCall === false ? (
           <Container>
             <>
               {tutorDetails.map((tutor, index) => (
-                <Card className="m-3 ">
-                  <>
-                    <Row>
-                      <Col key={tutor?._id} xs={12} md={2}>
-                        <Card.Img
-                          src={`${Image_Url}/${tutor?.photo}`}
-                          style={{ width: "180px" }}
-                        />
-                      </Col>
-                      <Col xs={12} md={10}>
-                        <Card.Body>
-                          <Col xs={12} md={5}>
-                            <Card.Title>NAME: {tutor?.name}</Card.Title>
-                            <Card.Text>
-                              SUBJECT: {tutor?.qualification}
-                            </Card.Text>
-                            <Card.Text>
-                              Experience: {tutor?.experience}
-                            </Card.Text>
-                            <Card.Text>Duration: {tutor?.startOnline} am to {tutor?.onlineEnd} pm</Card.Text>
-                          </Col>
-                          <Col xs={12} md={5}>
-                            <Button
-                              variant="primary"
-                              type="submit"
-                              className="float-end"
-                              onClick={() => {
-                                handleMentoring(tutor._id);
-                              }}
-                            >
-                              Join
-                            </Button>
-                          </Col>
-                        </Card.Body>
-                      </Col>
-                    </Row>
-                  </>
-                </Card>
+                <div className="row" key={tutor?._id}>
+                  <div className="row mt-3">
+                    <div className="col-md-2">
+                      <img
+                        className="bg-white mt-2"
+                        src={`${Image_Url}/${tutor?.photo}`}
+                        style={{ width: "100px" }}
+                        alt=""
+                      />
+                    </div>
+                    <div className="col-lg-8">
+                      <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>NAME: {tutor?.name}</h5>
+                      <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>Qualification: {tutor?.qualification}</h5>
+                      <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>Experience: {tutor?.experience}</h5>
+                     
+                      <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>Online Duration: {tutor?.startOnline} am to {tutor?.onlineEnd} pm</h5>
+                      </div>
+                      <div className="col-lg-2">
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        className="me-5 join-button"
+                        size="lg"
+                        onClick={() => {
+                          handleMentoring(tutor._id);
+                        }}
+                      >
+                        Join
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               ))}
             </>
           </Container>
@@ -147,3 +142,4 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
 }
 
 export default StudentMentorList;
+

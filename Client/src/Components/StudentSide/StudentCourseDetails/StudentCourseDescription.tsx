@@ -21,7 +21,7 @@ function StudentCourseDescription({
                   fontSize: "30px",
                 }}
               >
-                What you will learn{" "}
+                Know about the course{" "}
               </Card.Title>
               <Card.Text style={{ color: "#fff" }}>
                 {courseData?.description}
