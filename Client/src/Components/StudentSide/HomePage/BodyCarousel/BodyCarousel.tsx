@@ -3,18 +3,19 @@ import c3 from "../../../../Assets/Images/img1.avif";
 import c4 from "../../../../Assets/Images/img2.avif";
 import c2 from "../../../../Assets/Images/carouselBody/hb3.avif";
 import c1 from "../../../../Assets/Images/img3.avif";
+import c5 from "../../../../Assets/Images/kk.jpg";
 import "./BodyCarousel.css";
 import Container from "react-bootstrap/Container";
 
-function BodyCarousel() {
+function  BodyCarousel() {
   return (
-    <Container>
+    <Container className="bodyContainer">
       <Carousel>
         <Carousel.Item>
-          <img className="bodyCarouselImg" src={c3} />
+          <img className="bodyCarouselImg" src={c5} />
         </Carousel.Item>
         <Carousel.Item>
-          <img className="bodyCarouselImg" src={c4} />
+          <img className="bodyCarouselImg" src={c5} />
         </Carousel.Item>
         <Carousel.Item>
           <img className="bodyCarouselImg" src={c2} />

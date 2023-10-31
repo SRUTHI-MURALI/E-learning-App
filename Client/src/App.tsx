@@ -12,7 +12,7 @@ import StudentCourseDetails from "./Pages/StudentPages/StudentCourseDetails";
 //Tutor imports
 import TutorRegister from "./Pages/TutorPages/TutorRegister";
 import TutorLogin from "./Pages/TutorPages/TutorLogin";
-import TutorHome from "./Pages/TutorPages/TutorHome";
+
 import TutorAddCourse from "./Pages/TutorPages/TutorAddCourse";
 import CourseList from "./Pages/TutorPages/CourseList";
 import TutorStudentList from "./Pages/TutorPages/TutorStudentList";

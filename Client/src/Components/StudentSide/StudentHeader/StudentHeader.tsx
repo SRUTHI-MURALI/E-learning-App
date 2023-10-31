@@ -27,14 +27,14 @@ function StudentHeader() {
     navigate("/");
   };
   return (
-    <Navbar expand="lg">
-      <Container>
-        <img className="logo" src={logo} />
+    <Navbar bg="" fixed="top" expand="lg">
+  
+        <img className="logo m-4" style={{ height: "4rem",width:'10rem' }} src={logo} />
         <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle " style={{backgroundColor:'white'}} />
 
         <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto my-2 my-lg-0"
+            className="me-auto my-2 my-lg-0 "
             style={{ maxHeight: "80px" }}
             navbarScroll
           >
@@ -63,7 +63,12 @@ function StudentHeader() {
             <Nav.Link   className={`nav-header-student ${isProfile ? "highlight" : ""}`}href="/studentprofile">
               Profile
             </Nav.Link>
+
+            
+            
           </Nav>
+
+          
 
           <h1
             style={{
@@ -80,7 +85,7 @@ function StudentHeader() {
             <Button className="m-3">Logout</Button>
           </Link>
         </Navbar.Collapse>
-      </Container>
+      
     </Navbar>
   );
 }
