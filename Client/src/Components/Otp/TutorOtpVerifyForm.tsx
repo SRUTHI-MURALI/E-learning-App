@@ -52,7 +52,7 @@ function TutorOtpVerifyForm() {
         <Card style={{ width: "18rem" }} className="text-center">
           <Form onSubmit={handleSubmit}>
             <Card.Body>
-              <Card.Title> Otp Verification</Card.Title>
+              <Card.Title> Enter Otp Send to the PhoneNumber</Card.Title>
               <Card.Img variant="top" />
               <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
                 <Form.Control

@@ -16,7 +16,7 @@ import {
 function InstructorTable() {
   const [instructorList, setInstructorlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const getInstructorList = async () => {

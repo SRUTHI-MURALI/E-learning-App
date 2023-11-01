@@ -3,7 +3,6 @@ import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Navbar} from "react-bootstrap";
 import logo from "../../../../Assets/Images/carouselBody/l1.jpeg";
-import signup from '../../../../Assets/Images/signup.png'
 import { Link} from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "./Header.css";
@@ -12,7 +11,7 @@ function NavScrollExample() {
 
  
   return (
-    <Navbar expand="md">
+    <Navbar fixed="top" expand="lg" className="navbar-student">
       
         <img className="logo"style={{ height: "8rem",width:'20rem' }} src={logo} />
         <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle " style={{backgroundColor:'white'}} />

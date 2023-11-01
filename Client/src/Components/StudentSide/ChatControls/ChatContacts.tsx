@@ -49,7 +49,7 @@ export default function ChatContacts({ contacts, changeChat }) {
           {contacts.map((contact, index) => (
             <div
               key={contact._id}
-              className={`contact ${index === currentSelected ? "selected" : ""}`}
+              className={`contact ${index === currentSelected ? "selected" : ""} m-4`}
               onClick={() => changeCurrentChat(index, contact)}
             >
               {/* Content for each contact */}

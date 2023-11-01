@@ -27,7 +27,7 @@ function StudentHome() {
       <BodyCarousel />
       <Card />
       <Body1 />
-      <Body2 />
+      
       <Footer />
     </div>
   );

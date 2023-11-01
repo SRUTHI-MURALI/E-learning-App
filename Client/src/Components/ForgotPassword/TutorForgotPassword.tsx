@@ -77,8 +77,10 @@ function TutorForgotPassword() {
           setOtpverified(true);
         })
         .catch((error) => {
-          // Handle the error here
-          console.log(error);
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+          toast.error(error.response.data.message);
         });
     } catch (error) {
       if (
@@ -98,6 +100,11 @@ function TutorForgotPassword() {
   const handlenewPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password === confirmPassword) {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/;
+    if(!regex.test(password.trim())){
+      toast.error("Password should be 8 characters and should contain a lowercase letter , a uppercase letter , a number and a symbol ");
+      return;
+    }
       await axios
         .put(`${Base_Url}/tutor/resetpassword`, {
           password,

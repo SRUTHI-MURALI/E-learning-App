@@ -74,7 +74,7 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
             <>
               <Form onSubmit={handleSubmit}>
                 <Card.Body>
-                  <Card.Title> Otp Verification</Card.Title>
+                  <Card.Title> Enter Otp Send to the PhoneNumber</Card.Title>
                   <Card.Img variant="top" />
                   <Form.Group
                     className="mb-3 mt-3"

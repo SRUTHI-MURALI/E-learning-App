@@ -388,6 +388,7 @@ const inActivateCategory = async (req: Request, res: Response) => {
 const getEditCategoryList = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    
     const editCategory = await categoryModel.findById({ _id: id });
     if (editCategory) {
       res.status(201).json({
@@ -405,9 +406,11 @@ const editCategory = async (req: Request, res: Response) => {
     const { id } = req.params;
     console.log(id, category, description, "admin");
 
+   
+
     const check = await categoryModel.findOne({ title: category });
     if (check && check._id.toString() !== id) {
-      res.status(400).json("Category with the same title already exists.");
+      res.status(400).json({message:"Category with the same title already exists."});
     } else {
       const editedCategory = await categoryModel.findByIdAndUpdate(
         id,

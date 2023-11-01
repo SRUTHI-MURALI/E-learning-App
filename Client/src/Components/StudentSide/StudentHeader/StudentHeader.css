@@ -1,9 +1,14 @@
 .nav-header-student {
   color: white;
+ 
 }
 
 .highlight {
 
   border-radius: 2rem;
   background-color:rgb(218, 93, 93);
+}
+
+.navbar-student{
+  background-color: #323e4f;
 }

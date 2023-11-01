@@ -56,14 +56,16 @@ function StudentCourseQuizList() {
                       alt=""
                     />
                   </div>
-                  <div className="col-lg-2" onClick={() => {
+                 
+                </>
+                <div style={{marginLeft:"100px",marginTop:'1rem'}} onClick={() => {
                     handleQuiz(courses._id);
                   }}>
                     <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>Title: {courses?.title}</h5>
                     <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>By :  {courses?.instructor?.name}</h5>
                   </div>
-                </>
               </div>
+              
             ))}
           </>
         ) : (
@@ -80,31 +82,3 @@ function StudentCourseQuizList() {
 export default StudentCourseQuizList;
 
 
-{/* <Row>
-<Col key={courses?._id} xs={12} md={4}>
-  <Card.Img
-    style={{ height: "200px" }}
-    variant="top"
-    src={`${Image_Url}/${courses.photo}`}
-  />
-</Col>
-<Col xs={12} md={8}>
-  <Card.Body>
-    <Card.Title>Title: {courses?.title}</Card.Title>
-    
-    <Card.Text>
-      Name of Tutor: {courses?.instructor?.name}
-    </Card.Text>
-    <Button
-      variant="primary"
-      type="submit"
-      className="mt-4"
-      onClick={() => {
-        handleQuiz(courses._id);
-      }}
-    >
-      Attempt Quiz
-    </Button>
-  </Card.Body>
-</Col>
-</Row> */}

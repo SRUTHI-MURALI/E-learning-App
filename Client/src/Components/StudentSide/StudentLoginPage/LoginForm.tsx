@@ -137,26 +137,22 @@ function LoginForm() {
                   />
                 </Form.Group>
                 <Row>
+                <Col xs={12} md={4}>
+                    
+                  </Col>
                   <Col xs={12} md={6}>
                     <Button variant="primary" type="submit">
-                      Login
+                      Login as Student
                     </Button>
                   </Col>
-                  <Col xs={12} md={6}>
-                    <Button
-                      className="float-end "
-                      variant="primary"
-                      type="submit"
-                    >
-                      LoginWithOtp
-                    </Button>
-                  </Col>
+                 
                 </Row>
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    marginTop:'2rem'
                   }}
                 >
                   <GoogleLogin

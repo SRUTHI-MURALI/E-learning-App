@@ -8,8 +8,8 @@ function WithHeaderExample() {
   return (
     <Container className="mt-5">
      <h1
-          className="text-center text-white m-5"
-          style={{ textDecoration: "underline"}}
+          className="text-center  m-5"
+          style={{ textDecoration: "underline", color:' aqua'}}
         >
           About Us
         </h1>
@@ -18,20 +18,7 @@ function WithHeaderExample() {
             
            
             <p style={{ textAlign: "center", color:'#fff' }}>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.Some quick example text to build on the
-              card title and make up the bulk of the card's content.Some quick
-              example text to build on the card title and make up the bulk of
-              the card's content.Some quick example text to build on the card
-              title and make up the bulk of the card's content.Some quick
-              example text to build on the card title and make up the bulk of
-              the card's content.Some quick example text to build on the card
-              title and make up the bulk of the card's content.Some quick
-              example text to build on the card title and make up the bulk of
-              the card's content.Some quick example text to build on the card
-              title and make up the bulk of the card's content.Some quick
-              example text to build on the card title and make up the bulk of
-              the card's content.
+            An electronic learning platform is an integrated set of interactive online services that provide trainers, learners, and others involved in education with information, tools, and resources to support and enhance education delivery and management. One type of eLearning platform is a learning management system (LMS).An electronic learning platform is an integrated set of interactive online services that provide trainers, learners, and others involved in education with information, tools, and resources to support and enhance education delivery and management. One type of eLearning platform is a learning management system (LMS).
             </p>
           </Col>
           <Col xs={12} md={5}>

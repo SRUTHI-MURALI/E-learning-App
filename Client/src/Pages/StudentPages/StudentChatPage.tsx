@@ -68,13 +68,13 @@ export default function StudentChatPage() {
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
-console.log(currentChat,'chat');
+
 
 
   return (
       <>
       <StudentHeader/>
-      <Container>
+      <Container style={{marginTop:'8rem'}}>
         <div className="container">
         
           <ChatContacts contacts={contacts} changeChat={handleChatChange} />

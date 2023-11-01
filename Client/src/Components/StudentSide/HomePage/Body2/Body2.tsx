@@ -23,27 +23,33 @@ function BasicExample() {
 
   return (
     <Container className="mt-5 cardLayout ">
+       <h1
+          className="text-center m-5"
+          style={{ textDecoration: "underline", color:' aqua'}}
+        >
+          Our Teachers
+        </h1>
       <Row>
         {tutorDetails.map((tutor, index) => (
-          <Col md={4} key={tutor._id}>
+          <Col md={3} key={tutor._id}>
             <Link
               style={{ textDecoration: "none" }}
               to={`/tutordetails/${tutor?._id}`}
             >
-              <Card style={{ width: "18rem" }}>
-                <Card.Img style={{ height: "240px" }} variant="top" src={`${Image_Url}/${tutor?.photo}`} />
+              <Card style={{ width: "18rem" ,height:'25rem'}}>
+                <Card.Img style={{ height: "14rem" }} variant="top" src={`${Image_Url}/${tutor?.photo}`} />
                 <Card.Body>
-                  <Card.Title> Name:{tutor?.name}</Card.Title>
+                  <Card.Title className="text-center"> {tutor?.name}</Card.Title>
                   <Card.Text>
                     Experience:
                     {tutor?.experience} Years
                   </Card.Text>
                   <Card.Text>
-                    specializations:
-                    {tutor?.qualification}
+                    Specialized in : 
+                     {tutor?.qualification}
                   </Card.Text>
 
-                  <Link to={`/tutordetails/${tutor?._id}`}>Know More </Link>
+                 
                 </Card.Body>
               </Card>
             </Link>

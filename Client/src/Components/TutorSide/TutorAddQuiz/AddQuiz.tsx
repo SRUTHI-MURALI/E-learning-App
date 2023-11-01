@@ -28,6 +28,19 @@ function AddQuiz({ courseId, onClose }) {
       return toast.error("Please fill all fields");
     }
 
+    const questionPattern = /^[A-Za-z\s.\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/;
+
+    if (
+      !questionPattern.test(question.trim()) ||
+      !questionPattern.test(option1.trim()) ||
+      !questionPattern.test(option2.trim()) ||
+      !questionPattern.test(option3.trim()) ||
+      !questionPattern.test(option4.trim())
+    ) {
+      toast.error("question and options can only contain letters,symbols and spaces");
+      return;
+    }
+
     const newQuestion = {
       question,
       option1,
@@ -131,7 +144,6 @@ function AddQuiz({ courseId, onClose }) {
             <Form.Label>Correct Answer</Form.Label>
             <Form.Select
               value={answerOption}
-              
               onChange={(e) => setAnswerOption(e.target.value)}
             >
               <option value="option1">Option 1</option>

@@ -34,8 +34,8 @@ function TutorEditProfileForm({ tutor, onClose }) {
         setQualification(profile?.qualification);
         setPhone(profile?.phone);
         setPassword(profile?.password);
-        setStartOnline(profile?.start)
-        setOnlineEnd(profile?.end)
+        setStartOnline(profile?.startOnline)
+        setOnlineEnd(profile?.onlineEnd)
       } catch (error) {
         console.log({ error });
       }

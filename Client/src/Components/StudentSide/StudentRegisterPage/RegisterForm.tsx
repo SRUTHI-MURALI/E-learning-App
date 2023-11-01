@@ -40,9 +40,10 @@ function RegisterForm() {
     }
 
     // Validate username format (only letters and spaces allowed)
-    const usernamePattern = /^[A-Za-z\s.]+$/;
+    const usernamePattern = /^[A-Za-z\s.\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/;
+
     if (!usernamePattern.test(trimmedName.trim())) {
-      toast.error("Username can only contain letters and spaces");
+      toast.error("Username can only contain letters,symbols and spaces");
       return;
     }
     const phonePattern = /^\d{10}$/;
@@ -53,7 +54,8 @@ function RegisterForm() {
 
     // Validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(trimmedEmail.trim())) {
+    const emailP = /^[^\s@]+@gmail\.com$/;
+    if (!emailPattern.test(trimmedEmail.trim()) || !emailP.test(trimmedEmail.trim())) {
       toast.error("Please enter a valid email address");
       return;
     }

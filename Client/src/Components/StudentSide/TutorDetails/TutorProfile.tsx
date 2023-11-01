@@ -4,16 +4,13 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
 import { getTutorProfile } from "../AxiosConfigStudents/AxiosConfig";
 
-
 export default function TutorProfile() {
   const [tutorDetails, setTutorDetails] = useState([]);
   const [tutorCourses, setTutorCourses] = useState([]);
   const { id } = useParams<{ id: string }>() as { id: string };
 
-
-
   useEffect(() => {
-    const getTutorData = async (id:string) => {
+    const getTutorData = async (id: string) => {
       try {
         const response = await getTutorProfile(id);
         setTutorDetails(response.data.tutorDetails);
@@ -27,7 +24,7 @@ export default function TutorProfile() {
 
   return (
     <section>
-      <Container className="py-5">
+      <Container style={{ marginTop: "120px" }} className="py-5">
         <Row>
           {tutorDetails && (
             <>

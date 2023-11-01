@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 function StudentEditProfileForm({ student, onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState('');
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
@@ -82,15 +82,19 @@ function StudentEditProfileForm({ student, onClose }) {
     if (age === "") {
       setAge("No Age");
     }
-    if (phone === "") {
-      setPhone("No Number");
-    } else {
-      const phonePattern = /^\d{10}$/;
-      if (!phonePattern.test(phone.toString().trim())) {
-        toast.error("Please enter a valid 10-digit phone number");
-        return;
-      }
-    }
+    if (phone === '') {
+      console.log("kk");
+      
+      setPhone('No number');
+    // } else {
+    //   console.log("ll");
+      
+    //   const phonePattern = /^\d{10}$/;
+    //   if (!phonePattern.test(phone)) {
+    //     toast.error("Please enter a valid 10-digit phone number");
+    //     return;
+    //   }
+     }
     if (email === "") {
       setEmail("No Mail");
     } else {

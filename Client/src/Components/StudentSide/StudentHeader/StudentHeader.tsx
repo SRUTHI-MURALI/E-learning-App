@@ -27,7 +27,7 @@ function StudentHeader() {
     navigate("/");
   };
   return (
-    <Navbar bg="" fixed="top" expand="lg">
+    <Navbar className="navbar-student" fixed="top" expand="lg">
   
         <img className="logo m-4" style={{ height: "4rem",width:'10rem' }} src={logo} />
         <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle " style={{backgroundColor:'white'}} />

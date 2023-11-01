@@ -51,6 +51,7 @@ function StudenetCoursePurchase({ courseData }: StudentCoursePurchaseProps) {
     };
     const rzp1 = new window.Razorpay(options);
     rzp1.open();
+    
   };
 
   const handlePayment = async (e) => {
@@ -60,16 +61,21 @@ function StudenetCoursePurchase({ courseData }: StudentCoursePurchaseProps) {
           e.preventDefault();
           const res = await makePayment(id);
           initPayment(res.data.data);
+          
         } catch (error) {
           console.log(error);
         }
       };
 
-      makeRazorPay(courseData._id);
+   await  makeRazorPay(courseData._id);
+      
     } else {
       navigate("/studentlogin");
     }
+   
   };
+
+  
 
   return (
     <div>

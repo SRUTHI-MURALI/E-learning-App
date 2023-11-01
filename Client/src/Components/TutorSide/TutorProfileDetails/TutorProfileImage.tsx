@@ -20,32 +20,28 @@ function TutorProfileImage({ tutor }) {
       setImage(response.data.tutorDetails.photo);
     }
     getPhoto()
-  }, [photo]);
+  }, [cloudinaryURL]);
 
 
   const handleImageSubmit = async (e) => {
     e.preventDefault();
     
-      const img=await imageHandler();
+      await imageHandler();
      
       
-      if (!img) {
-        toast.error("Error uploading photo");
-        return;
-      }else{
-        setPhoto(newImage ? img?.data?.public_id : image);
-      }
       
   
-      
-    try {
+      if(photo){
+        try {
 
-      await tutorEditPhoto(tutor._id, photo);
-       
-      
-    } catch (error) {
-      console.log(error);
-    }
+          await tutorEditPhoto(tutor._id, photo);
+           window.location.reload()
+          
+        } catch (error) {
+          console.log(error);
+        }
+      }
+   
   };
 
   const imageHandler = async () => {
@@ -56,6 +52,7 @@ function TutorProfileImage({ tutor }) {
       formData.append("cloud_name", "dnkc0odiw");
       const response = await axios.post(`${Course_Upload_Url}`, formData);
       setCloudinaryURL(response.data.public_id);
+      setPhoto(response.data.public_id)
       return response
     } catch (err) {
       console.error("Image Upload Error:", err);

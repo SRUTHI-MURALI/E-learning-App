@@ -4,7 +4,7 @@ import "./StudentCoursesList.css";
 
 function CourseBody1() {
   return (
-    <div>
+    <div style={{marginTop:'10px'}}>
       
         <Row className="bodyContainer">
           <img className="courseBodyimg " style={{height:'40rem'}} src={img} />

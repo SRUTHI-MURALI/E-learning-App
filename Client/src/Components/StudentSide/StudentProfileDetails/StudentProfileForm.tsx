@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
-import pic from "../../../Assets/Images/pic2.png";
+import pic from "../../../Assets/Images/nophoto.png";
 import { Container, Card, Row, Col, Button } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
 import StudentEditProfileForm from "./StudentEditProfileForm";
@@ -27,6 +27,8 @@ const StudentProfileForm = () => {
         const response = await getStudentProfile(id);
 
         setStudent(response.data.studentDetails);
+     
+        
       } catch (error) {
         console.log({ error });
       }
@@ -55,6 +57,8 @@ const StudentProfileForm = () => {
     
     setShowEdit(false);
   };
+
+  
   return (
    <Container className="bodyContainer">
     <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
@@ -64,21 +68,26 @@ const StudentProfileForm = () => {
     <div className="col-lg-12">
     
             <div className="row mt-3">
-                <div className="col-md-4">
-                {student?.photo !== "No Pic" ? (
-                  <img
-                    style={{ width: "200px" }}
-                    src={`${Image_Url}/${student?.photo}`}
-                    alt="profile"
-                    className="rounded-circle"
-                  />
-                ) : (
-                  <img style={{ width: "200px" }} src={pic} className="rounded-circle" />
-                )}
-                 
-                </div>
+            <div className="col-md-3">
+              {student?.photo !=="No Pic"  ? (
+                <img
+                  style={{ width: "200px" }}
+                  src={`${Image_Url}/${student?.photo}`}
+                  alt="profile"
+                  className="rounded-circle"
+                />
+              ) : (
+                <img
+                  style={{ width: "200px" }}
+                  src={pic}
+                  className="rounded-circle"
+                  alt="default"
+                />
+              )}
+            </div>
+
                 
-                <div className="col-lg-8">
+                <div className="col-lg-6">
                 
                     <p style={{color:"#5B5B5B",fontFamily:"Open Sans sans-serif",color:'white'}}>
                     <h4>Name : {student?.name}</h4>
@@ -88,38 +97,46 @@ const StudentProfileForm = () => {
                     <h4>Phone : {student?.phone}</h4>
                     <h4>Email : {student?.email}</h4>
                     </p>
+                    
                 </div>
+                <div className="col-lg-2">
+                <Button onClick={handleEditStudentProfile} >Update Profile</Button>
+                </div>
+                
             </div>
+       
             
         </div>
-
         {allCourseList.length !== 0 ? (
-          <>
-             <h4 style={{fontFamily:"Vollkorn serif",color:'white',fontStyle:'bolder'}} className="m-3">Enrolled Courses</h4>
-             {allCourseList.map((course) => (
-              <div className="col-lg-10 m-3 ">
-              <Link to={`/studentcoursedetails/${course?._id}`} style={{textDecoration:'none'}} key={course?._id}>
-                     <div className="row mt-3">
-                         <div className="col-md-2 ">
-                             <img className="bg-white mt-2"
-                                src={`${Image_Url}/${course?.photo}`} style={{width:'8rem',height:'7rem'}}
-                                 alt=""
-                             />
-                         </div>
-                         <div className="col-lg-10">
-                         <h5 style={{fontFamily:"Vollkorn serif",color:'white'}}>  Course: {course?.title}</h5>
-                         
-                         <h5 style={{fontFamily:"Vollkorn serif",color:'white'}}>  By {course?.instructor?.name}</h5>                         </div>
-                     </div>
-                     </Link>
-                 </div>
-             ))}
-            
-          </>
+  <>
+    <h4 style={{ fontFamily: "Vollkorn serif", color: 'white', fontStyle: 'bolder',textDecoration:'underline' }} className="m-3">Enrolled Courses</h4>
 
-
-        ):(
-          <h2 style={{ color: "red", fontStyle: "italic" }}>
+    <div className="row">
+      {allCourseList.map((course) => (
+        <div key={course?._id} className="col-md-6 mt-3">
+          <Link to={`/studentcoursedetails/${course?._id}`} style={{ textDecoration: 'none', display: 'block' }}>
+            <div className="row">
+              <div className="col-md-3 mt-4">
+                <img
+                  className="bg-white mt-2"
+                  src={`${Image_Url}/${course?.photo}`}
+                  style={{ width: '8rem', height: '7rem' }}
+                  alt=""
+                />
+              </div>
+              <div className="col-md-3 mt-5">
+                <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>Course: {course?.title}</h5>
+                <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>By {course?.instructor?.name}</h5>
+              </div>
+            </div>
+          </Link>
+        </div>
+      ))}
+    </div>
+  </>
+) 
+:(
+          <h2 style={{ color: "red", fontStyle: "italic" ,marginTop:"5rem"}}>
                       Sorry, no enrolled courses available!          </h2>
         )}
         
@@ -127,7 +144,7 @@ const StudentProfileForm = () => {
       </>
       
     ):(
-      <p>jkhjh</p>
+      <StudentEditProfileForm onClose={handleClose} student={student}/>
     )}
    </Container>
     

@@ -14,7 +14,7 @@ import { getStudents } from "../AxiosConfigAdmin/AxiosConfig";
 function StudentTable() {
   const [studentList, setStudentlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const getStudentsList = async () => {
