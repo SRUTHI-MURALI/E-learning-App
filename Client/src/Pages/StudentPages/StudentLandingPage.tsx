@@ -20,6 +20,8 @@ function StudentLandingPage() {
       navigate("/");
     }
   }, [navigate]);
+
+  
   return (
     <>
     {parseData &&

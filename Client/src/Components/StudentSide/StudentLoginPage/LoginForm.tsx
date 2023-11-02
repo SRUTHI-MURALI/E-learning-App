@@ -96,6 +96,9 @@ function LoginForm() {
       navigate("/studentlandingpage");
     }
   }, [navigate]);
+ 
+  
+  
 
   return (
     <GoogleOAuthProvider clientId="1098563032990-ulbr653b8ln8fte1hndcdsi2ugfnbpud.apps.googleusercontent.com">

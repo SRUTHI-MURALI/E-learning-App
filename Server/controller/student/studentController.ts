@@ -102,6 +102,7 @@ const signUp = async (req: Request, res: Response) => {
       name: newUser.name,
       email: newUser.email,
       phone: newUser.phone,
+      status: newUser.isBlocked,
       token,
     });
   } catch (error) {
@@ -134,6 +135,7 @@ const login = async (req: Request, res: Response) => {
           name: student.name,
           email: student.email,
           phone: student.phone,
+          status: student.isBlocked,
           token,
         });
       }

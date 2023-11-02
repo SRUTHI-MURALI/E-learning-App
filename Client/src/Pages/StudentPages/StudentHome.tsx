@@ -8,8 +8,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function StudentHome() {
-  const studentData = localStorage.getItem("studentData");
-  const parseData = JSON.parse(studentData);
+  
 
   const navigate = useNavigate()
 
@@ -20,6 +19,7 @@ function StudentHome() {
       navigate("/studentlandingpage");
     }
   }, [navigate]);
+
   
   return (
     <div>

@@ -215,3 +215,10 @@ body {
     display: none;
   }
 }
+
+.nav-text {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 86rem;
+}

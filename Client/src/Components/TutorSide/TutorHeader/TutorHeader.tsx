@@ -20,31 +20,30 @@ function TutorHeader() {
   };
   return (
     <Navbar fixed="top" expand="lg" className="navbar-student">
-      
-    <img className="logo"style={{ height: "4rem" }} src={l1} />
-    <Navbar.Toggle aria-controls="navbarScroll"  className="custom-navbar-toggle " style={{backgroundColor:'white'}} />
+      <img className="logo" style={{ height: "4rem" }} src={l1} />
+      <Navbar.Toggle
+        aria-controls="navbarScroll"
+        className="custom-navbar-toggle "
+        style={{ backgroundColor: "white" }}
+      />
 
-    <Navbar.Collapse id="navbarScroll" >
-      
-      <Nav>
-      
-       <div className="header-left ">
-         <h3 style={{ color: "#fff" }}>{parseData?.name}</h3>
-      </div>
-      
-      <div >
-         <Link to="" onClick={handleLogout}>
-           {" "}
-           <BsPersonCircle className="icon" />
-           Logout
-         </Link>
-       </div>
-       </Nav>
-    </Navbar.Collapse>
- 
-</Navbar>
-
-
+      <Navbar.Collapse id="navbarScroll">
+        <Nav >
+          <div className="nav-text ">
+            <div className="px-5 pt-3">
+              <h3 style={{ color: "#fff" }}>{parseData?.name}</h3>
+            </div>
+            <div className="pt-2">
+              <Link to="" onClick={handleLogout}>
+                {" "}
+                <BsPersonCircle className="icon" />
+                Logout
+              </Link>
+            </div>
+          </div>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }
 

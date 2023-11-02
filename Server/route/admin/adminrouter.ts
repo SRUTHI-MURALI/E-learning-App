@@ -31,8 +31,8 @@ adminrouter.post("/login", login);
 
 // student management
 adminrouter.get("/getstudentlist", adminLoggedin, getStudentsList);
-adminrouter.put("/blockstudent/:id", adminLoggedin, blockStudent);
-adminrouter.put("/unblockstudent/:id", adminLoggedin, unBlockStudent);
+adminrouter.put("/blockstudent/:id", blockStudent);
+adminrouter.put("/unblockstudent/:id", unBlockStudent);
 adminrouter.get("/getstudentcount", adminLoggedin, getDashboardData);
 
 //Instructor management

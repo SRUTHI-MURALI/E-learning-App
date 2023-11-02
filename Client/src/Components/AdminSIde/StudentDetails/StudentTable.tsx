@@ -15,7 +15,7 @@ function StudentTable() {
   const [studentList, setStudentlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
   const itemsPerPage = 10;
-
+  
   useEffect(() => {
     const getStudentsList = async () => {
       try {
@@ -49,10 +49,17 @@ function StudentTable() {
         if (!student.isBlocked) {
           await axios.put(`${Base_Url}/admin/blockstudent/${student._id}`);
           student.isBlocked = true;
+         
+  
+
+          
+
           toast.success(`student "${student.name}" blocked successfully`);
         } else {
           await axios.put(`${Base_Url}/admin/unblockstudent/${student._id}`);
           student.isBlocked = false;
+          
+          
           toast.success(`student "${student.name}" unblocked successfully`);
         }
 
