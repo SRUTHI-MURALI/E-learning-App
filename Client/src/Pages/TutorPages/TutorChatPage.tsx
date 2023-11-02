@@ -79,7 +79,7 @@ export default function TutorChatPage() {
   return (
     <>
     <TutorHeader/>
-    <Container>
+    <Container style={{marginTop:'5rem', }}>
       <div className="container">
       
         <TutorChatContacts contacts={contacts} changeChat={handleChatChange} />

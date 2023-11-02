@@ -64,7 +64,7 @@ function TutorQuizTable() {
   const offset = currentPage * itemsPerPage;
   const paginatedData = courseList.slice(offset, offset + itemsPerPage);
   return (
-    <div>
+    <div style={{marginTop:'7rem'}}>
       <p className="tutorstudentlistheading">
         <ImArrowRight /> <u>Question List</u>
       </p>

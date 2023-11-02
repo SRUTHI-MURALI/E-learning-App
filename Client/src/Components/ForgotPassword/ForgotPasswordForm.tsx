@@ -77,8 +77,10 @@ function ForgotPasswordForm() {
           setOtpverified(true);
         })
         .catch((error) => {
-          // Handle the error here
-          console.log(error);
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+          toast.error(error.response.data.message);
         });
     } catch (error) {
       if (

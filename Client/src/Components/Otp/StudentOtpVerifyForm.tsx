@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, Container } from "react-bootstrap";
 import r1 from "../../Assets/Images/otp1.avif";
 import { Base_Url } from "../../Config/Config";
+import { toast, ToastContainer } from "react-toastify";
 
 interface StudentOtpVerifyFormProps {
   phone: number;
@@ -34,11 +35,20 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
     }
 
     try {
-      const response = await axios.post(`${Base_Url}/student/verifyotp`, {
+        axios.post(`${Base_Url}/student/verifyotp`, {
         verificationCode: trimmedOtp,
+      }) .then(() => {
+        alert("Otp verified successfully");
+        navigate("/studentlogin");
+      })
+      .catch((error) => {
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+        toast.error("otp verification failed");
       });
-      console.log(response.data);
-      navigate("/studentlogin");
+      
+      
     } catch (error) {
       // Handle the error here
       console.error("An error occurred:", error);
@@ -69,6 +79,7 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
       style={{ minHeight: "100vh", backgroundImage: `url(${r1})` }}
     >
       <Container>
+      <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
         <Card style={{ width: "18rem" }} className="text-center">
           {otpSent ? (
             <>

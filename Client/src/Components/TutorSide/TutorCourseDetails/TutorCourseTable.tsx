@@ -11,7 +11,7 @@ import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../AxiosConfigInstructors/AxiosConfig";
 
-function TutorCourseTable() {
+function TutorCourseTable(tutorname) {
   const tutorData = localStorage.getItem("tutorData");
   const parseData = JSON.parse(tutorData);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
@@ -54,7 +54,7 @@ function TutorCourseTable() {
   const paginatedData = courseList.slice(offset, offset + itemsPerPage);
 
   return (
-    <div>
+    <div style={{marginTop:'7rem'}}>
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
 
       {openPopUp == false && (

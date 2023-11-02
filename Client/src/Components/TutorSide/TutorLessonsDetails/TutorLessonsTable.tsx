@@ -89,7 +89,7 @@ function TutorLessonsTable() {
   const paginatedData = lessonsList.slice(offset, offset + itemsPerPage);
 
   return (
-    <div>
+    <div style={{marginTop:'7rem'}}>
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
       {openPopUp == false && (
         <>

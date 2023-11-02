@@ -85,9 +85,8 @@ const signUp = async (req: Request, res: Response) => {
 
     if (otpResponse.status !== 200) {
       // Handle OTP verification failure
-      console.log("error");
-
-      return res.status(400).json({ error: "OTP verification failed" });
+  
+      return res.status(400).json({ message: "OTP verification failed" });
     }
 
     // Create a new user

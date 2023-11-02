@@ -41,7 +41,7 @@ function TutorProfileform({ tutor }) {
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
       {showEdit === false ? (
         <>
-          <Row>
+          <Row style={{marginTop:'7rem'}}>
             <Col>
               <p className="studentlistheading">
                 <ImArrowRight /> <u>Tutor Profile</u>

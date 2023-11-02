@@ -23,19 +23,20 @@ function TutorOtpVerifyForm() {
     }
   
     try {
-      const response = await axios.post(`${Base_Url}/tutor/verifyotp`, {
+    await axios.post(`${Base_Url}/tutor/verifyotp`, {
         verificationCode: trimmedOtp,
+      }).then(() => {
+        alert("Otp verified successfully");
+        navigate("/tutorlogin");
+      })
+      .catch((error) => {
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+        toast.error("otp verification failed");
       });
   
-      if (response.status === 200) {
-        // OTP verification successful
-        toast.success("Success: OTP verified successfully")
-     
-        navigate("/tutorlogin");
-      } else {
-        // OTP verification failed
-      toast.error("Error: OTP verification failed");
-      }
+      
     } catch (error) {
       // Handle other errors
       console.log("Error: Something went wrong", error);

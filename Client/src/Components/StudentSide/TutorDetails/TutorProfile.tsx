@@ -122,21 +122,16 @@ export default function TutorProfile() {
           {tutorCourses.map((course, index) => (
             <Col md={3}>
               <Link to={`/studentcoursedetails/${course._id}`}>
-                <Card className="mb-4" style={{ height: "400px" }}>
+                <div className="mb-4" style={{ height: "200px" }}>
                   <Card.Body className="text-center">
                     <Card.Img
-                      style={{ height: "250px" }}
+                      style={{ height: "200px" }}
                       variant="top"
                       src={`${Image_Url}/${course?.photo}`}
                     />
-                    <p className="text-muted mb-1 mt-4">
-                      Title:{course?.title}
-                    </p>
-                    <p className="text-muted mb-1 mt-2">
-                      Duration:{course?.duration} Hours
-                    </p>
+                    
                   </Card.Body>
-                </Card>
+                </div>
               </Link>
             </Col>
           ))}

@@ -25,7 +25,8 @@ function AddQuiz({ courseId, onClose }) {
       option4 === "" ||
       answerOption === ""
     ) {
-      return toast.error("Please fill all fields");
+     toast.error("Please fill all fields")
+     return
     }
 
     const questionPattern = /^[A-Za-z\s.\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/;
@@ -59,16 +60,19 @@ function AddQuiz({ courseId, onClose }) {
     setOption4("");
     setAnswerOption("");
   };
-  {
-    console.log(questionset, "questions");
-  }
+ 
   const handleQuizSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await addQuiz(questionset, courseId, count);
+      if(questionset.length <=0){
+        alert ('No questions to submit')
+      }else{
+        await addQuiz(questionset, courseId, count);
 
       alert("Success");
+      }
+      
     } catch (error) {
       console.log(error);
     }

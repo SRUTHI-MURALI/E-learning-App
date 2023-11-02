@@ -100,6 +100,7 @@ function LoginForm() {
   return (
     <GoogleOAuthProvider clientId="1098563032990-ulbr653b8ln8fte1hndcdsi2ugfnbpud.apps.googleusercontent.com">
       <Container className="mt-5">
+      <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
         <Card className="logCard">
           <ToastContainer
             position="top-center"

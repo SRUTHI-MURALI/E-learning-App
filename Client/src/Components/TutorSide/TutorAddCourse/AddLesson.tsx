@@ -91,9 +91,14 @@ function AddLesson({ courseId, onClose }) {
   const handleMainSubmit = async  () => {
    
     try {
-      await addNewLesson(lessons, courseId);
+      if(lessons.length<=0){
+        alert("No lessons to submit");
+      }else{
+        await addNewLesson(lessons, courseId);
       onClose(false);
       alert("Success");
+      }
+      
       navigate("/tutorallcourses");
     } catch (error) {
       console.log(error);

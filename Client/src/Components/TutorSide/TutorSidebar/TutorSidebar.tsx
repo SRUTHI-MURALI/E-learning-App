@@ -1,6 +1,6 @@
 
 import { BsFillArchiveFill, BsPeopleFill } from "react-icons/bs";
-import l1 from "../../../Assets/Images/carouselBody/l1.jpeg";
+
 import "../Css/Tutor.css";
 import { Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
@@ -19,14 +19,10 @@ function TutorSidebar() {
   
 
   return (
-    <Row>
+    <Row style={{marginTop:'7rem'}}>
       <Col>
         <aside  id="sidebar" className="sidebar-responsive">
-          <div className="sidebar-title">
-            <div className="sidebar-brand">
-              <img style={{ height: "150px" }} src={l1} alt="Logo" />
-            </div>
-          </div>
+          
 
           <ul className="sidebar-list">
             <li
