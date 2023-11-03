@@ -14,7 +14,7 @@ function TutorEditProfileForm({ tutor, onClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [qualification, setQualification] = useState("");
-  const [experience, setExperience] = useState("");
+  const [experience, setExperience] = useState(0);
   const [about, setAbout] = useState("");
   const [startOnline, setStartOnline] = useState(0);
   const [onlineEnd, setOnlineEnd] = useState(0);
@@ -46,7 +46,7 @@ function TutorEditProfileForm({ tutor, onClose }) {
   const handleEditTutor = async (e) => {
     e.preventDefault();
    
-    
+   
     const namePattern = /^[A-Za-z\s.]+$/;
     if(name === ''){
       setName("No Name")
@@ -78,8 +78,9 @@ function TutorEditProfileForm({ tutor, onClose }) {
       }
     }
    
-    if(experience === ''){
-      setExperience("No Experience")
+    if(isNaN(experience)  || experience <= 0){
+
+      setExperience(0)
     }
     if(phone === ''){
       setPhone("No Number")
@@ -132,7 +133,7 @@ function TutorEditProfileForm({ tutor, onClose }) {
   };
 
   return (
-    <Container className="m-5">
+    <Container style={{marginTop:"10rem"}} >
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
       <Card className="m-5">
         <Row>

@@ -6,6 +6,7 @@ import AllCoursesList from "../../Components/StudentSide/StudentCoursesList/AllC
 import EnrolledCoursesList from "../../Components/StudentSide/StudentCoursesList/EnrolledCoursesList";
 import Footer from "../../Components/StudentSide/StudentFooter/Footer";
 import { useNavigate } from "react-router-dom";
+import SearchBarContainer from "../../Components/StudentSide/SearchBar/SearchBarContainer";
 
 function StudentCourseList() {
   const studentData = localStorage.getItem("studentData");
@@ -27,7 +28,8 @@ function StudentCourseList() {
        <Container>
          <Row>
            <StudentHeader />
-           <CourseBody1 />
+          
+           
            <AllCoursesList />
            <EnrolledCoursesList />
            <Footer />

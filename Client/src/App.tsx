@@ -49,6 +49,8 @@ import StudentChatPage from "./Pages/StudentPages/StudentChatPage";
 import TutorChatPage from "./Pages/TutorPages/TutorChatPage";
 import StudentCoursePdf from "./Pages/StudentPages/StudentCoursesPdf";
 
+import SearchBarContainer from "./Components/StudentSide/SearchBar/SearchBarContainer";
+
 
 function App() {
   return (
@@ -107,6 +109,7 @@ function App() {
           <Route path="/adminlessonslist/:id" element={<AdminLessonList />} />
           <Route path="/orderhistory" element={<AdminOrderList />} />
          
+          <Route path="/search" element={<SearchBarContainer />} />
 
           {/* otp */}
 

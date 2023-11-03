@@ -9,7 +9,7 @@ import {
   activateQuiz,
   removeQuiz,
 } from "../AxiosConfigInstructors/AxiosConfig";
-import { useState } from "react";
+
 
 function ViewQuiz({ quiz, onClose }) {
   
@@ -46,49 +46,58 @@ function ViewQuiz({ quiz, onClose }) {
     }
   };
 
+
   return (
     <>
-      <ToastContainer position="top-center" autoClose={3000} />
-      {quiz[0].questionset.map((question, index) => (
-        <div key={question?._id}>
-          <Accordion>
-            <Accordion.Item className="m-3" eventKey={question?._id}>
-              <Row>
-                {question?.isActive ? (
-                  <Accordion.Header>
-                    Question {index + 1} : Active
-                  </Accordion.Header>
-                ) : (
-                  <Accordion.Header>
-                    Question {index + 1} : Removed
-                  </Accordion.Header>
-                )}
-                <Col xs={12} md={8}>
-                  <Accordion.Body>
-                    Question {index + 1}: {question.question}
-                  </Accordion.Body>
-                  <Accordion.Body>Option 1: {question.option1}</Accordion.Body>
-                  <Accordion.Body>Option 2: {question.option2}</Accordion.Body>
-                  <Accordion.Body>Option 3: {question.option3}</Accordion.Body>
-                  <Accordion.Body>Option 4: {question.option4}</Accordion.Body>
-                  <Accordion.Body>
-                    Right Answer: {question.answerOption}
-                  </Accordion.Body>
-                </Col>
-                <Col xs={12} md={4}>
-                  {/* <Accordion.Body onClick={handleEdit}>
-                    <AiFillEdit />
-                  </Accordion.Body> */}
-                  <Accordion.Body onClick={() => handleDelete(question)}>
-                    {question?.isActive ? (<><AiTwotoneDelete /> Remove Quiz <AiTwotoneDelete /></>) : (<><HiPlus /> add quiz <HiPlus /></>)}
-                  </Accordion.Body>
-                </Col>
-              </Row>
-            </Accordion.Item>
-          </Accordion>
-        </div>
-      ))}
-    </>
+    <ToastContainer position="top-center" autoClose={3000} />
+  
+    {quiz?.map((questions, index) => (
+      questions?.questionset.map((question, innerIndex) => {
+        console.log(question.option1);
+        return (
+          <div key={innerIndex}>
+            <Accordion>
+              <Accordion.Item className="m-3" eventKey={question?._id}>
+                <Row>
+                  {question?.isActive ? (
+                    <Accordion.Header>
+                      Question {innerIndex + 1} : Active
+                    </Accordion.Header>
+                  ) : (
+                    <Accordion.Header>
+                      Question {innerIndex + 1} : Removed
+                    </Accordion.Header>
+                  )}
+                  <Col xs={12} md={8}>
+                    <Accordion.Body>
+                      Question {innerIndex + 1}: {question?.question}
+                    </Accordion.Body>
+                    <Accordion.Body>Option 1: {question?.option1}</Accordion.Body>
+                    <Accordion.Body>Option 2: {question?.option2}</Accordion.Body>
+                    <Accordion.Body>Option 3: {question?.option3}</Accordion.Body>
+                    <Accordion.Body>Option 4: {question?.option4}</Accordion.Body>
+                    <Accordion.Body>
+                      Right Answer: {question.answerOption}
+                    </Accordion.Body>
+                  </Col>
+                  <Col xs={12} md={4}>
+                    <Accordion.Body onClick={() => handleDelete(question)}>
+                      {question?.isActive ? (
+                        <><AiTwotoneDelete /> Remove Quiz <AiTwotoneDelete /></>
+                      ) : (
+                        <><HiPlus /> add quiz <HiPlus /></>
+                      )}
+                    </Accordion.Body>
+                  </Col>
+                </Row>
+              </Accordion.Item>
+            </Accordion>
+          </div>
+        );
+      })
+    ))}
+  </>
+  
   );
 }
 

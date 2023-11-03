@@ -18,7 +18,8 @@ import {
   studentEditedProfile,
   getCourseList,
   sendMsg,
-  receivemsg
+  receivemsg,
+  getSearchData
 } from "../../controller/student/studentController";
 import { studentLoggedin } from "../../middlewares/studentMiddlewares";
 
@@ -56,6 +57,9 @@ studentrouter.put(
 //student Chats
 studentrouter.post("/sendmsg",studentLoggedin,sendMsg)
 studentrouter.post("/receivemsg",studentLoggedin,receivemsg)
+
+//student search
+studentrouter.post("/searchitem",getSearchData)
 
 
 export default studentrouter;

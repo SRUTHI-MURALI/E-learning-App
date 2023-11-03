@@ -186,7 +186,8 @@ const getInstructorList = async (req: Request, res: Response) => {
 const addCategory = async (req: Request, res: Response) => {
   try {
     const { category, description } = req.body;
-    const check = await categoryModel.findOne({ title: category });
+    const caseInsensitiveCategory = new RegExp(category, 'i');
+    const check = await categoryModel.findOne({ title: caseInsensitiveCategory });
     if (check) {
       return res.status(400).json("category already existing");
     } else {

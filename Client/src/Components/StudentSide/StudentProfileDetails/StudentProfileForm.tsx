@@ -16,6 +16,7 @@ const StudentProfileForm = () => {
   const studentInfo = localStorage.getItem("studentData");
   const info = JSON.parse(studentInfo);
 
+
   const [student, setStudent] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
 
@@ -57,6 +58,7 @@ const StudentProfileForm = () => {
     
     setShowEdit(false);
   };
+  console.log(student?.photo );
 
   
   return (
@@ -69,13 +71,15 @@ const StudentProfileForm = () => {
     
             <div className="row mt-3">
             <div className="col-md-3">
-              {student?.photo !=="No Pic"  ? (
+              {student?.photo &&student?.photo !=="No Pic"  ? (
+               
                 <img
                   style={{ width: "200px" }}
                   src={`${Image_Url}/${student?.photo}`}
                   alt="profile"
                   className="rounded-circle"
                 />
+                
               ) : (
                 <img
                   style={{ width: "200px" }}

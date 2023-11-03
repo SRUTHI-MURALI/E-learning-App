@@ -451,6 +451,22 @@ const receivemsg = async (req: Request, res: Response) => {
   }
 };
 
+const getSearchData = async (req: Request, res: Response) =>{
+
+
+  try {
+    const {searchvalue}=req.body
+    const caseInsensitiveSearch = new RegExp(searchvalue, 'i');
+    const courseData= await Courses.find({title:caseInsensitiveSearch})
+    
+    res.status(201).json({courseData});
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
+
 export {
   sendOtp,
   signUp,
@@ -467,5 +483,6 @@ export {
   studentEditedProfile,
   getCourseList,
   sendMsg,
-  receivemsg
+  receivemsg,
+  getSearchData
 };
