@@ -19,7 +19,8 @@ import {
   getCourseList,
   sendMsg,
   receivemsg,
-  getSearchData
+  getSearchData,
+  getSortData
 } from "../../controller/student/studentController";
 import { studentLoggedin } from "../../middlewares/studentMiddlewares";
 
@@ -60,6 +61,9 @@ studentrouter.post("/receivemsg",studentLoggedin,receivemsg)
 
 //student search
 studentrouter.post("/searchitem",getSearchData)
+
+//student sort
+studentrouter.post("/sortitem",getSortData)
 
 
 export default studentrouter;

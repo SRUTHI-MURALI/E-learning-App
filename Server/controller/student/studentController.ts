@@ -474,6 +474,49 @@ const getSearchData = async (req: Request, res: Response) => {
   }
 };
 
+const getSortData = async (req: Request, res: Response) => {
+  try {
+    const { sortValue, sortOrder } = req.body;
+    
+  
+    let courseData: any;
+  
+    if (sortValue === 'price') {
+     
+      const query = {
+        price: { $gte: 0 },
+      };
+      
+      courseData = await Courses.find(query).where({ isApproved: true }).populate(
+        "category instructor"
+      ).sort({
+        price: sortOrder === 'asc' ? 1 : -1
+      });
+    } else if (sortValue === 'duration') {
+     
+      const query = {
+        duration: { $gte: 0 },
+      };
+  
+      courseData = await Courses.find(query).sort({
+        duration: sortOrder === 'asc' ? 1 : -1
+      });
+    }
+  
+  
+    if (courseData.length > 0) {
+      res.status(200).json({ courseData });
+    } else {
+      res.status(404).json({ message: 'No search item' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+  
+};
+
+
 
 
 export {
@@ -493,5 +536,6 @@ export {
   getCourseList,
   sendMsg,
   receivemsg,
-  getSearchData
+  getSearchData,
+  getSortData
 };

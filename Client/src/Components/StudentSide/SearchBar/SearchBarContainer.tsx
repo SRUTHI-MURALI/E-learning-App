@@ -21,7 +21,7 @@ function SearchBarContainer({ setSearchedCourses }) {
   
 
   return (
-    <div className="float-end" style={{ marginTop: '150px' }}>
+    <div  style={{ marginTop: '150px' }}>
       <Form onSubmit={handleSearch}>
         <Row>
           <Col xs="auto">
@@ -33,7 +33,7 @@ function SearchBarContainer({ setSearchedCourses }) {
             />
           </Col>
           <Col xs="auto">
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Search</Button>
           </Col>
         </Row>
       </Form>
