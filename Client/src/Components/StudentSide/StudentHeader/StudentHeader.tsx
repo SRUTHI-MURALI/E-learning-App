@@ -19,6 +19,7 @@ function StudentHeader() {
   const location = useLocation()
   const isHome = location.pathname === "/studentlandingpage"
   const isCourses = location.pathname === "/studentallcourselist"
+  const isInstructors = location.pathname === "/studentinstructorlist"
   const isProfile = location.pathname === "/studentprofile"
 
   const handleLogout = async () => {
@@ -58,6 +59,13 @@ function StudentHeader() {
               href="/studentallcourselist"
             >
               Courses
+            </Nav.Link>
+
+            <Nav.Link
+              className={`nav-header-student ${isInstructors ? "highlight" : ""}`}
+              href="/studentinstructorlist"
+            >
+              Instructors
             </Nav.Link>
             
             <Nav.Link   className={`nav-header-student ${isProfile ? "highlight" : ""}`}href="/studentprofile">

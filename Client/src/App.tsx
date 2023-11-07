@@ -50,6 +50,7 @@ import TutorChatPage from "./Pages/TutorPages/TutorChatPage";
 import StudentCoursePdf from "./Pages/StudentPages/StudentCoursesPdf";
 
 import SearchBarContainer from "./Components/StudentSide/SearchBar/SearchBarContainer";
+import StudentTutorList from "./Pages/StudentPages/StudentTutorList";
 
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
           <Route path="/mentoring" element={<StudentMentors/>}/>
           <Route path="/studentpdfs" element={<StudentCoursePdf/>}/>
           <Route path="/chat" element={<StudentChatPage/>}/>
+          <Route path="/studentinstructorlist" element={<StudentTutorList/>} />
           
 
           {/* tutor Routes */}
@@ -109,7 +111,7 @@ function App() {
           <Route path="/adminlessonslist/:id" element={<AdminLessonList />} />
           <Route path="/orderhistory" element={<AdminOrderList />} />
          
-          <Route path="/search" element={<SearchBarContainer />} />
+          
 
           {/* otp */}
 

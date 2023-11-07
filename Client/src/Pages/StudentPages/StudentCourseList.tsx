@@ -1,12 +1,12 @@
 import React,{useEffect} from "react";
 import { Container, Row } from "react-bootstrap";
 import StudentHeader from "../../Components/StudentSide/StudentHeader/StudentHeader";
-import CourseBody1 from "../../Components/StudentSide/StudentCoursesList/CourseBody1";
+
 import AllCoursesList from "../../Components/StudentSide/StudentCoursesList/AllCoursesList";
 import EnrolledCoursesList from "../../Components/StudentSide/StudentCoursesList/EnrolledCoursesList";
 import Footer from "../../Components/StudentSide/StudentFooter/Footer";
 import { useNavigate } from "react-router-dom";
-import SearchBarContainer from "../../Components/StudentSide/SearchBar/SearchBarContainer";
+
 
 function StudentCourseList() {
   const studentData = localStorage.getItem("studentData");
@@ -28,8 +28,6 @@ function StudentCourseList() {
        <Container>
          <Row>
            <StudentHeader />
-          
-           
            <AllCoursesList />
            <EnrolledCoursesList />
            <Footer />

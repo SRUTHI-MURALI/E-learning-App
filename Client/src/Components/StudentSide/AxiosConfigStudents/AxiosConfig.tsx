@@ -30,6 +30,8 @@ export const getAllCourses = () => {
   return api.get("/getallcourses");
 };
 
+
+
 export const getEnrolledCourses = (id: string) => {
   return api.get(`/getenrolledcourses/${id}`);
 };

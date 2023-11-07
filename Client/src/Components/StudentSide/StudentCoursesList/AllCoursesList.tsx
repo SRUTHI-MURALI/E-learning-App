@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Col, Container } from 'react-bootstrap';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Card, Col, Container, Row } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { FaRupeeSign } from 'react-icons/fa';
@@ -7,8 +7,12 @@ import { Link } from 'react-router-dom';
 import { Image_Url } from '../../../Config/Config';
 import { getAllCourses, getEnrolledCourses } from '../AxiosConfigStudents/AxiosConfig';
 import SearchBarContainer from '../SearchBar/SearchBarContainer';
+import ReactPaginate from 'react-paginate';
+import {FaBackward} from 'react-icons/fa'
+import { TbPlayerTrackNextFilled } from "react-icons/tb";
 
 function AllCoursesList() {
+  const [currentPage, setCurrentPage] = useState(0);
   const [allCourseList, setAllCourseList] = useState([]);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [searchedCourses, setSearchedCourses] = useState([]);
@@ -58,31 +62,31 @@ function AllCoursesList() {
     },
   };
 
+  
+
+
   const filteredCourses = searchedCourses.length > 0 ? searchedCourses : allCourseList;
+
+  const PageSize = 8;
+  const pageCount = Math.ceil(filteredCourses.length / PageSize);
+
+  const currentTableData = useMemo(() => {
+    const firstPage = currentPage * PageSize;
+    const lastPage = Math.min(firstPage + PageSize, filteredCourses.length);
+    return filteredCourses.slice(firstPage, lastPage);
+  }, [currentPage, filteredCourses]);
+
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
 
   return (
     <>
       <SearchBarContainer setSearchedCourses={setSearchedCourses} />
       <Container className="mt-5">
         <p className="allcourses-header">All Courses</p>
-        <Carousel
-          swipeable={false}
-          draggable={false}
-          showDots={true}
-          responsive={responsive}
-          ssr={true}
-          infinite={true}
-          autoPlay={false}
-          autoPlaySpeed={1000}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          containerClass="carousel-container"
-          removeArrowOnDeviceType={['tablet', 'mobile']}
-          dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px"
-        >
-          {filteredCourses.map((courses, index) => (
+        <Row>
+          {currentTableData.map((courses, index) => (
             <Col key={courses?._id}>
               <Link to={`/studentcoursedetails/${courses?._id}`} style={{ textDecoration: 'none' }}>
                 <Card style={{ width: '16rem', height: '25rem' }} className="m-2">
@@ -99,8 +103,20 @@ function AllCoursesList() {
               </Link>
             </Col>
           ))}
-        </Carousel>
+       </Row>
       </Container>
+      <ReactPaginate
+          previousLabel={<FaBackward />}
+          nextLabel={<TbPlayerTrackNextFilled />}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          
+          activeClassName={"active"}
+        />
     </>
   );
 }
