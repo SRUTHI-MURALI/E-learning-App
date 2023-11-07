@@ -11,7 +11,8 @@ function SearchBarContainer({ setSearchedCourses }) {
     try {
       if (searchValue) {
         const response = await axios.post(`${Base_Url}/student/searchitem`, { searchvalue: searchValue });
-        setSearchedCourses(response.data.courseData);
+        setSearchedCourses(response?.data?.searchData);  
+        
       }
     } catch (error) {
       console.error('Error:', error);

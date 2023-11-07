@@ -451,20 +451,29 @@ const receivemsg = async (req: Request, res: Response) => {
   }
 };
 
-const getSearchData = async (req: Request, res: Response) =>{
-
-
+const getSearchData = async (req: Request, res: Response) => {
   try {
-    const {searchvalue}=req.body
+    const { searchvalue } = req.body;
     const caseInsensitiveSearch = new RegExp(searchvalue, 'i');
-    const courseData= await Courses.find({title:caseInsensitiveSearch})
     
-    res.status(201).json({courseData});
+    const courseData = await Courses.find({ title: caseInsensitiveSearch });
+    const tutorData = await Tutor.find({ name: caseInsensitiveSearch });
+    
+    const searchData = [...courseData, ...tutorData]; // Combine the results into an array
+    
+    if (searchData.length > 0) {
+      res.status(200).json({ searchData });
+    } else {
+      res.status(404).json({ message: 'No search item' });
+    }
+
+   
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  
-}
+};
+
 
 
 export {

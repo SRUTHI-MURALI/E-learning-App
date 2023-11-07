@@ -10,17 +10,20 @@ import './AllTeachersList.css'
 
 function AllTeachersList({tearcherData}) {
   const [currentPage, setCurrentPage] = useState(0);
-  console.log(tearcherData);
+  const [searchedCourses, setSearchedCourses] = useState([]);
   
+console.log(searchedCourses,'kjjl');
+
+  const filteredCourses = searchedCourses.length > 0 ? searchedCourses : tearcherData;
   
   const PageSize = 8;
-  const pageCount = Math.ceil(tearcherData.length / PageSize);
+  const pageCount = Math.ceil(filteredCourses.length / PageSize);
 
   const currentTableData = useMemo(() => {
     const firstPage = currentPage * PageSize;
-    const lastPage = Math.min(firstPage + PageSize, tearcherData.length);
-    return tearcherData.slice(firstPage, lastPage);
-  }, [currentPage, tearcherData]);
+    const lastPage = Math.min(firstPage + PageSize, filteredCourses.length);
+    return filteredCourses.slice(firstPage, lastPage);
+  }, [currentPage, filteredCourses]);
 
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
@@ -32,7 +35,7 @@ function AllTeachersList({tearcherData}) {
   
   return (
     <>
-    <SearchBarContainer/>
+    <SearchBarContainer setSearchedCourses={setSearchedCourses}  />
     <Container  className="mt-5">
       <>
     <Row>

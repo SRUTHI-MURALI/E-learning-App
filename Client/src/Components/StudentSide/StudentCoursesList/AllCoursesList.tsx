@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { FaRupeeSign } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -82,7 +81,7 @@ function AllCoursesList() {
 
   return (
     <>
-      <SearchBarContainer setSearchedCourses={setSearchedCourses} />
+      <SearchBarContainer setSearchedCourses={setSearchedCourses}  />
       <Container className="mt-5">
         <p className="allcourses-header">All Courses</p>
         <Row>
