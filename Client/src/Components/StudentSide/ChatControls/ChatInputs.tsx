@@ -18,18 +18,18 @@ export default function ChatInputs({ handleSendMsg }) {
 
   return (
     <Container>
-    <form className="input-container" onSubmit={(event) => sendChat(event)}>
+    <form className="input-container ms-5" onSubmit={(event) => sendChat(event)}>
       <div className="row">
-        <div className="col-lg-10 col-md-8">
+        <div className="col-lg-8 col-md-8">
           <input
-            style={{ borderRadius: '10px', height: '50px', width: '100%', maxWidth: '550px' }}
+            style={{ borderRadius: '8px', height: '50px', width: '70%', maxWidth: '550px', textAlign:'center'}}
             type="text"
             placeholder="Type your message here"
             onChange={(e) => setMsg(e.target.value)}
             value={msg}
           />
         </div>
-        <div className="col-lg-2 col-md-4">
+        <div className="col-lg-4 col-md-4">
           <button type="submit" className="btn btn-primary">
             <IoMdSend />
           </button>
@@ -43,7 +43,6 @@ export default function ChatInputs({ handleSendMsg }) {
 
 const Container = styled.div`
 
- 
   
   
  

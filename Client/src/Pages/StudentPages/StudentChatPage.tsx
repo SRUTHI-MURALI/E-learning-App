@@ -74,7 +74,7 @@ export default function StudentChatPage() {
   return (
       <>
       <StudentHeader/>
-      <Container style={{marginTop:'8rem'}}>
+      <Container style={{marginTop:'7rem'}}>
         <div className="container">
         
           <ChatContacts contacts={contacts} changeChat={handleChatChange} />
@@ -99,10 +99,11 @@ const Container = styled.div`
   align-items: center;
   background-color: #131324;
   .container {
-    height: 85vh;
-    width: 85vw;
+    height: 80vh;
+    width: 70vw;
     background-color: white;
     display: grid;
+    border-radius:2rem;
     grid-template-columns: 25% 75%;
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       grid-template-columns: 35% 65%;

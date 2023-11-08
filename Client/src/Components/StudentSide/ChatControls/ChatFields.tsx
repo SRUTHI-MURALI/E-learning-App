@@ -89,9 +89,7 @@ export default function ChatFields({ currentChat, socket }) {
             alt=""
           />
         </div>
-        <div className="username">
-          <h3>{currentChat.name}</h3>
-        </div>
+        
       </div>
     </div>
     <div className="chat-messages">
@@ -145,16 +143,16 @@ const Container = styled.div`
     }
   }
   .chat-messages {
-    padding: 1rem 2rem;
+    padding: 1rem 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: .1rem;
     overflow: auto;
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
         background-color: black;
-        width: 0.1rem;
+        width: 0.2rem;
         border-radius: 1rem;
       }
     }
@@ -177,6 +175,7 @@ const Container = styled.div`
       justify-content: flex-end;
       .content {
         background-color: #4f04ff21;
+        height:3rem;
       }
     }
     .recieved {

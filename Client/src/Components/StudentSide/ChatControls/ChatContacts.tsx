@@ -41,10 +41,10 @@ export default function ChatContacts({ contacts, changeChat }) {
   {currentUserName && (
     <>
       <div className="brand">
-        {/* Content for the "brand" section */}
+       
       </div>
       <div className="contacts">
-        <h1 style={{ color: 'white' }}>Teachers</h1>
+        <h1 style={{ color: 'white' }}>Our Teachers</h1>
         <div className="d-flex flex-column">
           {contacts.map((contact, index) => (
             <div
@@ -75,6 +75,8 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
+  border-radius:2rem;
+  
   background-color: rgb(100, 140, 198);
   
   .contacts {
@@ -82,6 +84,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     overflow: auto;
+   
     gap: 0.8rem;
     &::-webkit-scrollbar {
       width: 0.2rem;
@@ -93,13 +96,13 @@ const Container = styled.div`
     }
     .contact {
       background-color: #ffffff30;
-      min-height: 5rem;
+      min-height: 3 rem;
       cursor: pointer;
       width: 90%;
-      border-radius: 0.2rem;
-      padding: 0.4rem;
+      border-radius: 3rem;
+      padding: .8rem;
       display: flex;
-      gap: 1rem;
+      gap: .5rem;
       align-items: center;
       transition: 0.5s ease-in-out;
       .avatar {

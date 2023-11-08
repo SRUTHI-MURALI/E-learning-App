@@ -498,10 +498,13 @@ const getSortData = async (req: Request, res: Response) => {
         duration: { $gte: 0 },
       };
   
-      courseData = await Courses.find(query).sort({
+      courseData = await Courses.find(query).where({ isApproved: true }).populate(
+        "category instructor"
+      ).sort({
         duration: sortOrder === 'asc' ? 1 : -1
       });
     }
+  
   
   
     if (courseData.length > 0) {
