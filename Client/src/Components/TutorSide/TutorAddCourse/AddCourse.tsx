@@ -14,7 +14,7 @@ interface AddCourseProps {
 
 function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
   const tutorData = localStorage.getItem("tutorData");
-  const parseData = JSON.parse(tutorData);
+  const parseData = tutorData ? JSON.parse(tutorData) : null;
 
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number>(0);
@@ -148,7 +148,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                       onChange={(e) => {
                         const inputValue = e.target.value;
                          // Parse the input as an integer
-                        setPrice(inputValue); // Update the state with the parsed integer
+                        setPrice(Number(inputValue)); // Update the state with the parsed integer
                       }}
                     />
                   </Form.Group>
@@ -160,7 +160,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                       onChange={(e) => {
                         const inputValue = e.target.value;
                         // Parse the input as an integer
-                        setDuration(inputValue); // Update the state with the parsed integer
+                        setDuration(Number(inputValue)); // Update the state with the parsed integer
                       }}
                     />
                   </Form.Group>

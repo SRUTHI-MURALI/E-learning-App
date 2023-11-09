@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import {
   BsFillArchiveFill,
   BsFillGrid3X3GapFill,
@@ -44,30 +44,19 @@ function AdminDashBoard() {
           return { _id: month, totalIncome: 0 };
         });
         // Update the initial array with the fetched data
-        const updatedMonthlySales = initialMonthlySales.map((item) => {
+        const updatedMonthlySales:any = initialMonthlySales.map((item) => {
           const matchingData = response.data.monthlyIncomeData.find(
-            (data) => data._id === item._id
+            (data:any) => data._id === item._id
           );
           return matchingData || item;
         });
-        updatedMonthlySales.sort((a, b) => a._id - b._id);
+        updatedMonthlySales.sort((a:any, b:any) => a._id - b._id);
 
         setMonthlyIncome(updatedMonthlySales);
 
-        const initialMonthlyCourses = Array.from({ length: 12 }, (_, index) => {
-          const month = ((currentMonth + index - 1) % 12) + 1; // Ensure January is the first month
-          return { _id: month, count: 0 };
-        });
+        
 
-        const updatedMonthlyCourses = initialMonthlyCourses.map((item) => {
-          const matchingData = response.data.monthlyCoursesData.find(
-            (data) => data._id === item._id
-          );
-          return matchingData || item;
-        });
-        updatedMonthlyCourses.sort((a, b) => a._id - b._id);
-
-        setMonthlyCourses(updatedMonthlyCourses);
+        
       } catch (error) {
         console.log(error);
       }

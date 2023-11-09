@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { Row, Col, Container} from "react-bootstrap";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";

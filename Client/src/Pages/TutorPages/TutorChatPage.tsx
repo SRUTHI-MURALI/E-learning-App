@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import styled from "styled-components";
@@ -17,7 +17,8 @@ export default function TutorChatPage() {
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
   const tutorDetails = localStorage.getItem("tutorData");
-  const tutor =JSON.parse(tutorDetails)
+  
+  const tutor = tutorDetails ? JSON.parse(tutorDetails) : null;
 
   useEffect(() => {
     async function fetchData() {

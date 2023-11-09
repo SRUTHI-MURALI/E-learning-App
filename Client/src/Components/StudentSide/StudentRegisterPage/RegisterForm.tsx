@@ -117,7 +117,7 @@ function RegisterForm() {
                 <Form.Control
                   placeholder="123456789"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(Number(e.target.value))}
                 />
               </Form.Group>
 

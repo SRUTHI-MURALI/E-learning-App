@@ -91,7 +91,7 @@ function LoginForm() {
 
   useEffect(() => {
     const studentData = localStorage.getItem("studentData");
-    const parseData = JSON.parse(studentData);
+    const parseData = studentData ? JSON.parse(studentData) : null;
     if (parseData) {
       navigate("/studentlandingpage");
     }

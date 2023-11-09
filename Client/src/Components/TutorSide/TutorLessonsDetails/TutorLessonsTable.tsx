@@ -1,9 +1,8 @@
+import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { ImArrowRight } from "react-icons/im";
 import { TiTickOutline } from "react-icons/ti";
 import { AiOutlineClose } from "react-icons/ai";
-import { useState, useEffect } from "react";
-import "../../AdminSIde/CourseDetails/CourseTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Video_Url } from "../../../Config/Config";
@@ -18,42 +17,54 @@ import {
   inactivateLesson,
 } from "../AxiosConfigInstructors/AxiosConfig";
 
-function TutorLessonsTable() {
-  const [lessonsList, setLessonslist] = useState([]);
-  const [openPopUp, setOpenPopUp] = useState(false);
+interface Lesson {
+  _id: string;
+  title: string;
+  description: string;
+  duration: string;
+  pdf: string;
+  video: string;
+  isActive: boolean;
+}
 
+interface ParamTypes {
+  id: any;
+}
+
+function TutorLessonsTable() {
+  const [lessonsList, setLessonslist] = useState<Lesson[]>([]);
+  const [openPopUp, setOpenPopUp] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
   const itemsPerPage = 5;
 
-  const { id } = useParams();
+  const { id } = useParams<ParamTypes>();
 
   useEffect(() => {
-    const getLessons = async (id: string) => {
+    const getLessons = async (courseId: string) => {
       try {
-        await getAllLessons(id).then((response) => {
-          setLessonslist(response.data.allLessons);
-        });
+        const response = await getAllLessons(courseId);
+        setLessonslist(response.data.allLessons);
       } catch (error) {
         console.log(error);
       }
     };
     getLessons(id);
-  }, []);
+  }, [id]);
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 
-  const handleOpenAddForm = async () => {
+  const handleOpenAddForm = () => {
     setOpenPopUp(true);
   };
-  const handleOnClose = async () => {
+
+  const handleOnClose = () => {
     setOpenPopUp(false);
   };
 
-  const activeStatus = async (lessons: any) => {
+  const activeStatus = async (lessons: Lesson) => {
     try {
-      // Display a confirmation dialog using SweetAlert
       const result = await Swal.fire({
         title: `Are you sure you want to ${
           lessons.isActive ? "Disable" : "Activate"
@@ -65,14 +76,12 @@ function TutorLessonsTable() {
       });
 
       if (result.isConfirmed) {
-        const courseId = id;
         if (!lessons.isActive) {
-          await activateLesson(lessons._id, courseId);
-
+          await activateLesson(lessons._id, id);
           lessons.isActive = true;
           toast.success(`lessons "${lessons.title}" activated successfully`);
         } else {
-          await inactivateLesson(lessons._id, courseId);
+          await inactivateLesson(lessons._id, id);
           lessons.isActive = false;
           toast.success(`lesson "${lessons.title}" disabled successfully`);
         }
@@ -80,7 +89,6 @@ function TutorLessonsTable() {
         setLessonslist([...lessonsList]);
       }
     } catch (error) {
-      // Handle errors and display an error message to the user
       toast.error("Error");
     }
   };
@@ -89,9 +97,9 @@ function TutorLessonsTable() {
   const paginatedData = lessonsList.slice(offset, offset + itemsPerPage);
 
   return (
-    <div style={{marginTop:'7rem'}}>
+    <div style={{ marginTop: "7rem" }}>
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
-      {openPopUp == false && (
+      {openPopUp === false && (
         <>
           <Row>
             <Row>
@@ -127,16 +135,16 @@ function TutorLessonsTable() {
                   {paginatedData.map((lessons, index) => (
                     <tr key={lessons._id}>
                       <td>{index + 1}</td>
-                      <td>{lessons?.title}</td>
-                      <td>{lessons?.description}</td>
-                      <td>{lessons?.duration}</td>
+                      <td>{lessons.title}</td>
+                      <td>{lessons.description}</td>
+                      <td>{lessons.duration}</td>
                       <td>
-                        {lessons?.pdf && (
+                        {lessons.pdf && (
                           <a
-                            href={lessons?.pdf}
+                            href={lessons.pdf}
                             target="_blank"
                             rel="noopener noreferrer"
-                            download // Add 'download' attribute to trigger the download
+                            download
                           >
                             Download PDF
                           </a>
@@ -144,14 +152,14 @@ function TutorLessonsTable() {
                       </td>
                       <td>
                         <video
-                          src={`${Video_Url}/${lessons?.video}`}
-                          alt="sample"
+                          src={`${Video_Url}/${lessons.video}`}
+                          
                           style={{ width: "40px" }}
                           controls
-                        />{" "}
+                        />
                       </td>
                       <td>
-                        {lessons?.isActive ? (
+                        {lessons.isActive ? (
                           <>
                             <TiTickOutline />
                             <Button
@@ -192,7 +200,7 @@ function TutorLessonsTable() {
         </div>
       )}
 
-      {openPopUp == false && (
+      {openPopUp === false && (
         <div style={{ float: "right", margin: "3px" }}>
           <ReactPaginate
             previousLabel={"Previous "}
@@ -202,7 +210,7 @@ function TutorLessonsTable() {
             marginPagesDisplayed={2}
             pageRangeDisplayed={2}
             onPageChange={handlePageChange}
-            containerClassName={"pagination"} // Remove one of the containerClassName attributes
+            containerClassName={"pagination"}
             activeClassName={"active"}
           />
         </div>

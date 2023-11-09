@@ -30,7 +30,7 @@ function StudentCourseAbout({ courseData }: StudentCourseAboutProps) {
   }, []);
 
   const studentData = localStorage.getItem("studentData");
-  const parseData = JSON.parse(studentData);
+  const parseData = studentData ? JSON.parse(studentData) : null;
 
   useEffect(() => {
     const enrolledCourses = async (id) => {

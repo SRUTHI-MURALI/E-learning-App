@@ -1,8 +1,7 @@
 
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import styled from "styled-components";
-import { io } from "socket.io-client";
-import { Base_Url } from "../../../Config/Config";
+
 
 
 export default function TutorChatContacts({ contacts, changeChat }) {
@@ -17,7 +16,8 @@ export default function TutorChatContacts({ contacts, changeChat }) {
     async function fetchData() {
       try {
         const tutor = localStorage.getItem("tutorData");
-        const userData = await JSON.parse(tutor);
+        const userData =  tutor ? JSON.parse(tutor) : null;
+       
       
         
         if (userData) {

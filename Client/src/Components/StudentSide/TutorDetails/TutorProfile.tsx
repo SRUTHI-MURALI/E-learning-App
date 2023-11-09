@@ -1,45 +1,62 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { Image_Url } from "../../../Config/Config";
-import { getTutorProfile } from "../AxiosConfigStudents/AxiosConfig";
+import  { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Image_Url } from '../../../Config/Config';
+import { getTutorProfile } from '../AxiosConfigStudents/AxiosConfig';
+
+interface TutorDetails {
+  _id: string;
+  photo: string;
+  name: string;
+  qualification: string;
+  email: string;
+  phone: string;
+  experience: number;
+  about: string;
+}
+
+interface TutorCourse {
+  _id: string;
+  photo: string;
+}
+
+interface TutorData {
+  tutorDetails: TutorDetails;
+  tutorCourses: TutorCourse[];
+}
 
 export default function TutorProfile() {
-  const [tutorDetails, setTutorDetails] = useState([]);
-  const [tutorCourses, setTutorCourses] = useState([]);
+  const [tutorData, setTutorData] = useState<TutorData | null>(null);
   const { id } = useParams<{ id: string }>() as { id: string };
 
   useEffect(() => {
     const getTutorData = async (id: string) => {
       try {
         const response = await getTutorProfile(id);
-        setTutorDetails(response.data.tutorDetails);
-        setTutorCourses(response.data.tutorCourses);
+        setTutorData(response.data);
       } catch (error) {
         console.log({ error });
       }
     };
     getTutorData(id);
-  }, []);
+  }, [id]);
 
   return (
     <section>
-      <Container style={{ marginTop: "120px" }} className="py-5">
+      <Container style={{ marginTop: '120px' }} className="py-5">
         <Row>
-          {tutorDetails && (
+          {tutorData && (
             <>
-              <Col lg="4" key={tutorDetails?._id}>
+              <Col lg="4" key={tutorData.tutorDetails._id}>
                 <Card className="mb-4">
                   <Card.Body className="text-center">
                     <Card.Img
-                      src={`${Image_Url}/${tutorDetails?.photo}`}
+                      src={`${Image_Url}/${tutorData.tutorDetails?.photo}`}
                       className="rounded-circle"
-                      style={{ width: "150px" }}
+                      style={{ width: '150px' }}
                     />
-                    <p className="text-muted mb-1">{tutorDetails?.name}</p>
-                    <p className="text-muted mb-1">
-                      {tutorDetails?.qualification}
-                    </p>
+                    <p className="text-muted mb-1">{tutorData.tutorDetails?.name}</p>
+                    <p className="text-muted mb-1">{tutorData.tutorDetails?.qualification}</p>
                   </Card.Body>
                 </Card>
               </Col>
@@ -51,9 +68,7 @@ export default function TutorProfile() {
                         <Card.Text>Full Name</Card.Text>
                       </Col>
                       <Col sm="9">
-                        <Card.Text className="text-muted">
-                          {tutorDetails?.name}
-                        </Card.Text>
+                        <Card.Text className="text-muted">{tutorData.tutorDetails?.name}</Card.Text>
                       </Col>
                     </Row>
                     <hr />
@@ -62,9 +77,7 @@ export default function TutorProfile() {
                         <Card.Text>Email</Card.Text>
                       </Col>
                       <Col sm="9">
-                        <Card.Text className="text-muted">
-                          {tutorDetails?.email}
-                        </Card.Text>
+                        <Card.Text className="text-muted">{tutorData.tutorDetails?.email}</Card.Text>
                       </Col>
                     </Row>
                     <hr />
@@ -73,9 +86,7 @@ export default function TutorProfile() {
                         <Card.Text>Phone</Card.Text>
                       </Col>
                       <Col sm="9">
-                        <Card.Text className="text-muted">
-                          {tutorDetails?.phone}
-                        </Card.Text>
+                        <Card.Text className="text-muted">{tutorData.tutorDetails?.phone}</Card.Text>
                       </Col>
                     </Row>
                     <hr />
@@ -85,7 +96,7 @@ export default function TutorProfile() {
                       </Col>
                       <Col sm="9">
                         <Card.Text className="text-muted">
-                          {tutorDetails?.experience} Years
+                          {tutorData.tutorDetails?.experience} Years
                         </Card.Text>
                       </Col>
                     </Row>
@@ -95,9 +106,7 @@ export default function TutorProfile() {
                         <Card.Text>Specialisations</Card.Text>
                       </Col>
                       <Col sm="9">
-                        <Card.Text className="text-muted">
-                          {tutorDetails?.qualification}
-                        </Card.Text>
+                        <Card.Text className="text-muted">{tutorData.tutorDetails?.qualification}</Card.Text>
                       </Col>
                     </Row>
                     <hr />
@@ -106,9 +115,7 @@ export default function TutorProfile() {
                         <Card.Text>About</Card.Text>
                       </Col>
                       <Col sm="9">
-                        <Card.Text className="text-muted">
-                          {tutorDetails?.about}
-                        </Card.Text>
+                        <Card.Text className="text-muted">{tutorData.tutorDetails?.about}</Card.Text>
                       </Col>
                     </Row>
                   </Card.Body>
@@ -118,18 +125,17 @@ export default function TutorProfile() {
           )}
         </Row>
         <Row>
-          <p className="allcourses-header"> Courses By {tutorDetails?.name}</p>
-          {tutorCourses.map((course, index) => (
-            <Col md={3}>
+          <p className="allcourses-header"> Courses By {tutorData?.tutorDetails?.name}</p>
+          {tutorData?.tutorCourses.map((course) => (
+            <Col md={3} key={course._id}>
               <Link to={`/studentcoursedetails/${course._id}`}>
-                <div className="mb-4" style={{ height: "200px" }}>
+                <div className="mb-4" style={{ height: '200px' }}>
                   <Card.Body className="text-center">
                     <Card.Img
-                      style={{ height: "200px" }}
+                      style={{ height: '200px' }}
                       variant="top"
                       src={`${Image_Url}/${course?.photo}`}
                     />
-                    
                   </Card.Body>
                 </div>
               </Link>

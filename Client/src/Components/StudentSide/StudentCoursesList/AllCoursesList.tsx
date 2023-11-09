@@ -21,7 +21,7 @@ function AllCoursesList() {
   const [searchedCourses, setSearchedCourses] = useState([]);
   const [sortedCourses, setSortedCourses] = useState([]);
   const student = localStorage.getItem("studentData");
-  const parseData = JSON.parse(student);
+  const parseData = student ? JSON.parse(student) : null;
 
   useEffect(() => {
     const getCourses = async () => {

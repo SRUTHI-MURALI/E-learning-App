@@ -14,7 +14,8 @@ export default function ChatContacts({ contacts, changeChat }) {
     async function fetchData() {
       try {
         const students = localStorage.getItem("studentData");
-        const userData = await JSON.parse(students);
+        const userData =  students ? JSON.parse(students) : null;
+
       
         
         if (userData) {

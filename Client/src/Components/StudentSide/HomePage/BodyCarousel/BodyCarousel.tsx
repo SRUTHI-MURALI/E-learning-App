@@ -1,8 +1,7 @@
 import Carousel from "react-bootstrap/Carousel";
 import c3 from "../../../../Assets/Images/img1.avif";
 import c4 from "../../../../Assets/Images/img2.avif";
-import c2 from "../../../../Assets/Images/carouselBody/hb3.avif";
-import c1 from "../../../../Assets/Images/img3.avif";
+
 import c5 from "../../../../Assets/Images/kk.jpg";
 import "./BodyCarousel.css";
 

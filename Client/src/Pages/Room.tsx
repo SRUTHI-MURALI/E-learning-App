@@ -3,7 +3,8 @@
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 
 const tutorData = localStorage.getItem("tutorData");
-const parseData= JSON.parse(tutorData);
+const parseData = tutorData ? JSON.parse(tutorData) : null;
+
 
 // get token
 function generateToken(tokenServerUrl, userID) {

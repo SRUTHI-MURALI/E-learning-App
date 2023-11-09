@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "./TutorChatInputs";
 import { v4 as uuidv4 } from "uuid";
@@ -18,12 +18,12 @@ export default function TutorChatFields({ currentChat, socket }) {
     const fetchData = async () => {
       try {
         const tutorDetails = localStorage.getItem("tutorData");
-        const tutor = JSON.parse(tutorDetails);
-        console.log(tutor._id,'tututu');
+        const tutor =  tutorDetails ? JSON.parse(tutorDetails) : null;
+       
         
         const response = await receiveMessage(tutor._id, currentChat?.studentDetails?._id);
         setMessages(response?.data);
-       console.log(response,'msg');
+     
       
         
       } catch (error) {

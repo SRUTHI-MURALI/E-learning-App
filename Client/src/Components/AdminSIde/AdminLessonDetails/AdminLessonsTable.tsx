@@ -8,8 +8,18 @@ import { useParams } from "react-router-dom";
 import { getalllessons } from "../AxiosConfigAdmin/AxiosConfig";
 import { Video_Url } from "../../../Config/Config";
 
+interface Lesson {
+  _id: string;
+  title: string;
+  description: string;
+  duration: string;
+  pdf: string;
+  video: string;
+  isActive: boolean;
+}
+
 function AdminLessonsTable() {
-  const [lessonsList, setLessonslist] = useState([]);
+  const [lessonsList, setLessonslist] = useState<Lesson[]>([]);
 
   const [currentPage, setCurrentPage] = useState(0); // Current page number
   const itemsPerPage = 5;
@@ -65,7 +75,7 @@ function AdminLessonsTable() {
               <td>
               <video
                           src={`${Video_Url}/${lessons?.video}`}
-                          alt="sample"
+                         
                           style={{ width: "40px" }}
                           controls
                         />{" "}

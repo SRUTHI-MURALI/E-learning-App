@@ -8,7 +8,7 @@ import { Nav, Navbar } from "react-bootstrap";
 
 function TutorHeader() {
   const tutorData = localStorage.getItem("tutorData");
-  const parseData = JSON.parse(tutorData);
+  const parseData = tutorData ? JSON.parse(tutorData) : null;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

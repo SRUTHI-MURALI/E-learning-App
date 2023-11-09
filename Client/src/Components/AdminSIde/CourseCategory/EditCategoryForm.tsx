@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { Card, Row, Form, Button, Container } from "react-bootstrap";
-import { toast, ToastContainer } from "react-toastify";
+import { toast,  } from "react-toastify";
 
 import { editCategory, getEditCategory } from "../AxiosConfigAdmin/AxiosConfig";
 

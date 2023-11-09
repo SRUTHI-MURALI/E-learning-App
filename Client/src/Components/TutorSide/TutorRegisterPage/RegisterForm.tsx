@@ -24,14 +24,14 @@ function RegisterForm() {
     e.preventDefault();
     const trimmedTutorName = tutorName.trim();
     const trimmedPassword = password.trim();
-    const trimmedPhone = phone.trim();
+    const trimmedPhone = phone;
     const trimmedEmail = email.trim();
     const trimmedConfirmPassword = confirmPassword.trim();
 
     if (
       trimmedTutorName === "" ||
       trimmedEmail === "" ||
-      trimmedPhone === "" ||
+      trimmedPhone === 0 ||
       trimmedPassword === "" ||
       trimmedConfirmPassword === ""
     ) {
@@ -113,7 +113,7 @@ function RegisterForm() {
                 <Form.Control
                   placeholder="123456789"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(Number(e.target.value))}
                 />
               </Form.Group>
               <Form.Group className="mb-3 mt-5" controlId="formGridAddress1">

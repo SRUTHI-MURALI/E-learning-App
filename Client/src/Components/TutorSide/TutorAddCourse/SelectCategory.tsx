@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { Row, Form, Card, Button, Container } from "react-bootstrap";
 import "./TutorAddCourse.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAllCategory } from "../AxiosConfigInstructors/AxiosConfig";
+
+
 
 function SelectCategory({ onSelectCategory }) {
   const [categories, setCategories] = useState([]);

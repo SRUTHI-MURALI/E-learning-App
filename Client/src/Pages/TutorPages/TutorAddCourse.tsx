@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import SelectCategory from "../../Components/TutorSide/TutorAddCourse/SelectCategory";
 import AddCourse from "../../Components/TutorSide/TutorAddCourse/AddCourse";
 import { Col, Container, Row } from "react-bootstrap";
@@ -8,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 function TutorAddCourse() {
   const tutorData = localStorage.getItem("tutorData");
-  const parseData = JSON.parse(tutorData);
+ const parseData = tutorData ? JSON.parse(tutorData) : null;
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const tutorData = localStorage.getItem("tutorData");
-    const parseData = JSON.parse(tutorData);
+    const parseData = tutorData ? JSON.parse(tutorData) : null;
     if (!parseData) {
       navigate("/tutorlogin");
     }
@@ -24,7 +24,7 @@ function TutorAddCourse() {
   const [courseAdded, setCourseAdded] = useState(false);
 
   // Callback function to receive the selected category and update state
-  const handleCategorySelect = (category) => {
+  const handleCategorySelect = (category:any) => {
     setSelectedCategory(category);
   };
 

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import React,{useState,useEffect} from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import{useState,useEffect} from 'react'
+import {  useParams } from 'react-router-dom';
 import { Base_Url } from '../../Config/Config';
-import { Col, Container, Row } from 'react-bootstrap';
+import {  Container, Row } from 'react-bootstrap';
 import StudentHeader from '../../Components/StudentSide/StudentHeader/StudentHeader';
 import StudentCourseimage from '../../Components/StudentSide/StudentCourseDetails/StudentCourseimage';
 import StudentCourseDescription from '../../Components/StudentSide/StudentCourseDetails/StudentCourseDescription';
@@ -15,9 +15,7 @@ function StudentCoureseView() {
     const { id } = useParams();
     const showVideo=true;
   
-    const studentData = localStorage.getItem("studentData");
-    const parseData= JSON.parse(studentData);
-  
+   
   
     useEffect(() => {
         // Make an HTTP request to fetch data from the backend

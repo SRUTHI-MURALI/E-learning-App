@@ -45,7 +45,7 @@ function LoginForm() {
   };
   useEffect(() => {
     const adminData = localStorage.getItem("adminData");
-    const parseData = JSON.parse(adminData);
+    const parseData = adminData ? JSON.parse(adminData) : null;
     if (parseData) {
       navigate("/adminhome");
     }

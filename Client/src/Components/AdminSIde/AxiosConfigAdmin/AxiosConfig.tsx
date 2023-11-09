@@ -8,7 +8,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const adminData = localStorage.getItem("adminData");
-    const parseData = JSON.parse(adminData);
+    const parseData = adminData ? JSON.parse(adminData) : null;
     const token = parseData.token;
 
     // Assuming you store the token in localStorage

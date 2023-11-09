@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import "./StudentCoursesList.css";
 import { Image_Url } from "../../../Config/Config";
@@ -9,7 +9,7 @@ function EnrolledCoursesList() {
   const [allCourseList, setAllCourseList] = useState([]);
 
   const student = localStorage.getItem("studentData");
-  const parseData = JSON.parse(student);
+  const parseData = student ? JSON.parse(student) : null;
 
   useEffect(() => {
     const enrolledCourses = async (id) => {

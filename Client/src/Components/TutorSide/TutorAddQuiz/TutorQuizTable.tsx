@@ -17,8 +17,8 @@ function TutorQuizTable() {
   const [currentPage, setCurrentPage] = useState(0); // Current page number
   const itemsPerPage = 10;
 
-  const tutorData = localStorage.getItem("tutorData");
-  const parseData = JSON.parse(tutorData);
+  
+  
 
   const handleAddQuiz = async (courseId) => {
     setCourseId(courseId);

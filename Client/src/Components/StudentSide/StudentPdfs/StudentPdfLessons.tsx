@@ -5,7 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 
 interface StudentCourseLessonsProps {
-    courseId: object;
+    courseId: [];
   
 }
 function StudentPdfLessons({ courseId }: StudentCourseLessonsProps) {

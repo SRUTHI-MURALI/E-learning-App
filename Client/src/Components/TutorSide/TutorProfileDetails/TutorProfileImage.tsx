@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { Course_Upload_Url, Image_Url } from "../../../Config/Config";
 import profilesample from "../../../Assets/Images/pic2.png";
 import { Button, Card, Form } from "react-bootstrap";
@@ -8,9 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { getTutorProfile, tutorEditPhoto } from "../AxiosConfigInstructors/AxiosConfig";
 
-function TutorProfileImage({ tutor }) {
-  const [image, setImage] = useState("");
-  const [newImage, setNewImage] = useState("");
+interface TutorEditProfileImageProps {
+  tutor: { _id: string };
+  onClose: (value: boolean) => void;
+}
+const TutorProfileImage : React.FC<TutorEditProfileImageProps> = ({
+  tutor,
+  
+})=>{
+  const [image, setImage] = useState<File | null>(null);
+  const [newImage, setNewImage] = useState<File | null>(null);
   const [photo, setPhoto] = useState("");
   const [cloudinaryURL, setCloudinaryURL] = useState("");
   
@@ -23,7 +30,7 @@ function TutorProfileImage({ tutor }) {
   }, [cloudinaryURL]);
 
 
-  const handleImageSubmit = async (e) => {
+  const handleImageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
       await imageHandler();

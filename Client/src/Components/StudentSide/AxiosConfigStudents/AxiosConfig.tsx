@@ -9,7 +9,8 @@ api.interceptors.request.use(
   (config) => {
     const studentData = localStorage.getItem("studentData");
 
-    const parseData = JSON.parse(studentData);
+    
+    const parseData = studentData ? JSON.parse(studentData) : null;
     const token = parseData.token;
 
     if (token) {

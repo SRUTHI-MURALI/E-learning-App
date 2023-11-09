@@ -8,13 +8,12 @@ import { useNavigate } from 'react-router-dom';
 function TutorQuizList() {
 
   const tutorData = localStorage.getItem("tutorData");
-  const parseData= JSON.parse(tutorData);
-
+  const parseData = tutorData ? JSON.parse(tutorData) : null;
   const navigate = useNavigate()
 
   useEffect(() => {
     const tutorData = localStorage.getItem("tutorData");
-    const parseData= JSON.parse(tutorData);
+    const parseData = tutorData ? JSON.parse(tutorData) : null;
     if (!parseData) {
       navigate("/tutorlogin");
     }

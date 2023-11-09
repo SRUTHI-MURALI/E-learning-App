@@ -1,4 +1,4 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
+
 
 import { Button, Card, Container, Row } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
@@ -20,7 +20,7 @@ interface StudentCoursePurchaseProps {
 function StudenetCoursePurchase({ courseData }: StudentCoursePurchaseProps) {
   const studentDetails = localStorage.getItem("studentData");
 
-  const students = JSON.parse(studentDetails);
+  const students = studentDetails ? JSON.parse(studentDetails) : null;
   const navigate = useNavigate();
 
   const initPayment = (res: any) => {

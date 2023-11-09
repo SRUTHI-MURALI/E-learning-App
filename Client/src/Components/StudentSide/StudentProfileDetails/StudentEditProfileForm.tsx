@@ -86,14 +86,7 @@ function StudentEditProfileForm({ student, onClose }) {
       console.log("kk");
       
       setPhone('No number');
-    // } else {
-    //   console.log("ll");
-      
-    //   const phonePattern = /^\d{10}$/;
-    //   if (!phonePattern.test(phone)) {
-    //     toast.error("Please enter a valid 10-digit phone number");
-    //     return;
-    //   }
+    
      }
     if (email === "") {
       setEmail("No Mail");

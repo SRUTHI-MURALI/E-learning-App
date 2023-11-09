@@ -117,7 +117,7 @@ function ForgotPasswordForm() {
   };
 
   useEffect(() => {
-    let countdownInterval;
+    let countdownInterval:any;
 
     if (otpSent && count > 0) {
       countdownInterval = setInterval(() => {

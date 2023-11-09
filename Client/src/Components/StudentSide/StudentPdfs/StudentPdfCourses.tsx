@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import  { useState, useEffect } from "react";
+import {  Container, Row } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
 import { getAllCourses } from "../AxiosConfigStudents/AxiosConfig";
 import StudentPdfLessons from "./StudentPdfLessons";
@@ -14,7 +14,7 @@ function StudentPdfCourses() {
       try {
         const response=await getAllCourses();
         setAllCourseList(response.data.allCourses);
-        console.log(allCourseList,'ooo');
+       
         
       } catch (error) {
         console.log(error);

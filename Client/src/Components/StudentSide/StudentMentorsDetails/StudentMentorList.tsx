@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getInstructors } from "../AxiosConfigStudents/AxiosConfig";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { Image_Url } from "../../../Config/Config";
 import './studentMentor.css'

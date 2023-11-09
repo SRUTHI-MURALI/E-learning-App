@@ -11,13 +11,13 @@ import AllTeachersList from "../../Components/StudentSide/StudentTeachersList/Al
 function StudentTutorList() {
     const [teachers,setTeachers]= useState([])
     const studentData = localStorage.getItem("studentData");
-  const parseData= JSON.parse(studentData);
+    const parseData = studentData ? JSON.parse(studentData) : null;
 
   const navigate = useNavigate()
 
   useEffect(() => {
     const studentData = localStorage.getItem("studentData");
-  const parseData= JSON.parse(studentData);
+    const parseData = studentData ? JSON.parse(studentData) : null;
     if (!parseData) {
       navigate("/studentlogin");
     }

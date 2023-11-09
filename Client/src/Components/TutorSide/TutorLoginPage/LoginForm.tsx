@@ -64,7 +64,7 @@ function LoginForm() {
 
   useEffect(() => {
     const tutorData = localStorage.getItem("tutorData");
-    const parseData = JSON.parse(tutorData);
+    const parseData = tutorData ? JSON.parse(tutorData) : null;
     if (parseData) {
       navigate("/tutorhome");
     }

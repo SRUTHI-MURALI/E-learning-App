@@ -1,4 +1,4 @@
-import React from "react";
+
 import StudentOtpVerifyForm from "../../Components/Otp/StudentOtpVerifyForm";
 import { useParams } from "react-router-dom";
 

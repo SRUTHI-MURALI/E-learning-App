@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { Button, Col, Row,Form } from 'react-bootstrap';
 import { Base_Url } from '../../../Config/Config';
 
@@ -12,7 +12,7 @@ function SortBarContainer({setSortedCourses}) {
       e.preventDefault();
       try {
         if (sortValue) {
-            console.log(sortOrder,sortValue,'kjhjkhjk');
+           
             
           const response = await axios.post(`${Base_Url}/student/sortitem`, { sortValue,sortOrder });
        

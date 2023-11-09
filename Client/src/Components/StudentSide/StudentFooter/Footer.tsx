@@ -1,5 +1,4 @@
 import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
 import "./Footer.css";
 import {AiFillFacebook} from 'react-icons/ai'

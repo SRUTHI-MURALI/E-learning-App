@@ -8,13 +8,14 @@ import { useNavigate } from "react-router-dom";
 function StudentList() {
 
   const adminData = localStorage.getItem("adminData");
-  const parseData= JSON.parse(adminData);
+  const parseData = adminData ? JSON.parse(adminData) : null;
+  
 
   const navigate = useNavigate()
 
   useEffect(() => {
     const adminData = localStorage.getItem("adminData");
-    const parseData = JSON.parse(adminData);
+    const parseData = adminData ? JSON.parse(adminData) : null;
     if (!parseData) {
       navigate("/adminlogin");
     }

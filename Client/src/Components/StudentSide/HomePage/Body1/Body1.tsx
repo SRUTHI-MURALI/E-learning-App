@@ -1,4 +1,4 @@
-import Card from "react-bootstrap/Card";
+
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
 import "./Body1.css";

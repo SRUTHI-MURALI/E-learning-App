@@ -1,4 +1,4 @@
-import React ,{useEffect}from "react";
+import {useEffect}from "react";
 
 import AdminSidebar from "../../Components/AdminSIde/AdminSidebar/AdminSidebar";
 import { Col, Row } from "react-bootstrap";
@@ -8,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 function CourseCategoryList() {
   const adminData = localStorage.getItem("adminData");
-  const parseData= JSON.parse(adminData);
+  const parseData = adminData ? JSON.parse(adminData) : null;
 
   const navigate = useNavigate()
 
   useEffect(() => {
     const adminData = localStorage.getItem("adminData");
-    const parseData = JSON.parse(adminData);
+    const parseData = adminData ? JSON.parse(adminData) : null;
     if (!parseData) {
       navigate("/adminlogin");
     }
