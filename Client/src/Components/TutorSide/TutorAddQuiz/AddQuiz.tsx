@@ -1,20 +1,25 @@
-import  { useState } from "react";
+import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addQuiz } from "../AxiosConfigInstructors/AxiosConfig";
 
-function AddQuiz({ courseId, onClose }) {
-  const [questionset, setQuestionset] = useState([]);
-  const [question, setQuestion] = useState("");
-  const [option1, setOption1] = useState("");
-  const [option2, setOption2] = useState("");
-  const [option3, setOption3] = useState("");
-  const [option4, setOption4] = useState("");
-  const [answerOption, setAnswerOption] = useState("option1");
-  const [count, setCount] = useState(0);
+interface AddQuizProps {
+  courseId: string;
+  onClose: (flag: boolean) => void;
+}
 
-  const handleAddQuiz = (e) => {
+const AddQuiz: React.FC<AddQuizProps> = ({ courseId, onClose }) => {
+  const [questionset, setQuestionset] = useState<any[]>([]);
+  const [question, setQuestion] = useState<string>("");
+  const [option1, setOption1] = useState<string>("");
+  const [option2, setOption2] = useState<string>("");
+  const [option3, setOption3] = useState<string>("");
+  const [option4, setOption4] = useState<string>("");
+  const [answerOption, setAnswerOption] = useState<string>("option1");
+  const [count, setCount] = useState<number>(0);
+
+  const handleAddQuiz = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (
@@ -25,8 +30,8 @@ function AddQuiz({ courseId, onClose }) {
       option4 === "" ||
       answerOption === ""
     ) {
-     toast.error("Please fill all fields")
-     return
+      toast.error("Please fill all fields");
+      return;
     }
 
     const questionPattern = /^[A-Za-z\s.\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/;
@@ -38,7 +43,7 @@ function AddQuiz({ courseId, onClose }) {
       !questionPattern.test(option3.trim()) ||
       !questionPattern.test(option4.trim())
     ) {
-      toast.error("question and options can only contain letters,symbols and spaces");
+      toast.error("question and options can only contain letters, symbols, and spaces");
       return;
     }
 
@@ -60,19 +65,17 @@ function AddQuiz({ courseId, onClose }) {
     setOption4("");
     setAnswerOption("");
   };
- 
-  const handleQuizSubmit = async (e) => {
+
+  const handleQuizSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      if(questionset.length <=0){
-        alert ('No questions to submit')
-      }else{
+      if (questionset.length <= 0) {
+        alert("No questions to submit");
+      } else {
         await addQuiz(questionset, courseId, count);
-
-      alert("Success");
+        alert("Success");
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -92,8 +95,8 @@ function AddQuiz({ courseId, onClose }) {
         >
           Submit Quiz
         </Button>
-        <h3 className="mt-4">Add a Question ?</h3>
-        <h4> Question:{count + 1}</h4>
+        <h3 className="mt-4">Add a Question?</h3>
+        <h4> Question: {count + 1}</h4>
         <Form
           className="m-5 "
           style={{ padding: "25px", border: "2px solid #ccc" }}
@@ -164,12 +167,12 @@ function AddQuiz({ courseId, onClose }) {
             type="submit"
             onClick={handleQuizSubmit}
           >
-            cancel
+            Cancel
           </Button>
         </Form>
       </Container>
     </div>
   );
-}
+};
 
 export default AddQuiz;

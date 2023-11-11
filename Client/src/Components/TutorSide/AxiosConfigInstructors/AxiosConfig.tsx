@@ -22,6 +22,26 @@ api.interceptors.request.use(
   }
 );
 
+type LessonType = {
+  _id: string;
+  title: string;
+  description: string;
+  duration: string;
+  pdf: string;
+  video: string;
+  isActive: boolean;
+};
+
+type QuizType= {
+  question : string;
+  option1 : string;
+  option2 : string;
+  option3 : string;
+  option4 : string;
+  answerOption : string;
+}
+
+
 export const addCourse = (
   title: string,
   price: number,
@@ -46,12 +66,13 @@ export const getAllCategory = () => {
   return api.get("/getCourseCategory");
 };
 
-export const addNewLesson = (lessons: Array[], courseId: string) => {
+export const addNewLesson = (lessons: Array<LessonType>, courseId: string) => {
   return api.post("/addlessons", { lessons, courseId });
 };
 
+
 export const addQuiz = (
-  questionset: Array[],
+  questionset:Array<QuizType>,
   courseId: string,
   count: number
 ) => {

@@ -8,19 +8,35 @@ import { Lessons_Upload_Url } from "../../../Config/Config";
 import AddQuiz from "../TutorAddQuiz/AddQuiz";
 import { addNewLesson } from "../AxiosConfigInstructors/AxiosConfig";
 
-function AddLesson({ courseId, onClose }) {
-  const [lessons, setLessons] = useState([]);
+
+interface Lesson {
+
+  title: string;
+  description: string;
+  duration: string;
+  pdf: string;
+  video: string;
+  isActive: boolean;
+}
+
+interface AddLessonProps {
+  courseId: string;
+  onClose: (flag: boolean) => void;
+}
+
+function AddLesson({ courseId, onClose }: AddLessonProps)  {
+  const [lessons, setLessons] = useState<Lesson[]>([]);
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
   const [showAddQuiz, setShowAddQuiz] = useState(false);
   const navigate = useNavigate();
-  const [video, setVideo] = useState(null);
+  const [video, setVideo] = useState<File | null>(null);
   const [cloudinaryURL, setCloudinaryURL] = useState("");
   const [count, setCount] = useState(0);
   const pdfInputRef = useRef<HTMLInputElement | null>(null);
   const videoInputRef = useRef<HTMLInputElement | null>(null);
-  const [pdf, setPdf] = useState(null); // Change to null for file handling
+  const [pdf, setPdf] = useState<File | null>(null);
 
   const handleAdd = async () => {
     
@@ -60,12 +76,13 @@ function AddLesson({ courseId, onClose }) {
     if (cloudinaryURL) {
       
 
-    const newLesson = {
+    const newLesson: Lesson = {
       title: title,
       duration: duration,
       description: description,
       video: cloudinaryURL,
-      pdf: pdf ? URL.createObjectURL(pdf) : "", // Store the PDF file as a URL
+      pdf: pdf ? URL.createObjectURL(pdf) : "",
+      isActive: false
     };
     toast.success("successfully added lesson ");
    

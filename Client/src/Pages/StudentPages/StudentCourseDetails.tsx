@@ -11,10 +11,15 @@ import StudenetCoursePurchase from "../../Components/StudentSide/StudentCourseDe
 import StudentCourseLessons from "../../Components/StudentSide/StudentCourseDetails/StudentCourseLessons";
 import { Base_Url } from "../../Config/Config";
 
-export default function StudentCourseDetails() {
-  const [data, setData] = useState("");
-  const { id } = useParams();
 
+interface CourseDetails {
+  // Define properties of course details
+}
+
+
+export default function StudentCourseDetails() {
+  const [data, setData] = useState<CourseDetails | null>(null);
+  const { id } = useParams<{ id: string }>();
   
   const showVideo= false;
 

@@ -3,7 +3,7 @@ import { Container, Row } from "react-bootstrap";
 import { Image_Url } from "../../../Config/Config";
 
 interface StudentCourseImageProps {
-  courseData: object;
+  courseData: any;
 }
 
 function StudentCourseimage({ courseData }: StudentCourseImageProps) {

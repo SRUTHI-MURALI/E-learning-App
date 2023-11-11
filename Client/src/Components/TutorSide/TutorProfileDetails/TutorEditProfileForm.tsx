@@ -252,18 +252,19 @@ const TutorEditProfileForm: React.FC<TutorEditProfileFormProps> = ({
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3">
-              <Form.Label column sm="2">
-                Experience :
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control
-                  type="number"
-                  placeholder={tutorDetails?.experience || 0}
-                  value={experience}
-                  onChange={(e) => setExperience(e.target.value)}
-                />
-              </Col>
-            </Form.Group>
+            <Form.Label column sm="2">
+              Experience:
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control
+                type="number"
+                placeholder={tutorDetails?.experience.toString() || '0'}
+                value={experience.toString()}
+                onChange={(e) => setExperience(Number(e.target.value))}
+              />
+            </Col>
+          </Form.Group>
+
 
             <Row>
               <Col>

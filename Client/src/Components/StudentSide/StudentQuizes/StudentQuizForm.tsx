@@ -15,7 +15,7 @@ interface Question {
 }
 
 interface StudentQuizFormProps {
-  courseId: string;
+  courseId: string | null;
   onClose: () => void;
 }
 

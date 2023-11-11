@@ -4,7 +4,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { Video_Url } from "../../../Config/Config";
 
 interface StudentCourseLessonsProps {
-  courseData: object;
+  courseData: any;
   show: boolean;
 }
 function StudentCourseLessons({ courseData, show }: StudentCourseLessonsProps) {

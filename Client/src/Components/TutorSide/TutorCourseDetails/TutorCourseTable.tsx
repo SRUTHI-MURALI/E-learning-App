@@ -29,6 +29,8 @@ interface Course {
 }
 
 function TutorCourseTable() {
+  
+  
   const tutorData = localStorage.getItem("tutorData");
   const parseData = tutorData ? JSON.parse(tutorData) : null;
   const [currentPage, setCurrentPage] = useState(0);

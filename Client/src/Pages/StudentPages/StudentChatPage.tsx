@@ -1,27 +1,36 @@
-import  { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import styled from "styled-components";
 
-import ChatFields from "../../Components/StudentSide/ChatControls/ChatFields"
+import ChatFields from "../../Components/StudentSide/ChatControls/ChatFields";
 import ChatContacts from "../../Components/StudentSide/ChatControls/ChatContacts";
 import ChatWelcome from "../../Components/StudentSide/ChatControls/ChatWelcome";
 import StudentHeader from "../../Components/StudentSide/StudentHeader/StudentHeader";
 import { Base_Url } from "../../Config/Config";
 import { getInstructors } from "../../Components/StudentSide/AxiosConfigStudents/AxiosConfig";
 
+interface User {
+  _id: string;
+  // Add other properties as needed
+}
+
+interface Contact {
+  // Define properties of contact
+}
+
 export default function StudentChatPage() {
   const navigate = useNavigate();
-  const socket = useRef(null);
-  const [contacts, setContacts] = useState([]);
-  const [currentChat, setCurrentChat] = useState(undefined);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const socket = useRef<Socket | null>(null);
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [currentChat, setCurrentChat] = useState<Contact | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const students = localStorage.getItem("studentData");
-        
+
         if (!students) {
           navigate("/studentlogin");
         } else {
@@ -40,9 +49,8 @@ export default function StudentChatPage() {
       socket.current = io(Base_Url);
       socket.current.emit("add-user", currentUser._id);
     }
-    
+
     return () => {
-      
       if (socket.current) {
         socket.current.disconnect();
       }
@@ -54,8 +62,8 @@ export default function StudentChatPage() {
       try {
         if (currentUser) {
           const response = await getInstructors();
-          setContacts(response.data.tutorDetails);  
-        } 
+          setContacts(response.data.tutorDetails);
+        }
       } catch (error) {
         console.error("Error fetching contacts:", error);
       }
@@ -63,20 +71,16 @@ export default function StudentChatPage() {
 
     fetchContacts();
   }, [currentUser, navigate]);
-  
 
-  const handleChatChange = (chat) => {
+  const handleChatChange = (chat: Contact) => {
     setCurrentChat(chat);
   };
 
-
-
   return (
-      <>
-      <StudentHeader/>
-      <Container style={{marginTop:'7rem'}}>
+    <>
+      <StudentHeader />
+      <Container style={{ marginTop: "7rem" }}>
         <div className="container">
-        
           <ChatContacts contacts={contacts} changeChat={handleChatChange} />
           {currentChat === undefined ? (
             <ChatWelcome />
@@ -85,7 +89,7 @@ export default function StudentChatPage() {
           )}
         </div>
       </Container>
-      </>
+    </>
   );
 }
 
@@ -103,7 +107,7 @@ const Container = styled.div`
     width: 70vw;
     background-color: white;
     display: grid;
-    border-radius:2rem;
+    border-radius: 2rem;
     grid-template-columns: 25% 75%;
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       grid-template-columns: 35% 65%;

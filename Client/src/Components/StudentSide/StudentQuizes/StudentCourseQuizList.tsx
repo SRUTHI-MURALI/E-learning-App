@@ -4,11 +4,13 @@ import {  Image_Url } from "../../../Config/Config";
 import StudentQuizForm from "./StudentQuizForm";
 import { getAllCourses } from "../AxiosConfigStudents/AxiosConfig";
 
-function StudentCourseQuizList() {
-  const [allCourseList, setAllCourseList] = useState([]);
-  const [showQuiz, setShowQuiz] = useState(false);
-  const [selectedCourseId, setSelectedCourseId] = useState(null);
-  const [quiz,setQuiz]= useState([])
+interface StudentCourseQuizListProps {}
+
+const StudentCourseQuizList: React.FC<StudentCourseQuizListProps> = () => {
+  const [allCourseList, setAllCourseList] = useState<any[]>([]);
+  const [showQuiz, setShowQuiz] = useState<boolean>(false);
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  const [quiz, setQuiz] = useState<any[]>([]);
 
   useEffect(() => {
     const getCourses = async ()=>{
@@ -27,7 +29,7 @@ function StudentCourseQuizList() {
    getCourses()
   }, []);
 
-  const handleQuiz = async (id) => {
+  const handleQuiz = async (id: string) => {
     setSelectedCourseId(id);
     setShowQuiz(true);
   };
@@ -43,7 +45,7 @@ function StudentCourseQuizList() {
       <Container style={{ marginTop: '120px' }}>
         {showQuiz === false ? (
           <>
-            {quizCourses.map((courses, index) => (
+            {quizCourses.map((courses) => (
               <div className="row mt-3" key={courses?._id}>
                 <>
                   <div className="col-md-4">

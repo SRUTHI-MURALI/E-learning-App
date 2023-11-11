@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import  { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import styled from "styled-components";
 import { Base_Url } from "../../Config/Config";
 
@@ -10,25 +10,31 @@ import TutorChatFields from "../../Components/TutorSide/TutorChatControls/TutorC
 import TutorChatWelcome from "../../Components/TutorSide/TutorChatControls/TutorChatWelcome";
 import { getEnrolledStudents } from "../../Components/TutorSide/AxiosConfigInstructors/AxiosConfig";
 
+interface Tutor {
+  _id: string;
+  // Add other properties as needed
+}
+
+interface Contact {
+  // Define properties of contact
+}
+
 export default function TutorChatPage() {
   const navigate = useNavigate();
-  const socket = useRef(null);
-  const [contacts, setContacts] = useState([]);
-  const [currentChat, setCurrentChat] = useState(undefined);
-  const [currentUser, setCurrentUser] = useState(undefined);
-  const tutorDetails = localStorage.getItem("tutorData");
-  
-  const tutor = tutorDetails ? JSON.parse(tutorDetails) : null;
+  const socket = useRef<Socket | null>(null);
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [currentChat, setCurrentChat] = useState<Contact | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<Tutor | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const tutor = localStorage.getItem("tutorData");
-        
-        if (!tutor) {
+        const tutorDetails = localStorage.getItem("tutorData");
+
+        if (!tutorDetails) {
           navigate("/tutorlogin");
         } else {
-          setCurrentUser(JSON.parse(tutor));
+          setCurrentUser(JSON.parse(tutorDetails));
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -37,31 +43,27 @@ export default function TutorChatPage() {
 
     fetchData();
   }, [navigate]);
+
   useEffect(() => {
     if (currentUser) {
       socket.current = io(Base_Url);
-      socket.current.emit("add-user", tutor._id);
+      socket.current.emit("add-user", currentUser._id);
     }
-    
+
     return () => {
-      
       if (socket.current) {
         socket.current.disconnect();
       }
     };
   }, [currentUser]);
 
-  
-
   useEffect(() => {
     async function fetchContacts() {
       try {
         if (currentUser) {
-          const response = await getEnrolledStudents(tutor._id);
-           
+          const response = await getEnrolledStudents(currentUser._id);
           setContacts(response.data.filteredOrders);
-          
-        } 
+        }
       } catch (error) {
         console.error("Error fetching contacts:", error);
       }
@@ -69,28 +71,24 @@ export default function TutorChatPage() {
 
     fetchContacts();
   }, [currentUser, navigate]);
-  
 
-  const handleChatChange = (chat) => {
+  const handleChatChange = (chat: Contact) => {
     setCurrentChat(chat);
   };
 
-
-
   return (
     <>
-    <TutorHeader/>
-    <Container style={{marginTop:'5rem', }}>
-      <div className="container">
-      
-        <TutorChatContacts contacts={contacts} changeChat={handleChatChange} />
-        {currentChat === undefined ? (
-          <TutorChatWelcome />
-        ) : (
-          <TutorChatFields currentChat={currentChat} socket={socket} />
-        )}
-      </div>
-    </Container>
+      <TutorHeader />
+      <Container style={{ marginTop: "5rem" }}>
+        <div className="container">
+          <TutorChatContacts contacts={contacts} changeChat={handleChatChange} />
+          {currentChat === undefined ? (
+            <TutorChatWelcome />
+          ) : (
+            <TutorChatFields currentChat={currentChat} socket={socket} />
+          )}
+        </div>
+      </Container>
     </>
   );
 }

@@ -1,15 +1,25 @@
+import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { ImArrowRight } from "react-icons/im";
-import { useState, useEffect } from "react";
-import "./TutorStudentTable.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import ReactPaginate from "react-paginate";
 import { getEnrolledStudents } from "../AxiosConfigInstructors/AxiosConfig";
 
+interface Order {
+  _id: string;
+  studentDetails: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  courseDetails: {
+    title: string;
+  };
+}
+
 function TutorStudentTable() {
-  const [orderList, setOrderlist] = useState([]);
+  const [orderList, setOrderlist] = useState<Order[]>([]);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
   const itemsPerPage = 10;
 
@@ -27,10 +37,12 @@ function TutorStudentTable() {
       }
     };
 
-    enrolledStudents(parseData._id);
-  }, []);
+    if (parseData) {
+      enrolledStudents(parseData._id);
+    }
+  }, [parseData]);
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 
@@ -41,10 +53,7 @@ function TutorStudentTable() {
     <>
       {paginatedData.length !== 0 ? (
         <div>
-          <ToastContainer
-            position="top-center"
-            autoClose={3000}
-          ></ToastContainer>
+          <ToastContainer position="top-center" autoClose={3000} />
           <p className="tutorstudentlistheading">
             <ImArrowRight /> <u>Student List</u>
           </p>
@@ -88,7 +97,7 @@ function TutorStudentTable() {
         </div>
       ) : (
         <h2 style={{ color: "red", fontStyle: "italic", margin: "8rem" }}>
-          Sorry No enrolled students available !{" "}
+          Sorry No enrolled students available!
         </h2>
       )}
     </>

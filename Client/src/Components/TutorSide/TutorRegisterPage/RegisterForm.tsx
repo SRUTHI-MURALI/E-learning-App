@@ -46,7 +46,7 @@ function RegisterForm() {
       return;
     }
     const phonePattern = /^\d{10}$/;
-    if (!phonePattern.test(trimmedPhone.trim())) {
+    if (!phonePattern.test( trimmedPhone.toString())) {
       toast.error("Please enter a valid 10-digit phone number");
       return;
     }

@@ -15,7 +15,7 @@ declare global {
 }
 
 interface StudentCoursePurchaseProps {
-  courseData: object;
+  courseData: any;
 }
 function StudenetCoursePurchase({ courseData }: StudentCoursePurchaseProps) {
   const studentDetails = localStorage.getItem("studentData");

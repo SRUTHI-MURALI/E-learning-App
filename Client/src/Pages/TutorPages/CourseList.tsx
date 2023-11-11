@@ -6,7 +6,7 @@ import TutorCourseTable from "../../Components/TutorSide/TutorCourseDetails/Tuto
 import { useNavigate } from "react-router-dom";
 
 function CourseList() {
-  const tutorName = localStorage.getItem("name");
+  
   const tutorData = localStorage.getItem("tutorData");
   const parseData = tutorData ? JSON.parse(tutorData) : null;
 
@@ -29,7 +29,7 @@ function CourseList() {
            <TutorSidebar />
          </Col>
          <Col xs={12} md={8}>
-           <TutorCourseTable tutorname={tutorName} />
+           <TutorCourseTable  />
          </Col>
        </Row>
      </div>

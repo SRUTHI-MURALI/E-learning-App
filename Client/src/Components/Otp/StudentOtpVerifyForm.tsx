@@ -17,7 +17,7 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
   const [count, setCount] = useState(8);
   const [otpSent, setOtpSent] = useState(true);
 
-  console.log(phone, "verify");
+ 
   const handleResendOtp = async () => {
     await axios.post(`${Base_Url}/otp/sendmobileotp`, {
       phone,

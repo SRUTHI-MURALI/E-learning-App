@@ -16,19 +16,17 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
   const tutorData = localStorage.getItem("tutorData");
   const parseData = tutorData ? JSON.parse(tutorData) : null;
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
-  const [cloudinaryURL, setCloudinaryURL] = useState("");
-  const [selectedCourse, setSelectedCourse] = useState("");
-  const [show, setShow] = useState(null);
-  const [showLesson, setShowLesson] = useState(false);
+  const [cloudinaryURL, setCloudinaryURL] = useState<string>("");
+  const [selectedCourse, setSelectedCourse] = useState<string>("");
+  const [show, setShow] = useState<boolean | null>(null);
+  const [showLesson, setShowLesson] = useState<boolean>(false);
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    
-    
     e.preventDefault();
     const trimmedTitle = title.trim();
     const trimmedPrice = price;
@@ -37,18 +35,17 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
 
     if (
       trimmedTitle === "" ||
-      
-      trimmedDescription === ""||
-    
-      isNaN(trimmedDuration) || 
-        isNaN(trimmedPrice) ||     
-        trimmedDuration <= 0 ||     
-        trimmedPrice <= 0   
+      trimmedDescription === "" ||
+      isNaN(trimmedDuration) ||
+      isNaN(trimmedPrice) ||
+      trimmedDuration <= 0 ||
+      trimmedPrice <= 0
     ) {
-      return  toast.error("Please fill in all required fields and ensure non-negative numeric values greater than 0.");
+      return toast.error(
+        "Please fill in all required fields and ensure non-negative numeric values greater than 0."
+      );
     }
 
-    // Validate username format (only letters and spaces allowed)
     const usernamePattern = /^[A-Za-z\s.]+$/;
     if (!usernamePattern.test(trimmedTitle.trim())) {
       alert("title can only contain letters and spaces");
@@ -57,7 +54,9 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
     if (image) {
       const allowedFormats = ["image/jpeg", "image/png"];
       if (!allowedFormats.includes(image.type)) {
-        toast.error("Invalid image format. Please select a JPEG or PNG image.");
+        toast.error(
+          "Invalid image format. Please select a JPEG or PNG image."
+        );
         return;
       }
     } else {
@@ -68,28 +67,25 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
     await imageHandler();
 
     if (cloudinaryURL) {
-      
-    
+      try {
+        const response = await addCourse(
+          trimmedTitle,
+          trimmedPrice,
+          trimmedDuration,
+          trimmedDescription,
+          selectedCategory,
+          cloudinaryURL,
+          parseData?._id
+        );
+        setSelectedCourse(response.data._id);
 
-    try {
-      const response = await addCourse(
-        trimmedTitle,
-        trimmedPrice,
-        trimmedDuration,
-        trimmedDescription,
-        selectedCategory,
-        cloudinaryURL,
-        parseData?._id
-      );
-      setSelectedCourse(response.data._id);
-
-      setShow(true);
-      toast.success("successfully added course");
-    } catch (error) {
-      toast.error(" error");
-      return;
+        setShow(true);
+        toast.success("successfully added course");
+      } catch (error) {
+        toast.error(" error");
+        return;
+      }
     }
-  }
   };
 
   const addLessonHandler = async () => {
@@ -102,7 +98,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
 
   const imageHandler = async () => {
     const formData = new FormData();
-    formData.append("file", image);
+    formData.append("file", image as Blob);
     formData.append("upload_preset", "courselist");
     formData.append("cloud_name", "dnkc0odiw");
     const response = await axios.post(`${Course_Upload_Url}`, formData);
@@ -116,7 +112,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
 
   return (
     <div>
-      {showLesson == false ? (
+      {!showLesson ? (
         <Container>
           <Card className=" justify-content-center">
             <Row>
@@ -141,14 +137,13 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                 </Row>
 
                 <Row className="mb-3">
-                <Form.Group as={Col} controlId="formGridCity">
+                  <Form.Group as={Col} controlId="formGridCity">
                     <Form.Label>Price</Form.Label>
                     <Form.Control
                       value={price}
                       onChange={(e) => {
                         const inputValue = e.target.value;
-                         // Parse the input as an integer
-                        setPrice(Number(inputValue)); // Update the state with the parsed integer
+                        setPrice(Number(inputValue));
                       }}
                     />
                   </Form.Group>
@@ -159,12 +154,10 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                       value={duration}
                       onChange={(e) => {
                         const inputValue = e.target.value;
-                        // Parse the input as an integer
-                        setDuration(Number(inputValue)); // Update the state with the parsed integer
+                        setDuration(Number(inputValue));
                       }}
                     />
                   </Form.Group>
-
                 </Row>
 
                 <Form.Group className="mb-3" controlId="formGridAddress1">
@@ -189,7 +182,6 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
                         setImage(selectedFile);
                       }
                     }}
-                  
                   />
                   <Form.Label>Allowed formats: JPEG, PNG</Form.Label>
                 </Form.Group>
