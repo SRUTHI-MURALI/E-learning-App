@@ -15,10 +15,13 @@ interface User {
   // Add other properties as needed
 }
 
-interface Contact {
-  // Define properties of contact
-}
 
+
+interface Contact {
+  _id: string;
+  name: string;
+  // Add other properties as needed
+}
 
 
 export default function StudentChatPage() {

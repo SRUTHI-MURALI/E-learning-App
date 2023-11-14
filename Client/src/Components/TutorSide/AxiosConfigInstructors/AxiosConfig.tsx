@@ -23,7 +23,6 @@ api.interceptors.request.use(
 );
 
 type LessonType = {
-  _id: string;
   title: string;
   description: string;
   duration: string;
@@ -66,14 +65,14 @@ export const getAllCategory = () => {
   return api.get("/getCourseCategory");
 };
 
-export const addNewLesson = (lessons: Array<LessonType>, courseId: string) => {
+export const addNewLesson = (lessons: Array<LessonType>, courseId: string | undefined) => {
   return api.post("/addlessons", { lessons, courseId });
 };
 
 
 export const addQuiz = (
   questionset:Array<QuizType>,
-  courseId: string,
+  courseId: string | undefined,
   count: number
 ) => {
   return api.post("/addquiz", { questionset, courseId, count });
@@ -83,12 +82,12 @@ export const getAllCourses = () => {
   return api.get("/getallcourses");
 };
 
-export const getEditCourse = (id: string) => {
+export const getEditCourse = (id: string | null) => {
   return api.get(`/geteditcourse/${id}`);
 };
 
 export const editCourseList = (
-  id: string,
+  id: string | null,
   title: string,
   duration: number,
   category: string,
@@ -101,15 +100,15 @@ export const getUser = () => {
   return api.get("/getallcourses");
 };
 
-export const getAllLessons = (id: string) => {
+export const getAllLessons = (id: string | undefined) => {
   return api.get(`/getalllessons/${id}`);
 };
 
-export const activateLesson = (id: string, courseId: string) => {
+export const activateLesson = (id: string, courseId: string | undefined) => {
   return api.put(`/activatelesson/${id}`, { courseId });
 };
 
-export const inactivateLesson = (id: string, courseId: string) => {
+export const inactivateLesson = (id: string, courseId: string | undefined) => {
   return api.put(`/disablelesson/${id}`, { courseId });
 };
 

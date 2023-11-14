@@ -11,9 +11,15 @@ import StudenetCoursePurchase from "../../Components/StudentSide/StudentCourseDe
 import StudentCourseLessons from "../../Components/StudentSide/StudentCourseDetails/StudentCourseLessons";
 import { Base_Url } from "../../Config/Config";
 
-
+interface CourseLesson {
+  _id: string;
+  title: string;
+  description: string;
+  duration: number;
+  video: string;
+}
 interface CourseDetails {
-  // Define properties of course details
+  courseLessons: CourseLesson[];
 }
 
 
@@ -66,7 +72,7 @@ export default function StudentCourseDetails() {
             </Col>
           </Row>
 
-          <StudentCourseLessons courseData={data} show={showVideo} />
+          <StudentCourseLessons courseData={data || { courseLessons: [] }}  show={showVideo} />
           <StudentCourseAbout courseData={data} />
           <Footer />
         </Row>

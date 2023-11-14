@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { addQuiz } from "../AxiosConfigInstructors/AxiosConfig";
 
 interface AddQuizProps {
-  courseId: string;
+  courseId: string | undefined;
   onClose: (flag: boolean) => void;
 }
 

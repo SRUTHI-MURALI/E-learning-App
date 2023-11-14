@@ -16,14 +16,19 @@ interface Tutor {
 }
 
 interface Contact {
-  // Define properties of contact
+  _id: string;
+  name:string;
+  studentDetails: {
+    email: string;
+    // Add other relevant properties
+  };
 }
 
 export default function TutorChatPage() {
   const navigate = useNavigate();
   const socket = useRef<Socket | null>(null);
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [currentChat, setCurrentChat] = useState<Contact | undefined>(undefined);
+  const [currentChat, setCurrentChat] = useState<any | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<Tutor | null>(null);
 
   useEffect(() => {

@@ -11,7 +11,8 @@ interface Course {
   title: string;
 }
 
-interface QuizQuestion {
+export interface QuizQuestion {
+  questionset: any;
   _id: string;
   course: string;
   
@@ -59,7 +60,7 @@ function TutorQuizTable() {
   };
 
   const handleView = async (courseId: string) => {
-    const questionSet = quiz.filter((quiz) => quiz?.course === courseId);
+    const questionSet = quiz.filter((q) => q?.course === courseId);
     setQuestions(questionSet);
     setView(true);
   };

@@ -3,11 +3,13 @@ import styled from "styled-components";
 
 interface Contact {
   _id: string;
+  name: string; // Add this line
   studentDetails: {
     email: string;
     // Add other relevant properties
   };
 }
+
 
 interface TutorChatContactsProps {
   contacts: Contact[];

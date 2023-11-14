@@ -6,6 +6,9 @@ import { HiPlus } from "react-icons/hi";
 import "react-toastify/dist/ReactToastify.css";
 
 import { activateQuiz, removeQuiz } from "../AxiosConfigInstructors/AxiosConfig";
+import { QuizQuestion } from "./TutorQuizTable";
+import { ReactNode } from "react";
+
 
 interface Question {
   _id: string;
@@ -19,16 +22,24 @@ interface Question {
 }
 
 interface Quiz {
+  question: ReactNode;
+  option2: ReactNode;
+  option3: ReactNode;
+  option4: ReactNode;
+  answerOption: ReactNode;
+  option1: any;
+  _id: string;
+  isActive: any;
   questionset: Question[];
 }
 
 interface ViewQuizProps {
-  quiz: Quiz[];
+  quiz: QuizQuestion[];
   onClose: () => void;
 }
 
-function ViewQuiz({ quiz, onClose }: ViewQuizProps) {
-  const handleDelete = async (question: Question) => {
+function ViewQuiz({ quiz }: ViewQuizProps) {
+  const handleDelete = async (question: Quiz) => {
     try {
       const result = await Swal.fire({
         title: `Are you sure you want to ${
@@ -63,8 +74,8 @@ function ViewQuiz({ quiz, onClose }: ViewQuizProps) {
       <ToastContainer position="top-center" autoClose={3000} />
 
       {quiz?.map((questions) => (
-        questions?.questionset.map((question, innerIndex) => {
-          console.log(question.option1);
+        questions?.questionset.map((question: Quiz, innerIndex: any ) => {
+          
           return (
             <div key={innerIndex}>
               <Accordion>

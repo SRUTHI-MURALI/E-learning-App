@@ -20,7 +20,7 @@ interface Lesson {
 }
 
 interface AddLessonProps {
-  courseId: string;
+  courseId: string | undefined;
   onClose: (flag: boolean) => void;
 }
 

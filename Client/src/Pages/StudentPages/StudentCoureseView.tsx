@@ -10,11 +10,19 @@ import StudentCourseLessons from '../../Components/StudentSide/StudentCourseDeta
 import StudentCourseAbout from '../../Components/StudentSide/StudentCourseDetails/StudentCourseAbout';
 import Footer from '../../Components/StudentSide/StudentFooter/Footer';
 
+interface CourseLesson {
+  _id: string;
+  title: string;
+  description: string;
+  duration: number;
+  video: string;
+}
 
 
 
 function StudentCoureseView() {
-  const [data, setData] = useState('')
+  const [data, setData] = useState<{ courseLessons: CourseLesson[] }>({ courseLessons: [] });
+
     const { id } = useParams();
     const showVideo=true;
   

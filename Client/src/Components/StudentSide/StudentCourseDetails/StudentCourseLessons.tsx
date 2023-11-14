@@ -10,7 +10,7 @@ interface CourseLesson {
   video: string;
 }
 
-interface StudentCourseLessonsProps {
+export interface StudentCourseLessonsProps {
   courseData: {
     courseLessons: CourseLesson[];
   };

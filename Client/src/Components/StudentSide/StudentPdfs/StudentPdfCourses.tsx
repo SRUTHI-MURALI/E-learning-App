@@ -17,7 +17,7 @@ interface Course {
 function StudentPdfCourses() {
   const [allCourseList, setAllCourseList] = useState<Course[]>([]);
   const [show, setShow] = useState(false);
-  const [selectedCourseId, setSelectedCourseId] = useState<string[] | null>(null);
+  const [selectedCourseId, setSelectedCourseId] = useState<any[] | null>(null);
 
   useEffect(() => {
     const getCourses = async () => {

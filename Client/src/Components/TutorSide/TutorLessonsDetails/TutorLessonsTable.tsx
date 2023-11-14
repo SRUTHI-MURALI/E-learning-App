@@ -40,7 +40,7 @@ function TutorLessonsTable() {
   const { id } = useParams<ParamTypes>();
 
   useEffect(() => {
-    const getLessons = async (courseId: string) => {
+    const getLessons = async (courseId: string | undefined) => {
       try {
         const response = await getAllLessons(courseId);
         setLessonslist(response.data.allLessons);
