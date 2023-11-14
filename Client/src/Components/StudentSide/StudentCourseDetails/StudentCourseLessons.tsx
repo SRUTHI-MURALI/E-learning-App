@@ -1,12 +1,22 @@
-
 import { Container, Row } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import { Video_Url } from "../../../Config/Config";
 
+interface CourseLesson {
+  _id: string;
+  title: string;
+  description: string;
+  duration: number;
+  video: string;
+}
+
 interface StudentCourseLessonsProps {
-  courseData: any;
+  courseData: {
+    courseLessons: CourseLesson[];
+  };
   show: boolean;
 }
+
 function StudentCourseLessons({ courseData, show }: StudentCourseLessonsProps) {
   return (
     <div>
@@ -22,8 +32,8 @@ function StudentCourseLessons({ courseData, show }: StudentCourseLessonsProps) {
           Course Highlights
         </h2>
         {courseData?.courseLessons?.map((courses, index) => (
-          <Row className="m-3">
-            <Accordion key={courses?._id}>
+          <Row className="m-3" key={courses?._id}>
+            <Accordion>
               <Accordion.Item eventKey={courses?._id}>
                 <Accordion.Header>Lesson: {index + 1}</Accordion.Header>
                 <Accordion.Body>Title : {courses?.title}</Accordion.Body>

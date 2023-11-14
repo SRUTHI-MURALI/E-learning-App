@@ -42,14 +42,14 @@ import TutorProfile from "./Pages/TutorPages/TutorProfile";
 import TutorDetailsPage from "./Pages/StudentPages/TutorDetailsPage";
 import StudentProfile from "./Pages/StudentPages/StudentProfile";
 import TutorForgotPassword from "./Components/ForgotPassword/TutorForgotPassword";
-import Room from "./Pages/room";
+import Room from "./Pages/Room";
 import StudentMentors from "./Pages/StudentPages/StudentMentors";
 import StudentCoureseView from "./Pages/StudentPages/StudentCoureseView";
 import StudentChatPage from "./Pages/StudentPages/StudentChatPage";
 import TutorChatPage from "./Pages/TutorPages/TutorChatPage";
 import StudentCoursePdf from "./Pages/StudentPages/StudentCoursesPdf";
 
-import SearchBarContainer from "./Components/StudentSide/SearchBar/SearchBarContainer";
+
 import StudentTutorList from "./Pages/StudentPages/StudentTutorList";
 
 
@@ -105,7 +105,7 @@ function App() {
           <Route path="/courseCategoryList" element={<CourseCategoryList />} />
           <Route
             path="/addCategory"
-            element={<AddCategory onClose={undefined} />}
+            element={<AddCategory onClose={()=>undefined} />}
           />
           <Route path="/allCoursesList" element={<CoursesList />} />
           <Route path="/adminlessonslist/:id" element={<AdminLessonList />} />

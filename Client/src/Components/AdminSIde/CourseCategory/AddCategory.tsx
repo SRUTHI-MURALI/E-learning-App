@@ -35,13 +35,13 @@ function AddCategory({ onClose }: addCategoryProps) {
       if (response.status === 201) {
       
          toast.success("category added");
-        onClose(false);
+        onClose();
        
         
       } else if (response.status == 400) {
         toast.error("Category already exists");
       }
-    } catch (error) {
+    } catch (error:any) {
       if (
         error.response &&
         error.response.data &&
@@ -58,7 +58,7 @@ function AddCategory({ onClose }: addCategoryProps) {
   };
 
   const handleClose = () => {
-    onClose(false);
+    onClose();
   };
 
   return (

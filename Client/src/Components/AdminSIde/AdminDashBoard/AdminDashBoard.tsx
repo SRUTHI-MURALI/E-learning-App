@@ -26,7 +26,7 @@ function AdminDashBoard() {
   const [orders, setOrders] = useState();
   const [totalIncome, setTotalIncome] = useState();
   const [monthlyIncome, setMonthlyIncome] = useState([]);
-  const [monthlyCourses, setMonthlyCourses] = useState([]);
+  const [monthlyCourses] = useState([]);
   const [courses, setCourses] = useState();
   useEffect(() => {
     const getStudents = async () => {
@@ -54,6 +54,7 @@ function AdminDashBoard() {
 
         setMonthlyIncome(updatedMonthlySales);
 
+        console.log(courses);
         
 
         

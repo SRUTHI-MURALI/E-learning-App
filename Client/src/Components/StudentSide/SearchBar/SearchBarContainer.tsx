@@ -3,10 +3,15 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import axios from 'axios';
 import { Base_Url } from '../../../Config/Config';
 
-function SearchBarContainer({ setSearchedCourses }) {
+interface SearchBarContainerProps {
+  setSearchedCourses: React.Dispatch<React.SetStateAction<any[]>>;
+}
+
+
+const SearchBarContainer: React.FC<SearchBarContainerProps> = ({ setSearchedCourses }) => {
   const [searchValue, setSearchValue] = useState('');
 
-  const handleSearch = async (e) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (searchValue) {

@@ -29,7 +29,7 @@ const TutorProfileImage: React.FC<TutorEditProfileImageProps> = ({
     getPhoto();
   }, [cloudinaryURL]);
 
-  const handleImageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleImageSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     await imageHandler();

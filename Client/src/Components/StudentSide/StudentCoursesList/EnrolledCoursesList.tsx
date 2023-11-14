@@ -5,14 +5,23 @@ import { Image_Url } from "../../../Config/Config";
 import { getEnrolledCourses } from "../AxiosConfigStudents/AxiosConfig";
 import { Link } from "react-router-dom";
 
+interface Course {
+  _id: string;
+  title: string;
+  instructor: {
+    name: string;
+  };
+  photo: string;
+}
+
 function EnrolledCoursesList() {
-  const [allCourseList, setAllCourseList] = useState([]);
+  const [allCourseList, setAllCourseList] = useState<Course[]>([]);
 
   const student = localStorage.getItem("studentData");
   const parseData = student ? JSON.parse(student) : null;
 
   useEffect(() => {
-    const enrolledCourses = async (id) => {
+    const enrolledCourses = async (id: string) => {
       try {
         const response = await getEnrolledCourses(id);
         setAllCourseList(response.data.enrolledCourses);
@@ -21,8 +30,11 @@ function EnrolledCoursesList() {
       }
     };
 
-    enrolledCourses(parseData?._id);
-  }, []);
+    if (parseData) {
+      enrolledCourses(parseData._id);
+    }
+  }, [parseData]);
+
   return (
     <div>
       <Container className="mt-5">

@@ -5,11 +5,13 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAllCategory } from "../AxiosConfigInstructors/AxiosConfig";
 
+interface SelectCategoryProps {
+  onSelectCategory: (category: string) => void;
+}
 
-
-function SelectCategory({ onSelectCategory }) {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+function SelectCategory({ onSelectCategory }: SelectCategoryProps) {
+  const [categories, setCategories] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,9 +28,7 @@ function SelectCategory({ onSelectCategory }) {
 
   const handleCategorySelection = () => {
     if (selectedCategory === "") {
-      {
-        return toast.error("Please Select a Category");
-      }
+      return toast.error("Please Select a Category");
     }
     // Call the callback function to pass back the selected category
     onSelectCategory(selectedCategory);
@@ -39,10 +39,7 @@ function SelectCategory({ onSelectCategory }) {
       <Card className="selectcategorycard">
         <Row>
           <Container>
-            <ToastContainer
-              position="top-center"
-              autoClose={3000}
-            ></ToastContainer>
+            <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
             <Form.Select
               aria-label="Default select example"
               onChange={(e) => setSelectedCategory(e.target.value)}

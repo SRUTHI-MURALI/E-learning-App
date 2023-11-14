@@ -75,7 +75,7 @@ function LoginForm() {
       dispatch(login(studentData));
       toast.success("successfully logged in");
       navigate("/studentlandingpage");
-    } catch (error) {
+    } catch (error:any) {
       // Display the error message from the response
       if (
         error.response &&

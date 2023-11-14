@@ -48,7 +48,7 @@ function LoginForm() {
       dispatch(login(tutorData));
       toast.success("successfully logged in");
       navigate("/tutorallcourses");
-    } catch (error) {
+    } catch (error:any) {
       // Display the error message from the response
       if (
         error.response &&

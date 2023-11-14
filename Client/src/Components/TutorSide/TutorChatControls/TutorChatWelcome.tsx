@@ -1,9 +1,12 @@
 import  { useState, useEffect } from "react";
 import styled from "styled-components";
 
-
+interface TutorData {
+  name: string;
+  // Add other properties if needed
+}
 export default function TutorChatWelcome() {
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState<TutorData | null>(null);
 
 
   useEffect(() => {

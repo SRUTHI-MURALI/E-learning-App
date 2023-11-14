@@ -28,7 +28,7 @@ interface Lesson {
 }
 
 interface ParamTypes {
-  id: any;
+  [key: string]: string | undefined;
 }
 
 function TutorLessonsTable() {

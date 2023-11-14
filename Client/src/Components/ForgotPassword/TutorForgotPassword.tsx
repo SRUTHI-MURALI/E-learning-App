@@ -41,7 +41,7 @@ function TutorForgotPassword() {
       } else {
         toast.error("An error occurred while sending OTP");
       }
-    } catch (error) {
+    } catch (error:any) {
       // Handle network errors or other exceptions
       if (
         error.response &&
@@ -82,7 +82,7 @@ function TutorForgotPassword() {
           error.response.data.message
           toast.error(error.response.data.message);
         });
-    } catch (error) {
+    } catch (error:any) {
       if (
         error.response &&
         error.response.data &&

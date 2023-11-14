@@ -83,7 +83,7 @@ const StudentProfileForm: React.FC<StudentProfileFormProps> = () => {
               </div>
 
               <div className="col-lg-6">
-                <p style={{ color: "#5B5B5B", fontFamily: "Open Sans sans-serif", color: 'white' }}>
+                <p style={{ color: "#5B5B5B", fontFamily: "Open Sans sans-serif" }}>
                   <h4>Name : {student?.name}</h4>
                   <h4>Gender : {student?.gender}</h4>
                   <h4>Age : {student?.age}</h4>

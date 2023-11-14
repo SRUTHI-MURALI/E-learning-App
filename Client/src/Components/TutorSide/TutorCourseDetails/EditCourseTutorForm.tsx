@@ -7,13 +7,18 @@ import {
   getEditCourse,
 } from "../AxiosConfigInstructors/AxiosConfig";
 
-function EditCourseTutorForm({ onCloseEdit, courseId }) {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [category, setCategory] = useState("");
-  const [categoryName,setCategoryName]= useState('')
-  const [allCategories, setAllCategories] = useState([]);
+interface EditCourseTutorFormProps {
+  onCloseEdit: (status: boolean) => void;
+  courseId: string | null;
+}
+
+function EditCourseTutorForm({ onCloseEdit, courseId }: EditCourseTutorFormProps) {
+  const [title, setTitle] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+  const [category, setCategory] = useState<string>("");
+  const [categoryName, setCategoryName] = useState<string>("");
+  const [allCategories, setAllCategories] = useState<any[]>([]);
 
   useEffect(() => {
     const getcourse = async () => {
@@ -24,50 +29,52 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
         setTitle(course.title);
         setDuration(course.duration);
         setCategory(course.category._id);
-        setCategoryName(course.category.title)
+        setCategoryName(course.category.title);
         setPrice(course.price);
       } catch (error) {
         console.log(error);
       }
     };
     getcourse();
-  }, []);
+  }, [courseId]);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      // Trim values and parse numeric fields
-      const trimmedTitle = title.trim();
-      const trimmedDuration = parseInt(duration, 10);
-      const trimmedPrice = parseFloat(price);
-      const trimmedCategory = category.trim();
-    
-      
-      if (
-        !trimmedTitle || 
-        !trimmedCategory || 
-        isNaN(trimmedDuration) || 
-        isNaN(trimmedPrice) ||     
-        trimmedDuration <= 0 ||     
-        trimmedPrice <= 0           
-      ) {
-        toast.error("Please fill in all required fields and ensure non-negative numeric values greater than 0.");
-        return;
-      }
-      try {
-        
-        await editCourseList(courseId, trimmedTitle, trimmedDuration, trimmedCategory, trimmedPrice);
-        toast.success("Course successfully edited.");
-        
-        onCloseEdit(false);
-      } catch (error) {
-      console.log(error,'ddd');
-      
-        toast.error("An error occurred while editing the course.");
-      }
-    };
-  
+    const trimmedTitle = title.trim();
+    const trimmedDuration = parseInt(duration.toString(), 10);
+    const trimmedPrice = parseFloat(price.toString());
+    const trimmedCategory = category.trim();
+
+    if (
+      !trimmedTitle ||
+      !trimmedCategory ||
+      isNaN(trimmedDuration) ||
+      isNaN(trimmedPrice) ||
+      trimmedDuration <= 0 ||
+      trimmedPrice <= 0
+    ) {
+      toast.error(
+        "Please fill in all required fields and ensure non-negative numeric values greater than 0."
+      );
+      return;
+    }
+
+    try {
+      await editCourseList(
+        courseId,
+        trimmedTitle,
+        trimmedDuration,
+        trimmedCategory,
+        trimmedPrice
+      );
+      toast.success("Course successfully edited.");
+      onCloseEdit(false);
+    } catch (error) {
+      console.log(error, "ddd");
+      toast.error("An error occurred while editing the course.");
+    }
+  };
 
   const handleClose = () => {
     onCloseEdit(false);
@@ -80,10 +87,7 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
           <Card className="responsive-card">
             <Form onSubmit={handleSubmit}>
               <Form.Label style={{ color: "black" }}>Edit Course</Form.Label>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Course Title</Form.Label>
                 <Form.Control
                   type="text"
@@ -99,9 +103,9 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
                 <Form.Label>Duration</Form.Label>
                 <Form.Control
                   type="number"
-                  placeholder={duration}
+                  placeholder={duration.toString()}
                   value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
+                  onChange={(e) => setDuration(parseInt(e.target.value, 10))}
                 />
               </Form.Group>
               <Form.Group
@@ -111,9 +115,9 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   type="number"
-                  placeholder={price}
+                  placeholder={price.toString()}
                   value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={(e) => setPrice(parseFloat(e.target.value))}
                 />
               </Form.Group>
 
@@ -123,11 +127,14 @@ function EditCourseTutorForm({ onCloseEdit, courseId }) {
               >
                 <Form.Label>Category</Form.Label>
                 <Form.Select onChange={(e) => setCategory(e.target.value)}>
-                  <option value={category._id}>{categoryName}</option>
+                  <option value={category}>{categoryName}</option>
                   {allCategories
-                    .filter((categoryItem) => categoryItem._id !== category._id)
+                    .filter((categoryItem) => categoryItem._id !== category)
                     .map((categoryItem) => (
-                      <option key={categoryItem._id} value={categoryItem._id}>
+                      <option
+                        key={categoryItem._id}
+                        value={categoryItem._id}
+                      >
                         {categoryItem.title}
                       </option>
                     ))}

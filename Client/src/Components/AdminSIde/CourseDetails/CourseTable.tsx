@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react"; // Import React
+import  { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
-
 import { ImArrowRight } from "react-icons/im";
-import "./CourseTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "react-bootstrap";
@@ -16,9 +14,21 @@ import {
   getAllCourse,
 } from "../AxiosConfigAdmin/AxiosConfig";
 
+interface Course {
+  _id: string;
+  title: string;
+  category: { title: string };
+  description: string;
+  duration: number;
+  instructor: { name: string; isBlocked: boolean };
+  isApproved: boolean;
+  price: number;
+  photo: string;
+}
+
 function CourseTable() {
-  const [courseList, setCourselist] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0); 
+  const [courseList, setCourselist] = useState<Course[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
 
   const navigate = useNavigate();
@@ -27,8 +37,6 @@ function CourseTable() {
     const getCourses = async () => {
       try {
         const response = await getAllCourse();
-        console.log(response.data, "kkk");
-
         setCourselist(response.data.allCourses);
       } catch (error) {
         console.error(error);
@@ -37,17 +45,16 @@ function CourseTable() {
     getCourses();
   }, []);
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 
-  const handleLessons = (Id) => {
+  const handleLessons = (Id: string) => {
     navigate(`/adminlessonslist/${Id}`);
   };
 
-  const courseStatus = async (course) => {
+  const courseStatus = async (course: Course) => {
     try {
-      // Display a confirmation dialog using SweetAlert
       const result = await Swal.fire({
         title: `Are you sure you want to ${
           course.isApproved ? "unapprove" : "approve"
@@ -72,7 +79,6 @@ function CourseTable() {
         setCourselist([...courseList]);
       }
     } catch (error) {
-      // Handle errors and display an error message to the user
       toast.error("Error");
     }
   };

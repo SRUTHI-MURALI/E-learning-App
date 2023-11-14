@@ -19,6 +19,8 @@ interface Contact {
   // Define properties of contact
 }
 
+
+
 export default function StudentChatPage() {
   const navigate = useNavigate();
   const socket = useRef<Socket | null>(null);

@@ -10,7 +10,7 @@ import { addNewLesson } from "../AxiosConfigInstructors/AxiosConfig";
 
 
 interface Lesson {
-
+  
   title: string;
   description: string;
   duration: string;
@@ -124,7 +124,7 @@ function AddLesson({ courseId, onClose }: AddLessonProps)  {
 
   const videoHandler = async () => {
     const formData = new FormData();
-    formData.append("file", video);
+    formData.append("file", video as Blob);
     formData.append("upload_preset", "lessonlist");
     formData.append("cloud_name", "dnkc0odiw");
     try {
@@ -196,7 +196,7 @@ function AddLesson({ courseId, onClose }: AddLessonProps)  {
                   <Form.Label>Video</Form.Label>
                   <Form.Control
                     type="file"
-                    ref={(input) => {
+                    ref={(input:any) => {
                       videoInputRef.current = input;
                     }}
                     onChange={(e) => {
@@ -214,7 +214,7 @@ function AddLesson({ courseId, onClose }: AddLessonProps)  {
                       <Form.Label>Add PDF</Form.Label>
                       <Form.Control
                         type="file"
-                        ref={(input) => {
+                        ref={(input:any) => {
                           pdfInputRef.current = input;
                         }}
                         onChange={(e) => {

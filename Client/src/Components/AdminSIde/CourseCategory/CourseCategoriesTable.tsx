@@ -16,13 +16,20 @@ import {
   inactivateCategory,
 } from "../AxiosConfigAdmin/AxiosConfig";
 
+interface Category {
+  _id: string;
+  title: string;
+  description: string;
+  isActive: boolean;
+}
+
 function CourseCategoriesTable() {
-  const [categoryList, setCategorylist] = useState([]);
-  const [categoryId, setCategoryId] = useState("");
-  const [openPopUp, setOpenPopUp] = useState(false);
-  const [editPopUp, setEditPopUp] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0); // Current page number
-  const itemsPerPage = 10;
+  const [categoryList, setCategorylist] = useState<Category[]>([]);
+  const [categoryId, setCategoryId] = useState<string>("");
+  const [openPopUp, setOpenPopUp] = useState<boolean>(false);
+  const [editPopUp, setEditPopUp] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(0); // Current page number
+  const itemsPerPage: number = 10;
 
   useEffect(() => {
     const getAllCategory = async () => {
@@ -40,11 +47,11 @@ function CourseCategoriesTable() {
     setOpenPopUp(true);
   };
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 
-  const categoryStatus = async (category) => {
+  const categoryStatus = async (category: Category) => {
     try {
       // Display a confirmation dialog using SweetAlert
       const result = await Swal.fire({
@@ -76,7 +83,7 @@ function CourseCategoriesTable() {
     }
   };
 
-  const EditCategory = async (id) => {
+  const EditCategory = async (id:string) => {
     setCategoryId(id);
 
     setEditPopUp(true);

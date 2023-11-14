@@ -1,19 +1,20 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
+interface StudentData {
+  name: string;
+  // Add other properties as needed
+}
 
 export default function ChatWelcome() {
-  const [userName, setUserName] = useState("");
-
+  const [userName, setUserName] = useState<StudentData | null>(null);
 
   useEffect(() => {
     async function fetchUserName() {
       try {
         const userData = localStorage.getItem("studentData");
         if (userData) {
-          const student = JSON.parse(userData);
-          
-
+          const student: StudentData = JSON.parse(userData);
           setUserName(student);
         }
       } catch (error) {
@@ -26,18 +27,17 @@ export default function ChatWelcome() {
 
   return (
     <Container>
-    {/* Add an optional responsive image */}
-    {/* <img src={} alt="" /> */}
-    
-    <h1>
-      Welcome, <span>{userName?.name}!</span>
-    </h1>
-    
-    <h3 className="text-center">
-      Please select a chat to start messaging.
-    </h3>
-  </Container>
-  
+      {/* Add an optional responsive image */}
+      {/* <img src={} alt="" /> */}
+      
+      <h1>
+        Welcome, <span>{userName?.name}!</span>
+      </h1>
+      
+      <h3 className="text-center">
+        Please select a chat to start messaging.
+      </h3>
+    </Container>
   );
 }
 
@@ -45,7 +45,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color:black;
+  color: black;
   flex-direction: column;
   img {
     height: 20rem;

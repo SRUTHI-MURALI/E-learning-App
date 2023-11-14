@@ -9,15 +9,14 @@ import { Base_Url } from "../../Config/Config";
 import { toast, ToastContainer } from "react-toastify";
 
 interface StudentOtpVerifyFormProps {
-  phone: number;
+  phone: number| null;
 }
 
 function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
-  const [otp, setotp] = useState("");
-  const [count, setCount] = useState(8);
-  const [otpSent, setOtpSent] = useState(true);
+  const [otp, setOtp] = useState<string>("");
+  const [count, setCount] = useState<number>(8);
+  const [otpSent] = useState<boolean>(true);
 
- 
   const handleResendOtp = async () => {
     await axios.post(`${Base_Url}/otp/sendmobileotp`, {
       phone,
@@ -25,6 +24,9 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
   };
 
   const navigate = useNavigate();
+
+
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,20 +37,20 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
     }
 
     try {
-        axios.post(`${Base_Url}/student/verifyotp`, {
-        verificationCode: trimmedOtp,
-      }) .then(() => {
-        alert("Otp verified successfully");
-        navigate("/studentlogin");
-      })
-      .catch((error) => {
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-        toast.error("otp verification failed");
-      });
-      
-      
+      axios
+        .post(`${Base_Url}/student/verifyotp`, {
+          verificationCode: trimmedOtp,
+        })
+        .then(() => {
+          alert("Otp verified successfully");
+          navigate("/studentlogin");
+        })
+        .catch((error) => {
+          error.response &&
+            error.response.data &&
+            error.response.data.message &&
+            toast.error("otp verification failed");
+        });
     } catch (error) {
       // Handle the error here
       console.error("An error occurred:", error);
@@ -79,7 +81,7 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
       style={{ minHeight: "100vh", backgroundImage: `url(${r1})` }}
     >
       <Container>
-      <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
+        <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
         <Card style={{ width: "18rem" }} className="text-center">
           {otpSent ? (
             <>
@@ -87,14 +89,11 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
                 <Card.Body>
                   <Card.Title> Enter Otp Send to the PhoneNumber</Card.Title>
                   <Card.Img variant="top" />
-                  <Form.Group
-                    className="mb-3 mt-3"
-                    controlId="formGridAddress1"
-                  >
+                  <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
                     <Form.Control
                       placeholder="Enter otp"
                       value={otp}
-                      onChange={(e) => setotp(e.target.value)}
+                      onChange={(e) => setOtp(e.target.value)}
                     />
                   </Form.Group>
                   <Button variant="primary" type="submit">

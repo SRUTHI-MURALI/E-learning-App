@@ -54,9 +54,10 @@ function StudenetCoursePurchase({ courseData }: StudentCoursePurchaseProps) {
     
   };
 
-  const handlePayment = async (e) => {
+  const handlePayment = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (students) {
-      const makeRazorPay = async (id) => {
+      const makeRazorPay = async (id:any) => {
         try {
           e.preventDefault();
           const res = await makePayment(id);

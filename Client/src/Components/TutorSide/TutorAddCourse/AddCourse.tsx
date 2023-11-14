@@ -26,7 +26,7 @@ function AddCourse({ selectedCategory, onCourseAdded }: AddCourseProps) {
   const [show, setShow] = useState<boolean | null>(null);
   const [showLesson, setShowLesson] = useState<boolean>(false);
 
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedTitle = title.trim();
     const trimmedPrice = price;

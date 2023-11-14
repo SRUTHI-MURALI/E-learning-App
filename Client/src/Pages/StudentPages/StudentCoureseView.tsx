@@ -10,8 +10,11 @@ import StudentCourseLessons from '../../Components/StudentSide/StudentCourseDeta
 import StudentCourseAbout from '../../Components/StudentSide/StudentCourseDetails/StudentCourseAbout';
 import Footer from '../../Components/StudentSide/StudentFooter/Footer';
 
+
+
+
 function StudentCoureseView() {
-    const [data, setData] = useState("");
+  const [data, setData] = useState('')
     const { id } = useParams();
     const showVideo=true;
   

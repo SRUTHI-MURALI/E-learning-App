@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Form, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { Course_Upload_Url, Image_Url } from "../../../Config/Config";
@@ -10,18 +10,33 @@ import {
 } from "../AxiosConfigStudents/AxiosConfig";
 import PropTypes from "prop-types";
 
-function StudentEditProfileForm({ student, onClose }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState('');
-  const [gender, setGender] = useState("");
-  const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
-  const [country, setCountry] = useState("");
+interface StudentEditProfileFormProps {
+  student: {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    gender: string;
+    phone: string;
+    age: string;
+    country: string;
+    photo: string;
+  };
+  onClose: (value: boolean) => void;
+}
+
+function StudentEditProfileForm({ student, onClose }: StudentEditProfileFormProps) {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>('');
+  const [gender, setGender] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [age, setAge] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
-  const [cloudinaryURL, setCloudinaryURL] = useState("");
-  const [existingImage, setExistingImage] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [cloudinaryURL, setCloudinaryURL] = useState<string>("");
+  const [existingImage, setExistingImage] = useState<string>("");
+  const [photo, setPhoto] = useState<string>("");
 
   useEffect(() => {
     const getProfileData = async (id: string) => {
@@ -29,14 +44,14 @@ function StudentEditProfileForm({ student, onClose }) {
         const response = await getStudentProfile(id);
         const profile = response.data.studentDetails;
 
-        setName(profile?.name);
-        setEmail(profile?.email);
-        setPassword(profile?.password);
-        setGender(profile?.gender);
-        setPhone(profile?.phone);
-        setAge(profile?.age);
-        setCountry(profile?.country);
-        setExistingImage(profile?.photo);
+        setName(profile?.name || "");
+        setEmail(profile?.email || "");
+        setPassword(profile?.password || "");
+        setGender(profile?.gender || "");
+        setPhone(profile?.phone || "");
+        setAge(profile?.age || "");
+        setCountry(profile?.country || "");
+        setExistingImage(profile?.photo || "");
       } catch (error) {
         console.log({ error });
       }
@@ -44,7 +59,7 @@ function StudentEditProfileForm({ student, onClose }) {
     getProfileData(student._id);
   }, []);
 
-  const handleEditStudentProfile = async (e) => {
+  const handleEditStudentProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (image) {
@@ -83,11 +98,8 @@ function StudentEditProfileForm({ student, onClose }) {
       setAge("No Age");
     }
     if (phone === '') {
-      console.log("kk");
-      
       setPhone('No number');
-    
-     }
+    }
     if (email === "") {
       setEmail("No Mail");
     } else {
@@ -126,7 +138,7 @@ function StudentEditProfileForm({ student, onClose }) {
 
   const imageHandler = async () => {
     const formData = new FormData();
-    formData.append("file", image);
+    formData.append("file", image as Blob);
     formData.append("upload_preset", "studentImage");
     formData.append("cloud_name", "dnkc0odiw");
     await axios
@@ -149,7 +161,7 @@ function StudentEditProfileForm({ student, onClose }) {
         <Card className="m-5">
           <Row>
             <Col>
-              <Form>
+              <Form onSubmit={handleEditStudentProfile}>
                 <Form.Group as={Row} className="mb-3">
                   <Form.Label column sm="2">
                     Name:
@@ -250,9 +262,7 @@ function StudentEditProfileForm({ student, onClose }) {
                 </Form.Group>
                 <Row>
                   <Col>
-                    <Button type="submit" onClick={handleEditStudentProfile}>
-                      Submit
-                    </Button>
+                    <Button type="submit">Submit</Button>
                   </Col>
                   <Col>
                     <Button style={{ float: "right" }} onClick={handleClose}>
@@ -292,7 +302,18 @@ function StudentEditProfileForm({ student, onClose }) {
 }
 
 StudentEditProfileForm.propTypes = {
-  student: PropTypes.object.isRequired,
+  student: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    gender: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    age: PropTypes.string.isRequired,
+    country: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+  }).isRequired,
   onClose: PropTypes.func.isRequired,
 };
+
 export default StudentEditProfileForm;

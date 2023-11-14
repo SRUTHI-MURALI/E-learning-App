@@ -1,17 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
+import  { useEffect, useState, useRef } from "react";
 import { getInstructors } from "../AxiosConfigStudents/AxiosConfig";
 import { Button, Container, Row } from "react-bootstrap";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { Image_Url } from "../../../Config/Config";
-import './studentMentor.css'
+import "./studentMentor.css";
 
 interface StudentMentorsListProps {
-  studentData: object;
+  studentData: {
+    _id: string;
+    name: string;
+  };
 }
+
 function StudentMentorList({ studentData }: StudentMentorsListProps) {
-  const [tutorDetails, setTutorDetails] = useState([]);
+  const [tutorDetails, setTutorDetails] = useState<any[]>([]);
   const [showCall, setShowCall] = useState(false);
-  const studentMeetingContainerRef = useRef(null);
+  const studentMeetingContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const getTutorData = async () => {
@@ -37,7 +41,7 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
     };
   }, []);
 
-  function generateToken(tokenServerUrl, userID) {
+  function generateToken(tokenServerUrl: string, userID: string) {
     // Obtain the token interface provided by the App Server
     return fetch(
       `${tokenServerUrl}/access_token?userID=${userID}&expired_ts=7200`,
@@ -46,9 +50,9 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
       }
     ).then((res) => res.json());
   }
-  const handleMentoring = async (tutorid) => {
-    const tutorID = tutorid;
 
+  const handleMentoring = async (tutorid: string) => {
+    const tutorID = tutorid;
     const studentID = studentData._id;
 
     if (tutorID) {
@@ -67,7 +71,7 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
         const zp = ZegoUIKitPrebuilt.create(token);
 
         zp.joinRoom({
-          container: studentMeetingContainerRef.current,
+          container: studentMeetingContainerRef.current!,
           sharedLinks: [
             {
               name: "Personal link",
@@ -85,13 +89,14 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
     }
     setShowCall(true);
   };
+
   return (
-    <Container style={{ marginTop: '120px' }}>
+    <Container style={{ marginTop: "120px" }}>
       <Row>
         {showCall === false ? (
           <Container>
             <>
-              {tutorDetails.map((tutor, index) => (
+              {tutorDetails.map((tutor) => (
                 <div className="row" key={tutor?._id}>
                   <div className="row mt-3">
                     <div className="col-md-2">
@@ -103,13 +108,20 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
                       />
                     </div>
                     <div className="col-lg-8">
-                      <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>NAME: {tutor?.name}</h5>
-                      <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>Qualification: {tutor?.qualification}</h5>
-                      <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>Experience: {tutor?.experience}</h5>
-                     
-                      <h5 style={{ fontFamily: "Vollkorn serif", color: 'white' }}>Online Duration: {tutor?.startOnline} am to {tutor?.onlineEnd} pm</h5>
-                      </div>
-                      <div className="col-lg-2">
+                      <h5 style={{ fontFamily: "Vollkorn serif", color: "white" }}>
+                        NAME: {tutor?.name}
+                      </h5>
+                      <h5 style={{ fontFamily: "Vollkorn serif", color: "white" }}>
+                        Qualification: {tutor?.qualification}
+                      </h5>
+                      <h5 style={{ fontFamily: "Vollkorn serif", color: "white" }}>
+                        Experience: {tutor?.experience}
+                      </h5>
+                      <h5 style={{ fontFamily: "Vollkorn serif", color: "white" }}>
+                        Online Duration: {tutor?.startOnline} am to {tutor?.onlineEnd} pm
+                      </h5>
+                    </div>
+                    <div className="col-lg-2">
                       <Button
                         variant="primary"
                         type="submit"
@@ -142,4 +154,3 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
 }
 
 export default StudentMentorList;
-

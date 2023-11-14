@@ -1,7 +1,7 @@
+import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { ImArrowRight } from "react-icons/im";
 import { Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import "./StudentTable.css";
 import { toast, ToastContainer } from "react-toastify";
@@ -11,11 +11,19 @@ import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import { getStudents } from "../AxiosConfigAdmin/AxiosConfig";
 
+interface Student {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  isBlocked: boolean;
+}
+
 function StudentTable() {
-  const [studentList, setStudentlist] = useState([]);
+  const [studentList, setStudentlist] = useState<Student[]>([]);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
   const itemsPerPage = 10;
-  
+
   useEffect(() => {
     const getStudentsList = async () => {
       try {
@@ -28,16 +36,15 @@ function StudentTable() {
     getStudentsList();
   }, []);
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 
-  const blockStatus = async (student: any) => {
+  const blockStatus = async (student: Student) => {
     try {
-      // Display a confirmation dialog using SweetAlert
       const result = await Swal.fire({
         title: `Are you sure you want to ${
-          student.isBlocked ? "UnBlock" : "Block"
+          student.isBlocked ? "Unblock" : "Block"
         } the student "${student.name}"?`,
         icon: "question",
         showCancelButton: true,
@@ -49,18 +56,13 @@ function StudentTable() {
         if (!student.isBlocked) {
           await axios.put(`${Base_Url}/admin/blockstudent/${student._id}`);
           student.isBlocked = true;
-         
-  
 
-          
-
-          toast.success(`student "${student.name}" blocked successfully`);
+          toast.success(`Student "${student.name}" blocked successfully`);
         } else {
           await axios.put(`${Base_Url}/admin/unblockstudent/${student._id}`);
           student.isBlocked = false;
-          
-          
-          toast.success(`student "${student.name}" unblocked successfully`);
+
+          toast.success(`Student "${student.name}" unblocked successfully`);
         }
 
         setStudentlist([...studentList]);
@@ -85,7 +87,7 @@ function StudentTable() {
         <thead>
           <tr>
             <th>#</th>
-            <th> Name</th>
+            <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
             <th>Actions</th>

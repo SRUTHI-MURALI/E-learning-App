@@ -6,8 +6,8 @@ import ReactPaginate from "react-paginate";
 import { getorderlist } from "../AxiosConfigAdmin/AxiosConfig";
 
 function AdminOrderTable() {
-  const [orderList, setOrderList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0); // Current page number
+  const [orderList, setOrderList] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function AdminOrderTable() {
     getOrders();
   }, []);
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 

@@ -27,7 +27,7 @@ function EditCategoryForm({ onCloseEdit, categoryId }: EditCategoryFormProps) {
     getCategory(categoryId);
   }, [categoryId]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
   
     const trimmedCategory = category.trim();
@@ -43,8 +43,8 @@ function EditCategoryForm({ onCloseEdit, categoryId }: EditCategoryFormProps) {
       try {
         await editCategory(categoryId, trimmedCategory, trimmedDescription);
         toast.success("Successfully edited.");
-        onCloseEdit(false)
-      } catch (error) {
+        onCloseEdit()
+      } catch (error:any) {
         if (error.response && error.response.data && error.response.data.message) {
           toast.error(error.response.data.message);
         } else {
@@ -55,7 +55,7 @@ function EditCategoryForm({ onCloseEdit, categoryId }: EditCategoryFormProps) {
   };
   
   const handleClose = () => {
-    onCloseEdit(false);
+    onCloseEdit();
   };
 
   return (

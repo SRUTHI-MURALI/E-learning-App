@@ -1,8 +1,7 @@
+import  { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { ImArrowRight } from "react-icons/im";
 import { Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import "./InstructorTable.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReactPaginate from "react-paginate";
@@ -13,9 +12,17 @@ import {
   unBlockInstructor,
 } from "../AxiosConfigAdmin/AxiosConfig";
 
+interface Instructor {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  isBlocked: boolean;
+}
+
 function InstructorTable() {
-  const [instructorList, setInstructorlist] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0); // Current page number
+  const [instructorList, setInstructorlist] = useState<Instructor[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -30,16 +37,15 @@ function InstructorTable() {
     getInstructorList();
   }, []);
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 
-  const blockStatus = async (instructor: any) => {
+  const blockStatus = async (instructor: Instructor) => {
     try {
-      // Display a confirmation dialog using SweetAlert
       const result = await Swal.fire({
         title: `Are you sure you want to ${
-          instructor.isBlocked ? "UnBlock" : "Block"
+          instructor.isBlocked ? "Unblock" : "Block"
         } the instructor "${instructor.name}"?`,
         icon: "question",
         showCancelButton: true,
@@ -51,20 +57,18 @@ function InstructorTable() {
         if (!instructor.isBlocked) {
           await blockInstructor(instructor._id);
           instructor.isBlocked = true;
-          toast.success(`instructor "${instructor.name}" blocked successfully`);
+          toast.success(`Instructor "${instructor.name}" blocked successfully`);
         } else {
           await unBlockInstructor(instructor._id);
           instructor.isBlocked = false;
           toast.success(
-            `instructor "${instructor.name}" unblocked successfully`
+            `Instructor "${instructor.name}" unblocked successfully`
           );
         }
 
         setInstructorlist([...instructorList]);
-        console.log(instructorList, "hhh");
       }
     } catch (error) {
-      // Handle errors and display an error message to the user
       toast.error("Error");
     }
   };
@@ -82,21 +86,19 @@ function InstructorTable() {
         <thead>
           <tr>
             <th>#</th>
-            <th> Name</th>
+            <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
-
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {paginatedData.map((instructor, index) => (
-            <tr key={instructor.id}>
+            <tr key={instructor._id}>
               <td>{index + 1}</td>
               <td>{instructor.name}</td>
               <td>{instructor.email}</td>
               <td>{instructor.phone}</td>
-
               <td>
                 {instructor.isBlocked ? (
                   <Button

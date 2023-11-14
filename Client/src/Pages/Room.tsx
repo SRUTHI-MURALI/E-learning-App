@@ -18,18 +18,18 @@ function generateToken(tokenServerUrl: string, userID: string) {
   ).then((res) => res.json());
 }
 
-function randomID(len: number): string {
-  let result = '';
-  if (result) return result;
-  const chars =
-    '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP';
-  const maxPos = chars.length;
+// function randomID(len: number): string {
+//   let result = '';
+//   if (result) return result;
+//   const chars =
+//     '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP';
+//   const maxPos = chars.length;
 
-  for (let i = 0; i < len; i++) {
-    result += chars.charAt(Math.floor(Math.random() * maxPos));
-  }
-  return result;
-}
+//   for (let i = 0; i < len; i++) {
+//     result += chars.charAt(Math.floor(Math.random() * maxPos));
+//   }
+//   return result;
+// }
 
 export function getUrlParams(
   url: string = window.location.href
@@ -41,7 +41,7 @@ export function getUrlParams(
 export default function Room() {
   const tutorData = localStorage.getItem('tutorData');
   const parseData: TutorData | null = tutorData ? JSON.parse(tutorData) : null;
-  const roomID = parseData?._id;
+  const roomID: string = parseData?._id ?? "";
   const myMeeting = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -40,7 +40,7 @@ function AdminLessonsTable() {
     getLessons();
   }, []);
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange =({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 
