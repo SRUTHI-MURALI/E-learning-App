@@ -5,6 +5,7 @@ import http from "http";
 import cors from "cors";
 import { Server as SocketIOServer, Socket } from "socket.io";
 import path from 'path'
+import morgan from "morgan"
 
 const app = express();
 
@@ -25,7 +26,7 @@ app.use("/tutor", tutorrouter);
 app.use("/otp", otprouter);
 app.use("/Razorpay", razorpayroute);
 app.use(express.static(path.join(__dirname,"../../../Client/dist")));
-
+app.use(morgan("dev"))
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname,"../../../Client/dist/index.html"));
 });
