@@ -26,10 +26,10 @@ app.use("/student", studentrouter_1.default);
 app.use("/tutor", tutorrouter_1.default);
 app.use("/otp", mobileOtpRouter_1.default);
 app.use("/Razorpay", payment_1.default);
-app.use(express_1.default.static(path_1.default.join(__dirname, "../../../Client/dist")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "../../../Client/dist/src")));
 app.use((0, morgan_1.default)("dev"));
 app.get("*", function (req, res) {
-    res.sendFile(path_1.default.join(__dirname, "../../../Client/dist/index.html"));
+    res.sendFile(path_1.default.join(__dirname, "../../../Client/dist/src/index.html"));
 });
 const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, {
