@@ -31,9 +31,8 @@ function LoginForm() {
     try {
       const idToken = credentialResponse.credential;
 
-
       const response = await googleLogin(idToken);
-      console.log(response,'idididi');
+
       const studentData = response.data;
 
       localStorage.setItem("studentData", JSON.stringify(studentData));
@@ -66,8 +65,6 @@ function LoginForm() {
     }
 
     try {
-   
-
       const response = await studentLogin(trimmedEmail, trimmedPassword);
 
       const studentData = response.data;
@@ -76,7 +73,7 @@ function LoginForm() {
       dispatch(login(studentData));
       toast.success("successfully logged in");
       navigate("/studentlandingpage");
-    } catch (error:any) {
+    } catch (error: any) {
       // Display the error message from the response
       if (
         error.response &&
@@ -97,14 +94,11 @@ function LoginForm() {
       navigate("/studentlandingpage");
     }
   }, [navigate]);
- 
-  
-  
 
   return (
     <GoogleOAuthProvider clientId="1098563032990-ulbr653b8ln8fte1hndcdsi2ugfnbpud.apps.googleusercontent.com">
       <Container className="mt-5">
-      <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
+        <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
         <Card className="logCard">
           <ToastContainer
             position="top-center"
@@ -142,22 +136,19 @@ function LoginForm() {
                   />
                 </Form.Group>
                 <Row>
-                <Col xs={12} md={4}>
-                    
-                  </Col>
+                  <Col xs={12} md={4}></Col>
                   <Col xs={12} md={6}>
                     <Button variant="primary" type="submit">
                       Login as Student
                     </Button>
                   </Col>
-                 
                 </Row>
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    marginTop:'2rem'
+                    marginTop: "2rem",
                   }}
                 >
                   <GoogleLogin

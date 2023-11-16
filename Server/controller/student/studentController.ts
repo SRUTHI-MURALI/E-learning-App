@@ -30,7 +30,7 @@ const sendOtp = async (req: Request, res: Response) => {
     if (emailfind || phonefind) {
       res.status(400).json({ error: "Student already exists" });
     } else {
-      await axios.post(`${BaseUrl}/otp/sendmobileotp`, { phone: phone });
+      await axios.post(`${BaseUrl}/otp/sendmobileotp`, { email: email });
       res.status(200).json({ message: "OTP sent successfully" });
       const newStudent = {
         name,
@@ -69,17 +69,18 @@ const resetPasswordSentOtp = async (req: Request, res: Response) => {
 const signUp = async (req: Request, res: Response) => {
   try {
     // Validate and extract data from the request body
-    const { verificationCode } = req.body;
+    const {email, verificationCode } = req.body;
     if (!verificationCode) {
       return res.status(400).json({ error: "Verification code is required" });
     }
 
     // Assuming you have a valid 'globalData.student' object
-    const phone = globalData.student?.phone;
-
+  if( email === globalData.student?.email){
+   
+    
     // Verify OTP
     const otpResponse = await axios.post(`${BaseUrl}/otp/verifymobileotp`, {
-      phone,
+    
       verificationCode,
     });
 
@@ -93,9 +94,10 @@ const signUp = async (req: Request, res: Response) => {
     const newUser = await Student.create(globalData.student);
     console.log("User created successfully:");
 
-    // Generate a token for the user
-    const token = generateToken(newUser._id);
+     // Generate a token for the user
+     const token = generateToken(newUser._id);
 
+     
     // Return user data and token in the response
     return res.status(200).json({
       _id: newUser._id,
@@ -105,6 +107,15 @@ const signUp = async (req: Request, res: Response) => {
       status: newUser.isBlocked,
       token,
     });
+
+  }
+
+
+    
+   
+
+    
+   
   } catch (error) {
     console.error("Error in sign-up:", error);
     return res.status(500).json(error);
@@ -112,7 +123,7 @@ const signUp = async (req: Request, res: Response) => {
 };
 
 const login = async (req: Request, res: Response) => {
-console.log("lllllll");
+
 
   
   try {

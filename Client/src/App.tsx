@@ -116,7 +116,7 @@ function App() {
           {/* otp */}
 
           <Route
-            path="/studentverifyOtp/:phone"
+            path="/studentverifyOtp/:email"
             element={<StudentVerifyOtp />}
           />
           <Route path="/tutorverifyOtp" element={<TutorVerifyOtp />} />

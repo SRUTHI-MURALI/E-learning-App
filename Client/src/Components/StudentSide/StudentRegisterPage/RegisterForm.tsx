@@ -79,15 +79,15 @@ function RegisterForm() {
         trimmedPassword
       );
 
-      handleNavigation(trimmedPhone);
+      handleNavigation(trimmedEmail);
     } catch (error) {
       toast.error("Registration error");
       return;
     }
   };
 
-  const handleNavigation = (phone:number) => {
-    navigate(`/studentverifyOtp/${phone}`);
+  const handleNavigation = (email:string) => {
+    navigate(`/studentverifyOtp/${email}`);
   };
 
   return (

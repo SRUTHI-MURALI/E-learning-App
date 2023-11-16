@@ -68,5 +68,5 @@ const generateEmail = (
       };
     });
 };
-
+ 
 export default generateEmail;

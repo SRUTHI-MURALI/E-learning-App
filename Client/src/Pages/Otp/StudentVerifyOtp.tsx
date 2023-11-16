@@ -3,10 +3,10 @@ import StudentOtpVerifyForm from "../../Components/Otp/StudentOtpVerifyForm";
 import { useParams } from "react-router-dom";
 
 function StudentVerifyOtp() {
-  const { phone } = useParams<{ phone: string }>();
+  const { email } = useParams<{ email: string }>();
   return (
     <div>
-      <StudentOtpVerifyForm phone={phone ? +phone : null} />
+      <StudentOtpVerifyForm email={email ? email : null} />
     </div>
   );
 }

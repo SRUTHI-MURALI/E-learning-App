@@ -1,5 +1,5 @@
 import  { useState, useEffect } from "react";
-import {  Col, Container, Row } from "react-bootstrap";
+import {  Col, Row } from "react-bootstrap";
 import {  Image_Url } from "../../../Config/Config";
 import StudentQuizForm from "./StudentQuizForm";
 import { getAllCourses } from "../AxiosConfigStudents/AxiosConfig";

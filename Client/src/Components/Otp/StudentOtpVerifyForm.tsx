@@ -9,17 +9,19 @@ import { Base_Url } from "../../Config/Config";
 import { toast, ToastContainer } from "react-toastify";
 
 interface StudentOtpVerifyFormProps {
-  phone: number| null;
+  email: string| null;
 }
 
-function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
+function StudentOtpVerifyForm({ email }: StudentOtpVerifyFormProps) {
   const [otp, setOtp] = useState<string>("");
   const [count, setCount] = useState<number>(8);
   const [otpSent] = useState<boolean>(true);
 
   const handleResendOtp = async () => {
+   
+    
     await axios.post(`${Base_Url}/otp/sendmobileotp`, {
-      phone,
+      email,
     });
   };
 
@@ -37,9 +39,11 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
     }
 
     try {
+    
       axios
         .post(`${Base_Url}/student/verifyotp`, {
           verificationCode: trimmedOtp,
+          email,
         })
         .then(() => {
           alert("Otp verified successfully");
@@ -87,7 +91,7 @@ function StudentOtpVerifyForm({ phone }: StudentOtpVerifyFormProps) {
             <>
               <Form onSubmit={handleSubmit}>
                 <Card.Body>
-                  <Card.Title> Enter Otp Send to the PhoneNumber</Card.Title>
+                  <Card.Title> Enter Otp Send to the emailId : {email}</Card.Title>
                   <Card.Img variant="top" />
                   <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
                     <Form.Control

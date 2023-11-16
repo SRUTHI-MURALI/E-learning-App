@@ -1,18 +1,19 @@
 import { Request, Response } from "express";
-import { generateOTP } from "../../otpGenerator/otpGenerator";
-const accountSid: string = process.env.TWILIO_ACCOUNT_SID || "";
-const authToken: string = process.env.TWILIO_AUTH_TOKEN || "";
-import { Twilio } from "twilio";
-const serviceSid: string = process.env.TWILIO_SERVICE_SID || "";
+// import { generateOTP } from "../../otpGenerator/otpGenerator";
 
-const twilioClient: Twilio = new Twilio(accountSid, authToken);
+import generateOtp from "../../EmailGenerator/otpGenerator";
+
+
+const globalData={
+  otp: null as null | number
+}
 const sendMobileOtp = async (req: Request, res: Response) => {
   try {
-    const { phone } = req.body;
+    const { email } = req.body;
 
     
-    const otp = await generateOTP(phone);
-
+    const otp = await generateOtp(email,res)
+    globalData.otp=otp;
     res.status(200).json({ message: "OTP sent successfully", otp });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -20,16 +21,14 @@ const sendMobileOtp = async (req: Request, res: Response) => {
 };
 const verifyMobileOtp = async (req: Request, res: Response) => {
   try {
-    const { phone, verificationCode } = req.body;
+    const {  verificationCode } = req.body;
+  
 
-    const verification_check = await twilioClient.verify.v2
-      .services(serviceSid)
-      .verificationChecks.create({
-        to: "+91" + phone,
-        code: verificationCode,
-      });
 
-    if (verification_check.status === "approved") {
+   
+    if (verificationCode==globalData.otp) {
+    
+      
       // OTP verification successful
       return res.status(200).json({ message: "OTP verified successfully" });
     } else {

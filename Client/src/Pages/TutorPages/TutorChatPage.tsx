@@ -19,7 +19,7 @@ interface Contact {
   _id: string;
   name:string;
   studentDetails: {
-    email: string;
+    name: string;
     // Add other relevant properties
   };
 }
