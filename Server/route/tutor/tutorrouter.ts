@@ -20,7 +20,8 @@ import {
   resetPassword,
   editProfilePhoto,
   removeQuiz,
-  activateQuiz
+  activateQuiz,
+  verifyOtp
 } from "../../controller/tutor/tutorController";
 import { tutorLoggedin } from "../../middlewares/tutorMiddlewares";
 
@@ -34,6 +35,7 @@ tutorRouter.post("/login", login);
 
 // tutor resetpassword
 tutorRouter.post("/resetpasswordsentotp", resetPasswordSentOtp);
+tutorRouter.post("/verifyforgotpasswordotp",verifyOtp)
 tutorRouter.put("/resetpassword", resetPassword);
 
 //tutor category management

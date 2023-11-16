@@ -22,6 +22,8 @@ const globalData = {
   }, // Define a type for user
 };
 
+let mailid:string;
+
 const sendOtp = async (req: Request, res: Response) => {
   try {
     const { name, email, password, phone } = req.body;
@@ -46,15 +48,45 @@ const sendOtp = async (req: Request, res: Response) => {
   }
 };
 
+const verifyOtp= async (req: Request, res: Response)=>{
+  try {
+    const {email, verificationCode } = req.body;
+   
+    if (!verificationCode) {
+      return res.status(400).json({ error: "Verification code is required" });
+    }
+    if(email == mailid){
+      const otpResponse = await axios.post(`${BaseUrl}/otp/verifymobileotp`, {
+    
+        verificationCode,
+      });
+      if (otpResponse.status !== 200) {
+        // Handle OTP verification failure
+    
+        return res.status(400).json({ message: "OTP verification failed" });
+      }else{
+        return res.status(200).json({ message: "OTP verified successfully" });
+      }
+  
+  
+    }
+  } catch (error) {
+    console.error("Error in resetting password:", error);
+    return res.status(500).json(error);
+  }
+}
+
 const resetPasswordSentOtp = async (req: Request, res: Response) => {
   try {
-    const { phone } = req.body;
+    const { email } = req.body;
 
-    const phonefind = await Student.findOne({ phone });
+    const emailfind:any = await Student.findOne({ email });
+   
+       mailid= emailfind?.email;
 
-    if (phonefind != null) {
+    if (emailfind != null) {
       await axios.post(`${BaseUrl}/otp/sendmobileotp`, {
-        phone: phonefind.phone,
+        email: emailfind.email,
       });
       res.status(200).json({ message: "OTP sent successfully" });
     } else {
@@ -110,11 +142,6 @@ const signUp = async (req: Request, res: Response) => {
 
   }
 
-
-    
-   
-
-    
    
   } catch (error) {
     console.error("Error in sign-up:", error);
@@ -269,28 +296,41 @@ const getCourseList = async (req: Request, res: Response) => {
 
 const resetPassword = async (req: Request, res: Response) => {
   try {
-    const { phone, password } = req.body;
+    const { email, password } = req.body;
    
+
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+   console.log(hashedPassword,'hashed');
     
+   if (hashedPassword) {
+    
+    Student
+      .findOneAndUpdate(
+        { email: email },
+        { password: hashedPassword },
+        {new:true}
+      )
+      .then((data) => {
+        if (!data) {
+          res.status(404).send({
+            message: `Cannot update user with ID: ${email}. User not found.`,
+          });
+        } else {
+          return res.status(200).json({ message: 'Password reset successful' });
+        }
+      })
+      .catch(() => {
+        return res.status(500).json({ message: 'Password reset failed' });
+      });
+  }else{
+    res.status(500).send(
+      "error"
+    );
+  }
 
-    const student = await Student.findOne({ phone });
 
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-
-    // Update the student's password
-    student.password = hashedPassword;
-    const updatedStudent = await student.save();
-
-    if (updatedStudent) {
-      return res.status(200).json({ message: 'Password reset successful' });
-    } else {
-      return res.status(500).json({ message: 'Password reset failed' });
-    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Password reset error' });
@@ -568,5 +608,6 @@ export {
   sendMsg,
   receivemsg,
   getSearchData,
-  getSortData
+  getSortData,
+  verifyOtp
 };

@@ -8,7 +8,7 @@ import { Base_Url } from "../../Config/Config";
 import { toast, ToastContainer } from "react-toastify";
 
 function TutorForgotPassword() {
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [count, setCount] = useState(5);
@@ -18,11 +18,11 @@ function TutorForgotPassword() {
 
   const navigate = useNavigate();
 
-  const handleNumberSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const trimmedPhone = phone.trim();
-    if (trimmedPhone === "") {
+    const trimmedEmail = email.trim();
+    if (trimmedEmail === "") {
       return;
     }
 
@@ -30,7 +30,7 @@ function TutorForgotPassword() {
       const response = await axios.post(
         `${Base_Url}/tutor/resetpasswordsentotp`,
         {
-          phone: trimmedPhone,
+          email: trimmedEmail,
         }
       );
 
@@ -67,9 +67,9 @@ function TutorForgotPassword() {
       }
 
       axios
-        .post(`${Base_Url}/otp/verifymobileotp`, {
+        .post(`${Base_Url}/tutor/verifyforgotpasswordotp`, {
           verificationCode: trimmedOtp,
-          phone: phone,
+          email: email,
         })
         .then(() => {
           toast.success("Otp verified successfully");
@@ -108,7 +108,7 @@ function TutorForgotPassword() {
       await axios
         .put(`${Base_Url}/tutor/resetpassword`, {
           password,
-          phone,
+          email,
         })
         .then((response) => {
           toast.success("password reset successfully");
@@ -146,17 +146,17 @@ function TutorForgotPassword() {
       <Container>
         <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
         <Card style={{ width: "18rem" }} className="text-center">
-          <Form onSubmit={handleNumberSubmit}>
+          <Form onSubmit={handleEmailSubmit}>
             <Card.Body>
               <Card.Title> Reset Password</Card.Title>
               <Card.Img variant="top" />
               <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
                 <Form.Control
-                  value={phone}
+                  value={email}
                   onChange={(e) => {
-                    setPhone(e.target.value);
+                    setEmail(e.target.value);
                   }}
-                  placeholder="Enter your phone number"
+                  placeholder="Enter your registered email"
                 />
               </Form.Group>
               <Button variant="primary" type="submit">
@@ -183,7 +183,7 @@ function TutorForgotPassword() {
               {count > 0 ? (
                 <h6>Countdown: {count} seconds</h6>
               ) : (
-                <Form onSubmit={handleNumberSubmit}>
+                <Form onSubmit={handleEmailSubmit}>
                   <Button type="submit">Resend OTP</Button>
                 </Form>
               )}

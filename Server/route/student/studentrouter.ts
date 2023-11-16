@@ -20,7 +20,8 @@ import {
   sendMsg,
   receivemsg,
   getSearchData,
-  getSortData
+  getSortData,
+  verifyOtp
 } from "../../controller/student/studentController";
 import { studentLoggedin } from "../../middlewares/studentMiddlewares";
 
@@ -37,6 +38,7 @@ studentrouter.get("/getspecificcoursedetails/:id", courseDetails);
 
 //student password reset
 studentrouter.post("/resetpasswordsentotp", resetPasswordSentOtp);
+studentrouter.post("/verifyforgotpasswordotp",verifyOtp)
 studentrouter.put("/resetpassword", resetPassword);
 
 //student tutor management

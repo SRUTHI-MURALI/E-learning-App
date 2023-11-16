@@ -19,6 +19,8 @@ const globalData = {
   }, // Define a type for user
 };
 
+let mailid:string;
+
 const sendOtp = async (req: Request, res: Response) => {
   try {
     const { name, email, password, phone } = req.body;
@@ -43,6 +45,36 @@ const sendOtp = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+const verifyOtp= async (req: Request, res: Response)=>{
+  try {
+    const {email, verificationCode } = req.body;
+    console.log(email,verificationCode,'hjgkgg');
+    
+   
+    if (!verificationCode) {
+      return res.status(400).json({ error: "Verification code is required" });
+    }
+    if(email == mailid){
+      const otpResponse = await axios.post(`${BaseUrl}/otp/verifymobileotp`, {
+    
+        verificationCode,
+      });
+      if (otpResponse.status !== 200) {
+        // Handle OTP verification failure
+    
+        return res.status(400).json({ message: "OTP verification failed" });
+      }else{
+        return res.status(200).json({ message: "OTP verified successfully" });
+      }
+  
+  
+    }
+  } catch (error) {
+    console.error("Error in resetting password:", error);
+    return res.status(500).json(error);
+  }
+}
 
 const signUp = async (req: Request, res: Response) => {
   try {
@@ -442,7 +474,7 @@ const tutorEditedProfile = async (req: Request, res: Response) => {
       },
       { new: true }
     );
-console.log(editedTutor,'tutor');
+
 
     if (editedTutor) {
       res.status(201).json({
@@ -482,12 +514,12 @@ const editProfilePhoto = async (req: Request, res: Response) => {
 
 const resetPassword = async (req: Request, res: Response) => {
   try {
-    const { phone, password } = req.body;
+    const { email, password } = req.body;
 
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(password, salt);
     const tutorPassword = await Tutor.findOneAndUpdate(
-      { phone },
+      { email },
       {
         password: hashedpassword,
       },
@@ -495,10 +527,10 @@ const resetPassword = async (req: Request, res: Response) => {
     );
 
     if (tutorPassword) {
-      res.status(400).json({ tutorPassword });
+      return res.status(200).json({ message: 'Password reset successful' });
     }
   } catch (error) {
-    res.status(400).json("reset error");
+    return res.status(500).json({ message: 'Password reset failed' });
   }
 };
 
@@ -547,13 +579,15 @@ const activateQuiz = async (req: Request, res: Response) => {
 
 const resetPasswordSentOtp = async (req: Request, res: Response) => {
   try {
-    const { phone } = req.body;
+    const { email } = req.body;
 
-    const phonefind = await Tutor.findOne({ phone });
+    const emailfind:any = await Tutor.findOne({ email });
 
-    if (phonefind != null) {
+    mailid= emailfind?.email;
+
+    if (emailfind != null) {
       await axios.post(`${BaseUrl}/otp/sendmobileotp`, {
-        phone: phonefind.phone,
+        email: emailfind?.email,
       });
       res.status(200).json({ message: "OTP sent successfully" });
     } else {
@@ -587,4 +621,5 @@ export {
   editProfilePhoto,
   removeQuiz,
   activateQuiz,
+  verifyOtp
 };

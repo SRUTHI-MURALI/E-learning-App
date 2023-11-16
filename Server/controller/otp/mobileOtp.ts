@@ -23,9 +23,6 @@ const verifyMobileOtp = async (req: Request, res: Response) => {
   try {
     const {  verificationCode } = req.body;
   
-
-
-   
     if (verificationCode==globalData.otp) {
     
       
