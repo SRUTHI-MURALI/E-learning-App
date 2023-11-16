@@ -31,8 +31,9 @@ function LoginForm() {
     try {
       const idToken = credentialResponse.credential;
 
-      const response = await googleLogin(idToken);
 
+      const response = await googleLogin(idToken);
+      console.log(response,'idididi');
       const studentData = response.data;
 
       localStorage.setItem("studentData", JSON.stringify(studentData));

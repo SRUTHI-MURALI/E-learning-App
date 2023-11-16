@@ -29,7 +29,7 @@ function TutorStudentList() {
          <Col xs={12} md={2}>
            <TutorSidebar />
          </Col>
-         <Col xs={12} md={8}>
+         <Col xs={12} md={8} style={{marginTop:'120px'}}>
            <TutorStudentTable />
          </Col>
        </Row>

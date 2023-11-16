@@ -162,7 +162,7 @@ function CourseCategoriesTable() {
             </Table>
            
         </Col>
-        <div style={{ float: "left", margin: "3px" }}>
+        <div style={{ float: "right", margin: "3px" }}>
         <ReactPaginate
           previousLabel={"Previous "}
           nextLabel={"Next"}

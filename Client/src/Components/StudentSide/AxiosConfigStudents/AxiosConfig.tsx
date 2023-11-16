@@ -38,6 +38,8 @@ export const getEnrolledCourses = (id: string) => {
 };
 
 export const googleLogin = (id_token: any) => {
+  console.log(id_token,'axios');
+  
   return axios.post(`${Base_Url}/student/googlelogin`, { id_token });
 };
 

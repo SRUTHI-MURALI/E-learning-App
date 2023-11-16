@@ -126,7 +126,7 @@ function AllCoursesList() {
                 style={{ textDecoration: "none" }}
               >
                 <Card
-                  style={{ width: "16rem", height: "25rem" }}
+                  style={{ width: "14rem", height: "25rem" }}
                   className="m-2"
                 >
                   <Card.Img

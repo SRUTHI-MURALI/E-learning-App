@@ -31,7 +31,7 @@ function TutorStudentTable() {
       try {
         const response = await getEnrolledStudents(id);
         setOrderlist(response.data.filteredOrders);
-        console.log(orderList, "students");
+       
       } catch (error) {
         console.log(error);
       }
@@ -54,7 +54,7 @@ function TutorStudentTable() {
       {paginatedData.length !== 0 ? (
         <div>
           <ToastContainer position="top-center" autoClose={3000} />
-          <p className="tutorstudentlistheading">
+          <p className="studentlistheading">
             <ImArrowRight /> <u>Student List</u>
           </p>
 

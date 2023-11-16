@@ -76,6 +76,7 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
             {
               name: "Personal link",
               url: window.location.href,
+              
             },
           ],
           scenario: {
@@ -91,7 +92,7 @@ function StudentMentorList({ studentData }: StudentMentorsListProps) {
   };
 
   return (
-    <Container style={{ marginTop: "120px" }}>
+    <Container style={{ marginTop: "130px" }}>
       <Row>
         {showCall === false ? (
           <Container>

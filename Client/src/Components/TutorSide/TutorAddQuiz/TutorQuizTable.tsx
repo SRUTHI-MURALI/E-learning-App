@@ -70,7 +70,7 @@ function TutorQuizTable() {
 
   return (
     <div style={{ marginTop: "7rem" }}>
-      <p className="tutorstudentlistheading">
+      <p className="studentlistheading">
         <ImArrowRight /> <u>Question List</u>
       </p>
 

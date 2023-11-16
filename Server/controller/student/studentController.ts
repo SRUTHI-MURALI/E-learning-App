@@ -112,11 +112,12 @@ const signUp = async (req: Request, res: Response) => {
 };
 
 const login = async (req: Request, res: Response) => {
+console.log("lllllll");
 
   
   try {
     
-    console.log(req.body,'log');
+   
     
     const { email, password } = req.body;
    
@@ -150,7 +151,10 @@ const login = async (req: Request, res: Response) => {
 // Import Request and Response from express package
 
 const googleLogin = async (req: Request, res: Response) => {
+  
   try {
+   
+    
     
     const { id_token } = req.body;
 
@@ -166,14 +170,19 @@ const googleLogin = async (req: Request, res: Response) => {
     // Use type assertion to tell TypeScript that you're certain it's JwtDecodedToken
     const decodedToken = jwt.decode(id_token) as JwtDecodedToken;
 
+   
+    
+
     const { name, email, jti, phone } = decodedToken;
     const emailfind = await Student.findOne({ email });
-    const phonefind = await Student.findOne({ phone });
-
-    if (emailfind || phonefind) {
-      const existingStudent = emailfind || phonefind;
+    
+    if (emailfind ) {
+      
+      
+      const existingStudent = emailfind ;
 
       const token = generateToken(existingStudent?._id);
+     
       return res.status(200).json({
         _id: existingStudent?._id,
         name: existingStudent?.name,
@@ -181,13 +190,21 @@ const googleLogin = async (req: Request, res: Response) => {
         phone: existingStudent?.phone,
         token,
       });
+    
+      
     } else {
+     
+      
       const addStudent = await Student.create({
         name,
         email,
         jti,
         phone,
       });
+
+
+      
+      
       const token = generateToken(addStudent._id);
       return res.status(200).json({
         _id: addStudent?._id,

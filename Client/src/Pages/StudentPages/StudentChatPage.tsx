@@ -8,14 +8,22 @@ import ChatContacts from "../../Components/StudentSide/ChatControls/ChatContacts
 import ChatWelcome from "../../Components/StudentSide/ChatControls/ChatWelcome";
 import StudentHeader from "../../Components/StudentSide/StudentHeader/StudentHeader";
 import { Base_Url } from "../../Config/Config";
-import { getInstructors } from "../../Components/StudentSide/AxiosConfigStudents/AxiosConfig";
+import { getEnrolledCourses, getInstructors } from "../../Components/StudentSide/AxiosConfigStudents/AxiosConfig";
 
 interface User {
   _id: string;
   // Add other properties as needed
 }
 
-
+interface Course {
+  _id: string;
+  title: string;
+  instructor: {
+    _id:string;
+    name: string;
+  };
+  photo: string;
+}
 
 interface Contact {
   _id: string;
@@ -28,14 +36,18 @@ export default function StudentChatPage() {
   const navigate = useNavigate();
   const socket = useRef<Socket | null>(null);
   const [contacts, setContacts] = useState<Contact[]>([]);
+  const [allTeachers, setAllTeachers] = useState<Contact[]>([]);
+  const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
   const [currentChat, setCurrentChat] = useState<Contact | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  const students = localStorage.getItem("studentData");
+  const studentDetails= students? JSON.parse(students):null
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const students = localStorage.getItem("studentData");
-
+       
         if (!students) {
           navigate("/studentlogin");
         } else {
@@ -67,8 +79,16 @@ export default function StudentChatPage() {
       try {
         if (currentUser) {
           const response = await getInstructors();
-          setContacts(response.data.tutorDetails);
+          const courses = await getEnrolledCourses(studentDetails?._id)
+          
+          setEnrolledCourses(courses.data.enrolledCourses)
+        
+          setAllTeachers(response.data.tutorDetails);
+          
+        
         }
+       
+        
       } catch (error) {
         console.error("Error fetching contacts:", error);
       }
@@ -76,6 +96,18 @@ export default function StudentChatPage() {
 
     fetchContacts();
   }, [currentUser, navigate]);
+
+  useEffect(()=>{
+    try {
+      const filteredContacts = allTeachers.filter((contact) =>
+          enrolledCourses.some((course) => course?.instructor?._id === contact._id)
+        );
+          setContacts(filteredContacts)
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+      
+    }
+  },[allTeachers])
 
   const handleChatChange = (chat: Contact) => {
     setCurrentChat(chat);

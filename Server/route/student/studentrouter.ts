@@ -31,6 +31,7 @@ studentrouter.post("/verifyotp", signUp);
 studentrouter.post("/login", login);
 studentrouter.post("/googlelogin", googleLogin);
 
+
 //student course management
 studentrouter.get("/getspecificcoursedetails/:id", courseDetails);
 

@@ -78,7 +78,7 @@ function InstructorTable() {
 
   return (
     <div>
-      <p className="instructorlistheading">
+      <p className="studentlistheading">
         <ImArrowRight /> <u>Instructor List</u>
       </p>
       <ToastContainer position="top-center"></ToastContainer>

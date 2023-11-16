@@ -67,6 +67,8 @@ export default function TutorChatPage() {
       try {
         if (currentUser) {
           const response = await getEnrolledStudents(currentUser._id);
+          console.log(response,'contacts');
+          
           setContacts(response.data.filteredOrders);
         }
       } catch (error) {

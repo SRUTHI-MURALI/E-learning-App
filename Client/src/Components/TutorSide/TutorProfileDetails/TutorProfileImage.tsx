@@ -93,7 +93,14 @@ const TutorProfileImage: React.FC<TutorEditProfileImageProps> = ({
                     alt="sample"
                     style={{ width: "100px" }}
                   />
-                  <Form.Control
+                  
+                </Form.Group>
+              </>
+            )}
+            
+          </Card.Body>
+      
+          {newImage ?(<Button type="submit" className="m-3" onClick={handleImageSubmit}>Submit</Button>):(<Form.Control
                     type="file"
                     onChange={(e) => {
                       const inputElement = e.target as HTMLInputElement;
@@ -103,12 +110,7 @@ const TutorProfileImage: React.FC<TutorEditProfileImageProps> = ({
                       }
                     }}
                   />
-                </Form.Group>
-              </>
-            )}
-          </Card.Body>
-
-          {newImage && <Button type="submit" className="m-3" onClick={handleImageSubmit}>Submit</Button>}
+) }
         </Card>
       </Form>
     </>

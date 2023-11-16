@@ -5,7 +5,7 @@ interface Contact {
   _id: string;
   name: string; // Add this line
   studentDetails: {
-    email: string;
+    name: string;
     // Add other relevant properties
   };
 }
@@ -61,6 +61,7 @@ export default function TutorChatContacts({
 
     setAllContacts(uniqueContacts);
   }, [contacts]);
+  
 
   return (
     <Container>
@@ -71,7 +72,10 @@ export default function TutorChatContacts({
           </div>
           <div className="contacts">
             <h1 style={{ color: "white" }}>Students</h1>
+         
             {allContacts.map((contact, index) => (
+             
+              
               <div
                 key={contact._id}
                 className={`contact ${
@@ -79,8 +83,9 @@ export default function TutorChatContacts({
                 }`}
                 onClick={() => changeCurrentChat(index, contact)}
               >
+                
                 <div className="username">
-                  <h3>{contact?.studentDetails?.email}</h3>
+                  <h3>{contact?.studentDetails?.name}</h3>
                 </div>
               </div>
             ))}
@@ -92,5 +97,78 @@ export default function TutorChatContacts({
 }
 
 const Container = styled.div`
-  // Your styling here
+  display: grid;
+  grid-template-rows: 10% 75% 15%;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color:  rgb(101, 118, 159);
+  
+  
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    gap: 0.1rem;
+    &::-webkit-scrollbar {
+      width: 0.2rem;
+      &-thumb {
+        
+        width: 0.1rem;
+        border-radius: 1rem;
+      }
+    }
+    .contact {
+      background-color: #ffffff34;
+      min-height: 5rem;
+      cursor: pointer;
+      width: 90%;
+      border-radius: 0.2rem;
+      padding: 0.4rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      transition: 0.5s ease-in-out;
+      .avatar {
+        img {
+          height: 3rem;
+        }
+      }
+      .username {
+        h3 {
+          color: white;
+        }
+      }
+    }
+    .selected {
+      background-color: #9a86f3;
+    }
+  }
+
+  .current-user {
+    background-color: #0d0d30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    .avatar {
+      img {
+        height: 4rem;
+        max-inline-size: 100%;
+      }
+    }
+    .username {
+      h2 {
+        color: white;
+      }
+    }
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+      gap: 0.5rem;
+      .username {
+        h2 {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
 `;
