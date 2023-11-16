@@ -9,8 +9,12 @@ import { Base_Url } from "../../Config/Config";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function TutorOtpVerifyForm() {
-  const [otp, setotp] = useState("");
+interface TeacherOtpVerifyFormProps {
+  email: string| null;
+}
+
+function TutorOtpVerifyForm({ email }: TeacherOtpVerifyFormProps) {
+  const [otp, setOtp] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -25,6 +29,7 @@ function TutorOtpVerifyForm() {
     try {
     await axios.post(`${Base_Url}/tutor/verifyotp`, {
         verificationCode: trimmedOtp,
+        email,
       }).then(() => {
         alert("Otp verified successfully");
         navigate("/tutorlogin");
@@ -53,13 +58,13 @@ function TutorOtpVerifyForm() {
         <Card style={{ width: "18rem" }} className="text-center">
           <Form onSubmit={handleSubmit}>
             <Card.Body>
-              <Card.Title> Enter Otp Send to the PhoneNumber</Card.Title>
+              <Card.Title> Enter Otp Send to the email : {email} </Card.Title>
               <Card.Img variant="top" />
               <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
                 <Form.Control
                   placeholder="Enter otp"
                   value={otp}
-                  onChange={(e) => setotp(e.target.value)}
+                  onChange={(e) => setOtp(e.target.value)}
                 />
               </Form.Group>
               <Button variant="primary" type="submit">

@@ -23,12 +23,12 @@ const sendOtp = async (req: Request, res: Response) => {
   try {
     const { name, email, password, phone } = req.body;
     const emailfind = await Tutor.findOne({ email });
-    const phonefind = await Tutor.findOne({ phone });
+    
 
-    if (emailfind || phonefind) {
+    if (emailfind ) {
       res.status(400).json({ error: "Instructor already exists" });
     } else {
-      await axios.post(`${BaseUrl}/otp/sendmobileotp`, { phone: phone });
+      await axios.post(`${BaseUrl}/otp/sendmobileotp`, { email: email });
       res.status(200).json({ message: "OTP sent successfully" });
 
       const newTutor = {
@@ -46,23 +46,37 @@ const sendOtp = async (req: Request, res: Response) => {
 
 const signUp = async (req: Request, res: Response) => {
   try {
-    const { verificationCode } = req.body;
-    const phone = globalData.tutor?.phone;
+    const {email, verificationCode } = req.body;
+    if (!verificationCode) {
+      return res.status(400).json({ error: "Verification code is required" });
+    }
+    if( email === globalData.tutor?.email){
+      const otpResponse=await axios.post(`${BaseUrl}/otp/verifymobileotp`, {
+     
+        verificationCode,
+      });
 
-    await axios.post(`${BaseUrl}/otp/verifymobileotp`, {
-      phone,
-      verificationCode,
-    });
+      if (otpResponse.status !== 200) {
+        // Handle OTP verification failure
+    
+        return res.status(400).json({ message: "OTP verification failed" });
+      }
 
-    const addUser = await Tutor.create(globalData.tutor);
-    const token = generateToken(addUser._id);
-    return res.status(200).json({
+// create new tutor
+      const addUser = await Tutor.create(globalData.tutor);
+     const token = generateToken(addUser._id);
+      return res.status(200).json({
       _id: addUser?._id,
       name: addUser?.name,
       email: addUser?.email,
       phone: addUser?.phone,
       token,
     });
+  
+    }
+
+    
+    
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

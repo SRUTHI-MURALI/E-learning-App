@@ -78,13 +78,17 @@ function RegisterForm() {
         trimmedPhone,
         trimmedPassword
       );
-
-      toast.success("successfully registered");
-      navigate("/tutorverifyOtp");
+      handleNavigation(trimmedEmail);
+     
+      
     } catch (error) {
       toast.error("registration error");
       return;
     }
+  };
+
+  const handleNavigation = (email:string) => {
+    navigate(`/tutorverifyOtp/${email}`);
   };
   return (
     <Container className="mt-5  ">

@@ -119,7 +119,7 @@ function App() {
             path="/studentverifyOtp/:email"
             element={<StudentVerifyOtp />}
           />
-          <Route path="/tutorverifyOtp" element={<TutorVerifyOtp />} />
+          <Route path="/tutorverifyOtp/:email" element={<TutorVerifyOtp />} />
 
           {/* forgot password  */}
 

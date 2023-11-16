@@ -91,7 +91,7 @@ function StudentOtpVerifyForm({ email }: StudentOtpVerifyFormProps) {
             <>
               <Form onSubmit={handleSubmit}>
                 <Card.Body>
-                  <Card.Title> Enter Otp Send to the emailId : {email}</Card.Title>
+                  <Card.Title> Enter Otp Send to the email : {email}</Card.Title>
                   <Card.Img variant="top" />
                   <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
                     <Form.Control

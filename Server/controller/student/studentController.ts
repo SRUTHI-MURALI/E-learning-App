@@ -92,7 +92,7 @@ const signUp = async (req: Request, res: Response) => {
 
     // Create a new user
     const newUser = await Student.create(globalData.student);
-    console.log("User created successfully:");
+    
 
      // Generate a token for the user
      const token = generateToken(newUser._id);
